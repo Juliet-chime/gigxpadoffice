@@ -6,6 +6,7 @@ import {
   UserOutlined,
 } from "@ant-design/icons";
 import { Layout, Menu, theme } from "antd";
+import { useNavigate } from "react-router-dom";
 const { Header, Content, Sider } = Layout;
 function getItem(label, key, icon, children) {
   return {
@@ -16,20 +17,25 @@ function getItem(label, key, icon, children) {
   };
 }
 const items = [
-  getItem("Option 1", "1", <PieChartOutlined />),
-  getItem("Option 2", "2", <DesktopOutlined />),
-  getItem("User", "sub1", <UserOutlined />, [
-    getItem("Tom", "3"),
-    getItem("Bill", "4"),
-    getItem("Alex", "5"),
+  getItem("Dashboard", "/dashboard", <PieChartOutlined />),
+  getItem("Transactions", "sub1", <UserOutlined />, [
+    getItem("Fiat Transactions", "/transactions"),
+    getItem("Crypto Transactions", "/crypto"),
+    getItem("Bill Payments", "/bills"),
   ]),
-  getItem("Files", "6", <FileOutlined />),
+  getItem("Wallets", "/wallets", <PieChartOutlined />),
+  getItem("Virtual Cards", "/cards", <DesktopOutlined />),
+
+  getItem("Customers", "/customers", <FileOutlined />),
+  getItem("Settings", "/settings", <FileOutlined />),
 ];
 
 const DashBoardLayout = () => {
+  const navigate = useNavigate();
   const {
     token: { colorBgContainer },
   } = theme.useToken();
+
   return (
     <div className="nav-area">
       <Layout style={{ height: "100vh" }}>
@@ -46,9 +52,12 @@ const DashBoardLayout = () => {
           <div className="demo-logo-vertical" />
           <Menu
             theme="dark"
-            defaultSelectedKeys={["1"]}
-            defaultOpenKeys={['3']}
+            defaultSelectedKeys={[window.location.pathname]}
             mode="inline"
+            onClick={({ key }) => {
+                console.log(key)
+              navigate(key);
+            }}
             items={items}
           />
         </Sider>
