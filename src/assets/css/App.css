@@ -1,3 +1,152 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@import url("https://fonts.googleapis.com/css2?family=Rubik:wght@400;500;600;700&display=swap");
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  margin: 0 !important;
+}
+
+body {
+  background: #fafafa;
+  font-family: "Rubik", sans-serif;
+  -webkit-font-smoothing: antialiased;
+  margin: 0px;
+  font-size: 14px;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+p {
+  margin: 0px;
+}
+
+a {
+  text-decoration: none;
+}
+
+.nav-area .ant-layout-sider-zero-width-trigger {
+  left: 335px;
+  border-start-start-radius: 0;
+  border-start-end-radius: 6px;
+  border-end-end-radius: 6px;
+  border-end-start-radius: 0;
+}
+
+.nav-area .ant-layout {
+  background-color: white;
+}
+
+.nav-area .ant-layout-sider {
+  background: #f2f3f4 !important;
+  padding: 10px;
+  /* flex: 0 0 248px !important;
+  max-width: 248px !important;
+  min-width: 248px !important;
+  width: 248px !important; */
+}
+
+.nav-area .ant-menu {
+  background: #f2f3f4 !important;
+}
+
+.nav-area .ant-menu-item {
+  font-style: normal;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 19px;
+  font-family: "Rubik";
+  letter-spacing: 0px;
+  color: #67777e;
+  opacity: 1;
+}
+
+.nav-area .ant-menu-submenu {
+  font-style: normal;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 19px;
+  font-family: "Rubik";
+  letter-spacing: 0px;
+  color: #67777e;
+  opacity: 1;
+}
+
+/* .nav-area .ant-menu-item svg {
+  width: 18px;
+  height: 18px;
+} */
+
+.nav-area .ant-menu-item-selected {
+  color: #1d3c48;
+  background: white;
+  border-radius: 30px;
+}
+
+/* .nav-area .ant-menu-submenu-selected {
+  color: #1d3c48;
+  background: white;
+  border-radius: 30px;
+  opacity: 1;
+} */
+
+.nav-area .ant-menu-item-active {
+  color: #1d3c48 !important;
+  background: white !important;
+  border-radius: 30px;
+}
+
+.nav-area .ant-menu-submenu-active {
+  color: #1d3c48 !important;
+  background: white !important;
+  border-radius: 30px;
+}
+
+.nav-area .ant-menu-item-selected svg {
+  filter: invert(69%) sepia(34%) saturate(552%) hue-rotate(345deg)
+    brightness(99%) contrast(88%);
+}
+
+.nav-area .ant-menu-item:hover {
+  color: #1d3c48;
+}
+
+.nav-area .ant-menu-item:hover svg {
+  filter: invert(69%) sepia(34%) saturate(552%) hue-rotate(345deg)
+    brightness(99%) contrast(88%);
+}
+.nav-area .ant-menu-submenu .ant-menu-item-selected::before {
+  content: ".";
+  color: red;
+}
+
+.nav-area .ant-menu-submenu .ant-menu-item-selected {
+  color: #1d3c48 !important;
+}
+
+/* .nav-area .ant-menu-submenu-open {
+    color: #1d3c48;
+    background: white;
+    border-radius: 30px;
+    opacity: 1;
+} */
+
+@media only screen and (max-width: 1024px) {
+  .nav-area .ant-layout-sider {
+    padding: 0px;
+    /* flex: 0 0 200px !important;
+    max-width: 200px !important;
+    min-width: 200px !important;
+    width: 200px !important; */
+  }
+}
