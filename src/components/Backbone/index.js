@@ -18,12 +18,8 @@ const DashBoardLayout = ({ children }) => {
               overflow: "auto",
             }}
           >
-            <div
-              style={{
-                padding: 24,
-              }}
-            >
-              {children}
+            <div>
+              <div className="container mx-auto px-1 sm:px-4">{children}</div>
             </div>
           </Content>
         </Layout>
