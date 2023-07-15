@@ -35,6 +35,33 @@ a {
   text-decoration: none;
 }
 
+
+.ant-menu-item.ant-menu-item-selected {
+  color: #1d3c48;
+  background: white;
+  border-radius: 30px;
+}
+
+.ant-menu-item.ant-menu-item-selected.ant-menu-item-only-child {
+  background: transparent;
+  color: #1D3C48;
+  /* padding: 0px !important; */
+}
+
+.ant-menu-submenu.ant-menu-submenu-selected {
+
+  background: transparent;
+  /*border-radius: 30px;
+  border: solid; */
+}
+
+.ant-menu-submenu.ant-menu-submenu-selected>.ant-menu-submenu-title {
+  background: white;
+  /* border-radius: 60px; */
+  /* padding: 20px; */
+  color: #1d3c48 !important;
+}
+
 .nav-area .ant-layout-sider-zero-width-trigger {
   left: 335px;
   border-start-start-radius: 0;
@@ -87,11 +114,11 @@ a {
   height: 18px;
 } */
 
-.nav-area .ant-menu-item-selected {
+/* .nav-area .ant-menu-item-selected {
   color: #1d3c48;
   background: white;
   border-radius: 30px;
-}
+} */
 
 /* .nav-area .ant-menu-submenu-selected {
   color: #1d3c48;
@@ -100,31 +127,33 @@ a {
   opacity: 1;
 } */
 
-.nav-area .ant-menu-item-active {
+/* .nav-area .ant-menu-item-active {
   color: #1d3c48 !important;
   background: white !important;
   border-radius: 30px;
-}
+} */
 
-.nav-area .ant-menu-submenu-active {
+
+/* .nav-area .ant-menu-submenu-active {
   color: #1d3c48 !important;
   background: white !important;
   border-radius: 30px;
-}
+} */
+
 
 .nav-area .ant-menu-item-selected svg {
-  filter: invert(69%) sepia(34%) saturate(552%) hue-rotate(345deg)
-    brightness(99%) contrast(88%);
+  filter: invert(69%) sepia(34%) saturate(552%) hue-rotate(345deg) brightness(99%) contrast(88%);
 }
 
+/*
 .nav-area .ant-menu-item:hover {
   color: #1d3c48;
 }
 
 .nav-area .ant-menu-item:hover svg {
-  filter: invert(69%) sepia(34%) saturate(552%) hue-rotate(345deg)
-    brightness(99%) contrast(88%);
+  filter: invert(69%) sepia(34%) saturate(552%) hue-rotate(345deg) brightness(99%) contrast(88%);
 }
+
 .nav-area .ant-menu-submenu .ant-menu-item-selected::before {
   content: ".";
   color: red;
@@ -132,7 +161,7 @@ a {
 
 .nav-area .ant-menu-submenu .ant-menu-item-selected {
   color: #1d3c48 !important;
-}
+} */
 
 /* .nav-area .ant-menu-submenu-open {
     color: #1d3c48;
