@@ -3,6 +3,7 @@ import DashBoardLayout from "../../components/Backbone"
 
 export default function Overview() {
   return (
-    <DashBoardLayout>dashboard</DashBoardLayout>
+    <h3>gggh</h3>
+    // <DashBoardLayout>dashboard</DashBoardLayout>
   )
 }
