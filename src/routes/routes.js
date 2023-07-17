@@ -10,7 +10,7 @@ import Wallets from "../pages/wallets/Wallets"
 
 const routes = [
     // public Routes
-    { path: '/login', component: Login, ispublic: true },
+    { path: '/', component: Login, ispublic: true },
 
     //private Routes
     { path: '/dashboard', component: Dashboard},

@@ -6,7 +6,7 @@ import DashBoardLayout from "../components/Backbone";
 function PrivateRoute({ children }) {
   return true ? <DashBoardLayout>
     {children}
-  </DashBoardLayout> : <Navigate to="/login" />;
+  </DashBoardLayout> : <Navigate to="/" />;
 }
 
 export default PrivateRoute;
