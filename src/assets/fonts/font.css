@@ -1,0 +1,6 @@
+@font-face {
+    font-family: 'CabinetGrotesk';
+    src: url('./CabinetGrotesk-Bold.otf') format('OpenType');
+    font-weight: bold;
+    font-style: normal;
+}
