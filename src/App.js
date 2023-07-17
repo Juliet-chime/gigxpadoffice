@@ -1,8 +1,9 @@
 import React from "react";
 import 'antd/dist/reset.css';
 import "./assets/css/App.css";
+import "./assets/fonts/font.css"
 
-import AllPages from "./routes/routes";
+import AllPages from "./routes/route";
 
 function App() {
   return <AllPages />;

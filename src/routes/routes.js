@@ -1,40 +1,26 @@
-import React from "react";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
-import Login from "../pages/auth/login";
-import Overview from "../pages/Overview";
-import DashBoardLayout from "../components/Backbone";
-// import PrivateRoute from "./privateRoute";
+import Login from "../pages/auth/login"
+import Dashboard from "../pages/dashboard"
+import Bills from "../pages/bills/Bills"
+import Card from "../pages/card/Card"
+import Customers from "../pages/customers/Customers"
+import Crypto from "../pages/crypto/Crypto"
+import Settings from "../pages/settings/Settings"
+import Transaction from "../pages/transactions/Transaction"
+import Wallets from "../pages/wallets/Wallets"
 
-const AllPages = () => (
-  <BrowserRouter>
-    <Routes>
-      <Route exact path="/" element={<Login />}></Route>
-    </Routes>
-    <DashBoardLayout>
-      <Routes>
-        <Route exact path="/dashboard" element={<Overview />}></Route>
-        <Route
-          exact
-          path="/transactions"
-          element={<h1>transactions</h1>}
-        ></Route>
-        <Route exact path="/crypto" element={<h1>crypto</h1>}></Route>
-        <Route exact path="/bills" element={<h1>bills</h1>}></Route>
-        <Route exact path="/wallets" element={<h1>wallets</h1>}></Route>
-        <Route exact path="/card" element={<h1>cards</h1>}></Route>
-        <Route exact path="/customers" element={<h1>customers</h1>}></Route>
-        <Route exact path="/settings" element={<h1>settings</h1>}></Route>
-        {/* <Route
-        path="/search"
-        element={
-          <PrivateRoute>
-            <SearchAll />
-          </PrivateRoute>
-        }
-      /> */}
-      </Routes>
-    </DashBoardLayout>
-  </BrowserRouter>
-);
+const routes = [
+    // public Routes
+    { path: '/login', component: Login, ispublic: true },
 
-export default AllPages;
+    //private Routes
+    { path: '/dashboard', component: Dashboard},
+    { path: '/transactions', component: Transaction},
+    { path: '/crypto', component: Crypto},
+    { path: '/bills', component: Bills},
+    { path: '/wallets', component: Wallets},
+    { path: '/card', component: Card},
+    { path: '/customers', component: Customers},
+    { path: '/settings', component: Settings}
+]
+
+export default routes
