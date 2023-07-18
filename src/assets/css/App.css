@@ -58,7 +58,7 @@ a {
 
 .nav-area .ant-menu-submenu .ant-menu-sub .ant-menu-item {
   font-size: 12px !important;
-  margin-bottom: 5px !important;
+  margin-bottom: 0px !important;
 }
 
 .nav-area
@@ -164,7 +164,6 @@ a {
 .nav-area .ant-menu-submenu {
   position: relative;
   font-style: normal;
-  /* font-weight: 400; */
   font-size: 14px;
   font-family: "Rubik";
   letter-spacing: 0px;
