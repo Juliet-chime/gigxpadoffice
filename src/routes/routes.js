@@ -18,7 +18,7 @@ const routes = [
     { path: '/crypto', component: Crypto},
     { path: '/bills', component: Bills},
     { path: '/wallets', component: Wallets},
-    { path: '/card', component: Card},
+    { path: '/cards', component: Card},
     { path: '/customers', component: Customers},
     { path: '/settings', component: Settings}
 ]
