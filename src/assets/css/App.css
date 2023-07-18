@@ -53,6 +53,7 @@ a {
 
 .ant-menu-submenu.ant-menu-submenu-selected {
   background: transparent;
+  color: #1d3c48 !important;
 }
 
 .nav-area .ant-menu-submenu .ant-menu-sub .ant-menu-item {
@@ -77,11 +78,24 @@ a {
   border: none !important;
 }
 
+
 .ant-menu-submenu.ant-menu-submenu-selected > .ant-menu-submenu-title {
   color: #1d3c48 !important;
   background: white !important;
   font-weight: 500;
   border-radius: 30px;
+}
+
+.ant-menu-submenu .ant-menu-submenu-title:hover {
+  color: #1d3c48 !important;
+  background: white !important;
+  font-weight: 500;
+  border-radius: 30px;
+}
+
+.ant-menu-submenu .ant-menu-submenu-title:hover svg {
+  filter: invert(49%) sepia(8%) saturate(7320%) hue-rotate(323deg)
+  brightness(96%) contrast(83%);
 }
 
 .ant-menu-submenu.ant-menu-submenu-selected > .ant-menu-submenu-title svg {
@@ -120,16 +134,6 @@ a {
   margin-bottom: 10px;
 }
 
-.nav-area .ant-menu-submenu {
-  font-style: normal;
-  font-weight: 400;
-  font-size: 14px;
-  font-family: "Rubik";
-  letter-spacing: 0px;
-  color: #67777e;
-  margin-bottom: 10px;
-}
-
 .nav-area .ant-menu-submenu svg {
   width: 15px;
   height: 15px;
@@ -159,6 +163,13 @@ a {
 
 .nav-area .ant-menu-submenu {
   position: relative;
+  font-style: normal;
+  /* font-weight: 400; */
+  font-size: 14px;
+  font-family: "Rubik";
+  letter-spacing: 0px;
+  color: #67777e;
+  margin-bottom: 10px;
 }
 
 .nav-area .ant-menu-submenu .ant-menu-item-selected::before {
