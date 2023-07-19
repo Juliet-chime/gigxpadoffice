@@ -5,24 +5,11 @@ export const LayoutContainer = styled.div`
 height: 100vh;
 background:${color.offWhite};
 `
-export const MobileLogo = styled.div`
-display: none;
-width: 100px;
-margin: auto;
-padding: 30px 0px;
-img{
-        width: 100%;
-        object-fit: contain;
-    } 
-@media (max-width: 920px) {
-    display: block;
-}
-`
 
 export const LayoutChildwrapper = styled.div`
   width: 500px;
   margin: auto;
-  margin-top:14%;
+  margin-top:10%;
 
 @media (max-width: 920px) {
     width: 95%; 
@@ -42,7 +29,7 @@ font-weight:bold;
 font-size: 30px;
 font-family: CabinetGrotesk;
 color: ${color.mainColor};
-max-width: 296px;
+max-width: ${props => props.maxWidth || '296px'};
 margin-bottom: 6px;
 letter-spacing: 0px;
 }
@@ -51,16 +38,17 @@ p{
     font-size:14px;
     font-weight:normal;
     color: #67777E;
+    max-width: ${props => props.spanWidth || '370px'};
 }
 `
 
 export const LayoutBgContainer = styled.div`
   height: 100vh;
-  background-color:#F2F3F4;
+  background-color:${color.lightWhite};
   background-image: url(${(props) => props.image});
   background-repeat: no-repeat;
   background-size: cover;
-  background-position: top center;
+  background-position: bottom center;
   .logo-container{
     padding-top: 40px;
     padding-left: 32px;
@@ -69,3 +57,46 @@ export const LayoutBgContainer = styled.div`
     }
   }
 `
+export const LogoLock = styled.div`
+display: flex;
+align-items: center;
+justify-content: flex-end;
+padding: 30px;
+@media (max-width: 920px) {
+  justify-content: ${props => props.lock ? 'space-between' : 'center'};
+}
+.mobile_logo{
+  display: none;
+  img{
+        width: 100%;
+        object-fit: contain;
+    } 
+  @media (max-width: 920px) {
+    display: block;
+}
+}
+.lock{
+width: 45px;
+height: 45px;
+border: solid 1px ${color.mainColor};
+border-radius: 6px;
+display: flex;
+align-items: center;
+justify-content: center;
+.iLock{
+  font-size: 25px;
+  color: ${color.mainColor};
+}
+}
+`
+export const LogoLinkStyle = styled.a`
+text-decoration: ${props => props.underline || 'none'};
+font-size: 14px;
+color: ${props => props.color || `${color.secondaryColor}`};
+font-weight:500;
+&:hover{
+  color: ${props => props.color || `${color.secondaryColor}`};
+  text-decoration: ${props => props.underline};
+}
+`
+
