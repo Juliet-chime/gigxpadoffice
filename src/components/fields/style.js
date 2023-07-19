@@ -13,9 +13,11 @@ export const BtnStyle = styled(Button)`
 background-color:${props => props.bg || 'transparent'} !important;
 color:${props => props.color || 'white'} !important;
 border: ${props => props.border || 'none'} !important;
+border-bottom: ${props => props.right || 'none'} !important;
 height: ${props => props.height || '3.125rem'}!important;
 width: ${props => props.width || '100%'}!important;
 padding: ${props => props.padding}!important;
+font-weight: ${props => props.weight || 500}!important;
 border-radius: ${props => props.br || '0.75rem'}!important;
 `
 
