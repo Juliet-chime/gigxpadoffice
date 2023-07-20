@@ -78,7 +78,6 @@ a {
   border: none !important;
 }
 
-
 .ant-menu-submenu.ant-menu-submenu-selected > .ant-menu-submenu-title {
   color: #1d3c48 !important;
   background: white !important;
@@ -95,7 +94,7 @@ a {
 
 .ant-menu-submenu .ant-menu-submenu-title:hover svg {
   filter: invert(49%) sepia(8%) saturate(7320%) hue-rotate(323deg)
-  brightness(96%) contrast(83%);
+    brightness(96%) contrast(83%);
 }
 
 .ant-menu-submenu.ant-menu-submenu-selected > .ant-menu-submenu-title svg {
@@ -202,6 +201,28 @@ a {
 
 .ant-input:focus {
   border: none !important;
+}
+
+.dexwuP > span {
+  padding-top: 0px !important;
+  flex: inherit !important;
+  color: #67777e;
+}
+
+.kjicut > span {
+  padding-top: 0px !important;
+  flex: inherit !important;
+  color: #67777e;
+}
+
+.kjicut {
+  gap: 5px !important;
+  align-items: center !important;
+}
+
+.dexwuP {
+  gap: 5px !important;
+  align-items: center !important;
 }
 
 @media only screen and (max-width: 1024px) {
