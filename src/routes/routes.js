@@ -7,10 +7,15 @@ import Crypto from "../pages/crypto/Crypto"
 import Settings from "../pages/settings/Settings"
 import Transaction from "../pages/transactions/Transaction"
 import Wallets from "../pages/wallets/Wallets"
+import AccessPage from "../pages/auth/access"
+import AccessLogin from "../pages/auth/accessLogin/AccessLogin"
 
 const routes = [
     // public Routes
     { path: '/', component: Login, ispublic: true },
+    { path: '/access', component: AccessPage, ispublic: true },
+    { path: '/accesslogin', component: AccessLogin, ispublic: true },
+    
 
     //private Routes
     { path: '/dashboard', component: Dashboard},
