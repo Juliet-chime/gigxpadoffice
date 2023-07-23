@@ -6,7 +6,6 @@ const CurrencyTabComponent = ({revenueAmount,profitAmount}) => {
     <div>
         <p>Total Revenue</p>
         <h2>{revenueAmount}</h2>
-      
         <Divider/>
         <p>Total Profit</p>
         <h2>{profitAmount}</h2>
