@@ -1,10 +1,11 @@
-import React, { useState } from "react";
-import { Button, Dropdown, Layout, Menu, Space, theme } from "antd";
+import React from "react";
+import { Dropdown, Layout, theme } from "antd";
 import { BiBell } from 'react-icons/bi'
-import {GoPersonFill} from 'react-icons/go'
+import { GoPersonFill } from 'react-icons/go'
 import { HeaderWrapper } from "./style";
-import { getItem } from "../SideBar";
-import { MailOutlined} from '@ant-design/icons';
+import { RxPerson } from 'react-icons/rx'
+import { PiSignOut, PiCurrencyDollarSimple } from 'react-icons/pi'
+import HeaderDropDonComponent from "./HeaderDropDonComponent";
 
 const { Header } = Layout;
 
@@ -13,58 +14,55 @@ export default function NavHeader() {
     token: { colorBgContainer },
   } = theme.useToken();
 
-  // const [collapsed, setCollapsed] = useState(false);
-  // const toggleCollapsed = () => {
-  //   setCollapsed(!collapsed);
-  // };
+  // const [display, setDisplay] = useState(false)
 
-  const menuItems = [
-    getItem('Navigation One', 'sub1', <MailOutlined />, [
-      getItem('Option 5', '5'),
-      getItem('Option 6', '6'),
-      getItem('Option 7', '7'),
-      getItem('Option 8', '8'),
-    ]),
-  ];
+  // const menuItems = [
+  //   getItem('Navigation One', 'sub1', null, [
+  //     getItem('Option 5', '5'),
+  //     getItem('Option 6', '6'),
+  //     getItem('Option 7', '7'),
+  //     getItem('Option 8', '8'),
+  //   ]),
+  // ];
 
   const items = [
     {
-      label: <a href="https://www.antgroup.com">1st menu item</a>,
+      label: <a href="https://www.antgroup.com">
+        <HeaderDropDonComponent icon={RxPerson} label={'My Profile'} />
+      </a>,
       key: '0',
     },
     {
-      label: <a href="https://www.aliyun.com">2nd menu item</a>,
+      label: <a href='https://google.com'>
+        <HeaderDropDonComponent icon={PiCurrencyDollarSimple} label={'Currency'} />
+      </a>,
       key: '1',
     },
     {
-      label: <div>
-        <Menu
-      defaultSelectedKeys={['1']}
-      defaultOpenKeys={['sub1']}
-      mode="inline"
-      theme="dark"
-      // inlineCollapsed={collapsed}
-      items={menuItems}
-    />
-      </div>,
+      type: 'divider',
+    },
+    {
+      label: <a href="https://www.aliyun.com">
+        <HeaderDropDonComponent icon={PiSignOut} label={'SignOut'} margin='0px' />
+      </a>,
       key: '2',
     },
   ];
 
-  const items1 = [
-    {
-      label: <a href="https://www.antgroup.com">1st menu item</a>,
-      key: '0',
-    },
-    {
-      label: <a href="https://www.aliyun.com">2nd menu item</a>,
-      key: '1',
-    },
-    {
-      label: '3rd menu item',
-      key: '2',
-    },
-  ];
+  // const items1 = [
+  //   {
+  //     label: <a href="https://www.antgroup.com">1st menu item</a>,
+  //     key: '0',
+  //   },
+  //   {
+  //     label: <a href="https://www.aliyun.com">2nd menu item</a>,
+  //     key: '1',
+  //   },
+  //   {
+  //     label: '3rd menu item',
+  //     key: '2',
+  //   },
+  // ];
 
   return (
     <Header
@@ -76,21 +74,19 @@ export default function NavHeader() {
       <HeaderWrapper>
         <div className="notification-holder">
           <Dropdown
-            menu={{
-              items,
-            }}
+            menu={{ items }}
             placement="bottomRight"
             trigger={['click']}
           >
             <div className="bell-holder">
               <BiBell className="bell" />
-              <div className="small-cirle"/>
+              <div className="small-cirle" />
             </div>
           </Dropdown>
         </div>
 
-        <div className="linethrough"/>
-        
+        <div className="linethrough" />
+
         <div className="user-wrapper">
           <Dropdown
             menu={{
@@ -99,16 +95,16 @@ export default function NavHeader() {
             trigger={['click']}
           >
             <div className="user-section">
-            <div>
-              <p className="user-info">
-                <span className="user-name">Anselm Mba</span>
-                {/* <span>Administrator</span> */}
-              </p>
-              
-            </div>
-            <div className="person-wrapper">
-              <GoPersonFill className="person"/>
-            </div>
+              <div>
+                <p className="user-info">
+                  <span className="user-name">Anselm Mba</span>
+                  {/* <span>Administrator</span> */}
+                </p>
+
+              </div>
+              <div className="person-wrapper">
+                <GoPersonFill className="person" />
+              </div>
             </div>
           </Dropdown>
         </div>
