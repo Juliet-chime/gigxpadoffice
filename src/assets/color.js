@@ -10,5 +10,7 @@ lighterAsh:'#67777E',
 lighterWhite:'#f4f4f4',
 white:'#ffffff',
 blockAsh:'#E4E4E4',
-blockBg:'#F7F8FA'
+blockBg:'#F7F8FA',
+dateColor:'#EFEFEF',
+headerLine:'#D0D0D0'
 }

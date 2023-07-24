@@ -65,7 +65,7 @@ const barDataSet = [
         },
         plugins: {
           legend: {
-            // display:false,
+             display:false,
             position: 'top',
           },
           title: {

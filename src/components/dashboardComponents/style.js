@@ -33,6 +33,9 @@ align-items:${props => props.flex ? 'center':''};
 justify-content:${props => props.flex ? 'center' : ''};
 height: ${props => props.height || '135px'};
 background-color:${props => props.bg};
+@media (max-width: 768px) {
+    padding: 10px 5px !important;
+}
 .block-top{
     border:solid red;
     display:flex;
