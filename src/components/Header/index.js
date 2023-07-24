@@ -1,8 +1,10 @@
-import React from "react";
-import { Button, Dropdown, Layout, Space, theme } from "antd";
+import React, { useState } from "react";
+import { Button, Dropdown, Layout, Menu, Space, theme } from "antd";
 import { BiBell } from 'react-icons/bi'
 import {GoPersonFill} from 'react-icons/go'
 import { HeaderWrapper } from "./style";
+import { getItem } from "../SideBar";
+import { MailOutlined} from '@ant-design/icons';
 
 const { Header } = Layout;
 
@@ -10,6 +12,20 @@ export default function NavHeader() {
   const {
     token: { colorBgContainer },
   } = theme.useToken();
+
+  // const [collapsed, setCollapsed] = useState(false);
+  // const toggleCollapsed = () => {
+  //   setCollapsed(!collapsed);
+  // };
+
+  const menuItems = [
+    getItem('Navigation One', 'sub1', <MailOutlined />, [
+      getItem('Option 5', '5'),
+      getItem('Option 6', '6'),
+      getItem('Option 7', '7'),
+      getItem('Option 8', '8'),
+    ]),
+  ];
 
   const items = [
     {
@@ -21,7 +37,16 @@ export default function NavHeader() {
       key: '1',
     },
     {
-      label: '3rd menu item',
+      label: <div>
+        <Menu
+      defaultSelectedKeys={['1']}
+      defaultOpenKeys={['sub1']}
+      mode="inline"
+      theme="dark"
+      // inlineCollapsed={collapsed}
+      items={menuItems}
+    />
+      </div>,
       key: '2',
     },
   ];
@@ -48,7 +73,7 @@ export default function NavHeader() {
         background: colorBgContainer,
       }}
     >
-      {/* <HeaderWrapper>
+      <HeaderWrapper>
         <div className="notification-holder">
           <Dropdown
             menu={{
@@ -63,6 +88,8 @@ export default function NavHeader() {
             </div>
           </Dropdown>
         </div>
+
+        <div className="linethrough"/>
         
         <div className="user-wrapper">
           <Dropdown
@@ -75,7 +102,7 @@ export default function NavHeader() {
             <div>
               <p className="user-info">
                 <span className="user-name">Anselm Mba</span>
-                <span>Administrator</span>
+                {/* <span>Administrator</span> */}
               </p>
               
             </div>
@@ -85,7 +112,7 @@ export default function NavHeader() {
             </div>
           </Dropdown>
         </div>
-      </HeaderWrapper> */}
+      </HeaderWrapper>
     </Header>
   );
 }

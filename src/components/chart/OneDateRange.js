@@ -3,6 +3,9 @@ import React, { forwardRef, useState } from 'react'
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import { DateFilterStyle } from './style';
+import { formatDate } from '../../utils/helperFunctions';
+import CustomButton from '../fields/CustomButton';
+import { generateYearsBetween } from '../../utils/func';
 
 const OneDateRange = () => {
 
@@ -13,17 +16,6 @@ const OneDateRange = () => {
     setStartDate(start);
     setEndDate(end);
   };
-
-  function generateYearsBetween(startYear = 2000, endYear) {
-    const endDate = endYear || new Date().getFullYear();
-    let years = [];
-
-    for (var i = startYear; i <= endDate; i++) {
-      years.push(startYear);
-      startYear++;
-    }
-    return years;
-  }
 
   const d = new Date();
   let year = d.getFullYear()
@@ -46,7 +38,6 @@ const OneDateRange = () => {
 
   const yearOptions = years.map((year) => {
     console.log(typeof year)
-    // const value = Str
     return {
       value: year,
       label: year,
@@ -65,10 +56,16 @@ const OneDateRange = () => {
 
   // const [startDate, setStartDate] = useState(new Date());
   const ExampleCustomInput = forwardRef(({ value, onClick }, ref) => {
+
+    const vaa = value.split('-')[0].trim()
+
+    const today = formatDate()
+
     return (
-      <button className="example-custom-input" onClick={onClick} ref={ref}>
-        {value}
-      </button>
+      <CustomButton className="showDate" onClick={onClick} ref={ref} color='black' border=' 1px solid #CCCCCC'
+      radius= '40px' padding='0px 30px'>
+        {vaa === today ? `Today` : value}
+      </CustomButton>
     )
   });
 
@@ -171,15 +168,11 @@ const OneDateRange = () => {
           </button> */}
         </div>
       )}
-    //   inline
     >
-  
       <DateFilterStyle>
-        <div style={{border:'solid red',position:'absolute',width:'100%'}}>
-        <span>APPLY FILTER</span>
-        <span>CLEAR FILTER</span>
-        </div>
-     
+        <p>APPLY FILTER</p>
+        <p className='linethrough'/>
+        <p className='clear'>CLEAR FILTER</p>
       </DateFilterStyle>
         
     </DatePicker>

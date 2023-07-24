@@ -11,7 +11,7 @@ import logo from "../../assets/images/x-pad-logo.svg";
 
 const { Sider } = Layout;
 
-function getItem(label, key, icon, children) {
+export function getItem(label, key, icon, children) {
   return {
     key,
     icon,

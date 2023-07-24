@@ -12,6 +12,7 @@ import BarChart from '../../components/chart/BarChart'
 import { doughnutOptions, doughnutdata, barDataSet, barLabels, barOptions } from '../../components/chart/data'
 import { DoughnutChart } from '../../components/chart/DoughnutChart'
 import CurrencyTabComponent from './CurrencyTabComponent'
+import ChartLabels from '../../components/chart/ChartLabels'
 
 export default function Dashboard() {
 
@@ -29,7 +30,7 @@ export default function Dashboard() {
   ];
 
   return (
-    <div style={{ border: 'solid', overflow: 'hidden', padding: '30px 0px' }}>
+    <div className='overflow-hidden py-10'>
       <Dashboardheader userName={'Hi Anselm,'} componentName={'Dashboard Overview'} />
       <section style={{ marginTop: '50px' }}>
         <SectionHeader header={'Wallet Balances'} />
@@ -77,8 +78,13 @@ export default function Dashboard() {
             <div>
               <BlockStyle height='auto' padding='10px 30px'>
                 <ChartHeader label={'Total FIAT Transactions'} amount={'₦32,599,000'} details today />
-                <div className='flex items-center mt-2'>
-                  <div className='hidden lg:flex-1 xl:flex-1 lg:block xl:block'>1</div>
+                <div className='flex items-center mt-5'>
+                  <div className='hidden lg:flex-1 xl:flex-1 lg:block xl:block'>
+                  <ChartLabels name={'Deposits'}/>
+                    <ChartLabels name={'Withdrawals'}/>
+                    <ChartLabels name={'Swaps'}/>
+                    <ChartLabels name={'Transfers'}/>
+                  </div>
                   <div className='flex-1' style={{ height: '267px' }}><BarChart labels={barLabels} datasets={barDataSet} options={barOptions} /></div>
                 </div>
               </BlockStyle>
@@ -88,9 +94,14 @@ export default function Dashboard() {
             <div>
               <BlockStyle height='auto' padding='10px 30px'>
                 <ChartHeader label={'Total Crypto Transactions'} amount={'₦6,390,050'} details today />
-                <div className='flex items-center mt-2'>
-                  <div className='hidden lg:flex-1 xl:flex-1 lg:block xl:block'>1</div>
-                  <div className='lg:flex-1 xl:flex-1' style={{ height: '267px' }}><BarChart labels={barLabels} datasets={barDataSet} options={barOptions} /></div>
+                <div className='flex items-center mt-5'>
+                  <div className='hidden lg:flex-1 xl:flex-1 lg:block xl:block'>
+                  <ChartLabels name={'Deposits'}/>
+                    <ChartLabels name={'Withdrawals'}/>
+                    <ChartLabels name={'Swaps'}/>
+                    <ChartLabels name={'Transfers'}/>
+                  </div>
+                  <div className='flex-1' style={{ height: '267px' }}><BarChart labels={barLabels} datasets={barDataSet} options={barOptions} /></div>
                 </div>
               </BlockStyle>
             </div>
@@ -101,10 +112,15 @@ export default function Dashboard() {
         <Row gutter={[16, 16]}>
           <Col xs={24} sm={24} md={8} lg={9} xl={9}>
             <div>
-              <BlockStyle height='265px' padding='10px 30px'>
+              <BlockStyle height='265px'>
                 <ChartHeader label={'Total Customers'} amount={'3,950'} details />
                 <div className='flex items-center mt-2'>
-                  <div className='hidden lg:flex-1 xl:flex-1 lg:block xl:block'>1</div>
+                  <div className='hidden lg:flex-1 xl:flex-1 lg:block xl:block '>
+                    <ChartLabels name={'Deposits'}/>
+                    <ChartLabels name={'Withdrawals'}/>
+                    <ChartLabels name={'Swaps'}/>
+                    <ChartLabels name={'Transfers'}/>
+                  </div>
                   <div className='lg:flex-1 xl:flex-1' style={{ width: '150px' }}>
                     <DoughnutChart options={doughnutOptions} data={doughnutdata} />
                   </div>
@@ -114,7 +130,7 @@ export default function Dashboard() {
           </Col>
           <Col xs={24} sm={24} md={8} lg={9} xl={9}>
             <div>
-              <BlockStyle height='265px' padding='10px 30px'>
+              <BlockStyle height='265px'>
                 <div style={{ position: 'relative' }}>
                   <ChartHeader tab items={items} />
                   <p style={{ position: 'absolute', top: '15px', right: '20px' }}>Today</p>
