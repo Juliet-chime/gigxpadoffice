@@ -50,7 +50,7 @@ export const getFirstDayOfWeek = function (date) {
   // first day is Monday
   const newDate = new Date(date);
   const day = newDate.getDay(),
-    diff = newDate.getDate() - day + (day == 0 ? -6 : 1);
+    diff = newDate.getDate() - day + (day ===0 ? -6 : 1);
   return new Date(newDate.setDate(diff));
 };
 

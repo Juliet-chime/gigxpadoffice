@@ -7,7 +7,7 @@ import { formatDate } from '../../utils/helperFunctions';
 import CustomButton from '../fields/CustomButton';
 import { generateYearsBetween } from '../../utils/func';
 
-const OneDateRange = () => {
+const OneDateRange = ({...props}) => {
 
   const [startDate, setStartDate] = useState(new Date());
   const [endDate, setEndDate] = useState(null);
@@ -168,6 +168,7 @@ const OneDateRange = () => {
           </button> */}
         </div>
       )}
+      {...props}
     >
       <DateFilterStyle>
         <p>APPLY FILTER</p>
