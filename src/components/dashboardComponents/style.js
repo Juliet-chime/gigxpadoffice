@@ -15,6 +15,11 @@ h2{
     color: ${color.mainColor};
     font-family: CabinetGrotesk;
 }
+h4{
+    font-family: 'Rubik', sans-serif;
+    font-size: 16px;
+    color: ${color.mainColor};
+}
 `
 
 export const SectionText =  styled('div')`
