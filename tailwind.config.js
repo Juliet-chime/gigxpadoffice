@@ -13,7 +13,8 @@ module.exports = {
         'transfer':'#FFE579',
         'filterColor':'#808080',
         'search':'#3E3E3E',
-        'lightash':'#EEEEEE'
+        'lightash':'#EEEEEE',
+        'tableInput':'#F7F7F7'
       },
 
     },

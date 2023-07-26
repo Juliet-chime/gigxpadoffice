@@ -272,54 +272,27 @@ a {
 }
 
 .ant-table-wrapper .ant-table-thead>tr>th {
-  /* position: relative;
-  color: rgba(0, 0, 0, 0.88);
-  font-weight: 600;
-  text-align: start; */
   background: #FFFDF1 !important;
-  /* background: #fafafa; */
   border-bottom: 1px solid #EEEEEE !important;
-  /* transition: background 0.2s ease; */
 }
 
 .ant-table-cell::before {
-  /* position: absolute;
-  top: 50%;
-  inset-inline-end: 0;
-  width: 1px;
-  height: 1.6em; */
   background-color: transparent !important;
-  /* transform: translateY(-50%);
-  transition: background-color 0.2s;
-  content: ""; */
 }
 
 .ant-table-wrapper .ant-table-tbody>tr>td {
   border-bottom: 1px solid #EEEEEE !important;
-  /* transition: background 0.2s,border-color 0.2s;
-    border-bottom: 1px solid #f0f0f0; */
 }
 
 .ant-table-wrapper .ant-table-thead>tr>th {
   font-size: 14px;
   font-family: Circular Std !important;
-  /* font: normal normal normal 12px/20px Circular Std; */
   color: #3E3E3E;
-  /* position: relative;
-    color: rgba(0, 0, 0, 0.88);
-    font-weight: 600;
-    text-align: start;
-    background: #fafafa;
-    border-bottom: 1px solid #f0f0f0;
-    transition: background 0.2s ease;
-    color: red; */
 }
 
 .ant-table-wrapper .ant-table-tbody>tr>td {
   font-family: 'Rubik', sans-serif;
   font-size: 13px;
-  /* font: normal normal normal 13px/20px Rubik;
-letter-spacing: 0px; */
   color: #1D3C48;
 }
 
