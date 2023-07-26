@@ -89,6 +89,7 @@ const Transaction = () => {
       <Dashboardheader
         componentName={'FIAT Transactions'}
         label={'Manage and Monitor FIAT transactions'}
+        className='mb-6'
       />
       <CustomTable
         data={data}
