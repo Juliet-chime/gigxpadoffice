@@ -302,6 +302,24 @@ a {
   color: #1D3C48 !important;
 }
 
+.ant-drawer .ant-drawer-header-title {
+  display: flex !important;
+  align-items: flex-end !important;
+  justify-content: flex-end !important;
+}
+
+.ant-drawer .ant-drawer-close {
+  width: 40px !important;
+  height: 40px !important;
+  border-radius: 50%;
+  background: #F2F3F4;
+}
+
+.ant-drawer .ant-drawer-header {
+  padding: 16px !important;
+  border-bottom: none !important;
+}
+
 .ant-select-selector:active {
   /* border: none !important; */
 }

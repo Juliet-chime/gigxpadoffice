@@ -15,12 +15,12 @@ p{
 }
 `
 
-const HeaderDropDonComponent = ({icon,label,...props}) => {
-    const Icon = icon
+const HeaderDropDonComponent = ({ icon, label, ...props }) => {
+  const Icon = icon
   return (
     <ComponentStyle {...props}>
-    <Icon/>
-    <p>{label}</p>
+      <Icon />
+      <p>{label}</p>
     </ComponentStyle>
   )
 }

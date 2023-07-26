@@ -1,40 +1,18 @@
 import { Select } from 'antd';
-import React, { forwardRef, useState } from 'react'
+import React from 'react'
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import { DateFilterStyle } from './style';
-import { formatDate } from '../../utils/helperFunctions';
-import CustomButton from '../fields/CustomButton';
+import { allMonth} from '../../utils/helperFunctions';
 import { generateYearsBetween } from '../../utils/func';
 
-const OneDateRange = ({...props}) => {
-
-  const [startDate, setStartDate] = useState(new Date());
-  const [endDate, setEndDate] = useState(null);
-  const onChange = (dates) => {
-    const [start, end] = dates;
-    setStartDate(start);
-    setEndDate(end);
-  };
+const OneDateRange = ({children,...props}) => {
 
   const d = new Date();
   let year = d.getFullYear()
 
   const years = generateYearsBetween(1990, year)
-  const months = [
-    "January",
-    "February",
-    "March",
-    "April",
-    "May",
-    "June",
-    "July",
-    "August",
-    "September",
-    "October",
-    "November",
-    "December",
-  ];
+
 
   const yearOptions = years.map((year) => {
     console.log(typeof year)
@@ -45,7 +23,7 @@ const OneDateRange = ({...props}) => {
     }
   })
 
-  const monthOptions = months.map((month) => {
+  const monthOptions = allMonth.map((month) => {
     const value = month.toLowerCase()
     return {
       value,
@@ -54,29 +32,8 @@ const OneDateRange = ({...props}) => {
     }
   })
 
-  // const [startDate, setStartDate] = useState(new Date());
-  const ExampleCustomInput = forwardRef(({ value, onClick }, ref) => {
-
-    const vaa = value.split('-')[0].trim()
-
-    const today = formatDate()
-
-    return (
-      <CustomButton className="showDate" onClick={onClick} ref={ref} color='black' border=' 1px solid #CCCCCC'
-      radius= '40px' padding='0px 30px'>
-        {vaa === today ? `Today` : value}
-      </CustomButton>
-    )
-  });
-
   return (
     <DatePicker
-      selected={startDate}
-      onChange={onChange}
-      customInput={<ExampleCustomInput />}
-      startDate={startDate}
-      endDate={endDate}
-      selectsRange
       className='datePicker'
       showPopperArrow={false}
       renderCustomHeader={({
@@ -114,14 +71,14 @@ const OneDateRange = ({...props}) => {
           />
 
           <Select
-            defaultValue={months[new Date(date).getMonth()]}
+            defaultValue={allMonth[new Date(date).getMonth()]}
             // value={months[new Date(date).getMonth()]}
             style={{
               width: 80,
             }}
             onChange={({ target: { value } }) => {
               console.log(value, 'mon')
-              return changeMonth(months.indexOf(value))
+              return changeMonth(allMonth.indexOf(value))
             }
             }
             options={monthOptions}
