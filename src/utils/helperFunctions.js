@@ -13,6 +13,21 @@ export const months = [
   "Dec",
 ];
 
+export const allMonth = [
+  "January",
+  "February",
+  "March",
+  "April",
+  "May",
+  "June",
+  "July",
+  "August",
+  "September",
+  "October",
+  "November",
+  "December",
+];
+
 export const Days = [
   "Sunday",
   "Monday",
@@ -23,12 +38,12 @@ export const Days = [
   "Saturday",
 ];
 
-export const formatDate = (date,name) => {
+export const formatDate = (date, name) => {
   const d = date ? new Date(date) : new Date();
   const year = d.getFullYear();
   const day = d.getDate();
   let monthNo = d.getMonth() + 1
-  monthNo = monthNo <= 9 ? "0"+String(monthNo) : monthNo
+  monthNo = monthNo <= 9 ? "0" + String(monthNo) : monthNo
   const monthName = months[d.getMonth()];
   const formatted = name ? `${date} ${monthName}, ${year}` : monthNo + "/" + day + "/" + year;
   return formatted;
@@ -50,7 +65,7 @@ export const getFirstDayOfWeek = function (date) {
   // first day is Monday
   const newDate = new Date(date);
   const day = newDate.getDay(),
-    diff = newDate.getDate() - day + (day ===0 ? -6 : 1);
+    diff = newDate.getDate() - day + (day === 0 ? -6 : 1);
   return new Date(newDate.setDate(diff));
 };
 
@@ -152,11 +167,9 @@ export const ParseDate = function (
 ) {
   date = date ? new Date(date) : new Date();
   date = prepareDate ? prepareDate(date) : date;
-  return `${!!dMY ? padToLength(date.getDate()) : date.getFullYear()}${
-    separator || " "
-  }${padToLength(!!iso ? date.getMonth() + 1 : date.getMonth())}${
-    separator || " "
-  }${!!dMY ? date.getFullYear() : padToLength(date.getDate())}`;
+  return `${!!dMY ? padToLength(date.getDate()) : date.getFullYear()}${separator || " "
+    }${padToLength(!!iso ? date.getMonth() + 1 : date.getMonth())}${separator || " "
+    }${!!dMY ? date.getFullYear() : padToLength(date.getDate())}`;
 };
 
 export const PrintDate = function (
@@ -182,11 +195,9 @@ export const PrintDate = function (
   } else if (!!localeDate) {
     return date.toLocaleDateString();
   } else {
-    return `${
-      showDay ? `${Days[date.getDay()].substring(0, 3)} , ` : ""
-    }${date.getDate()} ${getMonthName(date)}${
-      !showDay ? "," : ""
-    } ${date.getFullYear()}`;
+    return `${showDay ? `${Days[date.getDay()].substring(0, 3)} , ` : ""
+      }${date.getDate()} ${getMonthName(date)}${!showDay ? "," : ""
+      } ${date.getFullYear()}`;
   }
 };
 
@@ -211,7 +222,7 @@ export const getWeekRange = function (day, fullWeek) {
   const daysInWeek = [];
 
   // get date values for each day of the week
- const daysToWatch = fullWeek ? 7 : 5;
+  const daysToWatch = fullWeek ? 7 : 5;
   for (let i = 0; i < daysToWatch; i++) {
     if (i === 0) {
       daysInWeek.push(getDayStart(firstWeekDay).toString());
@@ -250,11 +261,11 @@ export const formatMoney = (
       i.substr(j).replace(/(\d{3})(?=\d)/g, "$1" + thousands) +
       (decimalCount
         ? decimal +
-          Math.abs(amount - i)
-            .toFixed(decimalCount)
-            .slice(2)
+        Math.abs(amount - i)
+          .toFixed(decimalCount)
+          .slice(2)
         : ""
       ).replace(/\.00$/, "")
     );
-  } catch (e) {}
+  } catch (e) { }
 };

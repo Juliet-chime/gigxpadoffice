@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { forwardRef, useState } from 'react'
 import Dashboardheader from '../../components/dashboardComponents/Dashboardheader'
 import SectionHeader from '../../components/dashboardComponents/SectionHeader'
 import { Col, Row } from 'antd'
@@ -13,8 +13,34 @@ import { doughnutOptions, doughnutdata, barDataSet, barLabels, barOptions } from
 import { DoughnutChart } from '../../components/chart/DoughnutChart'
 import CurrencyTabComponent from './CurrencyTabComponent'
 import ChartLabels from '../../components/chart/ChartLabels'
+import OneDateRange from '../../components/chart/OneDateRange'
+import {formatDate } from '../../utils/helperFunctions'
+import { PiCaretUp, PiCaretDown } from 'react-icons/pi'
 
 export default function Dashboard() {
+
+  const [startDate, setStartDate] = useState(new Date());
+  const [changeIcon, setChangeIcon] = useState(false);
+  const [endDate, setEndDate] = useState(null);
+  const onChange = (dates) => {
+    const [start, end] = dates;
+    setStartDate(start);
+    setEndDate(end);
+  };
+
+
+  const ExampleCustomInput = forwardRef(({ value, onClick }, ref) => {
+
+    const newDate = value.split('-')[0].trim()
+
+    const today = formatDate()
+
+    return (
+      <p onClick={onClick} ref={ref} className={'rounded-large border border-dateLine py-3 px-6 cursor-pointer flex items-center gap-2 text-mainColor text-sm font-medium '}>
+        {newDate === today ? `Today` : value} {newDate === today ? changeIcon ? <PiCaretUp className='text-mainColor text-xl font-medium' /> : <PiCaretDown className='text-mainColor text-xl font-medium' /> : null}
+      </p>
+    )
+  });
 
   const items = [
     {
@@ -39,7 +65,6 @@ export default function Dashboard() {
         >
           <Col xs={24} sm={24} md={12} lg={6} xl={6}>
             <div>
-
               <Blocks name='Quidax' bigAmount={'₦3,204,490'} smallAmount={'6,448'} curreny={'USD'} padding='30px' />
             </div>
           </Col>
@@ -77,13 +102,28 @@ export default function Dashboard() {
           <Col xs={24} sm={24} md={12} lg={12} xl={12}>
             <div>
               <BlockStyle height='auto' padding='10px 30px'>
-                <ChartHeader label={'Total FIAT Transactions'} amount={'₦32,599,000'} details today />
+                <div className='flex items-center justify-between'>
+                  <ChartHeader label={'Total FIAT Transactions'} amount={'₦32,599,000'} details />
+                  <div>
+                    <OneDateRange
+                      selected={startDate}
+                      onChange={onChange}
+                      startDate={startDate}
+                      endDate={endDate}
+                      selectsRange
+                      showPopperArrow={false}
+                      customInput={<ExampleCustomInput />}
+                      onCalendarOpen={() => setChangeIcon(true)}
+                      onCalendarClose={() => setChangeIcon(false)}
+                    />
+                  </div>
+                </div>
                 <div className='flex items-center mt-5'>
                   <div className='hidden lg:flex-1 xl:flex-1 lg:block xl:block'>
-                  <ChartLabels name={'Deposits'}/>
-                    <ChartLabels name={'Withdrawals'}/>
-                    <ChartLabels name={'Swaps'}/>
-                    <ChartLabels name={'Transfers'}/>
+                    <ChartLabels name={'Deposits'} />
+                    <ChartLabels name={'Withdrawals'} />
+                    <ChartLabels name={'Swaps'} />
+                    <ChartLabels name={'Transfers'} />
                   </div>
                   <div className='flex-1' style={{ height: '267px' }}><BarChart labels={barLabels} datasets={barDataSet} options={barOptions} /></div>
                 </div>
@@ -93,13 +133,28 @@ export default function Dashboard() {
           <Col xs={24} sm={24} md={12} lg={12} xl={12}>
             <div>
               <BlockStyle height='auto' padding='10px 30px'>
-                <ChartHeader label={'Total Crypto Transactions'} amount={'₦6,390,050'} details today />
+                <div className='flex items-center justify-between'>
+                  <ChartHeader label={'Total Crypto Transactions'} amount={'₦6,390,050'} details />
+                  <div>
+                    <OneDateRange
+                      selected={startDate}
+                      onChange={onChange}
+                      startDate={startDate}
+                      endDate={endDate}
+                      selectsRange
+                      showPopperArrow={false}
+                      customInput={<ExampleCustomInput />}
+                      onCalendarOpen={() => setChangeIcon(true)}
+                      onCalendarClose={() => setChangeIcon(false)}
+                    />
+                  </div>
+                </div>
                 <div className='flex items-center mt-5'>
                   <div className='hidden lg:flex-1 xl:flex-1 lg:block xl:block'>
-                  <ChartLabels name={'Deposits'}/>
-                    <ChartLabels name={'Withdrawals'}/>
-                    <ChartLabels name={'Swaps'}/>
-                    <ChartLabels name={'Transfers'}/>
+                    <ChartLabels name={'Deposits'} />
+                    <ChartLabels name={'Withdrawals'} />
+                    <ChartLabels name={'Swaps'} />
+                    <ChartLabels name={'Transfers'} />
                   </div>
                   <div className='flex-1' style={{ height: '267px' }}><BarChart labels={barLabels} datasets={barDataSet} options={barOptions} /></div>
                 </div>
@@ -116,10 +171,10 @@ export default function Dashboard() {
                 <ChartHeader label={'Total Customers'} amount={'3,950'} details />
                 <div className='flex items-center mt-2'>
                   <div className='hidden lg:flex-1 xl:flex-1 lg:block xl:block '>
-                    <ChartLabels name={'Deposits'}/>
-                    <ChartLabels name={'Withdrawals'}/>
-                    <ChartLabels name={'Swaps'}/>
-                    <ChartLabels name={'Transfers'}/>
+                    <ChartLabels name={'Deposits'} />
+                    <ChartLabels name={'Withdrawals'} />
+                    <ChartLabels name={'Swaps'} />
+                    <ChartLabels name={'Transfers'} />
                   </div>
                   <div className='lg:flex-1 xl:flex-1' style={{ width: '150px' }}>
                     <DoughnutChart options={doughnutOptions} data={doughnutdata} />
@@ -140,8 +195,27 @@ export default function Dashboard() {
           </Col>
           <Col xs={24} sm={24} md={8} lg={5} xl={5}>
             <div>
-              <Blocks name='Average Transaction' bigAmount={'6,390,050'} height='265px' flex>
-              </Blocks>
+              <BlockStyle height='265px' padding='20px 10px'>
+                <div className='flex justify-end'>
+                  <OneDateRange
+                    selected={startDate}
+                    onChange={onChange}
+                    startDate={startDate}
+                    endDate={endDate}
+                    selectsRange
+                    showPopperArrow={false}
+                    customInput={<ExampleCustomInput />}
+                    onCalendarOpen={() => setChangeIcon(true)}
+                    onCalendarClose={() => setChangeIcon(false)}
+                  />
+                </div>
+
+                <div className='flex flex-col items-center justify-center py-14'>
+                  <p>Average Transaction</p>
+                  <h2>6,390,050</h2>
+                </div>
+
+              </BlockStyle>
             </div>
           </Col>
         </Row>
