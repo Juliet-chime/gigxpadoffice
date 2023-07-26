@@ -4,3 +4,17 @@
     font-weight: bold;
     font-style: normal;
 }
+
+@font-face {
+    font-family: 'Circular Std';
+    src: url('./CircularStd-Bold.woff') format('OpenType');
+    font-weight: bold;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Circular Std';
+    src: url('./CircularStd-Medium.woff') format('OpenType');
+    font-weight: 500;
+    font-style: normal;
+}

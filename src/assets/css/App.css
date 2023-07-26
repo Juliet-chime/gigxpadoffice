@@ -29,6 +29,7 @@ h4,
 h5,
 p {
   margin: 0px;
+  padding: 0px;
 }
 
 a {
@@ -223,6 +224,119 @@ a {
 .dexwuP {
   gap: 5px !important;
   align-items: center !important;
+}
+
+.ant-divider-horizontal.ant-divider-with-text::after {
+  border: 1px solid #E4E4E4 !important;
+}
+
+.datePicker {
+  border: solid red !important;
+}
+
+.react-datepicker__header {
+  text-align: center;
+  background-color: #EFEFEF !important;
+  border-bottom: none !important;
+  border-top-left-radius: 0.3rem;
+  padding: 8px 0;
+  position: relative;
+}
+
+.react-datepicker {
+  font-size: 0.8rem;
+  background-color: #EFEFEF !important;
+  color: #000;
+  border: 1px solid #EFEFEF !important;
+  border-radius: 0.5rem !important;
+  display: inline-block;
+  position: relative;
+  padding: 0px !important;
+}
+
+.react-datepicker__day--selected,
+.react-datepicker__day--in-selecting-range {
+  background-color: #E25A5A !important;
+  border-radius: 50% !important;
+}
+
+.react-datepicker__day--in-range {
+  background-color: #E25A5A !important;
+  border-radius: 50% !important;
+}
+
+.ss.ant-tabs .ant-tabs-tab {
+  padding: 5px 30px !important;
+}
+
+.ss.ant-tabs-tab-active {
+  border: none !important;
+  background: #FFFFFF !important;
+  border-radius: 17px !important;
+  border-bottom: none !important;
+}
+
+.ant-pagination .ant-pagination-item-active {
+  background: #E25A5A !important;
+  border-radius: 8px !important;
+  border-color: #E25A5A !important;
+}
+
+.ant-pagination .ant-pagination-item-active a {
+  color: white !important;
+}
+
+.ant-table-wrapper .ant-table-thead>tr>th {
+  background: #FFFDF1 !important;
+  border-bottom: 1px solid #EEEEEE !important;
+}
+
+.ant-table-cell::before {
+  background-color: transparent !important;
+}
+
+.ant-table-wrapper .ant-table-tbody>tr>td {
+  border-bottom: 1px solid #EEEEEE !important;
+}
+
+.ant-table-wrapper .ant-table-thead>tr>th {
+  font-size: 14px;
+  font-family: Circular Std !important;
+  color: #3E3E3E;
+}
+
+.ant-table-wrapper .ant-table-tbody>tr>td {
+  font-family: 'Rubik', sans-serif;
+  font-size: 13px;
+  color: #1D3C48;
+}
+
+.ant-select-single .ant-select-selector .ant-select-selection-item {
+  font-size: 14px !important;
+  font-family: 'Rubik', sans-serif !important;
+  color: #1D3C48 !important;
+}
+
+.ant-drawer .ant-drawer-header-title {
+  display: flex !important;
+  align-items: flex-end !important;
+  justify-content: flex-end !important;
+}
+
+.ant-drawer .ant-drawer-close {
+  width: 40px !important;
+  height: 40px !important;
+  border-radius: 50%;
+  background: #F2F3F4;
+}
+
+.ant-drawer .ant-drawer-header {
+  padding: 16px !important;
+  border-bottom: none !important;
+}
+
+.ant-select-selector:active {
+  /* border: none !important; */
 }
 
 @media only screen and (max-width: 1024px) {

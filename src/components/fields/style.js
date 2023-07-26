@@ -6,7 +6,8 @@ export const FieldStyle = styled(Input)`
 background-color:${props => props.bg || 'transparent'} !important;
 border: ${props => props.border || 'none'} !important;
 height: ${props => props.height || '3.125rem'}!important;
-border-radius: ${props => props.br || '0.75rem'}!important;
+color: ${props => props.color || 'black'}!important;
+border-radius: ${props => props.radius || '0.75rem'}!important;
 `
 
 export const BtnStyle = styled(Button)`
@@ -18,7 +19,7 @@ height: ${props => props.height || '3.125rem'}!important;
 width: ${props => props.width || '100%'}!important;
 padding: ${props => props.padding}!important;
 font-weight: ${props => props.weight || 500}!important;
-border-radius: ${props => props.br || '0.75rem'}!important;
+border-radius: ${props => props.radius || '0.75rem'}!important;
 `
 
 export const CheckSpan = styled.span`

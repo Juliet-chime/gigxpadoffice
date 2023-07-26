@@ -5,13 +5,13 @@ import { FieldStyle } from './style'
 const CustomInputField = ({ type, ...props }) => {
   return (
     <>
-      {type === 'textarea' ? 
-      <Input.TextArea {...props} /> 
-      : type === 'search' 
-      ? <Input.Search {...props} /> 
-      : type === 'password' 
-      ? <Input.Password {...props} /> 
-      : <FieldStyle {...props} />
+      {type === 'textarea' ?
+        <Input.TextArea {...props} />
+        : type === 'search'
+          ? <Input.Search {...props} />
+          : type === 'password'
+            ? <Input.Password {...props} />
+            : <FieldStyle {...props} />
       }
     </>
   )
