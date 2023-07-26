@@ -88,6 +88,7 @@ const Bills = () => {
       <Dashboardheader
         componentName={'Bill Payments'}
         label={'Manage and Monitor FIAT transactions'}
+        className='mb-6'
       />
       <CustomTable
         data={data}
