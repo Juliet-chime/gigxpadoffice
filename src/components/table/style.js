@@ -7,8 +7,5 @@ border-radius: 3px;
 `
 
 export const CustomHeaderStyle = styled('div')`
-/* border: solid red;
-display: flex;
-justify-content: space-between;
-align-items: center; */
+border-bottom: solid 1px #eeeeee;
 `

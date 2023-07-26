@@ -1,7 +1,6 @@
 import React from 'react'
 import CustomTable from '../../components/table/CustomTable'
 import Dashboardheader from '../../components/dashboardComponents/Dashboardheader'
-import CustomTableHeader from '../../components/table/CustomTableHeader';
 
 const Transaction = () => {
 
@@ -71,10 +70,11 @@ const Transaction = () => {
        componentName={'FIAT Transactions'} 
        label={'Manage and Monitor FIAT transactions'}
        />
-       <CustomTableHeader/>
       <CustomTable 
       data={data}
       columns={columns}
+      type
+      status
       onRow={(record, rowIndex) => {
         return {
           onClick: (event) => {console.log({record,rowIndex,event},'clicked')}, // click row
