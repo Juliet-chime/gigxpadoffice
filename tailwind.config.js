@@ -8,7 +8,9 @@ module.exports = {
       'rubik': ['Rubik']
     },
     borderRadius: {
+      'full':'100%',
       'large': '40px',
+      'md':'12px'
     },
     extend: {
       colors: {
@@ -26,7 +28,10 @@ module.exports = {
         'failed': '#FF1414',
         'pending': '#EA7D1F',
         'dateLine': '#CCCCCC',
-        'lighterAsh': '#67777E'
+        'lighterAsh': '#67777E',
+        'borderLine':'#dbdbdb',
+        'ash-01':'#f5f5f5',
+        'ash-2':'#d8d8d8'
       },
 
     },

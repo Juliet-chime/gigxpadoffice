@@ -351,8 +351,41 @@ a {
   border: none !important;
 }
 
+.ant-tabs .ant-tabs-tab-btn {
+  color: #67777E !important;
+  padding: 5px 15px;
+  font-size: 17px;
+}
+
+.ant-tabs .ant-tabs-tab.ant-tabs-tab-active .ant-tabs-tab-btn {
+  color: #1D3C48 !important;
+  font-weight: 600;
+  font-size: 17px;
+}
+
+.ant-tabs-tab-active {
+  /* border: none !important;
+  background: #FFFFFF !important; */
+  /* border-radius: 17px !important;
+  border-bottom: none !important; */
+}
+
 .ant-select-selector:active {
   /* border: none !important; */
+}
+
+.ant-tabs .ant-tabs-tab.ant-tabs-tab-active .ant-tabs-tab-btn::after {
+  /* border: solid red !important; */
+  /* color: #1677ff;
+  text-shadow: 0 0 0.25px currentcolor; */
+}
+
+/* .ant-tabs-top>.ant-tabs-nav::before .ant-tabs-tab-active {
+  border: solid red !important;
+} */
+
+.ant-tabs .ant-tabs-tab.ant-tabs-tab-active {
+  /* border-bottom: solid red !important; */
 }
 
 @media only screen and (max-width: 1024px) {
