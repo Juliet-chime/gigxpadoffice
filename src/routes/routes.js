@@ -9,6 +9,7 @@ import Transaction from "../pages/transactions/Transaction"
 import Wallets from "../pages/wallets/Wallets"
 import AccessPage from "../pages/auth/access"
 import AccessLogin from "../pages/auth/accessLogin/AccessLogin"
+import CustomersDetails from "../pages/customers/CustomersDetails"
 
 const routes = [
     // public Routes
@@ -25,6 +26,7 @@ const routes = [
     { path: '/wallets', component: Wallets},
     { path: '/cards', component: Card},
     { path: '/customers', component: Customers},
+    { path: '/customers/:id', component: CustomersDetails},
     { path: '/settings', component: Settings}
 ]
 
