@@ -25,7 +25,8 @@ module.exports = {
         'complete': '#27B785',
         'failed': '#FF1414',
         'pending': '#EA7D1F',
-        'dateLine': '#CCCCCC'
+        'dateLine': '#CCCCCC',
+        'lighterAsh': '#67777E'
       },
 
     },

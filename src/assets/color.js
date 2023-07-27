@@ -13,5 +13,9 @@ export const color = {
     blockBg: '#F7F8FA',
     dateColor: '#EFEFEF',
     headerLine: '#D0D0D0',
-    lineAsh: '#EEEEEE'
+    lineAsh: '#EEEEEE',
+    coinColor:'#04151D',
+    lightYellow:'#FAF5E8',
+    lightGreen:'#E7F4EF',
+    lightBlue:'#EDFBFF'
 }

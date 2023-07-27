@@ -62,10 +62,7 @@ a {
   margin-bottom: 0px !important;
 }
 
-.nav-area
-  .ant-menu-submenu
-  .ant-menu-sub
-  .ant-menu-item.ant-menu-item-selected {
+.nav-area .ant-menu-submenu .ant-menu-sub .ant-menu-item.ant-menu-item-selected {
   color: #1d3c48;
   background: transparent !important;
   font-weight: 500;
@@ -79,7 +76,7 @@ a {
   border: none !important;
 }
 
-.ant-menu-submenu.ant-menu-submenu-selected > .ant-menu-submenu-title {
+.ant-menu-submenu.ant-menu-submenu-selected>.ant-menu-submenu-title {
   color: #1d3c48 !important;
   background: white !important;
   font-weight: 500;
@@ -94,13 +91,11 @@ a {
 }
 
 .ant-menu-submenu .ant-menu-submenu-title:hover svg {
-  filter: invert(49%) sepia(8%) saturate(7320%) hue-rotate(323deg)
-    brightness(96%) contrast(83%);
+  filter: invert(49%) sepia(8%) saturate(7320%) hue-rotate(323deg) brightness(96%) contrast(83%);
 }
 
-.ant-menu-submenu.ant-menu-submenu-selected > .ant-menu-submenu-title svg {
-  filter: invert(49%) sepia(8%) saturate(7320%) hue-rotate(323deg)
-    brightness(96%) contrast(83%);
+.ant-menu-submenu.ant-menu-submenu-selected>.ant-menu-submenu-title svg {
+  filter: invert(49%) sepia(8%) saturate(7320%) hue-rotate(323deg) brightness(96%) contrast(83%);
 }
 
 .nav-area .ant-layout-sider-zero-width-trigger {
@@ -152,13 +147,11 @@ a {
 }
 
 .nav-area .ant-menu-item-selected svg {
-  filter: invert(49%) sepia(8%) saturate(7320%) hue-rotate(323deg)
-    brightness(96%) contrast(83%);
+  filter: invert(49%) sepia(8%) saturate(7320%) hue-rotate(323deg) brightness(96%) contrast(83%);
 }
 
 .nav-area .ant-menu-item:hover svg {
-  filter: invert(49%) sepia(8%) saturate(7320%) hue-rotate(323deg)
-    brightness(96%) contrast(83%);
+  filter: invert(49%) sepia(8%) saturate(7320%) hue-rotate(323deg) brightness(96%) contrast(83%);
 }
 
 .nav-area .ant-menu-submenu {
@@ -204,13 +197,13 @@ a {
   border: none !important;
 }
 
-.dexwuP > span {
+.dexwuP>span {
   padding-top: 0px !important;
   flex: inherit !important;
   color: #67777e;
 }
 
-.kjicut > span {
+.kjicut>span {
   padding-top: 0px !important;
   flex: inherit !important;
   color: #67777e;
@@ -333,6 +326,29 @@ a {
 .ant-drawer .ant-drawer-header {
   padding: 16px !important;
   border-bottom: none !important;
+}
+
+.ant-collapse {
+  background-color: transparent !important;
+  border: none !important;
+}
+
+.ant-collapse-header {
+  border: 1px solid #E3E3E3 !important;
+  border-radius: 4px !important;
+}
+
+.ant-collapse>.ant-collapse-item:last-child>.ant-collapse-header {
+  border-radius: 0px !important;
+  margin-bottom: 10px !important;
+}
+
+.ant-collapse>.ant-collapse-item {
+  border-bottom: none !important;
+}
+
+.ant-collapse .ant-collapse-content {
+  border: none !important;
 }
 
 .ant-select-selector:active {
