@@ -14,8 +14,8 @@ export const color = {
     dateColor: '#EFEFEF',
     headerLine: '#D0D0D0',
     lineAsh: '#EEEEEE',
-    coinColor:'#04151D',
-    lightYellow:'#FAF5E8',
-    lightGreen:'#E7F4EF',
-    lightBlue:'#EDFBFF'
+    coinColor: '#04151D',
+    lightYellow: '#FAF5E8',
+    lightGreen: '#E7F4EF',
+    lightBlue: '#EDFBFF'
 }

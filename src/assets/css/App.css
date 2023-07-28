@@ -363,6 +363,48 @@ a {
   font-size: 17px;
 }
 
+.wallet-table .ant-table-wrapper .ant-table-thead>tr>th {
+  background-color: transparent !important;
+  color: #67777E;
+  font-size: 14px;
+}
+
+.wallet-table .ant-table-wrapper .ant-table-tbody>tr>td {
+  font-size: 14px;
+  color: #1D3C48;
+}
+
+.wallet-table .ant-table-wrapper .ant-table-tbody>tr>td:first-child {
+  border-left: solid 1px #EEEEEE !important;
+}
+
+.wallet-table .ant-table-wrapper .ant-table-tbody>tr>td:last-child {
+  border-right: solid 1px #EEEEEE !important;
+}
+
+
+.doc .ant-drawer-wrapper-body .ant-drawer-body {
+  padding: 0px !important;
+}
+
+@media only screen and (max-width: 1024px) {
+  .nav-area .ant-layout-sider {
+    padding: 0px;
+  }
+}
+
+.wallet-table .ant-table-wrapper .ant-spin-nested-loading .ant-spin-container .ant-table .ant-table-container {
+  /* border: solid red !important; */
+}
+
+.ant-tabs .ant-tabs-tab.ant-tabs-tab-active {
+  /* border-bottom: solid red !important; */
+}
+
+/* .wallet-table .ant-table-wrapper .ant-table-thead>tr {
+  border: solid blue !important;
+} */
+
 .ant-tabs-tab-active {
   /* border: none !important;
   background: #FFFFFF !important; */
@@ -383,13 +425,3 @@ a {
 /* .ant-tabs-top>.ant-tabs-nav::before .ant-tabs-tab-active {
   border: solid red !important;
 } */
-
-.ant-tabs .ant-tabs-tab.ant-tabs-tab-active {
-  /* border-bottom: solid red !important; */
-}
-
-@media only screen and (max-width: 1024px) {
-  .nav-area .ant-layout-sider {
-    padding: 0px;
-  }
-}

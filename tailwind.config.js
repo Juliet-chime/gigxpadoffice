@@ -8,11 +8,14 @@ module.exports = {
       'rubik': ['Rubik']
     },
     borderRadius: {
-      'full':'100%',
+      'full': '100%',
       'large': '40px',
-      'md':'12px'
+      'md': '12px'
     },
     extend: {
+      maxWidth: {
+        '1/2': '210px',
+      },
       colors: {
         'deposit': '#A7EFBD',
         'withdraw': '#CCECF8',
@@ -29,9 +32,11 @@ module.exports = {
         'pending': '#EA7D1F',
         'dateLine': '#CCCCCC',
         'lighterAsh': '#67777E',
-        'borderLine':'#dbdbdb',
-        'ash-01':'#f5f5f5',
-        'ash-2':'#d8d8d8'
+        'borderLine': '#dbdbdb',
+        'ash-01': '#f5f5f5',
+        'ash-2': '#d8d8d8',
+        'statusGreen': '#31C491',
+        'caramelAsh': '#F2F3F4'
       },
 
     },
