@@ -16,18 +16,18 @@ const routes = [
     { path: '/', component: Login, ispublic: true },
     { path: '/access', component: AccessPage, ispublic: true },
     { path: '/accesslogin', component: AccessLogin, ispublic: true },
-    
+
 
     //private Routes
-    { path: '/dashboard', component: Dashboard},
-    { path: '/transactions', component: Transaction},
-    { path: '/crypto', component: Crypto},
-    { path: '/bills', component: Bills},
-    { path: '/wallets', component: Wallets},
-    { path: '/cards', component: Card},
-    { path: '/customers', component: Customers},
-    { path: '/customers/:id', component: CustomersDetails},
-    { path: '/settings', component: Settings}
+    { path: '/dashboard', component: Dashboard },
+    { path: '/transactions', component: Transaction },
+    { path: '/crypto', component: Crypto },
+    { path: '/bills', component: Bills },
+    { path: '/wallets', component: Wallets },
+    { path: '/cards', component: Card },
+    { path: '/customers', component: Customers },
+    { path: '/customers/:id', component: CustomersDetails },
+    { path: '/settings', component: Settings }
 ]
 
 export default routes

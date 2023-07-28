@@ -1,23 +1,11 @@
-import React, { useState } from 'react'
+import React from 'react'
 import CustomTable from '../../components/table/CustomTable'
 import Dashboardheader from '../../components/dashboardComponents/Dashboardheader'
-import CustomDrawer from '../../components/fields/CustomDrawer';
 import { useNavigate } from 'react-router-dom';
 
 const Customers = () => {
 
   const navigate = useNavigate()
-
-  const [open, setOpen] = useState(false);
-  const [details, setDetails] = useState();
-
-  const showDrawer = () => {
-    setOpen(true);
-  };
-
-  const onClose = () => {
-    setOpen(false);
-  };
 
   const columns = [
     {
@@ -99,9 +87,6 @@ const Customers = () => {
           };
         }}
       />
-      {/* <CustomDrawer placement="right" onClose={onClose} open={open}>
-        <TransactionDetails data={details} />
-      </CustomDrawer> */}
     </div>
   )
 }

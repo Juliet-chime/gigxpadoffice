@@ -54,7 +54,7 @@ color: ${props => props.nameColor || color.lighterAsh};
 }
 }
 h2{
-    font-size:28px;
+    font-size:20px;
 font-family: 'Rubik', sans-serif;
 color: ${props => props.bigAmtColor || color.mainColor};
 font-weight:500;
