@@ -62,10 +62,7 @@ a {
   margin-bottom: 0px !important;
 }
 
-.nav-area
-  .ant-menu-submenu
-  .ant-menu-sub
-  .ant-menu-item.ant-menu-item-selected {
+.nav-area .ant-menu-submenu .ant-menu-sub .ant-menu-item.ant-menu-item-selected {
   color: #1d3c48;
   background: transparent !important;
   font-weight: 500;
@@ -79,7 +76,7 @@ a {
   border: none !important;
 }
 
-.ant-menu-submenu.ant-menu-submenu-selected > .ant-menu-submenu-title {
+.ant-menu-submenu.ant-menu-submenu-selected>.ant-menu-submenu-title {
   color: #1d3c48 !important;
   background: white !important;
   font-weight: 500;
@@ -94,13 +91,11 @@ a {
 }
 
 .ant-menu-submenu .ant-menu-submenu-title:hover svg {
-  filter: invert(49%) sepia(8%) saturate(7320%) hue-rotate(323deg)
-    brightness(96%) contrast(83%);
+  filter: invert(49%) sepia(8%) saturate(7320%) hue-rotate(323deg) brightness(96%) contrast(83%);
 }
 
-.ant-menu-submenu.ant-menu-submenu-selected > .ant-menu-submenu-title svg {
-  filter: invert(49%) sepia(8%) saturate(7320%) hue-rotate(323deg)
-    brightness(96%) contrast(83%);
+.ant-menu-submenu.ant-menu-submenu-selected>.ant-menu-submenu-title svg {
+  filter: invert(49%) sepia(8%) saturate(7320%) hue-rotate(323deg) brightness(96%) contrast(83%);
 }
 
 .nav-area .ant-layout-sider-zero-width-trigger {
@@ -152,13 +147,11 @@ a {
 }
 
 .nav-area .ant-menu-item-selected svg {
-  filter: invert(49%) sepia(8%) saturate(7320%) hue-rotate(323deg)
-    brightness(96%) contrast(83%);
+  filter: invert(49%) sepia(8%) saturate(7320%) hue-rotate(323deg) brightness(96%) contrast(83%);
 }
 
 .nav-area .ant-menu-item:hover svg {
-  filter: invert(49%) sepia(8%) saturate(7320%) hue-rotate(323deg)
-    brightness(96%) contrast(83%);
+  filter: invert(49%) sepia(8%) saturate(7320%) hue-rotate(323deg) brightness(96%) contrast(83%);
 }
 
 .nav-area .ant-menu-submenu {
@@ -204,13 +197,13 @@ a {
   border: none !important;
 }
 
-.dexwuP > span {
+.dexwuP>span {
   padding-top: 0px !important;
   flex: inherit !important;
   color: #67777e;
 }
 
-.kjicut > span {
+.kjicut>span {
   padding-top: 0px !important;
   flex: inherit !important;
   color: #67777e;
@@ -335,8 +328,63 @@ a {
   border-bottom: none !important;
 }
 
-.ant-select-selector:active {
-  /* border: none !important; */
+.ant-collapse {
+  background-color: transparent !important;
+  border: none !important;
+}
+
+.ant-collapse-header {
+  border: 1px solid #E3E3E3 !important;
+  border-radius: 4px !important;
+}
+
+.ant-collapse>.ant-collapse-item:last-child>.ant-collapse-header {
+  border-radius: 0px !important;
+  margin-bottom: 10px !important;
+}
+
+.ant-collapse>.ant-collapse-item {
+  border-bottom: none !important;
+}
+
+.ant-collapse .ant-collapse-content {
+  border: none !important;
+}
+
+.ant-tabs .ant-tabs-tab-btn {
+  color: #67777E !important;
+  padding: 5px 15px;
+  font-size: 17px;
+}
+
+.ant-tabs .ant-tabs-tab.ant-tabs-tab-active .ant-tabs-tab-btn {
+  color: #1D3C48 !important;
+  font-weight: 600;
+  font-size: 17px;
+}
+
+.wallet-table .ant-table-wrapper .ant-table-thead>tr>th {
+  background-color: transparent !important;
+  color: #67777E;
+  font-size: 14px;
+}
+
+.wallet-table .ant-table-wrapper .ant-table-tbody>tr>td {
+  font-size: 14px;
+  color: #1D3C48;
+}
+
+.wallet-table .ant-table-wrapper .ant-table-tbody>tr>td:first-child {
+  border-left: solid 1px #EEEEEE !important;
+}
+
+.wallet-table .ant-table-wrapper .ant-table-tbody>tr>td:last-child {
+  border-right: solid 1px #EEEEEE !important;
+}
+
+
+.doc .ant-drawer-wrapper-body .ant-drawer-body {
+  padding: 0px !important;
 }
 
 @media only screen and (max-width: 1024px) {
@@ -344,3 +392,36 @@ a {
     padding: 0px;
   }
 }
+
+.wallet-table .ant-table-wrapper .ant-spin-nested-loading .ant-spin-container .ant-table .ant-table-container {
+  /* border: solid red !important; */
+}
+
+.ant-tabs .ant-tabs-tab.ant-tabs-tab-active {
+  /* border-bottom: solid red !important; */
+}
+
+/* .wallet-table .ant-table-wrapper .ant-table-thead>tr {
+  border: solid blue !important;
+} */
+
+.ant-tabs-tab-active {
+  /* border: none !important;
+  background: #FFFFFF !important; */
+  /* border-radius: 17px !important;
+  border-bottom: none !important; */
+}
+
+.ant-select-selector:active {
+  /* border: none !important; */
+}
+
+.ant-tabs .ant-tabs-tab.ant-tabs-tab-active .ant-tabs-tab-btn::after {
+  /* border: solid red !important; */
+  /* color: #1677ff;
+  text-shadow: 0 0 0.25px currentcolor; */
+}
+
+/* .ant-tabs-top>.ant-tabs-nav::before .ant-tabs-tab-active {
+  border: solid red !important;
+} */
