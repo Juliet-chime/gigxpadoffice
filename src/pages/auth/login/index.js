@@ -14,8 +14,10 @@ import signBg from "../../../assets/images/signBg.png";
 import signBg1 from "../../../assets/images/signBg1.png";
 import PasswordChecklist from "react-password-checklist";
 import LoginLink from "../../../components/layout/LoginLink";
+import {useNavigate} from "react-router-dom";
 
 export default function Login() {
+  const navigate = useNavigate()
   const [show, setShow] = useState(false);
   const [password, setPassword] = useState("");
   const [retypePassword, setRetypepassword] = useState("");
@@ -75,7 +77,7 @@ export default function Login() {
               />
               <br />
               <br />
-              <CustomButton bg={color.secondaryColor} text="Log In" />
+              <CustomButton bg={color.secondaryColor} text="Log In" onClick={() => navigate("/dashboard")} />
             </div>
           ) : (
             <div>
