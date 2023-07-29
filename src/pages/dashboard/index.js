@@ -167,7 +167,7 @@ export default function Dashboard() {
         <Row gutter={[16, 16]}>
           <Col xs={24} sm={24} md={8} lg={9} xl={9}>
             <div>
-              <BlockStyle height='265px'>
+              <BlockStyle height='265px' padding='10px 30px'>
                 <ChartHeader label={'Total Customers'} amount={'3,950'} details />
                 <div className='flex items-center mt-2'>
                   <div className='hidden lg:flex-1 xl:flex-1 lg:block xl:block '>
