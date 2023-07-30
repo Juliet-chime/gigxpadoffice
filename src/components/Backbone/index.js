@@ -2,11 +2,12 @@ import React from "react";
 import { Layout } from "antd";
 import SideBar from "../SideBar";
 import NavHeader from "../Header";
+import Notification from "../notification/Notification";
 const { Content } = Layout;
 
 const DashBoardLayout = ({ children }) => {
   return (
-    <div className="nav-area">
+    <div className="nav-area relative">
       <Layout style={{ height: "100vh" }}>
         <SideBar />
         <Layout>
@@ -24,6 +25,13 @@ const DashBoardLayout = ({ children }) => {
           </Content>
         </Layout>
       </Layout>
+
+      {true ? <Notification
+        message={
+          <div><p>Changes saved successfully</p></div>
+        }
+        type="success" showIcon
+      /> : null}
     </div>
   );
 };

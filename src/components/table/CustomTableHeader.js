@@ -8,7 +8,7 @@ import { FaTimes } from 'react-icons/fa'
 import CustomInputField from '../fields/CustomField'
 import { color } from '../../assets/color'
 
-const CustomTableHeader = ({ assest, type, status, bill,headerBorder,role,bottom }) => {
+const CustomTableHeader = ({ assest, type, status, bill, headerBorder, role, bottom }) => {
 
     const [showSearch, setShowSearch] = useState(false)
     const typeOptions = [
@@ -99,7 +99,7 @@ const CustomTableHeader = ({ assest, type, status, bill,headerBorder,role,bottom
                             />}
                             {role && <CustomSelect defaultValue="-User Role-"
                                 options={roleOptions}
-                                onChange={handleChange}/>}
+                                onChange={handleChange} />}
                             {type && <CustomSelect
                                 defaultValue="-Type-"
                                 options={typeOptions}

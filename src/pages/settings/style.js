@@ -12,7 +12,7 @@ height: auto;
   background-size: cover;
   background-position: center center;
   @media (max-width: 1024px) {
-height: 100%;
+   height: 100%;
   }
 }
 `

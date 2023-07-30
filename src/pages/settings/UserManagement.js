@@ -1,11 +1,11 @@
-import { Dropdown, Table } from 'antd';
-import React, { useState } from 'react'
+import { Dropdown } from 'antd';
+import React from 'react'
 import { SlOptionsVertical } from 'react-icons/sl';
 import CustomButton from '../../components/fields/CustomButton';
 import { color } from '../../assets/color';
 import CustomTable from '../../components/table/CustomTable';
 
-const UserManagement = ({setAddUser} ) => {
+const UserManagement = ({ setAddUser }) => {
 
     const onAddUser = () => {
         setAddUser(true)
@@ -30,16 +30,16 @@ const UserManagement = ({setAddUser} ) => {
         },
     ];
 
-    const items2 = [
-        {
-            key: '1',
-            label: (
-                <CustomButton height='auto' color={color.mainColor} width='auto'>
-                   This user is the super admin
-                </CustomButton>
-            ),
-        },
-    ];
+    // const items2 = [
+    //     {
+    //         key: '1',
+    //         label: (
+    //             <CustomButton height='auto' color={color.mainColor} width='auto'>
+    //                This user is the super admin
+    //             </CustomButton>
+    //         ),
+    //     },
+    // ];
 
     const columns = [
         {
@@ -54,7 +54,6 @@ const UserManagement = ({setAddUser} ) => {
             title: 'User Name',
             dataIndex: 'name',
             key: 'name',
-            // render: (_, text) => <p> {text.type.toUpperCase()}</p>
         },
         {
             title: 'Email Address',
@@ -76,7 +75,7 @@ const UserManagement = ({setAddUser} ) => {
             dataIndex: 'status',
             key: 'status',
             render: (text) => (
-                <p className={`${text === 'active' ? 'text-statusGreen' :text==='pending'? 'text-statusPending': null}`}>{text}</p>
+                <p className={`${text === 'active' ? 'text-statusGreen' : text === 'pending' ? 'text-statusPending' : null}`}>{text}</p>
             ),
         },
         {
@@ -84,11 +83,11 @@ const UserManagement = ({setAddUser} ) => {
             dataIndex: '',
             key: '',
             render: (_, record) => {
-                console.log(record,'rerere')
+                console.log(record, 'rerere')
                 return (
                     <div>
                         <Dropdown
-                            menu={{items}}
+                            menu={{ items }}
                             arrow={false}
                             trigger='click'
                         >
@@ -127,21 +126,21 @@ const UserManagement = ({setAddUser} ) => {
             status: 'pending',
         },
     ];
-  return (
-    <div>
-        
-        <><div className='wallet-table mt-8'>
-    <CustomTable border={'none'} headerBorder={`1px solid #EEEEEE`} columns={columns} dataSource={data} filterHeader role status
-        pagination={{
-            hideOnSinglePage: true,
-            pageSize: 7,
-        }}
-    />
-</div>
-<CustomButton text={'Invite New User'} width='180px' color={color.mainColor} bg={color.fieldColor} onClick={onAddUser} className='mt-6'/>
-</>
-    </div>
-  )
+    return (
+        <div>
+
+            <><div className='wallet-table mt-8'>
+                <CustomTable border={'none'} headerBorder={`1px solid #EEEEEE`} columns={columns} dataSource={data} filterHeader role status
+                    pagination={{
+                        hideOnSinglePage: true,
+                        pageSize: 7,
+                    }}
+                />
+            </div>
+                <CustomButton text={'Invite New User'} width='180px' color={color.mainColor} bg={color.fieldColor} onClick={onAddUser} className='mt-6' />
+            </>
+        </div>
+    )
 }
 
 export default UserManagement

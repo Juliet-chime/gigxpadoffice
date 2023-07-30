@@ -11,11 +11,12 @@ module.exports = {
       'full': '100%',
       'large': '40px',
       'md': '12px',
-      'lg':'15px'
+      'lg': '15px',
+      '24': '24px'
     },
     extend: {
-      width:{
-        '700':'700px'
+      width: {
+        '700': '700px'
       },
       maxWidth: {
         '1/2': '210px',
@@ -41,10 +42,11 @@ module.exports = {
         'ash-01': '#f5f5f5',
         'ash-2': '#d8d8d8',
         'statusGreen': '#31C491',
-        'statusPending':'#E0A80E',
+        'statusPending': '#E0A80E',
         'caramelAsh': '#F2F3F4',
-        'fieldAsh':'#F2F6F7',
-        'ash-3':'#e4e4e4'
+        'fieldAsh': '#F2F6F7',
+        'ash-3': '#e4e4e4',
+        'black-200': '#04151D'
       },
 
     },
