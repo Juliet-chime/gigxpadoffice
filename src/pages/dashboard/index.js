@@ -14,7 +14,7 @@ import { DoughnutChart } from '../../components/chart/DoughnutChart'
 import CurrencyTabComponent from './CurrencyTabComponent'
 import ChartLabels from '../../components/chart/ChartLabels'
 import OneDateRange from '../../components/chart/OneDateRange'
-import {formatDate } from '../../utils/helperFunctions'
+import { formatDate } from '../../utils/helperFunctions'
 import { PiCaretUp, PiCaretDown } from 'react-icons/pi'
 
 export default function Dashboard() {

@@ -1,4 +1,4 @@
-import { Dropdown, Table } from 'antd'
+import { Dropdown } from 'antd'
 import React, { useState } from 'react'
 import { SlOptionsVertical } from 'react-icons/sl';
 import pdf from '../../assets/images/pdf.svg'
@@ -7,6 +7,7 @@ import CustomButton from '../../components/fields/CustomButton';
 import { color } from '../../assets/color';
 import CustomDrawer from '../../components/fields/CustomDrawer';
 import CustomerDetailsDrawer from './CustomerDetailsDrawer';
+import CustomTable from '../../components/table/CustomTable';
 
 const CustomerKYCDocumentation = () => {
 
@@ -134,7 +135,7 @@ const CustomerKYCDocumentation = () => {
     ];
     return (
         <div className='wallet-table'>
-            <Table columns={columns} dataSource={data}
+            <CustomTable border={'none'} columns={columns} dataSource={data}
                 pagination={{
                     hideOnSinglePage: true,
                     pageSize: 7,

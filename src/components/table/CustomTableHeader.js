@@ -8,7 +8,7 @@ import { FaTimes } from 'react-icons/fa'
 import CustomInputField from '../fields/CustomField'
 import { color } from '../../assets/color'
 
-const CustomTableHeader = ({ assest, type, status, bill }) => {
+const CustomTableHeader = ({ assest, type, status, bill, headerBorder, role, bottom }) => {
 
     const [showSearch, setShowSearch] = useState(false)
     const typeOptions = [
@@ -48,6 +48,21 @@ const CustomTableHeader = ({ assest, type, status, bill }) => {
         },
     ]
 
+    const roleOptions = [
+        {
+            value: 'admininstrator',
+            label: 'Administrator',
+        },
+        {
+            value: 'finance',
+            label: 'Finance',
+        },
+        {
+            value: 'developer',
+            label: 'Developer',
+        },
+    ]
+
     const billsPayment = [
         {
             value: 'electricity',
@@ -71,7 +86,7 @@ const CustomTableHeader = ({ assest, type, status, bill }) => {
         console.log(`selected ${value}`);
     };
     return (
-        <CustomHeaderStyle>
+        <CustomHeaderStyle headBorder={headerBorder} bottom={bottom}>
             <Row className='px-0 lg:px-4 xl:px-4'>
                 <Col xs={24} sm={24} md={9} lg={9} xl={9} className='border-r border-lightash p-1 md:p-2 lg:p-2 xl:p-2 mb-8 md:mb-0 lg:mb-0 xl:mb-0'>
                     {!showSearch ? <div className='flex items-start lg:items-center xl:items-center justify-between'>
@@ -82,6 +97,9 @@ const CustomTableHeader = ({ assest, type, status, bill }) => {
                                 options={assestOptions}
                                 onChange={handleChange}
                             />}
+                            {role && <CustomSelect defaultValue="-User Role-"
+                                options={roleOptions}
+                                onChange={handleChange} />}
                             {type && <CustomSelect
                                 defaultValue="-Type-"
                                 options={typeOptions}

@@ -7,7 +7,7 @@ background:${color.offWhite};
 `
 
 export const LayoutChildwrapper = styled.div`
-  width: 500px;
+  width: ${props => props.width || '500px'};
   margin: auto;
   margin-top:10%;
 

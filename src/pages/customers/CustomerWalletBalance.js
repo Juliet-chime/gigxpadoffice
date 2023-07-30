@@ -1,4 +1,4 @@
-import { Col, Row, Table } from 'antd'
+import { Col, Row } from 'antd'
 import React from 'react'
 import Blocks from '../../components/dashboardComponents/Blocks'
 import { color } from '../../assets/color'
@@ -6,6 +6,7 @@ import bitcoin from '../../assets/images/bitcoin.svg'
 import usd from '../../assets/images/usd.svg'
 import naira from '../../assets/images/naira.svg'
 import { SlOptionsVertical } from 'react-icons/sl'
+import CustomTable from '../../components/table/CustomTable'
 
 
 const CustomerWalletBalance = () => {
@@ -95,7 +96,7 @@ const CustomerWalletBalance = () => {
                 </Col>
                 <Col xs={20} sm={20} md={24} lg={17} xl={19}>
                     <div className='wallet-table'>
-                        <Table columns={columns} dataSource={data}
+                        <CustomTable columns={columns} dataSource={data} border={'none'}
                             pagination={{
                                 hideOnSinglePage: true,
                                 pageSize: 7,

@@ -94,6 +94,7 @@ const Bills = () => {
         data={data}
         columns={columns}
         bill
+        filterHeader
         status
         onRow={(record, rowIndex) => {
           return {

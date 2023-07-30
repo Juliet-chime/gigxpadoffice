@@ -23,7 +23,7 @@ h4{
 `
 
 export const SectionText = styled('div')`
-font-size:16px;
+font-size:14px;
 font-family: 'Rubik', sans-serif;
 color: ${color.lighterAsh};
 `
@@ -32,11 +32,12 @@ export const BlockStyle = styled('div')`
 border: ${props => props.border || `1px solid ${color.blockAsh}`};
 border-radius:${props => props.radius || '15px'};
 padding:${props => props.padding || '0px 30px'};
-display:${props => props.flex ? 'flex' : ''};
-flex-direction:${props => props.flex ? 'row' : ''};
-align-items:${props => props.flex ? 'center' : ''};
-justify-content:${props => props.flex ? 'center' : ''};
+display:${props => props.flex ? 'flex' : props.display};
+flex-direction:${props => props.flex ? 'row' : props.col};
+align-items:${props => props.flex ? 'center' : props.align};
+justify-content:${props => props.flex ? 'center' : props.justify};
 height: ${props => props.height || '135px'};
+gap:${props => props.gap};
 background-color:${props => props.bg};
 @media (max-width: 768px) {
     padding: 10px 5px !important;
