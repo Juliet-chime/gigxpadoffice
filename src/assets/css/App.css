@@ -387,11 +387,35 @@ a {
   padding: 0px !important;
 }
 
+.add-user-select .ant-select-selector {
+  border: none !important;
+  height: 100% !important;
+  background-color: transparent !important;
+}
+
+.add-user-select .ant-select-selector:hover {
+  border: solid 1px #F2F6F7 !important;
+}
+
+.ant-select-selector:hover {
+  border: 1px solid #E4E4E4 !important;
+}
+
+.add-user-select .ant-select-selector .anticon>svg {
+  color: #E25A5A !important;
+}
+
+.ant-select-selector {
+  border: 1px solid #E4E4E4 !important;
+}
+
 @media only screen and (max-width: 1024px) {
   .nav-area .ant-layout-sider {
     padding: 0px;
   }
 }
+
+
 
 .wallet-table .ant-table-wrapper .ant-spin-nested-loading .ant-spin-container .ant-table .ant-table-container {
   /* border: solid red !important; */
