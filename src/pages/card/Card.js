@@ -78,7 +78,7 @@ const Card = () => {
       />
       <div className='mt-12 mb-8'>
         <Row>
-          <Col xs={24} sm={24} md={7} lg={6} xl={6}>
+          <Col xs={24} sm={24} md={7} lg={6} xl={5}>
             <Blocks name='Total Card Top-Up' nameColor={color.mainColor} bigAmount={'1,256,990'} padding='20px' height='92px' bg={color.offWhite} border={`solid 1px ${color.lineAsh}`} />
           </Col>
         </Row>

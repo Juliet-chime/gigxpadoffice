@@ -37,7 +37,7 @@ const Wallets = () => {
       children: <p>{text}</p>,
     },
     {
-      key: '3',
+      key: '5',
       label: <p className='text-mainColor font-bold font-cabinetgrotesk text-xl'>MapleRad</p>,
       children: <p>{text}</p>,
     },

@@ -3,6 +3,8 @@ import Dashboardheader from '../../components/dashboardComponents/Dashboardheade
 import { Tabs } from 'antd';
 import UserManagement from './UserManagement';
 import AddAUser from './AddAUser';
+import RolesPermission from './RolesPermission';
+import GlobalConfiguration from './GlobalConfiguration/GlobalConfiguration';
 
 const Settings = () => {
 
@@ -20,12 +22,12 @@ const items = [
     {
         key: '2',
         label: `Roles and Permissions`,
-        children: <h5>dxtrtr</h5>,
+        children: <RolesPermission/>,
     },
     {
         key: '3',
         label: `Global Configuration`,
-        children: <h6>gfhj</h6>,
+        children: <GlobalConfiguration/>,
     },
 ];
 

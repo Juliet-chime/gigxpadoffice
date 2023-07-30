@@ -18,3 +18,4 @@ const WalletCard = ({ currency, coin, coinAmt, rate, bg }) => {
 }
 
 export default WalletCard
+
