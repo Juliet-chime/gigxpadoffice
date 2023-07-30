@@ -96,6 +96,7 @@ const Transaction = () => {
         columns={columns}
         type
         status
+        filterHeader
         onRow={(record, rowIndex) => {
           return {
             onClick: (event) => {

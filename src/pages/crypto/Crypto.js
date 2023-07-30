@@ -133,13 +133,13 @@ const Crypto = () => {
       </div>
       <div className='mt-12 mb-8'>
         <Row gutter={[16, 16]}>
-          <Col xs={24} sm={24} md={7} lg={6} xl={6}>
+          <Col xs={24} sm={24} md={7} lg={6} xl={5}>
             <Blocks name='Total Crypto Transfers' nameColor={color.mainColor} bigAmount={'858,800'} padding='20px' height='92px' bg={color.offWhite} border={`solid 1px ${color.lineAsh}`} />
           </Col>
-          <Col xs={24} sm={24} md={7} lg={6} xl={6}>
+          <Col xs={24} sm={24} md={7} lg={6} xl={5}>
             <Blocks name='Total Crypto Swaps' nameColor={color.mainColor} bigAmount={'858,800'} padding='20px' height='92px' bg={color.offWhite} border={`solid 1px ${color.lineAsh}`} />
           </Col>
-          <Col xs={24} sm={24} md={7} lg={6} xl={6}>
+          <Col xs={24} sm={24} md={7} lg={6} xl={5}>
             <Blocks name='Total FIAT to Crypto' nameColor={color.mainColor} bigAmount={'248'} padding='20px' height='92px' bg={color.offWhite} border={`solid 1px ${color.lineAsh}`} />
           </Col>
         </Row>
@@ -149,6 +149,7 @@ const Crypto = () => {
         columns={columns}
         type
         assest
+        filterHeader
         onRow={(record, rowIndex) => {
           return {
             onClick: (event) => {

@@ -63,3 +63,19 @@ padding: 10px 0px;
     }
 }
 `
+export const PersonWrapper = styled.div`
+   width: ${props => props.width || '38px'};
+    height: ${props => props.height || '38px'};
+    background-color: ${color.lighterWhite};
+    border-radius: 50%;
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+.person{
+    margin-bottom: -5px;
+    font-size: ${props => props.personSize || '35px'};
+    color: ${color.white};
+}
+`
+
+
