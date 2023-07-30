@@ -372,6 +372,10 @@ a {
   background-color: #F8F8F8 !important;
 }
 
+.config .ant-collapse>.ant-collapse-item:last-child>.ant-collapse-header {
+  border-radius: 15px !important;
+}
+
 .ant-tabs .ant-tabs-tab-btn {
   color: #67777E !important;
   padding: 5px 15px;
@@ -409,8 +413,6 @@ a {
   border-radius: 30px;
 }
 
-/* border: 1px solid #E4E4E4; */
-
 .limits .ant-tabs .ant-tabs-tab.ant-tabs-tab-active .ant-tabs-tab-btn {
   color: #E25A5A !important;
 }
@@ -420,12 +422,6 @@ a {
   width: 0px !important;
   border: none !important;
 }
-
-.ant-tabs-ink-bar .ant-tabs-ink-bar-animated {}
-
-/* .limits .ant-tabs .ant-tabs-tab.ant-tabs-tab-active {
-  border-right: none !important;
-} */
 
 .wallet-table .ant-table-wrapper .ant-table-thead>tr>th {
   background-color: transparent !important;
@@ -471,6 +467,24 @@ a {
 
 .ant-select-selector {
   border: 1px solid #E4E4E4 !important;
+}
+
+.ant-alert-success {
+  background-color: #1D3C48 !important;
+  border: none !important;
+  border-radius: none !important;
+  height: 80px !important;
+}
+
+.ant-alert {
+  color: white !important;
+  border-radius: 0px !important;
+  padding: 8px 100px !important;
+}
+
+.ant-alert-success .ant-alert-icon {
+  color: #60EFA8 !important;
+  font-size: 20px !important;
 }
 
 @media only screen and (max-width: 1024px) {

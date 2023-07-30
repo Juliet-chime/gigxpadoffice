@@ -1,4 +1,4 @@
-import { Dropdown, Table } from 'antd'
+import { Dropdown } from 'antd'
 import React, { useState } from 'react'
 import { SlOptionsVertical } from 'react-icons/sl';
 import pdf from '../../assets/images/pdf.svg'

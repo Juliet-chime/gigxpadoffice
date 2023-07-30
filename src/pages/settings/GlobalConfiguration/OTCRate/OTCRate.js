@@ -10,37 +10,37 @@ const OTCRate = () => {
         {
             key: '1',
             label: <div className='flex items-center gap-2'>
-                <img src={CNY} alt='CNY'/>
+                <img src={CNY} alt='CNY' />
                 <h3>CNY</h3>
             </div>,
-            children: <OtcChange/>
+            children: <OtcChange />
         },
         {
             key: '2',
             label: <div className='flex items-center gap-2'>
-                 <img src={USA} alt='CNY'/>
-            <h3>USD</h3>
-        </div>,
-            children: <OtcChange/>,
+                <img src={USA} alt='CNY' />
+                <h3>USD</h3>
+            </div>,
+            children: <OtcChange />,
         },
         {
             key: '3',
             label: <div className='flex items-center gap-2'>
-                 <img src={CAD} alt='CNY'/>
-            <h3>CAD</h3>
-        </div>,
-            children: <OtcChange/>,
+                <img src={CAD} alt='CNY' />
+                <h3>CAD</h3>
+            </div>,
+            children: <OtcChange />,
         },
     ];
 
-  return (
-    <div className='limits border border-ash-3 rounded-lg p-2 md:p-6 lg:p-6 xl:p-6'>
-         <Tabs
-        tabPosition={'left'}
-        items={items}
-      />
-    </div>
-  )
+    return (
+        <div className='limits border border-ash-3 rounded-lg p-2 md:p-6 lg:p-6 xl:p-6'>
+            <Tabs
+                tabPosition={'left'}
+                items={items}
+            />
+        </div>
+    )
 }
 
 export default OTCRate

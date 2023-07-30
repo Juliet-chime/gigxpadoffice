@@ -1,4 +1,4 @@
-import { Col, Row, Table } from 'antd'
+import { Col, Row } from 'antd'
 import React from 'react'
 import Blocks from '../../components/dashboardComponents/Blocks'
 import { color } from '../../assets/color'

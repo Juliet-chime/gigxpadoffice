@@ -3,7 +3,7 @@ import { Table } from 'antd';
 import { TableWrapperStyles } from './style';
 import CustomTableHeader from './CustomTableHeader';
 
-const CustomTable = ({ columns, data, assest, type, status, border, role,radius,headerBorder,bottom, top, filterHeader, ...props }) => {
+const CustomTable = ({ columns, data, assest, type, status, border, role, radius, headerBorder, bottom, top, filterHeader, ...props }) => {
 
   const itemRender = (_, type, originalElement) => {
     console.log(type, "a");
@@ -17,7 +17,7 @@ const CustomTable = ({ columns, data, assest, type, status, border, role,radius,
   };
   return (
     <TableWrapperStyles border={border} radius={radius} top={top}>
-{filterHeader ? <CustomTableHeader assest={assest} type={type} status={status} role={role} headerBorder={headerBorder} bottom={bottom} /> : null}
+      {filterHeader ? <CustomTableHeader assest={assest} type={type} status={status} role={role} headerBorder={headerBorder} bottom={bottom} /> : null}
       <Table
         columns={columns}
         dataSource={data}
