@@ -149,6 +149,7 @@ const Crypto = () => {
         columns={columns}
         type
         assest
+        filterHeader
         onRow={(record, rowIndex) => {
           return {
             onClick: (event) => {

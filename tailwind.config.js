@@ -13,6 +13,9 @@ module.exports = {
       'md': '12px'
     },
     extend: {
+      width:{
+        '700':'700px'
+      },
       maxWidth: {
         '1/2': '210px',
       },
@@ -36,7 +39,9 @@ module.exports = {
         'ash-01': '#f5f5f5',
         'ash-2': '#d8d8d8',
         'statusGreen': '#31C491',
-        'caramelAsh': '#F2F3F4'
+        'statusPending':'#E0A80E',
+        'caramelAsh': '#F2F3F4',
+        'fieldAsh':'#F2F6F7'
       },
 
     },

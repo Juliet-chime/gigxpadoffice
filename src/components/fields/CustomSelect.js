@@ -1,9 +1,10 @@
 import { Select } from 'antd'
 import React from 'react'
+import { SelectStyle } from './style'
 
 const CustomSelect = (props) => {
   return (
-    <Select {...props} />
+    <SelectStyle {...props} />
   )
 }
 

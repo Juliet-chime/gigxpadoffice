@@ -86,6 +86,7 @@ const Card = () => {
       <CustomTable
         data={data}
         columns={columns}
+        filterHeader
         onRow={(record, rowIndex) => {
           return {
             onClick: (event) => {

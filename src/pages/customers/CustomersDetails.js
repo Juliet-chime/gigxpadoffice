@@ -38,7 +38,7 @@ const CustomersDetails = () => {
             <Row justify="space-between" gutter={[0, 16]}>
                 <Col xs={24} sm={24} md={9} lg={9} xl={8}>
                     <div className='flex items-center gap-3'>
-                        <div className='w-12 h-12 flex items-center justify-center border border-borderLine rounded-full cursor-pointer'>
+                        <div className='w-10 h-10 flex items-center justify-center border border-borderLine rounded-full cursor-pointer'>
                             <PiCaretLeft color={color.mainColor} fontSize={20} />
                         </div>
                         <div>
