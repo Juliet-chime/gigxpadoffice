@@ -1,5 +1,5 @@
 import React from "react";
-import { Dropdown, Layout, theme } from "antd";
+import { Dropdown, Layout, Menu, theme } from "antd";
 import { BiBell } from 'react-icons/bi'
 import { GoPersonFill } from 'react-icons/go'
 import { HeaderWrapper } from "./style";
@@ -89,9 +89,26 @@ export default function NavHeader() {
 
         <div className="user-wrapper">
           <Dropdown
-            menu={{
-              items,
-            }}
+          overlay={(
+            <Menu>
+              <Menu.Item key="0">
+                Menu Item One
+              </Menu.Item>
+              <Menu.Item key="1">
+                ittt
+              <Menu>
+              <Menu.Item  key="1">  Menu Item One</Menu.Item>
+              </Menu>
+            
+              </Menu.Item>
+              <Menu.Item key="1">
+              Menu Item Three
+              </Menu.Item>
+            </Menu>
+          )}
+            // menu={{
+            //   items,
+            // }}
             trigger={['click']}
           >
             <div className="user-section">

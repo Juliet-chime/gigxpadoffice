@@ -10,17 +10,20 @@ module.exports = {
     borderRadius: {
       'full': '100%',
       'large': '40px',
+      '14': '14px',
       'md': '12px',
       'lg': '15px',
       '24': '24px'
     },
     extend: {
       width: {
-        '700': '700px'
+        '700': '700px',
+        'half': '50%'
       },
       maxWidth: {
         '1/2': '210px',
         '1/3': '230px',
+        '30': '250px'
       },
       colors: {
         'deposit': '#A7EFBD',
@@ -46,7 +49,8 @@ module.exports = {
         'caramelAsh': '#F2F3F4',
         'fieldAsh': '#F2F6F7',
         'ash-3': '#e4e4e4',
-        'black-200': '#04151D'
+        'black-200': '#04151D',
+        'green-50': '#E7F1F2'
       },
 
     },
