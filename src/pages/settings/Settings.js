@@ -41,6 +41,7 @@ const Settings = () => {
         <div className='detailcard mt-12'>
           <Tabs defaultActiveKey="1" items={items} onChange={onChange} />
         </div></>}
+
     </div>
   )
 }

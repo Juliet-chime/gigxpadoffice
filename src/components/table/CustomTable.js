@@ -16,6 +16,7 @@ const CustomTable = ({ columns, data, assest, type, status, border, role, radius
     return originalElement;
   };
   return (
+    //  <NullTableComponent />
     <TableWrapperStyles border={border} radius={radius} top={top}>
       {filterHeader ? <CustomTableHeader assest={assest} type={type} status={status} role={role} headerBorder={headerBorder} bottom={bottom} /> : null}
       <Table
