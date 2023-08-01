@@ -3,7 +3,7 @@ import React from 'react'
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import { DateFilterStyle } from './style';
-import { allMonth} from '../../utils/helperFunctions';
+import { allMonth, months} from '../../utils/helperFunctions';
 import { generateYearsBetween } from '../../utils/func';
 
 const OneDateRange = ({children,...props}) => {
@@ -15,7 +15,7 @@ const OneDateRange = ({children,...props}) => {
 
 
   const yearOptions = years.map((year) => {
-    console.log(typeof year)
+    // console.log(typeof year)
     return {
       value: year,
       label: year,
@@ -27,11 +27,12 @@ const OneDateRange = ({children,...props}) => {
     const value = month.toLowerCase()
     return {
       value,
-      label: year,
+      label: month,
 
     }
   })
 
+  console.log(monthOptions)
   return (
     <DatePicker
       className='datePicker'
@@ -53,11 +54,11 @@ const OneDateRange = ({children,...props}) => {
             gap: '10px'
           }}
         >
-          {/* <button onClick={decreaseMonth} disabled={prevMonthButtonDisabled}>
+          <button onClick={decreaseMonth} disabled={prevMonthButtonDisabled}>
             {"<"}
-          </button> */}
+          </button>
 
-          <Select
+           {/* <Select
             defaultValue={new Date().getFullYear()}
             value={new Date(date).getFullYear()}
             style={{
@@ -68,9 +69,9 @@ const OneDateRange = ({children,...props}) => {
               console.log(value, 'year')
             }}
             options={yearOptions}
-          />
+          /> */}
 
-          <Select
+          {/* <Select
             defaultValue={allMonth[new Date(date).getMonth()]}
             // value={months[new Date(date).getMonth()]}
             style={{
@@ -78,13 +79,13 @@ const OneDateRange = ({children,...props}) => {
             }}
             onChange={({ target: { value } }) => {
               console.log(value, 'mon')
-              return changeMonth(allMonth.indexOf(value))
+              return changeMonth(value)
             }
             }
             options={monthOptions}
-          />
+          />   */}
 
-          {/* <select
+           <select
           style={{
             border: '1px solid #EEEEEE',
             borderRadius: '5px',
@@ -102,9 +103,9 @@ const OneDateRange = ({children,...props}) => {
                 {option}
               </option>
             ))}
-          </select> */}
+          </select> 
 
-          {/* <select
+           <select
             value={months[new Date(date).getMonth()]}
             // value={months[getMonth(date)]}
             onChange={({ target: { value } }) => {
@@ -118,11 +119,11 @@ const OneDateRange = ({children,...props}) => {
                 {option}
               </option>
             ))}
-          </select> */}
+          </select> 
 
-          {/* <button onClick={increaseMonth} disabled={nextMonthButtonDisabled}>
+          <button onClick={increaseMonth} disabled={nextMonthButtonDisabled}>
             {">"}
-          </button> */}
+          </button>
         </div>
       )}
       {...props}
