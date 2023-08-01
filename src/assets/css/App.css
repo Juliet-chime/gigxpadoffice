@@ -199,13 +199,13 @@ a {
 
 .dexwuP>span {
   padding-top: 0px !important;
-  flex: inherit !important;
+  flex: none !important;
   color: #67777e;
 }
 
 .kjicut>span {
   padding-top: 0px !important;
-  flex: inherit !important;
+  flex: none !important;
   color: #67777e;
 }
 
@@ -217,6 +217,17 @@ a {
 .dexwuP {
   gap: 5px !important;
   align-items: center !important;
+}
+
+.PJfgA>span {
+  padding-top: 2px;
+  opacity: 0.5;
+  flex: none !important;
+}
+
+.PJfgA {
+  align-items: center !important;
+  gap: 5px !important;
 }
 
 .ant-divider-horizontal.ant-divider-with-text::after {
@@ -485,6 +496,28 @@ a {
 .ant-alert-success .ant-alert-icon {
   color: #60EFA8 !important;
   font-size: 20px !important;
+}
+
+.ant-modal .ant-modal-close {
+  width: 20px !important;
+  height: 20px !important;
+  background-color: #F2F6F7;
+  border-radius: 50%;
+  padding: 20px !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+}
+
+.invite .ant-modal .ant-modal-content {
+  border-radius: 14px !important;
+  padding: 0px !important;
+}
+
+.anticon svg {
+  color: #1D3C48;
+  font-weight: bold;
+  font-size: 16px;
 }
 
 @media only screen and (max-width: 1024px) {

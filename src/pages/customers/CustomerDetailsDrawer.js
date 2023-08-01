@@ -16,6 +16,7 @@ const CustomerDetailsDrawer = ({ title, date }) => {
                 </div>
                 <CustomButton text={'Download'} bg={color.white} color={color.mainColor} radius='27px' width='154px' />
             </div>
+
         </div>
     )
 }

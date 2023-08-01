@@ -10,12 +10,27 @@ import CustomDrawer from '../../components/fields/CustomDrawer'
 import SuperAdminDetails from './RolesDetails/SuperAdminDetails'
 import AdministratorDetails from './RolesDetails/AdministratorDetails'
 import DeveloperDetails from './RolesDetails/DeveloperDetails'
+import CustomModal from '../../components/modal/CustomModal'
+import CustomButton from '../../components/fields/CustomButton'
 
 const RolesPermission = () => {
   const [open, setOpen] = useState(false);
   const [openAdmin, setOpenAdmin] = useState(false);
   const [openDeveloper, setOpenDeveloper] = useState(false);
   const [openFinance, setOpenFinance] = useState(false);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
+
+  const showModal = (e) => {
+    console.log(e)
+    setIsModalOpen(true);
+  };
+  const handleOk = () => {
+    setIsModalOpen(false);
+  };
+  const handleCancel = () => {
+    setIsModalOpen(false);
+  };
 
   const showDrawer = () => {
     setOpen(true);
@@ -80,13 +95,26 @@ const RolesPermission = () => {
           </>
         })}
         <Col xs={12} sm={12} md={6} lg={5} xl={4}>
-          <BlockStyle height='165px' padding='0px' display='flex' col='column' align='center' justify='center' gap='20px' bg='#F8F8F8' border='2px dashed #E3E3E3' radius='8px'>
+          <BlockStyle height='165px' padding='0px' display='flex' col='column' align='center' justify='center' gap='20px' bg='#F8F8F8' border='2px dashed #E3E3E3' radius='8px' className='cursor-pointer' onClick={showModal}>
 
             <BiPlusCircle fontSize={26} color={color.mainColor} />
             <p className='text-sm text-mainColor'>Add New Role</p>
           </BlockStyle>
         </Col>
       </Row>
+
+      <CustomModal open={isModalOpen} width={530} onOk={handleOk} onCancel={handleCancel} footer={null} wrapClassName='invite'>
+        <div>
+          <div className='h-40  bg-green-50 rounded-t-14'></div>
+          <div className='flex flex-col items-center justify-center gap-6 pt-16 pb-8 px-6'>
+
+            <h2 className='text-xl font-bold font-cabinetgrotesk'>Users Invited Successfully</h2>
+            <p className="text-lighterAsh text-lg text-center">Users you have invited will get a link in their email address to sign in and activate their account on XPAD.</p>
+            <CustomButton text={'Dismiss'} bg={color.fieldColor} color={color.accessBtnColor} width='250px' weight='700' height='3.75rem' />
+          </div>
+        </div>
+      </CustomModal>
+
     </div>
   )
 }
