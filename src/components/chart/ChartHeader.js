@@ -16,9 +16,9 @@ const ChartHeader = ({ details, label, amount, tab, items, today, ...props }) =>
                 <p>{label}</p>
                 <h2>{amount}</h2>
             </div> : null}
-            {tab ? <div className='ss' style={{ width: '100%' }}>
+            {/* {tab ? <div className='ss' style={{ width: '100%' }}>
                 <CustomTab items={items} />
-            </div> : null}
+            </div> : null} */}
         </ChartHeaderStyle>
     )
 }

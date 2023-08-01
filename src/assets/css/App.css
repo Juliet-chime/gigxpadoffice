@@ -199,13 +199,13 @@ a {
 
 .dexwuP>span {
   padding-top: 0px !important;
-  flex: inherit !important;
+  flex: none !important;
   color: #67777e;
 }
 
 .kjicut>span {
   padding-top: 0px !important;
-  flex: inherit !important;
+  flex: none !important;
   color: #67777e;
 }
 
@@ -217,6 +217,17 @@ a {
 .dexwuP {
   gap: 5px !important;
   align-items: center !important;
+}
+
+.PJfgA>span {
+  padding-top: 2px;
+  opacity: 0.5;
+  flex: none !important;
+}
+
+.PJfgA {
+  align-items: center !important;
+  gap: 5px !important;
 }
 
 .ant-divider-horizontal.ant-divider-with-text::after {

@@ -85,7 +85,7 @@ export default function Dashboard() {
 
               <Blocks radius='71px' bg={color.blockBg} flex>
                 <Link to='/wallets'>
-                  <div style={{ display: 'flex', alignItems: 'center', gap: '5px' }}>
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '2px' }}>
                     <p>See all Wallets</p>
                     <MdArrowOutward color={color.secondaryColor} />
                   </div>

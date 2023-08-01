@@ -4,6 +4,7 @@ import SideBar from "../SideBar";
 import NavHeader from "../Header";
 const { Content } = Layout;
 
+
 const DashBoardLayout = ({ children }) => {
   return (
     <div className="nav-area relative">
