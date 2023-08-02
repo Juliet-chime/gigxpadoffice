@@ -10,7 +10,6 @@ on:
       - k8s/staging/deployment.yaml
 
 jobs:
-  jobs:
   sonarqube:
     #needs: [ on-success ]
     name: sonarqube-scan
