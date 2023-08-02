@@ -75,6 +75,13 @@ export const getYesterday = function () {
   return yesterday;
 };
 
+export const getCurrentYear = function () {
+   const date = new Date();
+  let year = date.getFullYear()
+
+  return year
+}
+
 export const getNextDay = function (date) {
   const tomorrow = new Date(date);
   tomorrow.setDate(new Date(date).getDate() + 1);

@@ -1,38 +1,66 @@
-import { Select } from 'antd';
-import React from 'react'
+// import { Select } from 'antd';
+import React, { useState } from 'react'
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import { DateFilterStyle } from './style';
-import { allMonth, months} from '../../utils/helperFunctions';
+import { allMonth, getCurrentYear, months} from '../../utils/helperFunctions';
 import { generateYearsBetween } from '../../utils/func';
+import Select from 'react-select'
+import { color } from '../../assets/color';
 
 const OneDateRange = ({children,...props}) => {
 
-  const d = new Date();
-  let year = d.getFullYear()
+  const customStyles = {
+    valueContainer: (provided, state) => ({
+      ...provided,
+      border:'none',
+      borderColor:'white',
+      // borderColor: state.isFocused ? 'red' : 'green',
+      backgroundColor: color.white,
+      // display: state.hasValue ? 'flex' : 'block',
+      // alignItems: 'flex-start',
+      // paddingTop: '10px',
+      // width: '150px',
+      // height: props.height,
+    }),
 
-  const years = generateYearsBetween(1990, year)
+    // dropdownIndicator: (provided, state) => ({
+    //   ...provided,
+    //   backgroundColor: colors.formFieldBGColor,
+    //   height: '100%',
+    // }),
+    indicatorSeparator: (provided, state) => ({
+      ...provided,
+      display: 'none',
+    }),
+    // placeholder: (provided, state) => ({
+    //   ...provided,
+    //   color: colors.modalSearchLabel,
+    // }),
+    // multiValue: (provided, state) => ({
+    //   ...provided,
+    //   backgroundColor: 'rgba(21, 132, 234, 0.1)',
+    //   color: colors.modalSearchLabel,
+    //   padding: '5px',
+    //   fontSize: '14px',
+    //   fontWeight: 500,
+    //   marginLeft: '10px',
+    // }),
+  }
+
+  const years = generateYearsBetween(1990, getCurrentYear())
 
 
-  const yearOptions = years.map((year) => {
-    // console.log(typeof year)
-    return {
-      value: year,
-      label: year,
+  const yearOptions = years.map((year) => ({
+    value: year,
+    label: year,
+  }))
 
-    }
-  })
+  const monthOptions = allMonth.map((month, i) => ({
+    value: i,
+    label: month,
+  }))
 
-  const monthOptions = allMonth.map((month) => {
-    const value = month.toLowerCase()
-    return {
-      value,
-      label: month,
-
-    }
-  })
-
-  console.log(monthOptions)
   return (
     <DatePicker
       className='datePicker'
@@ -45,87 +73,41 @@ const OneDateRange = ({children,...props}) => {
         increaseMonth,
         prevMonthButtonDisabled,
         nextMonthButtonDisabled,
-      }) => (
-        <div
-          style={{
-            margin: 10,
-            display: "flex",
-            alignItems: 'center',
-            gap: '10px'
-          }}
-        >
-          <button onClick={decreaseMonth} disabled={prevMonthButtonDisabled}>
-            {"<"}
-          </button>
-
-           {/* <Select
-            defaultValue={new Date().getFullYear()}
-            value={new Date(date).getFullYear()}
-            style={{
-              width: 80,
-            }}
-
-            onChange={(value) => {
-              console.log(value, 'year')
-            }}
-            options={yearOptions}
-          /> */}
-
-          {/* <Select
-            defaultValue={allMonth[new Date(date).getMonth()]}
-            // value={months[new Date(date).getMonth()]}
-            style={{
-              width: 80,
-            }}
-            onChange={({ target: { value } }) => {
-              console.log(value, 'mon')
-              return changeMonth(value)
-            }
-            }
-            options={monthOptions}
-          />   */}
-
-           <select
-          style={{
-            border: '1px solid #EEEEEE',
-            borderRadius: '5px',
-            padding:'5px'
-          }}
-            value={new Date(date).getYear()}
-            // value={getYear(date)}
-            onChange={({ target: { value } }) => {
-              console.log(value,'year')
-              return changeYear(value)
-            }}
-          >
-            {years.map((option) => (
-              <option key={option} value={option}>
-                {option}
-              </option>
-            ))}
-          </select> 
-
-           <select
-            value={months[new Date(date).getMonth()]}
-            // value={months[getMonth(date)]}
-            onChange={({ target: { value } }) => {
-              console.log(value,'mon')
-              return changeMonth(months.indexOf(value))
-            }
-            }
-          >
-            {months.map((option) => (
-              <option key={option} value={option}>
-                {option}
-              </option>
-            ))}
-          </select> 
-
-          <button onClick={increaseMonth} disabled={nextMonthButtonDisabled}>
-            {">"}
-          </button>
-        </div>
-      )}
+      }) => {
+        // console.log(date)
+        return  <div
+        style={{
+          margin: 10,
+          display: "flex",
+          alignItems: 'center',
+          gap: '10px'
+        }}
+      >
+        {/* <button onClick={decreaseMonth} disabled={prevMonthButtonDisabled}>
+          {"<"}
+        </button> */}
+        <Select  
+        options={yearOptions} 
+        styles={customStyles}
+        onChange={({value}) => {
+          // console.log(value)
+          changeYear(value)
+        }}/>
+        <Select options={monthOptions}
+               onChange={(e, i) => {
+              changeMonth(e.value)
+                 }}
+        // styles={{
+        //   control: (baseStyles, state) => ({
+        //     ...baseStyles,
+        //     borderColor: state.isFocused ? 'white' : 'white',
+        //   }),}}
+        />
+        {/* <button onClick={increaseMonth} disabled={nextMonthButtonDisabled}>
+          {">"}
+        </button> */}
+      </div>
+      }}
       {...props}
     >
       <DateFilterStyle>
@@ -134,7 +116,7 @@ const OneDateRange = ({children,...props}) => {
         <p className='clear'>CLEAR FILTER</p>
       </DateFilterStyle>
         
-    </DatePicker>
+    </DatePicker>               
   );
 }
 

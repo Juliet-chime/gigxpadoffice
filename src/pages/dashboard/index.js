@@ -16,6 +16,7 @@ import ChartLabels from '../../components/chart/ChartLabels'
 import OneDateRange from '../../components/chart/OneDateRange'
 import { formatDate } from '../../utils/helperFunctions'
 import { PiCaretUp, PiCaretDown } from 'react-icons/pi'
+import CustomTab from '../../components/tabination/CustomTab'
 
 export default function Dashboard() {
 
@@ -36,7 +37,7 @@ export default function Dashboard() {
     const today = formatDate()
 
     return (
-      <p onClick={onClick} ref={ref} className={'rounded-large border border-dateLine py-3 px-6 cursor-pointer flex items-center gap-2 text-mainColor text-sm font-medium '}>
+      <p onClick={onClick} ref={ref} className={'rounded-large border border-dateLine py-3 px-3 cursor-pointer flex items-center gap-2 text-mainColor text-sm font-medium '}>
         {newDate === today ? `Today` : value} {newDate === today ? changeIcon ? <PiCaretUp className='text-mainColor text-xl font-medium' /> : <PiCaretDown className='text-mainColor text-xl font-medium' /> : null}
       </p>
     )
@@ -167,18 +168,19 @@ export default function Dashboard() {
         <Row gutter={[16, 16]}>
           <Col xs={24} sm={24} md={8} lg={9} xl={9}>
             <div>
-              <BlockStyle height='265px' padding='10px 30px'>
+              <BlockStyle height='265px'>
                 <ChartHeader label={'Total Customers'} amount={'3,950'} details />
                 <div className='flex items-center mt-2'>
-                  <div className='hidden lg:flex-1 xl:flex-1 lg:block xl:block '>
+                  <div className='hidden flex-none lg:flex-1 xl:flex-1 lg:block xl:block '>
                     <ChartLabels name={'Deposits'} />
                     <ChartLabels name={'Withdrawals'} />
                     <ChartLabels name={'Swaps'} />
                     <ChartLabels name={'Transfers'} />
                   </div>
-                  <div className='lg:flex-1 xl:flex-1' style={{ width: '150px' }}>
+                  <div className='flex-none lg:flex-1 xl:flex-1 border border-red-950'>
                     <DoughnutChart options={doughnutOptions} data={doughnutdata} />
                   </div>
+                  {/* style={{ width: '150px' }} */}
                 </div>
               </BlockStyle>
             </div>
@@ -186,9 +188,24 @@ export default function Dashboard() {
           <Col xs={24} sm={24} md={8} lg={9} xl={9}>
             <div>
               <BlockStyle height='265px'>
-                <div style={{ position: 'relative' }}>
-                  <ChartHeader tab items={items} />
-                  <p style={{ position: 'absolute', top: '15px', right: '20px' }}>Today</p>
+                <div className='flex justify-between'>
+                  {/* <ChartHeader tab items={items} /> */}
+                  <div className='ss' style={{ width: '100%' }}>
+                <CustomTab items={items} />
+            </div> 
+                  <OneDateRange
+                    selected={startDate}
+                    onChange={onChange}
+                    startDate={startDate}
+                    endDate={endDate}
+                    selectsRange
+                    showPopperArrow={false}
+                    customInput={<ExampleCustomInput />}
+                    onCalendarOpen={() => setChangeIcon(true)}
+                    onCalendarClose={() => setChangeIcon(false)}
+                  />
+                  {/* <p>gjg</p> */}
+                  {/* <p style={{ position: 'absolute', top: '15px', right: '20px' }}>Today</p> */}
                 </div>
               </BlockStyle>
             </div>
