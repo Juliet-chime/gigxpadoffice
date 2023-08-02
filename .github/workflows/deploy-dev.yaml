@@ -30,7 +30,7 @@ jobs:
 
   deploy:
     runs-on: ubuntu-latest
-    needs: [sonarcloud]
+    needs: [sonarqube]
     environment:
       name: develop
       url: https://dev-bko.gigxpad.com
