@@ -23,6 +23,19 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.PAT }} # Needed to get PR information, if any exist
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+        #run: npx sonarqube-scanner
+      - name: Get SonarCloud quality gate status
+        env:
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+        run: |
+          RESULT=$(curl -u "$SONAR_TOKEN:" "https://sonarcloud.io/api/qualitygates/project_status?projectKey=GIGXPad-com_xpad-bko&analysisId=$SONAR_ANALYSIS_ID")
+          STATUS=$(echo $RESULT | jq -r .status)
+          echo $STATUS
+      - name: Check quality gate status
+        if: ${{ env.STATUS == 'ERROR' }}
+        run: |
+          echo "Quality gate status is ERROR"
+          exit 1
 
   deploy:
     runs-on: ubuntu-latest
