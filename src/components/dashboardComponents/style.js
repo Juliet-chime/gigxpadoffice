@@ -51,7 +51,7 @@ p{
 font-family: 'Rubik', sans-serif;
 color: ${props => props.nameColor || color.lighterAsh};   
 @media (min-width: 768px) and (max-width: 1024px)  {
-   font-size:15px; 
+   font-size:12px; 
 }
 }
 h2{
