@@ -1,14 +1,6 @@
 import styled from "styled-components";
 import { color } from "../../assets/color";
 
-export const ChartHeaderStyle = styled.div`
-display: flex;
-align-items: ${props => props.tab ? '' : 'center'};
-justify-content: space-between;
-.today{
-    margin-top: ${props => props.tab ? '15px' : ''};
-}
-`
 export const DateFilterStyle = styled.div`
    display: flex;
     justify-content: space-between;

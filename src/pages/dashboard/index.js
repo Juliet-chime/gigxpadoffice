@@ -36,6 +36,8 @@ export default function Dashboard() {
 
     const today = formatDate()
 
+    console.log({ newDate, today })
+
     return (
       <p onClick={onClick} ref={ref} className={'rounded-large border border-dateLine py-3 px-3 cursor-pointer flex items-center gap-2 text-mainColor text-sm font-medium '}>
         {newDate === today ? `Today` : value} {newDate === today ? changeIcon ? <PiCaretUp className='text-mainColor text-xl font-medium' /> : <PiCaretDown className='text-mainColor text-xl font-medium' /> : null}
@@ -43,15 +45,28 @@ export default function Dashboard() {
     )
   });
 
+  const ExampleCustomInputRef = forwardRef(({ value, onClick }, ref) => {
+
+    const newDate = value.split('-')[0].trim()
+
+    const today = formatDate()
+
+    return (
+      <p onClick={onClick} ref={ref} className={'rounded-large border border-dateLine cursor-pointer flex items-center gap-2 font-medium p-2 text-mainColor'}>
+        {newDate === today ? `Today` : value} {newDate === today ? changeIcon ? <PiCaretUp className='text-mainColor text-xs font-medium' /> : <PiCaretDown className='text-mainColor text-xs font-medium' /> : null}
+      </p>
+    )
+  });
+
   const items = [
     {
       key: '1',
-      label: `Tab 1`,
+      label: `FIAT`,
       children: <CurrencyTabComponent revenueAmount={'₦6,390,050'} profitAmount={'₦2,950,000'} />,
     },
     {
       key: '2',
-      label: `Tab 2`,
+      label: `CRYPTO`,
       children: <CurrencyTabComponent revenueAmount={'₦6,390,050'} profitAmount={'₦2,950,000'} />,
     },
   ];
@@ -102,7 +117,7 @@ export default function Dashboard() {
         >
           <Col xs={24} sm={24} md={12} lg={12} xl={12}>
             <div>
-              <BlockStyle height='auto' padding='10px 30px'>
+              <BlockStyle height='auto' padding='10px 20px'>
                 <div className='flex items-center justify-between'>
                   <ChartHeader label={'Total FIAT Transactions'} amount={'₦32,599,000'} details />
                   <div>
@@ -112,6 +127,7 @@ export default function Dashboard() {
                       startDate={startDate}
                       endDate={endDate}
                       selectsRange
+                      showDateFilter
                       showPopperArrow={false}
                       customInput={<ExampleCustomInput />}
                       onCalendarOpen={() => setChangeIcon(true)}
@@ -119,15 +135,21 @@ export default function Dashboard() {
                     />
                   </div>
                 </div>
-                <div className='flex items-center mt-5'>
-                  <div className='hidden lg:flex-1 xl:flex-1 lg:block xl:block'>
-                    <ChartLabels name={'Deposits'} />
-                    <ChartLabels name={'Withdrawals'} />
-                    <ChartLabels name={'Swaps'} />
-                    <ChartLabels name={'Transfers'} />
-                  </div>
-                  <div className='flex-1' style={{ height: '267px' }}><BarChart labels={barLabels} datasets={barDataSet} options={barOptions} /></div>
-                </div>
+                <Row gutter={[16, 16]} className='mt-5' align='middle'>
+                  <Col xs={0} sm={0} md={24} lg={24} xl={8}>
+                    <div className='flex flex-row xl:flex-col gap-2'>
+                      <ChartLabels name={'Deposits'} />
+                      <ChartLabels name={'Withdrawals'} />
+                      <ChartLabels name={'Swaps'} />
+                      <ChartLabels name={'Transfers'} />
+                    </div>
+                  </Col>
+                  <Col xs={24} sm={24} md={24} lg={24} xl={16}>
+                    <div className='h-48'>
+                      <BarChart labels={barLabels} datasets={barDataSet} options={barOptions} />
+                    </div>
+                  </Col>
+                </Row>
               </BlockStyle>
             </div>
           </Col>
@@ -143,6 +165,7 @@ export default function Dashboard() {
                       startDate={startDate}
                       endDate={endDate}
                       selectsRange
+                      showDateFilter
                       showPopperArrow={false}
                       customInput={<ExampleCustomInput />}
                       onCalendarOpen={() => setChangeIcon(true)}
@@ -150,15 +173,22 @@ export default function Dashboard() {
                     />
                   </div>
                 </div>
-                <div className='flex items-center mt-5'>
-                  <div className='hidden lg:flex-1 xl:flex-1 lg:block xl:block'>
-                    <ChartLabels name={'Deposits'} />
-                    <ChartLabels name={'Withdrawals'} />
-                    <ChartLabels name={'Swaps'} />
-                    <ChartLabels name={'Transfers'} />
-                  </div>
-                  <div className='flex-1' style={{ height: '267px' }}><BarChart labels={barLabels} datasets={barDataSet} options={barOptions} /></div>
-                </div>
+
+                <Row gutter={[16, 16]} className='mt-5' align='middle'>
+                  <Col xs={0} sm={0} md={24} lg={24} xl={8}>
+                    <div className='flex flex-row xl:flex-col gap-2'>
+                      <ChartLabels name={'Deposits'} />
+                      <ChartLabels name={'Withdrawals'} />
+                      <ChartLabels name={'Swaps'} />
+                      <ChartLabels name={'Transfers'} />
+                    </div>
+                  </Col>
+                  <Col xs={24} sm={24} md={24} lg={24} xl={16}>
+                    <div className='h-48'>
+                      <BarChart labels={barLabels} datasets={barDataSet} options={barOptions} />
+                    </div>
+                  </Col>
+                </Row>
               </BlockStyle>
             </div>
           </Col>
@@ -166,53 +196,54 @@ export default function Dashboard() {
       </section><br /><br /><br />
       <section>
         <Row gutter={[16, 16]}>
-          <Col xs={24} sm={24} md={8} lg={9} xl={9}>
+          <Col xs={24} sm={24} md={12} lg={12} xl={9}>
             <div>
-              <BlockStyle height='265px'>
+              <BlockStyle height='285px' padding='20px 30px'>
                 <ChartHeader label={'Total Customers'} amount={'3,950'} details />
-                <div className='flex items-center mt-2'>
-                  <div className='hidden flex-none lg:flex-1 xl:flex-1 lg:block xl:block '>
-                    <ChartLabels name={'Deposits'} />
-                    <ChartLabels name={'Withdrawals'} />
-                    <ChartLabels name={'Swaps'} />
-                    <ChartLabels name={'Transfers'} />
-                  </div>
-                  <div className='flex-none lg:flex-1 xl:flex-1 border border-red-950'>
-                    <DoughnutChart options={doughnutOptions} data={doughnutdata} />
-                  </div>
-                  {/* style={{ width: '150px' }} */}
-                </div>
+                <Row gutter={[16, 16]} className='mt-5' align='middle'>
+                  <Col xs={0} sm={0} md={24} lg={24} xl={12}>
+                    <div className='flex flex-row xl:flex-col gap-2 flex-wrap xl:flex-nowrap'>
+                      <ChartLabels name={'Deposits'} number={'1830'} />
+                      <ChartLabels name={'Withdrawals'} number={'1430'} />
+                      <ChartLabels name={'Swaps'} number={'830'} />
+                      <ChartLabels name={'Transfers'} number={'150'} />
+                    </div>
+                  </Col>
+                  <Col xs={24} sm={24} md={24} lg={24} xl={12}>
+                    <div>
+                      <DoughnutChart options={doughnutOptions} data={doughnutdata} />
+                    </div>
+                  </Col>
+                </Row>
               </BlockStyle>
             </div>
           </Col>
-          <Col xs={24} sm={24} md={8} lg={9} xl={9}>
+          <Col xs={24} sm={24} md={12} lg={12} xl={9}>
             <div>
-              <BlockStyle height='265px'>
-                <div className='flex justify-between'>
-                  {/* <ChartHeader tab items={items} /> */}
-                  <div className='ss' style={{ width: '100%' }}>
-                <CustomTab items={items} />
-            </div> 
+              <BlockStyle height='285px' padding='20px 30px' className='relative'>
+                <div className='revenue w-full px-3'>
+                  <CustomTab items={items} />
+                </div>
+                <div className='absolute top-3 md:top-4 lg:top-5 xl:top-5 right-2 lg:right-8 xl:right-8'>
                   <OneDateRange
                     selected={startDate}
                     onChange={onChange}
                     startDate={startDate}
                     endDate={endDate}
                     selectsRange
+                    showDateFilter
                     showPopperArrow={false}
-                    customInput={<ExampleCustomInput />}
+                    customInput={<ExampleCustomInputRef />}
                     onCalendarOpen={() => setChangeIcon(true)}
                     onCalendarClose={() => setChangeIcon(false)}
                   />
-                  {/* <p>gjg</p> */}
-                  {/* <p style={{ position: 'absolute', top: '15px', right: '20px' }}>Today</p> */}
                 </div>
               </BlockStyle>
             </div>
           </Col>
-          <Col xs={24} sm={24} md={8} lg={5} xl={5}>
+          <Col xs={24} sm={24} md={12} lg={10} xl={5}>
             <div>
-              <BlockStyle height='265px' padding='20px 10px'>
+              <BlockStyle height='285px' padding='20px 10px'>
                 <div className='flex justify-end'>
                   <OneDateRange
                     selected={startDate}
@@ -220,6 +251,7 @@ export default function Dashboard() {
                     startDate={startDate}
                     endDate={endDate}
                     selectsRange
+                    showDateFilter
                     showPopperArrow={false}
                     customInput={<ExampleCustomInput />}
                     onCalendarOpen={() => setChangeIcon(true)}
