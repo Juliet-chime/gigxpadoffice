@@ -1,139 +1,64 @@
-import { Select } from 'antd';
 import React from 'react'
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import { DateFilterStyle } from './style';
-import { allMonth, months} from '../../utils/helperFunctions';
+import { allMonth, getCurrentYear, getMonthName } from '../../utils/helperFunctions';
 import { generateYearsBetween } from '../../utils/func';
+import CustomReactSelect from '../fields/CustomReactSelect';
 
-const OneDateRange = ({children,...props}) => {
+const OneDateRange = ({ showDateFilter, children, ...props }) => {
 
-  const d = new Date();
-  let year = d.getFullYear()
-
-  const years = generateYearsBetween(1990, year)
+  const years = generateYearsBetween(1990, getCurrentYear())
 
 
-  const yearOptions = years.map((year) => {
-    // console.log(typeof year)
-    return {
-      value: year,
-      label: year,
+  const yearOptions = years.map((year) => ({
+    value: year,
+    label: year,
+  }))
 
-    }
-  })
+  const monthOptions = allMonth.map((month, i) => ({
+    value: i,
+    label: month,
+  }))
 
-  const monthOptions = allMonth.map((month) => {
-    const value = month.toLowerCase()
-    return {
-      value,
-      label: month,
-
-    }
-  })
-
-  console.log(monthOptions)
   return (
     <DatePicker
-      className='datePicker'
       showPopperArrow={false}
       renderCustomHeader={({
         date,
         changeYear,
         changeMonth,
-        decreaseMonth,
-        increaseMonth,
-        prevMonthButtonDisabled,
-        nextMonthButtonDisabled,
-      }) => (
-        <div
-          style={{
-            margin: 10,
-            display: "flex",
-            alignItems: 'center',
-            gap: '10px'
-          }}
-        >
-          <button onClick={decreaseMonth} disabled={prevMonthButtonDisabled}>
-            {"<"}
-          </button>
+      }) => {
 
-           {/* <Select
-            defaultValue={new Date().getFullYear()}
-            value={new Date(date).getFullYear()}
-            style={{
-              width: 80,
-            }}
 
-            onChange={(value) => {
-              console.log(value, 'year')
-            }}
+        const getYear = getCurrentYear(date)
+        const getMonth = getMonthName(date)
+
+        return <div className='flex items-center gap-2 m-2'>
+          <CustomReactSelect
             options={yearOptions}
-          /> */}
-
-          {/* <Select
-            defaultValue={allMonth[new Date(date).getMonth()]}
-            // value={months[new Date(date).getMonth()]}
-            style={{
-              width: 80,
+            placeholder={getYear}
+            onChange={({ value }) => {
+              console.log(value)
+              changeYear(value)
             }}
-            onChange={({ target: { value } }) => {
-              console.log(value, 'mon')
-              return changeMonth(value)
-            }
-            }
+          />
+
+          <CustomReactSelect
             options={monthOptions}
-          />   */}
-
-           <select
-          style={{
-            border: '1px solid #EEEEEE',
-            borderRadius: '5px',
-            padding:'5px'
-          }}
-            value={new Date(date).getYear()}
-            // value={getYear(date)}
-            onChange={({ target: { value } }) => {
-              console.log(value,'year')
-              return changeYear(value)
-            }}
-          >
-            {years.map((option) => (
-              <option key={option} value={option}>
-                {option}
-              </option>
-            ))}
-          </select> 
-
-           <select
-            value={months[new Date(date).getMonth()]}
-            // value={months[getMonth(date)]}
-            onChange={({ target: { value } }) => {
-              console.log(value,'mon')
-              return changeMonth(months.indexOf(value))
-            }
-            }
-          >
-            {months.map((option) => (
-              <option key={option} value={option}>
-                {option}
-              </option>
-            ))}
-          </select> 
-
-          <button onClick={increaseMonth} disabled={nextMonthButtonDisabled}>
-            {">"}
-          </button>
+            placeholder={getMonth}
+            onChange={(e, i) => { changeMonth(e.value) }}
+          />
         </div>
-      )}
+      }}
       {...props}
     >
-      <DateFilterStyle>
+      {showDateFilter ? <DateFilterStyle>
         <p>APPLY FILTER</p>
-        <p className='linethrough'/>
+        <p className='linethrough' />
         <p className='clear'>CLEAR FILTER</p>
-      </DateFilterStyle>
-        
+      </DateFilterStyle> : null}
+      {children}
     </DatePicker>
   );
 }

@@ -41,9 +41,10 @@ export const Days = [
 export const formatDate = (date, name) => {
   const d = date ? new Date(date) : new Date();
   const year = d.getFullYear();
-  const day = d.getDate();
+  let day = d.getDate();
   let monthNo = d.getMonth() + 1
   monthNo = monthNo <= 9 ? "0" + String(monthNo) : monthNo
+  day = day <= 9 ? "0" + String(day) : day
   const monthName = months[d.getMonth()];
   const formatted = name ? `${date} ${monthName}, ${year}` : monthNo + "/" + day + "/" + year;
   return formatted;
@@ -74,6 +75,13 @@ export const getYesterday = function () {
   yesterday.setDate(new Date().getDate() - 1);
   return yesterday;
 };
+
+export const getCurrentYear = function (date) {
+  const newDate = date ? new Date(date) : new Date();
+  let year = newDate.getFullYear()
+
+  return year
+}
 
 export const getNextDay = function (date) {
   const tomorrow = new Date(date);
@@ -126,7 +134,7 @@ export const getDaysBetween = function (from, to) {
 };
 
 export const getMonthName = function (date = new Date()) {
-  return months[new Date(date).getMonth()];
+  return allMonth[new Date(date).getMonth()];
 };
 
 export const isSameMonth = function (value, compare) {
