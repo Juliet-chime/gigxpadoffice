@@ -234,10 +234,6 @@ a {
   border: 1px solid #E4E4E4 !important;
 }
 
-.datePicker {
-  border: solid red !important;
-}
-
 .react-datepicker__header {
   text-align: center;
   background-color: #EFEFEF !important;
@@ -262,22 +258,12 @@ a {
 .react-datepicker__day--in-selecting-range {
   background-color: #E25A5A !important;
   border-radius: 50% !important;
+  border: none !important;
 }
 
 .react-datepicker__day--in-range {
   background-color: #E25A5A !important;
   border-radius: 50% !important;
-}
-
-.ss.ant-tabs .ant-tabs-tab {
-  padding: 5px 30px !important;
-}
-
-.ss.ant-tabs-tab-active {
-  border: none !important;
-  background: #FFFFFF !important;
-  border-radius: 17px !important;
-  border-bottom: none !important;
 }
 
 .ant-pagination .ant-pagination-item-active {
@@ -402,6 +388,41 @@ a {
 .ant-tabs-nav .ant-tabs-ink-bar-animated {
   border: solid 2px #E25A5A !important;
   border-radius: 4px;
+}
+
+.revenue .ant-tabs .ant-tabs-tab-btn {
+  color: #67777E !important;
+  padding: 2px;
+  font-size: 14px;
+}
+
+.revenue .ant-tabs .ant-tabs-tab {
+  padding: 3px 0px !important;
+}
+
+.revenue .ant-tabs .ant-tabs-tab.ant-tabs-tab-active .ant-tabs-tab-btn {
+  color: #E25A5A !important;
+  font-weight: normal;
+  font-size: 14px;
+  background-color: white;
+  padding: 5px 20px;
+  border-radius: 30px;
+}
+
+.revenue .ant-tabs-top>.ant-tabs-nav::before {
+  border-bottom: none;
+}
+
+.revenue .ant-tabs>.ant-tabs-nav .ant-tabs-nav-list {
+  background-color: #F2F3F4 !important;
+  border-radius: 30px;
+  padding: 0px 10px;
+}
+
+.revenue .ant-tabs-nav .ant-tabs-ink-bar-animated {
+  border: none !important;
+  border-radius: 0px;
+  width: 0px !important;
 }
 
 .limits .ant-tabs .ant-tabs-tab-btn {
@@ -529,38 +550,3 @@ a {
     padding: 3px !important;
   }
 }
-
-
-
-.wallet-table .ant-table-wrapper .ant-spin-nested-loading .ant-spin-container .ant-table .ant-table-container {
-  /* border: solid red !important; */
-}
-
-.ant-tabs .ant-tabs-tab.ant-tabs-tab-active {
-  /* border-bottom: solid red !important; */
-}
-
-/* .wallet-table .ant-table-wrapper .ant-table-thead>tr {
-  border: solid blue !important;
-} */
-
-.ant-tabs-tab-active {
-  /* border: none !important;
-  background: #FFFFFF !important; */
-  /* border-radius: 17px !important;
-  border-bottom: none !important; */
-}
-
-.ant-select-selector:active {
-  /* border: none !important; */
-}
-
-.ant-tabs .ant-tabs-tab.ant-tabs-tab-active .ant-tabs-tab-btn::after {
-  /* border: solid red !important; */
-  /* color: #1677ff;
-  text-shadow: 0 0 0.25px currentcolor; */
-}
-
-/* .ant-tabs-top>.ant-tabs-nav::before .ant-tabs-tab-active {
-  border: solid red !important;
-} */
