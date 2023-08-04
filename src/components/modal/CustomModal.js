@@ -1,10 +1,10 @@
 import { Modal } from 'antd'
 import React from 'react'
 
-const CustomModal = ({children, ...props}) => {
+const CustomModal = ({ children, ...props }) => {
   return (
     <Modal {...props}>
-        {children}
+      {children}
     </Modal>
   )
 }
