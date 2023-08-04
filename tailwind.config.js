@@ -50,7 +50,8 @@ module.exports = {
         'fieldAsh': '#F2F6F7',
         'ash-3': '#e4e4e4',
         'black-200': '#04151D',
-        'green-50': '#E7F1F2'
+        'green-50': '#E7F1F2',
+        'borderColor': '#EFEFEF'
       },
 
     },

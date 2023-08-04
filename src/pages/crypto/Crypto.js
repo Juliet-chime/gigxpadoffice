@@ -128,6 +128,7 @@ const Crypto = () => {
             customInput={<ExampleCustomInput />}
             onCalendarOpen={() => setChangeIcon(true)}
             onCalendarClose={() => setChangeIcon(false)}
+            showDateFilter
           />
         </div>
       </div>
