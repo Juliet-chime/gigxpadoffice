@@ -12,8 +12,7 @@ import { IoIosLock } from 'react-icons/io'
 
 const CustomersDetails = () => {
 
-    const params = useParams()
-    console.log(params)
+    // const params = useParams()
 
     const onChange = (key) => {
         console.log(key);
@@ -21,7 +20,6 @@ const CustomersDetails = () => {
 
     const [isModalOpen, setIsModalOpen] = useState(false);
     const showModal = (e) => {
-        console.log(e)
         setIsModalOpen(true);
     };
     const handleOk = () => {

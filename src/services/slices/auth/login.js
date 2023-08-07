@@ -1,56 +1,46 @@
-import { createSlice } from "@reduxjs/toolkit";
-import makeAPICall from "../../../utils/apiUtils";
-// import history from "../../history";
-// import { AUTH_TOKEN, REDIRECT_URL } from "../../../utils/constants";
-import { message } from "antd";
+import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import { makeApiRequest } from "../../baseApi";
+import { loginUser } from "../../apis";
+import { setAuth } from "../../../utils/authFunc";
 
 const initialState = {
   loading: false,
-  hasErrors: null,
+  error: null,
   user: {},
 };
+
+export const queryUserLogin = createAsyncThunk('loginUser', async (data) => {
+  try {
+    const response = await makeApiRequest('post', loginUser(), data)
+    return response.data
+  } catch (e) {
+    console.log(e)
+  }
+})
 
 export const loginSlice = createSlice({
   name: "login",
   initialState,
-  reducers: {
-    getApp: (state = initialState) => {
-      state.loading = true;
-    },
-    getAppSuccess: (state, { payload }) => {
-      state.user = payload;
-      state.loading = false;
-    },
-    getAppFailure: (state, { payload }) => {
-      state.loading = false;
-      state.hasErrors = payload;
-    },
-  },
+  reducers: {},
+  extraReducers: (builder) => {
+    builder
+      .addCase(queryUserLogin.pending, (state) => {
+        state.loading = true;
+      })
+      .addCase(queryUserLogin.fulfilled, (state, { payload }) => {
+        state.loading = false;
+        state.user = payload;
+        setAuth('token', payload?.accessToken)
+      })
+      .addCase(queryUserLogin.rejected, (state, { payload }) => {
+        state.loading = false;
+        state.error = payload;
+      });
+  }
 });
-
-// Three actions generated from the slice
-const { getApp, getAppSuccess, getAppFailure } = loginSlice.actions;
 
 // A selector
 export const getLoginSelector = (state) => state.login;
 
 // The reducer
 export default loginSlice.reducer;
-
-// api call action
-export const loginUser = (data) => (dispatch) => {
-  dispatch(getApp());
-  return makeAPICall({
-    path: "/auth/login/",
-    payload: data,
-    method: "POST",
-  })
-    .then((res) => {
-      console.log(res, "login successful");
-      dispatch(getAppSuccess(res));
-    })
-    .catch((err) => {
-      message.error(err.message, 5);
-      dispatch(getAppFailure(err));
-    });
-};

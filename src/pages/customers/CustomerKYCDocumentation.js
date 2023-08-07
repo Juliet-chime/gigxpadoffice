@@ -46,7 +46,6 @@ const CustomerKYCDocumentation = () => {
             dataIndex: ['title', 'type'],
             key: 'title',
             render: (_, title) => {
-                console.log(title)
                 return <div className='flex items-center gap-4'>
                     <div>
                         <img src={title.type === 'pdf' ? pdf : title.type === 'jpg' ? img : null} alt='' />

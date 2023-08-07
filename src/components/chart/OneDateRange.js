@@ -39,7 +39,6 @@ const OneDateRange = ({ showDateFilter, children, ...props }) => {
             options={yearOptions}
             placeholder={getYear}
             onChange={({ value }) => {
-              console.log(value)
               changeYear(value)
             }}
           />

@@ -25,8 +25,6 @@ const makeAPICall = async (
     ...customConfigs,
   };
 
-  // return console.log(configs);
-
   if (payload) configs.body = JSON.stringify(payload);
 
   let url = new window.URL(`${baseURL}${path}`);
@@ -68,7 +66,6 @@ const makeAPICall = async (
         }
 
         let error = new Error(errorMessage);
-        // console.log(error, "test");
         if (data.code === "token_not_valid" || error === "Token is invalid or expired") {
           //destroy client auth details and log user out
           logout();

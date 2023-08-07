@@ -7,7 +7,6 @@ import QuidaxContent from './accordionContent/QuidaxContent';
 
 const Wallets = () => {
   const onChange = (key) => {
-    console.log(key);
   };
 
   const text = `
@@ -56,7 +55,6 @@ const Wallets = () => {
           onChange={onChange}
           expandIconPosition={'end'}
           expandIcon={(panelProps) => {
-            console.log(panelProps)
             return panelProps.isActive
               ? <PiCaretUp color={color.mainColor} /> : <PiCaretDown color={color.mainColor} />
           }}
