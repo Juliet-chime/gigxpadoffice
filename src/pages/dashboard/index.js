@@ -36,8 +36,6 @@ export default function Dashboard() {
 
     const today = formatDate()
 
-    console.log({ newDate, today })
-
     return (
       <p onClick={onClick} ref={ref} className={'rounded-large border border-dateLine py-3 px-3 cursor-pointer flex items-center gap-2 text-mainColor text-sm font-medium '}>
         {newDate === today ? `Today` : value} {newDate === today ? changeIcon ? <PiCaretUp className='text-mainColor text-xl font-medium' /> : <PiCaretDown className='text-mainColor text-xl font-medium' /> : null}
@@ -99,7 +97,7 @@ export default function Dashboard() {
           <Col xs={24} sm={24} md={6} lg={6} xl={6}>
             <div>
 
-              <Blocks radius='71px' bg={color.blockBg} flex>
+              <Blocks radius='71px' bg={color.blockBg} flex={true}>
                 <Link to='/wallets'>
                   <div style={{ display: 'flex', alignItems: 'center', gap: '2px' }}>
                     <p>See all Wallets</p>

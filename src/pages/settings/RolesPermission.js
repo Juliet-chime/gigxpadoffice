@@ -22,7 +22,6 @@ const RolesPermission = () => {
 
 
   const showModal = (e) => {
-    console.log(e)
     setIsModalOpen(true);
   };
   const handleOk = () => {
