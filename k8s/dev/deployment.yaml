@@ -64,8 +64,8 @@ spec:
               cpu: 100m
               memory: 2Gi
           imagePullPolicy: Always
-          #envFrom:
-            #- secretRef:
-                #name: gigxpad-bko-dev-secret
+          envFrom:
+            - secretRef:
+                name: gigxpad-bko-dev-secret
       imagePullSecrets:
-        - name: xpad-bko-secret
+        - name: gigxpad-bko-dev-secret
