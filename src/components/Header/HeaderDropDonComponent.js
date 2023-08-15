@@ -4,10 +4,16 @@ import { color } from '../../assets/color'
 
 
 const ComponentStyle = styled.div`
+.text-display{
 display: flex;
 align-items: center;
-gap: 10px;
-margin:${props => props.margin || '0px 0px 10px 0px'};
+justify-content: space-between;
+margin:${props => props.margin || '0px 0px 5px 0px'};
+background-color: ${props => props.bg};
+padding: ${props => props.padding || '5px'};
+border-radius: ${props => props.radius};
+border : ${props => props.border}
+}
 p{
     font-family: 'Rubik', sans-serif;
     font-size: 14px;
@@ -15,14 +21,21 @@ p{
 }
 `
 
-const HeaderDropDonComponent = ({ icon, label, ...props }) => {
+const HeaderDropDownComponent = ({ icon, label, closeIcon, children, ...props }) => {
   const Icon = icon
+  const CloseIcon = closeIcon
   return (
     <ComponentStyle {...props}>
-      <Icon />
+     <div className='text-display'>
+     <div className='flex items-center gap-3'>
+     <Icon />
       <p>{label}</p>
+     </div>
+     {closeIcon ? <CloseIcon className='text-mainColor text-sm font-medium'/> : null}
+     </div>
+      {children}
     </ComponentStyle>
   )
 }
 
-export default HeaderDropDonComponent
+export default HeaderDropDownComponent

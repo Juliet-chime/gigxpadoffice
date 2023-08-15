@@ -79,24 +79,24 @@ export default function Dashboard() {
         <Row
           gutter={[16, 16]}
         >
-          <Col xs={24} sm={24} md={12} lg={6} xl={6}>
+          <Col xs={24} sm={24} md={6} lg={6} xl={6}>
             <div>
               <Blocks name='Quidax' bigAmount={'₦3,204,490'} smallAmount={'6,448'} curreny={'USD'} padding='30px' />
             </div>
           </Col>
-          <Col xs={24} sm={24} md={12} lg={6} xl={6}>
-            <div>
-
-              <Blocks name='Quidax' bigAmount={'₦3,204,490'} smallAmount={'6,448'} curreny={'USD'} padding='30px' />
-            </div>
-          </Col>
-          <Col xs={24} sm={24} md={12} lg={6} xl={6}>
+          <Col xs={24} sm={24} md={6} lg={6} xl={6}>
             <div>
 
               <Blocks name='Quidax' bigAmount={'₦3,204,490'} smallAmount={'6,448'} curreny={'USD'} padding='30px' />
             </div>
           </Col>
-          <Col xs={24} sm={24} md={12} lg={6} xl={6}>
+          <Col xs={24} sm={24} md={6} lg={6} xl={6}>
+            <div>
+
+              <Blocks name='Quidax' bigAmount={'₦3,204,490'} smallAmount={'6,448'} curreny={'USD'} padding='30px' />
+            </div>
+          </Col>
+          <Col xs={24} sm={24} md={6} lg={6} xl={6}>
             <div>
 
               <Blocks radius='71px' bg={color.blockBg} flex>
