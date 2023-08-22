@@ -29,7 +29,7 @@ font-weight:bold;
 font-size: 30px;
 font-family: CabinetGrotesk;
 color: ${color.mainColor};
-max-width: ${props => props.maxWidth || '296px'};
+max-width: ${props => props.maxwidth || '296px'};
 margin-bottom: 6px;
 letter-spacing: 0px;
 }

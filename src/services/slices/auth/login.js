@@ -30,7 +30,6 @@ export const loginSlice = createSlice({
       .addCase(queryUserLogin.fulfilled, (state, { payload }) => {
         state.loading = false;
         state.user = payload;
-        setAuth('token', payload?.accessToken)
       })
       .addCase(queryUserLogin.rejected, (state, { payload }) => {
         state.loading = false;

@@ -2,4 +2,8 @@ const loginUser = () => {
     return `/admins/auth/login`;
 };
 
-export { loginUser }
+const setPassword = () => {
+    return `/admins/auth/set-password`;
+};
+
+export { loginUser,setPassword }

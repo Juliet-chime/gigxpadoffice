@@ -8,12 +8,13 @@ const API_KEY = process.env.REACT_APP_PUBLIC_API_KEY;
 const REQUEST_TIMEOUT = 60000;
 
 const token = getAuth('token');
+const newUserToken = getAuth('newUserToken');
 
 const headers = {
     'Content-Type': 'application/json',
     Accept: 'application/json',
     'x-api-key': API_KEY,
-    Authorization: `Bearer ${token}`
+    Authorization: `Bearer ${token || newUserToken}`
 };
 
 const instance = axios.create({

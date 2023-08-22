@@ -4,7 +4,7 @@ import { Col, Row } from 'antd'
 import gpad from '../../assets/images/logo/XPADLOGO.svg'
 import { IoMdLock } from 'react-icons/io'
 
-const NonAuthLayout = ({ children, title, subText, image, lock, width, maxWidth, spanWidth }) => {
+const NonAuthLayout = ({ children, title, subText, image, lock, width, maxwidth, spanWidth }) => {
   return (
     <LayoutContainer>
       <Row>
@@ -28,7 +28,7 @@ const NonAuthLayout = ({ children, title, subText, image, lock, width, maxWidth,
             }
           </LogoLock>
 
-          <LayoutChildwrapper width={width} maxWidth={maxWidth} lock={lock} spanWidth={spanWidth}>
+          <LayoutChildwrapper width={width} maxwidth={maxwidth} lock={lock} spanWidth={spanWidth}>
             {title ? <h1>{title}</h1> : null}
             {subText ? <p>{subText}</p> : null}
             {children}
