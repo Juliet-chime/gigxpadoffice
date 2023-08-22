@@ -10,12 +10,14 @@ import Wallets from "../pages/wallets/Wallets"
 import AccessPage from "../pages/auth/access"
 import AccessLogin from "../pages/auth/accessLogin/AccessLogin"
 import CustomersDetails from "../pages/customers/CustomersDetails"
+import TwoFactorAuthentication from "../pages/auth/2fa"
 
 const routes = [
     // public Routes
     { path: '/', component: Login, ispublic: true },
     { path: '/access', component: AccessPage, ispublic: true },
     { path: '/accesslogin', component: AccessLogin, ispublic: true },
+    {path: '/2FA', component: TwoFactorAuthentication, ispublic:true},
 
 
     //private Routes

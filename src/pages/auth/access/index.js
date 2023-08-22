@@ -12,7 +12,7 @@ const AccessPage = () => {
     <div>
       <NonAuthLayout
         image={accessBg}
-        maxWidth={"448px"}
+        maxwidth={"448px"}
         show={show}
         lock={show}
         spanWidth="340px"
