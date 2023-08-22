@@ -40,7 +40,6 @@ export default function NavHeader() {
         <div className="notification-holder">
           <Dropdown
             dropdownRender={(menus) => {
-              console.log(menus)
               return <div className="shadow-lg rounded-md px-2 py-2 w-48 z-50 bg-white">
                 <NotificationItem title={'User invite accepted'} text={'56 minutes ago'} icon />
                 <NotificationItem title={'New Request Received'} text={'3 days ago'} />
@@ -62,7 +61,6 @@ export default function NavHeader() {
         <div className="user-wrapper">
           <Dropdown
             dropdownRender={(menus) => {
-              console.log(menus)
               return <div className="shadow-lg rounded-md px-1 py-2 bg-white">
                 <HeaderDropDownComponent icon={RxPerson} label={'My Profile'} />
                 <HeaderDropDownComponent icon={PiCurrencyDollarSimple} label={'Currency'} className='cursor-pointer' radius='4px' bg={openMenu ? '#ECF6F7' : ''} onClick={() => setOpenMenu(!openMenu)} closeIcon={openMenu ? PiCaretUp : PiCaretDown}>

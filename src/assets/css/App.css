@@ -535,11 +535,11 @@ a {
   padding: 0px !important;
 }
 
-.anticon svg {
+/* .anticon svg {
   color: #1D3C48;
   font-weight: bold;
   font-size: 16px;
-}
+} */
 
 @media only screen and (max-width: 1024px) {
   .nav-area .ant-layout-sider {
