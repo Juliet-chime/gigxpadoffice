@@ -83,7 +83,6 @@ const UserManagement = ({ setAddUser }) => {
             dataIndex: '',
             key: '',
             render: (_, record) => {
-                console.log(record, 'rerere')
                 return (
                     <div>
                         <Dropdown

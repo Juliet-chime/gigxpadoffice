@@ -45,7 +45,6 @@ const GlobalConfiguration = () => {
         onChange={onChange}
         expandIconPosition={'end'}
         expandIcon={(panelProps) => {
-          console.log(panelProps)
           return panelProps.isActive
             ? <PiCaretUp color={color.mainColor} /> : <PiCaretDown color={color.mainColor} />
         }}
