@@ -2,8 +2,8 @@ import axios from 'axios';
 import { getAuth } from '../utils/authFunc';
 
 /* eslint-disable no-undef */
-const API_URL = process.env.REACT_APP_BASE_API_URL;
-const API_KEY = process.env.REACT_APP_X_API_KEY;
+const API_URL = process.env.REACT_APP_PUBLIC_API_URL;
+const API_KEY = process.env.REACT_APP_PUBLIC_API_KEY;
 
 const REQUEST_TIMEOUT = 60000;
 

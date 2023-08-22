@@ -1,5 +1,5 @@
 const loginUser = () => {
-    return `/admin/auth/login`;
+    return `/admins/auth/login`;
 };
 
 export { loginUser }
