@@ -7,7 +7,7 @@ const getAuth = (name) => {
     if (data == null) {
         return false;
     } else {
-        data = JSON.parse(data);
+        // data = data;
         return data;
     }
 };
