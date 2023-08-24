@@ -1,7 +1,6 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { makeApiRequest } from "../../baseApi";
 import { loginUser } from "../../apis";
-import { setAuth } from "../../../utils/authFunc";
 
 const initialState = {
   loading: false,
@@ -9,12 +8,12 @@ const initialState = {
   user: {},
 };
 
-export const queryUserLogin = createAsyncThunk('loginUser', async (data) => {
+export const queryUserLogin = createAsyncThunk('loginUser', async (data, { rejectWithValue }) => {
   try {
     const response = await makeApiRequest('post', loginUser(), data)
-    return response.data
+    return response
   } catch (e) {
-    console.log(e)
+    return rejectWithValue(e)
   }
 })
 
@@ -31,9 +30,9 @@ export const loginSlice = createSlice({
         state.loading = false;
         state.user = payload;
       })
-      .addCase(queryUserLogin.rejected, (state, { payload }) => {
+      .addCase(queryUserLogin.rejected, (state, action) => {
         state.loading = false;
-        state.error = payload;
+        state.error = action.payload;
       });
   }
 });

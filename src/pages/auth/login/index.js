@@ -8,7 +8,7 @@ import {
 } from "@ant-design/icons";
 import CheckField from "../../../components/fields/CheckField";
 import { color } from "../../../assets/color";
-import CustomButton, { CustomFormikButton } from "../../../components/fields/CustomButton";
+import { CustomFormikButton } from "../../../components/fields/CustomButton";
 import signBg from "../../../assets/images/signBg.png";
 import signBg1 from "../../../assets/images/signBg1.png";
 import PasswordChecklist from "react-password-checklist";
@@ -21,7 +21,6 @@ import { queryUserLogin } from "../../../services/slices/auth/login";
 import * as Yup from 'yup'
 import CustomFormikField from "../../../components/fields/CustomFormikField";
 import ErrorField from "../../../components/fields/ErrorField";
-import { setAuth } from "../../../utils/authFunc";
 import { querySetPassword } from "../../../services/slices/auth/setpassword";
 
 export default function Login() {
@@ -43,14 +42,14 @@ export default function Login() {
 
   const resetSchema = Yup.object({
     password: Yup.string()
-    .required('Please enter your new password')
-    .matches(
-      /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?.&])[A-Z\d@$!%*#?.&]{8,}$/,
-      'Password must Contain 8 Characters, One Uppercase, One Lowercase, One Number and one special case Character'
-    ),
-  confirmPassword: Yup.string()
-    .required('Please confirm your password')
-    .oneOf([Yup.ref('password'), null], 'Password must match'),
+      .required('Please enter your new password')
+      .matches(
+        /^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$/,
+        'Password must Contain 8 Characters, One Uppercase, One Lowercase, One Number and one special case Character'
+      ),
+    confirmPassword: Yup.string()
+      .required('Please confirm your password')
+      .oneOf([Yup.ref('password'), null], 'Password must match'),
   })
 
 
@@ -60,44 +59,40 @@ export default function Login() {
       password: values?.password
     }
 
-    try {
-      const res = await dispatch(queryUserLogin(data))
-
-       console.log(res)
-
-      if(res?.payload?.passwordChanged === false ){
-        setAuth('newUserToken', res?.payload?.accessToken)
-        setShow(true)
-      }
-      else{
-        if(res?.payload?.message === msg) {
-          navigate('/2FA')
-        } else{
-          setAuth('token', res?.payload?.accessToken)
-          navigate('/dashboard')
+    dispatch(queryUserLogin(data))
+      .unwrap()
+      .then((res) => {
+        if (res?.data?.data?.passwordChanged === false) {
+          window.localStorage.setItem('newUserToken', res?.data?.accessToken)
+          setShow(true)
         }
-      
-      }
-    } catch (e) {
-      throw e
-    }
+
+        else {
+          if (res?.data?.message === msg) {
+            navigate('/2FA', { state: { email: values?.email } })
+          } else {
+            window.localStorage.setItem('authToken', res?.data?.accessToken)
+            navigate('/dashboard')
+          }
+        }
+      }).catch((e) => {
+        console.log(e, 'erroroooe');
+      })
   }
 
   const onSetPassword = async (values) => {
     const data = {
       password: values?.password,
       confirmPassword: values?.confirmPassword
-  }
-
+    }
     try {
-      const res = await dispatch(querySetPassword(data))
-      const {status}=  res?.payload
-
-      if(status === 'success'){
+      const res = await dispatch(querySetPassword(data)).unwrap()
+      if (res?.data?.status === 'success') {
+        localStorage.removeItem("newUserToken")
         setShow(false)
       }
-    } catch(e){
-throw e
+    } catch (e) {
+      console.log(e)
     }
   }
 
@@ -124,18 +119,17 @@ throw e
                 onSubmit={onSetPassword}
                 validationSchema={resetSchema}
               >
-                {({ handleChange, handleSubmit, isSubmitting, errors, values }) => 
-                {
+                {({ handleChange, handleSubmit, isSubmitting, errors, values }) => {
+               
                   const { password, confirmPassword } = errors
-
                   return (
-                    <Form>
+                    <Form onSubmit={handleSubmit}>
                       <CustomFormikField
                         value={values.password}
-                        name='password'
                         type={"password"}
                         placeholder="New Password"
                         className="inputstyle"
+                        name='password'
                         onChange={handleChange}
                       />
                       {password ? <ErrorField error={password} /> : null}
@@ -143,10 +137,10 @@ throw e
                       <br />
                       <CustomFormikField
                         type={"password"}
-                        name='confirmPassword'
                         value={values.confirmPassword}
                         placeholder="Retype Password"
                         className="inputstyle"
+                        name='confirmPassword'
                         onChange={handleChange}
                       />
                       {confirmPassword ? <ErrorField error={confirmPassword} /> : null}
@@ -171,8 +165,14 @@ throw e
                       />
                       <br />
                       <br />
-                      <CustomButton bg={color.secondaryColor} text="Log In" onClick={() => navigate("/dashboard")} />
-                    </Form>)
+                      <CustomFormikButton
+                        bg={color.secondaryColor}
+                        text="Submit"
+                        type='submit'
+                        disabled={isSubmitting}
+                      />
+                    </Form>
+                  )
                 }
                 }
               </Formik>
@@ -184,7 +184,7 @@ throw e
                 onSubmit={onHandleSubmit}
                 validationSchema={validationSchema}
               >
-                {({ handleChange, handleSubmit, isSubmitting, errors, values}) => {
+                {({ handleChange, handleSubmit, isSubmitting, errors, values }) => {
                   const { email, password } = errors
                   return (
                     <Form onSubmit={handleSubmit}>

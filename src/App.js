@@ -1,4 +1,4 @@
-import React from "react";
+import React,{useEffect} from "react";
 import 'antd/dist/reset.css';
 import "./assets/css/App.css";
 import "./assets/fonts/font.css"
@@ -11,6 +11,7 @@ import store, { persistor } from "./services/store";
 import './services/baseApi'
 
 function App() {
+
   return <Provider store={store}>
     <PersistGate loading={null} persistor={persistor}>
       <AllPages />

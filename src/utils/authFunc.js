@@ -1,15 +1,29 @@
 const setAuth = (name, data) => {
-    localStorage.setItem(name, JSON.stringify(data));
+    console.log(data, 'settt')
+    localStorage.setItem(name, data);
 };
 
 const getAuth = (name) => {
-    let data = localStorage.getItem(name);
-    if (data == null) {
-        return false;
-    } else {
-        // data = data;
-        return data;
+    try {
+        return localStorage.getItem(name);
+    } catch (e) {
+        console.error('Could not get token:', e);
+        return null;
     }
 };
 
-export { setAuth, getAuth }
+
+const removeAuth = (name) => {
+    try {
+        return localStorage.removeItem(name);
+    } catch (e) {
+        console.error('Could not remove token:', e);
+        return null;
+    }
+};
+
+const clearLocalStorage = () => {
+    localStorage.clear();
+};
+
+export { setAuth, getAuth, removeAuth, clearLocalStorage }
