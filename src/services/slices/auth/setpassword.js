@@ -8,12 +8,12 @@ const initialState = {
   message: {},
 };
 
-export const querySetPassword = createAsyncThunk('setPassword', async (data) => {
+export const querySetPassword = createAsyncThunk('setPassword', async (data,{rejectWithValue}) => {
   try {
     const response = await makeApiRequest('post', setPassword(), data)
-    return response.data
+    return response
   } catch (e) {
-    console.log(e)
+    return rejectWithValue(e)
   }
 })
 

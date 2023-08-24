@@ -7,9 +7,17 @@ import { Form } from 'formik-antd';
 import * as Yup from 'yup'
 import { CustomFormikButton } from '../../../components/fields/CustomButton';
 import { color } from '../../../assets/color';
+import ErrorField from '../../../components/fields/ErrorField';
+import { useLocation, useNavigate } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
+import { query2FA } from '../../../services/slices/auth/2fa';
 
 const TwoFactorAuthentication = () => {
     const faValues = { pin: '' }
+
+    const navigate = useNavigate()
+    const dispatch = useDispatch()
+    const location = useLocation()
 
     const validationSchema = Yup.object({
         pin: Yup.string()
@@ -20,8 +28,22 @@ const TwoFactorAuthentication = () => {
     })
 
 
-    const onHandleSubmit = (values) => {
-        console.log('fgh', values)
+    const onHandleSubmit = async (values) => {
+        const data = {
+            email: location?.state?.email,
+            code: values?.pin
+        }
+
+        try {
+            const res = await dispatch(query2FA(data)).unwrap()
+
+            if (res?.status === "success") {
+                window.localStorage.setItem('authToken', res?.data?.accessToken)
+                navigate('/dashboard')
+            }
+        } catch (e) {
+            console.log(e)
+        }
     }
     return (
         <div>
@@ -35,7 +57,7 @@ const TwoFactorAuthentication = () => {
                     "Please enter authentication code."
                 }
             >
-                <div className='mt-6'>
+                <div className='mt-10'>
                     <Formik
                         initialValues={faValues}
                         onSubmit={onHandleSubmit}
@@ -44,14 +66,17 @@ const TwoFactorAuthentication = () => {
                         validateOnMount={false}
                     >
                         {({ handleSubmit, errors, isSubmitting }) => {
+
+                            const { pin } = errors
                             return (
                                 <Form className="" onSubmit={handleSubmit}>
-                                    <div className="mb-2">
+                                    <div className="mb-10">
                                         <PinInputField
                                             length={6}
                                             type="numeric"
                                             name="pin"
                                         />
+                                        {pin ? <ErrorField error={pin} /> : null}
                                     </div>
 
                                     <CustomFormikButton
