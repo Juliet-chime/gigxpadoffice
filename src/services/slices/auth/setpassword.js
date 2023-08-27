@@ -8,17 +8,17 @@ const initialState = {
   message: {},
 };
 
-export const querySetPassword = createAsyncThunk('setPassword', async (data,{rejectWithValue}) => {
+export const querySetPassword = createAsyncThunk('setPassword/querySetPassword ', async (data,{rejectWithValue}) => {
   try {
     const response = await makeApiRequest('post', setPassword(), data)
-    return response
-  } catch (e) {
-    return rejectWithValue(e)
+    return response.data
+  } catch (err) {
+    return rejectWithValue(err.response.data)
   }
 })
 
 export const setPasswordSlice = createSlice({
-  name: "setpassword",
+  name: "setPassword",
   initialState,
   reducers: {},
   extraReducers: (builder) => {

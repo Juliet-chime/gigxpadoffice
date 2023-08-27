@@ -4,7 +4,8 @@ import DashBoardLayout from "../components/Backbone";
 
 function PrivateRoute({ children }) {
 
-  const token = window.localStorage.getItem('authToken')
+  const token = localStorage.getItem('authToken')
+  console.log(token)
   return token ? <DashBoardLayout>
     {children}
   </DashBoardLayout> : <Navigate to="/" />;

@@ -8,17 +8,17 @@ const initialState = {
   user: {},
 };
 
-export const queryUserLogin = createAsyncThunk('loginUser', async (data, { rejectWithValue }) => {
+export const queryUserLogin = createAsyncThunk('loginUser/queryUserLogin', async (data, { rejectWithValue }) => {
   try {
     const response = await makeApiRequest('post', loginUser(), data)
-    return response
-  } catch (e) {
-    return rejectWithValue(e)
+    return response.data
+  } catch (err) {
+    return rejectWithValue(err.response.data)
   }
 })
 
 export const loginSlice = createSlice({
-  name: "login",
+  name: "loginUser",
   initialState,
   reducers: {},
   extraReducers: (builder) => {
@@ -30,9 +30,9 @@ export const loginSlice = createSlice({
         state.loading = false;
         state.user = payload;
       })
-      .addCase(queryUserLogin.rejected, (state, action) => {
+      .addCase(queryUserLogin.rejected, (state, {payload}) => {
         state.loading = false;
-        state.error = action.payload;
+        state.error = payload;
       });
   }
 });

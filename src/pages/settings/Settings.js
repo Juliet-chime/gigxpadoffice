@@ -28,7 +28,7 @@ const Settings = () => {
       }
     }
     
-fetchRoles()
+     fetchRoles()
   }, [dispatch])
   
   const items = [
