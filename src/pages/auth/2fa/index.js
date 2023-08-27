@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import NonAuthLayout from '../../../components/layout/NonAuthLayout'
 import signBg from "../../../assets/images/signBg.png";
 import PinInputField from '../../../components/fields/PinInputField';
@@ -11,6 +11,7 @@ import ErrorField from '../../../components/fields/ErrorField';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { query2FA } from '../../../services/slices/auth/2fa';
+import { Alert } from 'antd';
 
 const TwoFactorAuthentication = () => {
     const faValues = { pin: '' }
@@ -18,6 +19,12 @@ const TwoFactorAuthentication = () => {
     const navigate = useNavigate()
     const dispatch = useDispatch()
     const location = useLocation()
+
+    const [error, setError] = useState('')
+
+    const onCloseAlert = (e) => {
+        setError('')
+    };
 
     const validationSchema = Yup.object({
         pin: Yup.string()
@@ -38,15 +45,25 @@ const TwoFactorAuthentication = () => {
             const res = await dispatch(query2FA(data)).unwrap()
 
             if (res?.status === "success") {
-                window.localStorage.setItem('authToken', res?.data?.accessToken)
+                localStorage.setItem('authToken', res?.data?.accessToken)
                 navigate('/dashboard')
             }
         } catch (e) {
             console.log(e)
+            if (e?.success === false) {
+                setError(e?.errorMessage)
+            }
         }
     }
     return (
         <div>
+            {error?.length > 0 ? <div className="loginalert">
+                <Alert
+                    message={error}
+                    type="error"
+                    closable
+                    onClose={onCloseAlert} />
+            </div> : null}
             <NonAuthLayout
                 maxwidth='350px'
                 image={signBg}

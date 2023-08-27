@@ -8,10 +8,10 @@ const initialState = {
   role: {},
 };
 
-export const queryRoles = createAsyncThunk('getRoles', async () => {
+export const queryRoles = createAsyncThunk('getRoles/queryRoles', async () => {
   try {
     const response = await makeApiRequest('get', getRoles())
-    return response
+    return response.data
   } catch (e) {
     console.log(e)
   }

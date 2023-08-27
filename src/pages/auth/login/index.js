@@ -22,12 +22,14 @@ import * as Yup from 'yup'
 import CustomFormikField from "../../../components/fields/CustomFormikField";
 import ErrorField from "../../../components/fields/ErrorField";
 import { querySetPassword } from "../../../services/slices/auth/setpassword";
+import { Alert } from "antd";
 
-export default function Login() {
+function Login(props) {
   const navigate = useNavigate()
   const dispatch = useDispatch()
 
   const [show, setShow] = useState(false);
+  const [error, setError] = useState('');
 
   const initialValues = { email: '', password: '' }
 
@@ -52,6 +54,9 @@ export default function Login() {
       .oneOf([Yup.ref('password'), null], 'Password must match'),
   })
 
+  const onCloseLoginAlert = (e) => {
+    setError('')
+  };
 
   const onHandleSubmit = async (values) => {
     const data = {
@@ -59,27 +64,54 @@ export default function Login() {
       password: values?.password
     }
 
-    dispatch(queryUserLogin(data))
-      .unwrap()
-      .then((res) => {
-        if (res?.data?.data?.passwordChanged === false) {
-          window.localStorage.setItem('newUserToken', res?.data?.accessToken)
-          setShow(true)
+    try {
+      const res = await dispatch(queryUserLogin(data)).unwrap()
+      if (res?.data?.passwordChanged === false) {
+        const newUserToken = res?.accessToken
+        localStorage.setItem('newUserToken', newUserToken)
+        setShow(true)
+      }
+      else {
+        if (res?.message === msg) {
+          navigate('/2FA', { state: { email: values?.email } })
+        } else {
+          const token = res?.accessToken
+          localStorage.setItem('authToken', token)
+          navigate('/dashboard')
         }
+      }
+    } catch (e) {
+      if (e?.success === false) {
+        setError(e?.errorMessage)
+      }
+    }
 
-        else {
-          if (res?.data?.message === msg) {
-            navigate('/2FA', { state: { email: values?.email } })
-          } else {
-            window.localStorage.setItem('authToken', res?.data?.accessToken)
-            navigate('/dashboard')
-          }
-        }
-      }).catch((e) => {
-        console.log(e, 'erroroooe');
-      })
+    // dispatch(queryUserLogin(data))
+    //   .unwrap()
+    //   .then((res) => {
+    //     if (res?.data?.passwordChanged === false) {
+    //       const newUserToken = res?.accessToken
+    //       localStorage.setItem('newUserToken', newUserToken)
+    //       setShow(true)
+    //     }
+
+    //     else {
+    //       if (res?.message === msg) {
+    //         navigate('/2FA', { state: { email: values?.email } })
+    //       } else {
+    //         const token = res?.accessToken
+    //         localStorage.setItem('authToken', token)
+    //         navigate('/dashboard')
+    //       }
+    //     }
+    //   })
+    //   .catch((e) => {
+    //     console.log(e)
+    //     // if(e?.response?.status === 400){
+    //     //   setError(e?.response?.data?.errorMessage)
+    //     // }
+    //   })
   }
-
   const onSetPassword = async (values) => {
     const data = {
       password: values?.password,
@@ -87,17 +119,28 @@ export default function Login() {
     }
     try {
       const res = await dispatch(querySetPassword(data)).unwrap()
-      if (res?.data?.status === 'success') {
+      if (res?.status === 'success') {
         localStorage.removeItem("newUserToken")
         setShow(false)
       }
-    } catch (e) {
+    }
+    catch (e) {
       console.log(e)
+      if (e?.success === false) {
+        setError(e?.errorMessage)
+      }
     }
   }
 
   return (
-    <div>
+    <div className="relative" style={{ border: 'solid blue' }}>
+      {error?.length > 0 ? <div className="loginalert">
+        <Alert
+          message={error}
+          type="error"
+          closable
+          onClose={onCloseLoginAlert} />
+      </div> : null}
       <NonAuthLayout
         image={show ? signBg1 : signBg}
         title={
@@ -120,7 +163,7 @@ export default function Login() {
                 validationSchema={resetSchema}
               >
                 {({ handleChange, handleSubmit, isSubmitting, errors, values }) => {
-               
+
                   const { password, confirmPassword } = errors
                   return (
                     <Form onSubmit={handleSubmit}>
@@ -194,7 +237,7 @@ export default function Login() {
                         placeholder="Email Address"
                         bg={color.fieldColor}
                         value={values.email}
-                        handleChange={handleChange}
+                        onChange={handleChange}
                       />
                       {email ? <ErrorField error={email} /> : null}
                       <br />
@@ -208,7 +251,7 @@ export default function Login() {
                         }
                         className="inputstyle"
                         value={values.password}
-                        handleChange={handleChange}
+                        onChange={handleChange}
                       />
                       {password ? <ErrorField error={password} /> : null}
                       <br />
@@ -217,7 +260,7 @@ export default function Login() {
                       <br />
                       <CustomFormikButton
                         bg={color.secondaryColor}
-                        text="Log In"
+                        text={`Log In`}
                         type='submit'
                         disabled={isSubmitting}
                       />
@@ -239,3 +282,5 @@ export default function Login() {
     </div>
   );
 }
+
+export default Login

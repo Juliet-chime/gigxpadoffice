@@ -1,4 +1,4 @@
-import React, { forwardRef, useState } from 'react'
+import React, { forwardRef, useEffect, useState } from 'react'
 import Dashboardheader from '../../components/dashboardComponents/Dashboardheader'
 import SectionHeader from '../../components/dashboardComponents/SectionHeader'
 import { Col, Row } from 'antd'
@@ -29,6 +29,9 @@ export default function Dashboard() {
     setEndDate(end);
   };
 
+  // useEffect(()=>{
+  //   window.location.reload()
+  // },[])
 
   const ExampleCustomInput = forwardRef(({ value, onClick }, ref) => {
 
@@ -97,7 +100,7 @@ export default function Dashboard() {
           <Col xs={24} sm={24} md={6} lg={6} xl={6}>
             <div>
 
-              <Blocks radius='71px' bg={color.blockBg} flex={true}>
+              <Blocks radius='71px' bg={color.blockBg} flexlayout={'true'}>
                 <Link to='/wallets'>
                   <div style={{ display: 'flex', alignItems: 'center', gap: '2px' }}>
                     <p>See all Wallets</p>
