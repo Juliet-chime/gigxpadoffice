@@ -51,7 +51,6 @@ const Card = () => {
       dataIndex: 'status',
       key: 'status',
       render: (text) => {
-        console.log(text, 'hfhf')
         return <h1 style={{ textTransform: 'uppercase', fontWeight: 'bold', fontSize: '10px', color: `${text === 'active' ? 'green' : 'red'}` }}>{text}</h1>
       },
     },
@@ -92,7 +91,6 @@ const Card = () => {
             onClick: (event) => {
               showDrawer()
               setDetails(record)
-              console.log({ record, rowIndex, event }, 'clicked')
             }, // click row
             onDoubleClick: (event) => { }, // double click row
             onContextMenu: (event) => { }, // right button click row

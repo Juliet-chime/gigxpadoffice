@@ -501,23 +501,54 @@ a {
   border: 1px solid #E4E4E4 !important;
 }
 
-.ant-alert-success {
+.loginalert .ant-alert {
+  border-radius: 0px;
+  padding: 8px 200px;
+  background-color: #E25A5A;
+  border: none;
+}
+
+.loginalert .ant-alert-error {
+  width: 100%;
+  position: absolute;
+  z-index: 100;
+  /* top: 0; */
+  color: black;
+  height: 50px;
+}
+
+.loginalert .ant-alert-message {
+  color: white;
+  font-weight: 500;
+  font-size: 16px;
+  font-family: 'Rubik', sans-serif;
+}
+
+.loginalert .ant-alert-close-icon {
+  font-size: 20px;
+}
+
+.loginalert .ant-alert-close-icon .anticon-close {
+  color: white;
+}
+
+/* .ant-alert-success {
   background-color: #1D3C48 !important;
   border: none !important;
   border-radius: none !important;
   height: 80px !important;
-}
+} */
 
-.ant-alert {
+/* .ant-alert {
   color: white !important;
   border-radius: 0px !important;
   padding: 8px 100px !important;
-}
+} */
 
-.ant-alert-success .ant-alert-icon {
+/* .ant-alert-success .ant-alert-icon {
   color: #60EFA8 !important;
   font-size: 20px !important;
-}
+} */
 
 .ant-modal .ant-modal-close {
   width: 20px !important;
@@ -535,11 +566,11 @@ a {
   padding: 0px !important;
 }
 
-.anticon svg {
+/* .anticon svg {
   color: #1D3C48;
   font-weight: bold;
   font-size: 16px;
-}
+} */
 
 @media only screen and (max-width: 1024px) {
   .nav-area .ant-layout-sider {

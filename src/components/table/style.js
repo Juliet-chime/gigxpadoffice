@@ -9,5 +9,5 @@ border-radius: ${props => props.radius || '3px'};
 
 export const CustomHeaderStyle = styled('div')`
 border-bottom: ${props => props.bottom || 'solid 1px #eeeeee'};
-border:${props => props.headBorder}
+border:${props => props.headborder}
 `
