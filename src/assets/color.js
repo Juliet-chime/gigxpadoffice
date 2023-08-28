@@ -17,5 +17,6 @@ export const color = {
     coinColor: '#04151D',
     lightYellow: '#FAF5E8',
     lightGreen: '#E7F4EF',
-    lightBlue: '#EDFBFF'
+    lightBlue: '#EDFBFF',
+    RED: '#EC4B4B',
 }

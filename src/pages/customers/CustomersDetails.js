@@ -1,7 +1,6 @@
 import { Col, Row, Tabs } from 'antd'
 import React, { useState } from 'react'
 import { PiCaretLeft } from 'react-icons/pi'
-import { useParams } from 'react-router-dom'
 import { color } from '../../assets/color'
 import CustomButton from '../../components/fields/CustomButton'
 import CustomerInformation from './CustomerInformation'
@@ -12,16 +11,12 @@ import { IoIosLock } from 'react-icons/io'
 
 const CustomersDetails = () => {
 
-    const params = useParams()
-    console.log(params)
-
     const onChange = (key) => {
         console.log(key);
     };
 
     const [isModalOpen, setIsModalOpen] = useState(false);
     const showModal = (e) => {
-        console.log(e)
         setIsModalOpen(true);
     };
     const handleOk = () => {

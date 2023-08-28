@@ -53,7 +53,6 @@ const Transaction = () => {
       dataIndex: 'status',
       key: 'status',
       render: (text) => {
-        console.log(text, 'hfhf')
         return <h1 style={{ textTransform: 'uppercase', fontWeight: 'bold', fontSize: '10px', color: `${text === 'success' ? '#5BE2A4' : 'red'}` }}>{text}</h1>
       },
     },

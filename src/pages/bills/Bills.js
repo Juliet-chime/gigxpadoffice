@@ -52,7 +52,6 @@ const Bills = () => {
       dataIndex: 'status',
       key: 'status',
       render: (text) => {
-        console.log(text, 'hfhf')
         return <h1 className={``} style={{ textTransform: 'uppercase', padding: "8px 10px", width: "90px", fontWeight: 'bold', fontSize: '10px', color: `${text === 'Completed' ? '#27B785' : text === 'Pending' ? '#EA7D1F' : text === 'Failed' ? '#FF1414' : null}`, background: `${text === 'Completed' ? '#E8FFF7' : text === 'Pending' ? '#ffe7e7' : text === 'Failed' ? '#FFE7E7' : null}` }}>{text}</h1>
       },
     },

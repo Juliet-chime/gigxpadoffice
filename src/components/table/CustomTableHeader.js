@@ -95,7 +95,7 @@ const CustomTableHeader = ({ assest, type, status, bill, headerBorder, role, bot
     };
 
     return (
-        <CustomHeaderStyle headBorder={headerBorder} bottom={bottom}>
+        <CustomHeaderStyle headborder={headerBorder} bottom={bottom}>
             <Row className='px-0 lg:px-4 xl:px-4'>
                 <Col xs={24} sm={24} md={9} lg={10} xl={10} className='border-r border-lightash p-1 md:p-2 lg:p-2 xl:p-2 mb-8 md:mb-0 lg:mb-0 xl:mb-0'>
                     {!showSearch ? <div className='flex items-start lg:items-center xl:items-center justify-between'>
