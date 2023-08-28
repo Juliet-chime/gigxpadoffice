@@ -1,4 +1,4 @@
-import React,{useEffect} from "react";
+import React from "react";
 import 'antd/dist/reset.css';
 import "./assets/css/App.css";
 import "./assets/fonts/font.css"
