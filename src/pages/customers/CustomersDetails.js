@@ -1,7 +1,6 @@
 import { Col, Row, Tabs } from 'antd'
 import React, { useState } from 'react'
 import { PiCaretLeft } from 'react-icons/pi'
-import { useParams } from 'react-router-dom'
 import { color } from '../../assets/color'
 import CustomButton from '../../components/fields/CustomButton'
 import CustomerInformation from './CustomerInformation'
@@ -11,8 +10,6 @@ import CustomModal from '../../components/modal/CustomModal'
 import { IoIosLock } from 'react-icons/io'
 
 const CustomersDetails = () => {
-
-    // const params = useParams()
 
     const onChange = (key) => {
         console.log(key);
