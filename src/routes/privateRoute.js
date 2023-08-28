@@ -1,10 +1,12 @@
 import React from "react";
 import { Navigate } from "react-router-dom";
-// import { isLogin } from "../utils/authUtils";
 import DashBoardLayout from "../components/Backbone";
 
 function PrivateRoute({ children }) {
-  return true ? <DashBoardLayout>
+
+  const token = localStorage.getItem('authToken')
+  console.log(token)
+  return token ? <DashBoardLayout>
     {children}
   </DashBoardLayout> : <Navigate to="/" />;
 }

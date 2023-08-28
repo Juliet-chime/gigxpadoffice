@@ -8,7 +8,7 @@ import {
 } from "@ant-design/icons";
 import CheckField from "../../../components/fields/CheckField";
 import { color } from "../../../assets/color";
-import CustomButton, { CustomFormikButton } from "../../../components/fields/CustomButton";
+import { CustomFormikButton } from "../../../components/fields/CustomButton";
 import signBg from "../../../assets/images/signBg.png";
 import signBg1 from "../../../assets/images/signBg1.png";
 import PasswordChecklist from "react-password-checklist";
@@ -21,21 +21,43 @@ import { queryUserLogin } from "../../../services/slices/auth/login";
 import * as Yup from 'yup'
 import CustomFormikField from "../../../components/fields/CustomFormikField";
 import ErrorField from "../../../components/fields/ErrorField";
+import { querySetPassword } from "../../../services/slices/auth/setpassword";
+import { Alert } from "antd";
 
-export default function Login() {
+function Login(props) {
   const navigate = useNavigate()
   const dispatch = useDispatch()
 
   const [show, setShow] = useState(false);
+  const [error, setError] = useState('');
 
   const initialValues = { email: '', password: '' }
 
   const passwordResetValues = { password: '', confirmPassword: '' }
 
+  const msg = 'A verification code has been sent to your email. Please check your inbox and enter the code to complete the login process.'
+
   const validationSchema = Yup.object({
     email: Yup.string().email('Please enter a valid email').required('Please enter your email').matches(/^[A-Za-z0-9._%+-]+@gigxpad\.com$/, 'Invalid email address'),
     password: Yup.string().required('Please enter your password'),
   })
+
+  const resetSchema = Yup.object({
+    password: Yup.string()
+      .required('Please enter your new password')
+      .matches(
+        /^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$/,
+        'Password must Contain 8 Characters, One Uppercase, One Lowercase, One Number and one special case Character'
+      ),
+    confirmPassword: Yup.string()
+      .required('Please confirm your password')
+      .oneOf([Yup.ref('password'), null], 'Password must match'),
+  })
+
+  const onCloseLoginAlert = (e) => {
+    setError('')
+  };
+
   const onHandleSubmit = async (values) => {
     const data = {
       email: values?.email,
@@ -43,21 +65,82 @@ export default function Login() {
     }
 
     try {
-      const res = await dispatch(queryUserLogin(data))
-      if (res.payload.status === 'success') {
+      const res = await dispatch(queryUserLogin(data)).unwrap()
+      if (res?.data?.passwordChanged === false) {
+        const newUserToken = res?.accessToken
+        localStorage.setItem('newUserToken', newUserToken)
         setShow(true)
       }
+      else {
+        if (res?.message === msg) {
+          navigate('/2FA', { state: { email: values?.email } })
+        } else {
+          const token = res?.accessToken
+          localStorage.setItem('authToken', token)
+          navigate('/dashboard')
+        }
+      }
     } catch (e) {
+      if (e?.success === false) {
+        setError(e?.errorMessage)
+      }
+    }
+
+    // dispatch(queryUserLogin(data))
+    //   .unwrap()
+    //   .then((res) => {
+    //     if (res?.data?.passwordChanged === false) {
+    //       const newUserToken = res?.accessToken
+    //       localStorage.setItem('newUserToken', newUserToken)
+    //       setShow(true)
+    //     }
+
+    //     else {
+    //       if (res?.message === msg) {
+    //         navigate('/2FA', { state: { email: values?.email } })
+    //       } else {
+    //         const token = res?.accessToken
+    //         localStorage.setItem('authToken', token)
+    //         navigate('/dashboard')
+    //       }
+    //     }
+    //   })
+    //   .catch((e) => {
+    //     console.log(e)
+    //     // if(e?.response?.status === 400){
+    //     //   setError(e?.response?.data?.errorMessage)
+    //     // }
+    //   })
+  }
+  const onSetPassword = async (values) => {
+    const data = {
+      password: values?.password,
+      confirmPassword: values?.confirmPassword
+    }
+    try {
+      const res = await dispatch(querySetPassword(data)).unwrap()
+      if (res?.status === 'success') {
+        localStorage.removeItem("newUserToken")
+        setShow(false)
+      }
+    }
+    catch (e) {
       console.log(e)
+      if (e?.success === false) {
+        setError(e?.errorMessage)
+      }
     }
   }
 
-  const onResetPassword = async (values) => {
-    console.log(values)
-  }
-
   return (
-    <div>
+    <div className="relative" style={{ border: 'solid blue' }}>
+      {error?.length > 0 ? <div className="loginalert">
+        <Alert
+          message={error}
+          type="error"
+          closable
+          onClose={onCloseLoginAlert} />
+      </div> : null}
       <NonAuthLayout
         image={show ? signBg1 : signBg}
         title={
@@ -76,50 +159,65 @@ export default function Login() {
             <div>
               <Formik
                 initialValues={passwordResetValues}
-                onSubmit={onResetPassword}
+                onSubmit={onSetPassword}
+                validationSchema={resetSchema}
               >
-                {({ values, handleChange }) => (<Form>
-                  <CustomFormikField
-                    value={values.password}
-                    name='password'
-                    type={"password"}
-                    placeholder="New Password"
-                    className="inputstyle"
-                    onChange={handleChange}
-                  />
-                  <br />
-                  <br />
-                  <CustomFormikField
-                    type={"password"}
-                    name='confirmPassword'
-                    value={values.confirmPassword}
-                    placeholder="Retype Password"
-                    className="inputstyle"
-                    onChange={handleChange}
-                  />
-                  <PasswordChecklist
-                    rules={["capital", "specialChar", "number", "minLength"]}
-                    minLength={8}
-                    value={values.password}
-                    valueAgain={values.confirmPassword}
-                    style={{ marginTop: "15px" }}
-                    iconComponents={{
-                      ValidIcon: <CheckCircleFilled style={{ color: "#46E082" }} />,
-                      InvalidIcon: (
-                        <CheckCircleFilled style={{ color: "#A7B8BF !important" }} />
-                      ),
-                    }}
-                    messages={{
-                      minLength: "Must Be at least 8 characters in length",
-                      specialChar: "Must Contain Special Character (@$%*&^!)",
-                      number: "Must Contain a number",
-                      capital: "Must Contain One Capital Letter",
-                    }}
-                  />
-                  <br />
-                  <br />
-                  <CustomButton bg={color.secondaryColor} text="Log In" onClick={() => navigate("/dashboard")} />
-                </Form>)}
+                {({ handleChange, handleSubmit, isSubmitting, errors, values }) => {
+
+                  const { password, confirmPassword } = errors
+                  return (
+                    <Form onSubmit={handleSubmit}>
+                      <CustomFormikField
+                        value={values.password}
+                        type={"password"}
+                        placeholder="New Password"
+                        className="inputstyle"
+                        name='password'
+                        onChange={handleChange}
+                      />
+                      {password ? <ErrorField error={password} /> : null}
+                      <br />
+                      <br />
+                      <CustomFormikField
+                        type={"password"}
+                        value={values.confirmPassword}
+                        placeholder="Retype Password"
+                        className="inputstyle"
+                        name='confirmPassword'
+                        onChange={handleChange}
+                      />
+                      {confirmPassword ? <ErrorField error={confirmPassword} /> : null}
+                      <PasswordChecklist
+                        rules={["capital", "specialChar", "number", "minLength"]}
+                        minLength={8}
+                        value={values.password}
+                        valueAgain={values.confirmPassword}
+                        style={{ marginTop: "15px" }}
+                        iconComponents={{
+                          ValidIcon: <CheckCircleFilled style={{ color: "#46E082" }} />,
+                          InvalidIcon: (
+                            <CheckCircleFilled style={{ color: "#A7B8BF !important" }} />
+                          ),
+                        }}
+                        messages={{
+                          minLength: "Must Be at least 8 characters in length",
+                          specialChar: "Must Contain Special Character (@$%*&^!)",
+                          number: "Must Contain a number",
+                          capital: "Must Contain One Capital Letter",
+                        }}
+                      />
+                      <br />
+                      <br />
+                      <CustomFormikButton
+                        bg={color.secondaryColor}
+                        text="Submit"
+                        type='submit'
+                        disabled={isSubmitting}
+                      />
+                    </Form>
+                  )
+                }
+                }
               </Formik>
             </div>
           ) : (
@@ -129,7 +227,7 @@ export default function Login() {
                 onSubmit={onHandleSubmit}
                 validationSchema={validationSchema}
               >
-                {({ handleChange, handleSubmit, isSubmitting, errors, values, touched }) => {
+                {({ handleChange, handleSubmit, isSubmitting, errors, values }) => {
                   const { email, password } = errors
                   return (
                     <Form onSubmit={handleSubmit}>
@@ -139,7 +237,7 @@ export default function Login() {
                         placeholder="Email Address"
                         bg={color.fieldColor}
                         value={values.email}
-                        handleChange={handleChange}
+                        onChange={handleChange}
                       />
                       {email ? <ErrorField error={email} /> : null}
                       <br />
@@ -153,7 +251,7 @@ export default function Login() {
                         }
                         className="inputstyle"
                         value={values.password}
-                        handleChange={handleChange}
+                        onChange={handleChange}
                       />
                       {password ? <ErrorField error={password} /> : null}
                       <br />
@@ -162,7 +260,7 @@ export default function Login() {
                       <br />
                       <CustomFormikButton
                         bg={color.secondaryColor}
-                        text="Log In"
+                        text={`Log In`}
                         type='submit'
                         disabled={isSubmitting}
                       />
@@ -184,3 +282,5 @@ export default function Login() {
     </div>
   );
 }
+
+export default Login
