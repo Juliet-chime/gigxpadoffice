@@ -11,9 +11,9 @@ const initialState = {
 export const querySetPassword = createAsyncThunk('setPassword/querySetPassword ', async (data,{rejectWithValue}) => {
   try {
     const response = await makeApiRequest('post', setPassword(), data)
-    return response.data
+    return response?.data
   } catch (err) {
-    return rejectWithValue(err.response.data)
+    return rejectWithValue(err?.response?.data)
   }
 })
 
@@ -38,7 +38,7 @@ export const setPasswordSlice = createSlice({
 });
 
 // A selector
-export const getSetPasswordSelector = (state) => state.setPassword;
+export const getSetPasswordSelector = (state) => state?.setPassword;
 
 // The reducer
 export default setPasswordSlice.reducer;
