@@ -6,40 +6,49 @@ const API_KEY = process.env.REACT_APP_PUBLIC_API_KEY;
 
 const REQUEST_TIMEOUT = 60000;
 
-const headers = {
+const token = localStorage.getItem('authToken')
+const newUserToken = localStorage.getItem('newUserToken');
+
+console.log({token,newUserToken},'token')
+
+export const headers = {
     'Content-Type': 'application/json',
     Accept: 'application/json',
     'x-api-key': API_KEY,
 };
+
+// if(!!token){
+//     headers.Authorization = `Bearer ${token ? token : newUserToken}`
+// }
 
 const instance = axios.create({
     baseURL: API_URL,
     headers
 });
 
-instance.interceptors.request.use(
-    (request) => {
-        const token = localStorage.getItem("authToken");
-        const newUserToken = localStorage.getItem('newUserToken');
-        console.log(token, 'tokeee')
-        if (!!token) {
-            request.headers.Authorization = `Bearer ${token ? token : newUserToken}`;
-        }
-        return request;
-    },
-    (error) => Promise.reject(error)
-);
+// instance.interceptors.request.use(
+//     (request) => {
+//       const token = localStorage.getItem("authToken");
+//       const newUserToken = localStorage.getItem('newUserToken');
+//       console.log(token,'tokeee')
+//       if (!!token) {
+//         request.headers.Authorization = `Bearer ${token ? token : newUserToken}`;
+//       }
+//       return request;
+//     },
+//     (error) => Promise.reject(error)
+//   );
 
-instance.interceptors.response.use(undefined, (error) => {
-    console.log(error.response.status, 'inceptt')
-    if (
-        error?.response?.status === 401 ||
-        error?.response?.data?.message.includes('InvalidToken')
-    ) {
-        localStorage.clear()
-    }
-    return Promise.reject(error);
-});
+  // instance.interceptors.response.use(undefined, (error) => {
+  //   // console.log(error?.response?.status,'inceptt')
+  //   if (
+  //     error?.response?.status === 401 ||
+  //     error?.response?.data?.message?.includes('InvalidToken')
+  //   ) {
+  //     localStorage.clear()
+  //   }
+  //   return Promise.reject(error);
+  // });
 
 instance.defaults.timeout = REQUEST_TIMEOUT;
 

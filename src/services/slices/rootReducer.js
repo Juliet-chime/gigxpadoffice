@@ -7,7 +7,7 @@ import { clearLocalStorage } from "../../utils/authFunc";
 
 
 const combinedReducer = combineReducers({
-  login: loginReducer,
+  // login: loginReducer,
   setPassword: setPasswordReducer,
   twoFA: twoFaReducer,
   roles: roleReducer

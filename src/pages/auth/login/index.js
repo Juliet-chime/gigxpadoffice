@@ -23,6 +23,8 @@ import CustomFormikField from "../../../components/fields/CustomFormikField";
 import ErrorField from "../../../components/fields/ErrorField";
 import { querySetPassword } from "../../../services/slices/auth/setpassword";
 import { Alert } from "antd";
+import { headers } from "../../../services/baseApi";
+
 
 function Login(props) {
   const navigate = useNavigate()
@@ -77,10 +79,12 @@ function Login(props) {
         } else {
           const token = res?.accessToken
           localStorage.setItem('authToken', token)
+          headers.Authorization = `Bearer ${token}`
           navigate('/dashboard')
         }
       }
     } catch (e) {
+      console.log(e)
       if (e?.success === false) {
         setError(e?.errorMessage)
       }
@@ -133,7 +137,7 @@ function Login(props) {
   }
 
   return (
-    <div className="relative" style={{ border: 'solid blue' }}>
+    <div className="relative">
       {error?.length > 0 ? <div className="loginalert">
         <Alert
           message={error}
