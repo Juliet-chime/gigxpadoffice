@@ -1,35 +1,18 @@
-import React, { useState, useEffect} from 'react'
+import React, { useState} from 'react'
 import Dashboardheader from '../../components/dashboardComponents/Dashboardheader'
 import { Tabs } from 'antd';
 import UserManagement from './UserManagement';
 import AddAUser from './AddAUser';
 import RolesPermission from './RolesPermission';
 import GlobalConfiguration from './GlobalConfiguration/GlobalConfiguration';
-import { useDispatch } from 'react-redux';
-import { queryRoles } from '../../services/slices/roles/fetchRoles';
 
 const Settings = () => {
-
-  const dispatch = useDispatch()
 
   const [addUser, setAddUser] = useState(false)
 
   const onChangeTab = (key) => {
     console.log(key);
   };
-
-  useEffect(() => {
-    const fetchRoles = async() => {
-      try {
-        const res = await dispatch(queryRoles()).unwrap()
-        console.log(res,'res')
-      } catch (e) {
-        throw e
-      }
-    }
-    
-     fetchRoles()
-  }, [dispatch])
   
   const items = [
     {

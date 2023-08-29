@@ -13,32 +13,33 @@ export const queryUserLogin = createAsyncThunk('loginUser/queryUserLogin', async
     const response = await makeApiRequest('post', loginUser(), data)
     return response.data
   } catch (err) {
-    return rejectWithValue(err.response.data)
+    console.log(err,'login ereeeee')
+    return rejectWithValue(err?.response?.data)
   }
 })
 
-export const loginSlice = createSlice({
-  name: "loginUser",
-  initialState,
-  reducers: {},
-  extraReducers: (builder) => {
-    builder
-      .addCase(queryUserLogin.pending, (state) => {
-        state.loading = true;
-      })
-      .addCase(queryUserLogin.fulfilled, (state, { payload }) => {
-        state.loading = false;
-        state.user = payload;
-      })
-      .addCase(queryUserLogin.rejected, (state, {payload}) => {
-        state.loading = false;
-        state.error = payload;
-      });
-  }
-});
+// export const loginSlice = createSlice({
+//   name: "loginUser",
+//   initialState,
+//   reducers: {},
+//   extraReducers: (builder) => {
+//     builder
+//       .addCase(queryUserLogin.pending, (state) => {
+//         state.loading = true;
+//       })
+//       .addCase(queryUserLogin.fulfilled, (state, { payload }) => {
+//         state.loading = false;
+//         state.user = payload;
+//       })
+//       .addCase(queryUserLogin.rejected, (state, {payload}) => {
+//         state.loading = false;
+//         state.error = payload;
+//       });
+//   }
+// });
 
 // A selector
-export const getLoginSelector = (state) => state.login;
+// export const getLoginSelector = (state) => state.login;
 
 // The reducer
-export default loginSlice.reducer;
+// export default loginSlice.reducer;
