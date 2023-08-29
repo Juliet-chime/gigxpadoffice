@@ -21,7 +21,6 @@ instance.interceptors.request.use(
     (request) => {
         const token = localStorage.getItem("authToken");
         const newUserToken = localStorage.getItem('newUserToken');
-        console.log(token, 'tokeee')
         if (!!token) {
             request.headers.Authorization = `Bearer ${token ? token : newUserToken}`;
         }
@@ -31,10 +30,9 @@ instance.interceptors.request.use(
 );
 
 instance.interceptors.response.use(undefined, (error) => {
-    console.log(error.response.status, 'inceptt')
     if (
         error?.response?.status === 401 ||
-        error?.response?.data?.message.includes('InvalidToken')
+        error?.response?.data?.message?.includes('InvalidToken')
     ) {
         localStorage.clear()
     }

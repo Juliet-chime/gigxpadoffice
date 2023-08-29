@@ -11,9 +11,9 @@ const initialState = {
 export const queryUserLogin = createAsyncThunk('loginUser/queryUserLogin', async (data, { rejectWithValue }) => {
   try {
     const response = await makeApiRequest('post', loginUser(), data)
-    return response.data
+    return response?.data
   } catch (err) {
-    return rejectWithValue(err.response.data)
+    return rejectWithValue(err?.response?.data)
   }
 })
 
@@ -38,7 +38,7 @@ export const loginSlice = createSlice({
 });
 
 // A selector
-export const getLoginSelector = (state) => state.login;
+export const getLoginSelector = (state) => state?.login;
 
 // The reducer
 export default loginSlice.reducer;

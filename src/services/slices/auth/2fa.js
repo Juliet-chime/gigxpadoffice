@@ -11,9 +11,9 @@ const initialState = {
 export const query2FA = createAsyncThunk('login-2fa/query2FA', async (data, { rejectWithValue }) => {
   try {
     const response = await makeApiRequest('post', twoFactorAuthentication(), data)
-    return response.data
+    return response?.data
   } catch (err) {
-    return rejectWithValue(err.response.data)
+    return rejectWithValue(err?.response?.data)
   }
 })
 
@@ -38,7 +38,7 @@ export const twoFaSlice = createSlice({
 });
 
 // A selector
-export const get2FaSelector = (state) => state.twoFA;
+export const get2FaSelector = (state) => state?.twoFA;
 
 // The reducer
 export default twoFaSlice.reducer;
