@@ -11,7 +11,7 @@ const initialState = {
 export const queryRoles = createAsyncThunk('getRoles/queryRoles', async () => {
   try {
     const response = await makeApiRequest('get', getRoles())
-    return response.data
+    return response?.data
   } catch (e) {
     console.log(e)
   }
@@ -38,7 +38,7 @@ export const roleSlice = createSlice({
 });
 
 // A selector
-export const getrolesSelector = (state) => state.roles;
+export const getrolesSelector = (state) => state?.roles;
 
 // The reducer
 export default roleSlice.reducer;
