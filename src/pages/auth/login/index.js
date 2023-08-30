@@ -23,6 +23,8 @@ import CustomFormikField from "../../../components/fields/CustomFormikField";
 import ErrorField from "../../../components/fields/ErrorField";
 import { querySetPassword } from "../../../services/slices/auth/setpassword";
 import { Alert } from "antd";
+import {FaTimes} from 'react-icons/fa'
+import { useErrorTimeout } from "../../../hooks/useTimeout";
 
 
 function Login() {
@@ -30,7 +32,10 @@ function Login() {
   const dispatch = useDispatch()
 
   const [show, setShow] = useState(false);
-  const [error, setError] = useState('');
+
+  const [message, setMessage] = useErrorTimeout()
+  // console.log(d)
+  // const [error, setError] = useState('');
 
   const initialValues = { email: '', password: '' }
 
@@ -55,9 +60,9 @@ function Login() {
       .oneOf([Yup.ref('password'), null], 'Password must match'),
   })
 
-  const onCloseLoginAlert = (e) => {
-    setError('')
-  };
+  // const onCloseLoginAlert = (e) => {
+  //   setError('')
+  // };
 
   const onHandleSubmit = async (values) => {
     const data = {
@@ -84,7 +89,7 @@ function Login() {
       }
     } catch (e) {
       if (e?.success === false) {
-        setError(e?.errorMessage)
+        setMessage(e?.errorMessage)
       }
     }
   }
@@ -102,19 +107,21 @@ function Login() {
     }
     catch (e) {
       if (e?.success === false) {
-        setError(e?.errorMessage)
+        setMessage(e?.errorMessage)
       }
     }
   }
 
   return (
     <div className="relative">
-      {error?.length > 0 ? <div className="loginalert">
+      {!!message ? <div className="loginalert">
         <Alert
-          message={error}
+          message={message}
           type="error"
-          closable
-          onClose={onCloseLoginAlert} />
+          showIcon
+          icon={<div><FaTimes/></div>}
+          // onClose={onCloseLoginAlert} 
+          />
       </div> : null}
       <NonAuthLayout
         image={show ? signBg1 : signBg}

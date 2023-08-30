@@ -33,6 +33,7 @@ const Settings = () => {
   ];
 
   return (
+
     <div>
       {addUser ? <AddAUser setAddUser={setAddUser} /> : <><Dashboardheader
         componentName={'System Settings'}
@@ -44,6 +45,7 @@ const Settings = () => {
         </div></>}
 
     </div>
+
   )
 }
 

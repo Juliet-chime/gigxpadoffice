@@ -30,6 +30,8 @@ let headers = {
 
 headers = await setAuthorization(headers)
 
+console.log(headers)
+
 if(!!instance){
     
 instance.defaults.headers.common['Authorization'] = headers.Authorization
@@ -52,12 +54,14 @@ export const makeApiRequest = async (method, url, data) => {
         method,
         url,
         data
-    }).catch(async error => {
-        if (error?.response) {
-            if(+error?.response?.status === 401){
-                 await localStorage.setItem('authToken', "")
-                 window?.location?.reload()
-            }
-        } 
     })
+    // .catch(async error => {
+    //     console.log(error)
+    //     // if (error?.response) {
+    //     //     if(+error?.response?.status === 401){
+    //     //          await localStorage.setItem('authToken', "")
+    //     //          window?.location?.reload()
+    //     //     }
+    //     // } 
+    // })
 };

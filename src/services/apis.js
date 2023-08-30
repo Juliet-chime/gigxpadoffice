@@ -14,11 +14,15 @@ const getRoles = () => {
     return `/admins/roles`;
 };
 
+const inviteAdmin = () => {
+    return `/admins/invite`;
+};
+
 const inviteSuperAdmin = () => {
     return `/admins/invite-superadmin`;
 };
 
 export {
-    loginUser, setPassword, twoFactorAuthentication, getRoles,
+    loginUser, setPassword, twoFactorAuthentication, getRoles, inviteAdmin,
     inviteSuperAdmin
 }

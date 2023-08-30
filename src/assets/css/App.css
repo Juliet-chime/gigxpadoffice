@@ -301,12 +301,6 @@ a {
   color: #1D3C48;
 }
 
-.ant-select-single .ant-select-selector .ant-select-selection-item {
-  font-size: 14px !important;
-  font-family: 'Rubik', sans-serif !important;
-  color: #1D3C48 !important;
-}
-
 .ant-drawer .ant-drawer-header-title {
   display: flex !important;
   align-items: flex-end !important;
@@ -479,27 +473,6 @@ a {
   padding: 0px !important;
 }
 
-.add-user-select .ant-select-selector {
-  border: none !important;
-  height: 100% !important;
-  background-color: transparent !important;
-}
-
-.add-user-select .ant-select-selector:hover {
-  border: solid 1px #F2F6F7 !important;
-}
-
-.ant-select-selector:hover {
-  border: 1px solid #E4E4E4 !important;
-}
-
-.add-user-select .ant-select-selector .anticon>svg {
-  color: #E25A5A !important;
-}
-
-.ant-select-selector {
-  border: 1px solid #E4E4E4 !important;
-}
 
 .loginalert .ant-alert {
   border-radius: 0px;
@@ -532,12 +505,19 @@ a {
   color: white;
 }
 
-/* .ant-alert-success {
+.successalert .ant-alert-success {
   background-color: #1D3C48 !important;
   border: none !important;
-  border-radius: none !important;
-  height: 80px !important;
-} */
+  border-radius: 0px !important;
+  height: 50px !important;
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  width: 100%;
+  color: white;
+  padding: 0px 200px;
+}
 
 /* .ant-alert {
   color: white !important;
@@ -566,10 +546,56 @@ a {
   padding: 0px !important;
 }
 
+.ant-select-selector {
+  background-color: transparent !important;
+  border-radius: 0px !important;
+  border: none !important;
+  height: 100% !important;
+}
+
+.ant-select-selection-placeholder {
+  display: flex !important;
+  align-items: center !important;
+}
+
+/* .ant-select-single .ant-select-selector .ant-select-selection-item {
+  font-size: 14px !important;
+  font-family: 'Rubik', sans-serif !important;
+  color: #1D3C48 !important;
+} */
+
+/* .add-user-select .ant-select-selector .anticon>svg {
+  color: #E25A5A !important;
+} */
+
+/*
+.ant-select-selector:hover {
+  border: none !important;
+} */
+
 /* .anticon svg {
   color: #1D3C48;
   font-weight: bold;
   font-size: 16px;
+} */
+
+/* .add-user-select .ant-select-selector {
+  border: none !important;
+  height: 100% !important;
+  background-color: transparent !important;
+}
+
+.add-user-select .ant-select-selector:hover {
+  border: solid 1px #F2F6F7 !important;
+}
+
+.ant-select-selector:hover {
+  border: 1px solid #E4E4E4 !important;
+}
+
+.ant-select-selector {
+  background-color: white !important;
+  border: 1px solid #E4E4E4 !important;
 } */
 
 @media only screen and (max-width: 1024px) {
