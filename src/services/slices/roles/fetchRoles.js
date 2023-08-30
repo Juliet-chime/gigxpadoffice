@@ -28,7 +28,7 @@ export const roleSlice = createSlice({
       })
       .addCase(queryRoles.fulfilled, (state, action) => {
         state.loading = false;
-        state.role = action.payload;
+        state.role = action?.payload;
       })
       .addCase(queryRoles.rejected, (state, { payload }) => {
         state.loading = false;

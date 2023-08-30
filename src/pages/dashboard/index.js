@@ -1,4 +1,4 @@
-import React, { forwardRef, useState } from 'react'
+import React, { forwardRef, useState, useEffect } from 'react'
 import Dashboardheader from '../../components/dashboardComponents/Dashboardheader'
 import SectionHeader from '../../components/dashboardComponents/SectionHeader'
 import { Col, Row } from 'antd'
@@ -17,21 +17,34 @@ import OneDateRange from '../../components/chart/OneDateRange'
 import { formatDate } from '../../utils/helperFunctions'
 import { PiCaretUp, PiCaretDown } from 'react-icons/pi'
 import CustomTab from '../../components/tabination/CustomTab'
+import { useDispatch } from 'react-redux'
+import { queryRoles } from '../../services/slices/roles/fetchRoles'
 
 export default function Dashboard() {
+
+  const dispatch = useDispatch()
 
   const [startDate, setStartDate] = useState(new Date());
   const [changeIcon, setChangeIcon] = useState(false);
   const [endDate, setEndDate] = useState(null);
+
   const onChange = (dates) => {
     const [start, end] = dates;
     setStartDate(start);
     setEndDate(end);
   };
 
-  // useEffect(()=>{
-  //   window.location.reload()
-  // },[])
+  useEffect(() => {
+    const fetchRoles = async() => {
+      try {
+        const res = await dispatch(queryRoles()).unwrap()
+        console.log(res,'res')
+      } catch (e) {
+       console.log(e)
+      }
+    }
+     fetchRoles()
+  }, [dispatch])
 
   const ExampleCustomInput = forwardRef(({ value, onClick }, ref) => {
 
