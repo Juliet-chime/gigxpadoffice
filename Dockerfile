@@ -14,7 +14,7 @@
 
 # Use a multi-stage build to optimize the image size
 # Stage 1: Build the React application
-FROM node:16 AS build
+FROM node:16-alpine as build
 
 # Set working directory
 WORKDIR /usr/src/gigx-admin
