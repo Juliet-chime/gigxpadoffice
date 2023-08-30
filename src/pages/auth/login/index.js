@@ -23,10 +23,9 @@ import CustomFormikField from "../../../components/fields/CustomFormikField";
 import ErrorField from "../../../components/fields/ErrorField";
 import { querySetPassword } from "../../../services/slices/auth/setpassword";
 import { Alert } from "antd";
-import { headers } from "../../../services/baseApi";
 
 
-function Login(props) {
+function Login() {
   const navigate = useNavigate()
   const dispatch = useDispatch()
 
@@ -68,6 +67,7 @@ function Login(props) {
 
     try {
       const res = await dispatch(queryUserLogin(data)).unwrap()
+      console.log(res,'login ressss')
       if (res?.data?.passwordChanged === false) {
         const newUserToken = res?.accessToken
         localStorage.setItem('newUserToken', newUserToken)
@@ -79,42 +79,14 @@ function Login(props) {
         } else {
           const token = res?.accessToken
           localStorage.setItem('authToken', token)
-          headers.Authorization = `Bearer ${token}`
           navigate('/dashboard')
         }
       }
     } catch (e) {
-      console.log(e)
       if (e?.success === false) {
         setError(e?.errorMessage)
       }
     }
-
-    // dispatch(queryUserLogin(data))
-    //   .unwrap()
-    //   .then((res) => {
-    //     if (res?.data?.passwordChanged === false) {
-    //       const newUserToken = res?.accessToken
-    //       localStorage.setItem('newUserToken', newUserToken)
-    //       setShow(true)
-    //     }
-
-    //     else {
-    //       if (res?.message === msg) {
-    //         navigate('/2FA', { state: { email: values?.email } })
-    //       } else {
-    //         const token = res?.accessToken
-    //         localStorage.setItem('authToken', token)
-    //         navigate('/dashboard')
-    //       }
-    //     }
-    //   })
-    //   .catch((e) => {
-    //     console.log(e)
-    //     // if(e?.response?.status === 400){
-    //     //   setError(e?.response?.data?.errorMessage)
-    //     // }
-    //   })
   }
   const onSetPassword = async (values) => {
     const data = {
@@ -129,7 +101,6 @@ function Login(props) {
       }
     }
     catch (e) {
-      console.log(e)
       if (e?.success === false) {
         setError(e?.errorMessage)
       }

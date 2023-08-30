@@ -1,62 +1,63 @@
 import axios from 'axios';
 
-/* eslint-disable no-undef */
 const API_URL = process.env.REACT_APP_PUBLIC_API_URL;
 const API_KEY = process.env.REACT_APP_PUBLIC_API_KEY;
+let instance
 
-const REQUEST_TIMEOUT = 60000;
+async function setAuthorization (headers) {
 
-const token = localStorage.getItem('authToken')
-const newUserToken = localStorage.getItem('newUserToken');
+    const token = await localStorage.getItem('authToken')
+    const newUserToken = await localStorage.getItem('newUserToken');
+    
+        if(!!newUserToken){
+            headers.Authorization = `Bearer ${newUserToken}`
+        }
+        else if(!!token){
+            headers.Authorization = `Bearer ${token}`
+        }
+    
+        return headers
+        
+    }
 
-console.log({token,newUserToken},'token')
+async function instantiateInstance () {
 
-export const headers = {
+let headers = {
     'Content-Type': 'application/json',
     Accept: 'application/json',
     'x-api-key': API_KEY,
 };
 
-// if(!!token){
-//     headers.Authorization = `Bearer ${token ? token : newUserToken}`
-// }
+headers = await setAuthorization(headers)
 
-const instance = axios.create({
-    baseURL: API_URL,
-    headers
-});
+if(!!instance){
+    
+instance.defaults.headers.common['Authorization'] = headers.Authorization
 
-// instance.interceptors.request.use(
-//     (request) => {
-//       const token = localStorage.getItem("authToken");
-//       const newUserToken = localStorage.getItem('newUserToken');
-//       console.log(token,'tokeee')
-//       if (!!token) {
-//         request.headers.Authorization = `Bearer ${token ? token : newUserToken}`;
-//       }
-//       return request;
-//     },
-//     (error) => Promise.reject(error)
-//   );
+} else{
+    instance = axios.create({
+        baseURL: API_URL,
+        headers
+    });
+}
 
-  // instance.interceptors.response.use(undefined, (error) => {
-  //   // console.log(error?.response?.status,'inceptt')
-  //   if (
-  //     error?.response?.status === 401 ||
-  //     error?.response?.data?.message?.includes('InvalidToken')
-  //   ) {
-  //     localStorage.clear()
-  //   }
-  //   return Promise.reject(error);
-  // });
 
-instance.defaults.timeout = REQUEST_TIMEOUT;
+return instance
+}
 
 export const makeApiRequest = async (method, url, data) => {
-    const response = await instance.request({
+    await instantiateInstance()
+
+    return instance.request({
         method,
         url,
         data
-    });
-    return response;
+    }).catch(async error => {
+        if (error?.response) {
+            if(+error?.response?.status === 401){
+                 await localStorage.setItem('authToken', "")
+                 window?.location?.reload()
+            }
+        } 
+    })
 };
