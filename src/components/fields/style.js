@@ -23,6 +23,7 @@ export const FormikSelectStyle = styled(FormikSelect)`
 background-color:${props => props.bg || 'transparent'} !important;
 border: ${props => props.border || 'none'} !important;
 height: ${props => props.height}!important;
+width: ${props => props.width || '100%'}!important;
 color: ${props => props.color || 'black'}!important;
 border-radius: ${props => props.radius || '0.75rem'}!important;
 `

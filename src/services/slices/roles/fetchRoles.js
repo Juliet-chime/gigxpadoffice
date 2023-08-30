@@ -38,7 +38,7 @@ export const roleSlice = createSlice({
 });
 
 // A selector
-export const getrolesSelector = (state) => state.roles;
+export const getRolesSelector = (state) => state.roles;
 
 // The reducer
 export default roleSlice.reducer;
