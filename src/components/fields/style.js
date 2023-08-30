@@ -1,6 +1,7 @@
 import { Button, Input, Select } from "antd";
 import styled from "styled-components";
 import { color } from "../../assets/color";
+import {Select as FormikSelect} from 'formik-antd'
 
 export const FieldStyle = styled(Input)`
 background-color:${props => props.bg || 'transparent'} !important;
@@ -12,6 +13,13 @@ padding: ${props => props.padding}!important;
 `
 
 export const SelectStyle = styled(Select)`
+background-color:${props => props.bg || 'transparent'} !important;
+border: ${props => props.border || 'none'} !important;
+height: ${props => props.height}!important;
+color: ${props => props.color || 'black'}!important;
+border-radius: ${props => props.radius || '0.75rem'}!important;
+`
+export const FormikSelectStyle = styled(FormikSelect)`
 background-color:${props => props.bg || 'transparent'} !important;
 border: ${props => props.border || 'none'} !important;
 height: ${props => props.height}!important;
