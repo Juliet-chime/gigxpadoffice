@@ -4,10 +4,9 @@ import { inviteSuperAdmin } from "../../apis";
 
 export const queryInviteSuperAdmin = createAsyncThunk('invite/queryInviteSuperAdmin', async (data, { rejectWithValue }) => {
   try {
-    const response = await makeApiRequest('post', inviteSuperAdmin(),data)
+    const response = await makeApiRequest('post', inviteSuperAdmin(), data)
     return response?.data
   } catch (err) {
-    console.log(err)
     return rejectWithValue(err?.response?.data)
   }
 })

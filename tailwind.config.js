@@ -35,6 +35,7 @@ module.exports = {
         'lightash': '#EEEEEE',
         'tableInput': '#F7F7F7',
         'mainColor': '#1D3C48',
+        'secondaryColor':'#E25A5A',
         'ash': '#67777E',
         'complete': '#27B785',
         'failed': '#FF1414',
