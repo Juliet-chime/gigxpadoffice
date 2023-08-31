@@ -1,7 +1,7 @@
 import { Button, Input, Select } from "antd";
 import styled from "styled-components";
 import { color } from "../../assets/color";
-import {Select as FormikSelect} from 'formik-antd'
+import { Select as FormikSelect } from 'formik-antd'
 
 export const FieldStyle = styled(Input)`
 background-color:${props => props.bg || 'transparent'} !important;

@@ -1,19 +1,19 @@
 import { useEffect, useState } from "react"
 
 
-export const useErrorTimeout = (duration=3000) => {
-    const [message,setMessage] = useState('')
-    const [status,setStatus] = useState('')
+export const useErrorTimeout = (duration = 6000) => {
+    const [message, setMessage] = useState('')
+    const [status, setStatus] = useState('')
 
-    useEffect(()=>{
-        if(message){
-            const errorTimeoutId = setTimeout(()=>{
+    useEffect(() => {
+        if (message) {
+            const errorTimeoutId = setTimeout(() => {
                 setMessage('')
                 setStatus('')
-            },duration)
+            }, duration)
             return () => clearTimeout(errorTimeoutId)
         }
-    },[message,duration])
+    }, [message, duration])
 
-    return [message,setMessage,status,setStatus]
+    return [message, setMessage, status, setStatus]
 }

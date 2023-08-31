@@ -22,9 +22,8 @@ import * as Yup from 'yup'
 import CustomFormikField from "../../../components/fields/CustomFormikField";
 import ErrorField from "../../../components/fields/ErrorField";
 import { querySetPassword } from "../../../services/slices/auth/setpassword";
-import { Alert } from "antd";
-import {FaTimes} from 'react-icons/fa'
 import { useErrorTimeout } from "../../../hooks/useTimeout";
+import Notification from "../../../components/notification/Notification";
 
 
 function Login() {
@@ -34,8 +33,6 @@ function Login() {
   const [show, setShow] = useState(false);
 
   const [message, setMessage] = useErrorTimeout()
-  // console.log(d)
-  // const [error, setError] = useState('');
 
   const initialValues = { email: '', password: '' }
 
@@ -59,10 +56,6 @@ function Login() {
       .required('Please confirm your password')
       .oneOf([Yup.ref('password'), null], 'Password must match'),
   })
-
-  // const onCloseLoginAlert = (e) => {
-  //   setError('')
-  // };
 
   const onHandleSubmit = async (values) => {
     const data = {
@@ -113,16 +106,12 @@ function Login() {
   }
 
   return (
-    <div className="relative">
-      {!!message ? <div className="loginalert">
-        <Alert
+    <div>
+      {!!message?
+        <Notification
           message={message}
           type="error"
-          showIcon
-          icon={<div><FaTimes/></div>}
-          // onClose={onCloseLoginAlert} 
-          />
-      </div> : null}
+          /> : null}
       <NonAuthLayout
         image={show ? signBg1 : signBg}
         title={
