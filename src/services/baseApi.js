@@ -64,12 +64,15 @@ export const makeApiRequest = async (method, url, data, params) => {
         return param;
     }
 
-    if (params) url.search = buildParams(params)
+    if (params) {
+        params=buildParams(params)
+    }
 
     return instance.request({
         method,
         url,
         data,
+        params
     })
     // .catch(async error => {
     //     console.log(error)
