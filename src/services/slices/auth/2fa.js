@@ -11,6 +11,7 @@ const initialState = {
 export const query2FA = createAsyncThunk('login-2fa/query2FA', async (data, { rejectWithValue }) => {
   try {
     const response = await makeApiRequest('post', twoFactorAuthentication(), data)
+    console.log(response.data, '2fa')
     return response.data
   } catch (err) {
     return rejectWithValue(err.response.data)
@@ -27,8 +28,9 @@ export const twoFaSlice = createSlice({
         state.loading = true;
       })
       .addCase(query2FA.fulfilled, (state, { payload }) => {
+        console.log(payload, '2fa payload')
         state.loading = false;
-        state.user = payload;
+        state.user = payload?.data?.admin;
       })
       .addCase(query2FA.rejected, (state, { payload }) => {
         state.loading = false;

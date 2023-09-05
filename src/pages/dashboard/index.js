@@ -1,4 +1,4 @@
-import React, { forwardRef, useEffect, useState } from 'react'
+import React, { forwardRef, useState } from 'react'
 import Dashboardheader from '../../components/dashboardComponents/Dashboardheader'
 import SectionHeader from '../../components/dashboardComponents/SectionHeader'
 import { Col, Row } from 'antd'
@@ -17,12 +17,17 @@ import OneDateRange from '../../components/chart/OneDateRange'
 import { formatDate } from '../../utils/helperFunctions'
 import { PiCaretUp, PiCaretDown } from 'react-icons/pi'
 import CustomTab from '../../components/tabination/CustomTab'
-import { useDispatch } from 'react-redux'
-import { queryRoles } from '../../services/slices/roles/fetchRoles'
+//  import { useDispatch } from 'react-redux'
+// import { queryRoles } from '../../services/slices/roles/fetchRoles'
+// import { queryTransactions } from '../../services/slices/transactions/getTransactions'
+// import { queryFiatMetrics } from '../../services/slices/dashboard/fiatMetrics'
+//  import { queryFiatRevenue } from '../../services/slices/dashboard/fiatRevenue'
+// import { queryCryptoMetrics } from '../../services/slices/dashboard/cryptoMetrics'
+// import { queryFiatProfit } from '../../services/slices/dashboard/fiatProfit'
 
 export default function Dashboard() {
 
-  const dispatch = useDispatch()
+  //const dispatch = useDispatch()
 
   const [startDate, setStartDate] = useState(new Date());
   const [changeIcon, setChangeIcon] = useState(false);
@@ -34,17 +39,77 @@ export default function Dashboard() {
     setEndDate(end);
   };
 
-  useEffect(() => {
-    const fetchRoles = async() => {
-      try {
-        const res = await dispatch(queryRoles()).unwrap()
-        console.log(res,'res')
-      } catch (e) {
-       console.log(e)
-      }
-    }
-     fetchRoles()
-  }, [dispatch])
+  // useEffect(() => {
+  //   const fetchRoles = async() => {
+  //     try {
+  //       const res = await dispatch(queryRoles()).unwrap()
+  //       console.log(res,'res')
+  //     } catch (e) {
+  //      console.log(e)
+  //     }
+  //   }
+  //    fetchRoles()
+  // }, [dispatch])
+
+  // useEffect(()=>{
+  //   const fetchTransaction = async() => {
+  //     try{
+  //       const res = await dispatch(queryTransactions()).unwrap()
+  //       console.log(res,'fect trxxxx')
+  //            } catch(e){
+  //       console.log(e)
+  //            }
+  //   }
+  //   fetchTransaction()
+  // },[dispatch])
+
+  // useEffect(()=>{
+  //   const fetchFiatMetrics = async() => {
+  //     try{
+  //       const res = await dispatch(queryFiatMetrics()).unwrap()
+  //       console.log(res,'fiat metrics')
+  //            } catch(e){
+  //       console.log(e)
+  //            }
+  //   }
+  //   fetchFiatMetrics()
+  // },[dispatch])
+
+  // useEffect(()=>{
+  //   const fetchFiatRevenue = async() => {
+  //     try{
+  //       const res = await dispatch(queryFiatRevenue()).unwrap()
+  //       console.log(res,'fiat revenue')
+  //            } catch(e){
+  //       console.log(e)
+  //            }
+  //   }
+  //   fetchFiatRevenue()
+  // },[dispatch])
+
+  // useEffect(()=>{
+  //   const fetchProfit = async() => {
+  //     try{
+  //       const res = await dispatch(queryFiatProfit()).unwrap()
+  //       console.log(res,'profit')
+  //            } catch(e){
+  //       console.log(e)
+  //            }
+  //   }
+  //   fetchProfit()
+  // },[dispatch])
+
+  // useEffect(()=>{
+  //   const fetchCryptoProfit = async() => {
+  //     try{
+  //       const res = await dispatch(queryCryptoMetrics()).unwrap()
+  //       console.log(res,'crypto metrics')
+  //            } catch(e){
+  //       console.log(e)
+  //            }
+  //   }
+  //   fetchCryptoProfit()
+  // },[dispatch])
 
   const ExampleCustomInput = forwardRef(({ value, onClick }, ref) => {
 
