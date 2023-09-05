@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React from 'react'
 import NonAuthLayout from '../../../components/layout/NonAuthLayout'
 import signBg from "../../../assets/images/signBg.png";
 import PinInputField from '../../../components/fields/PinInputField';
@@ -11,7 +11,8 @@ import ErrorField from '../../../components/fields/ErrorField';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { query2FA } from '../../../services/slices/auth/2fa';
-import { Alert } from 'antd';
+import { useErrorTimeout } from '../../../hooks/useTimeout';
+import Notification from '../../../components/notification/Notification';
 
 const TwoFactorAuthentication = () => {
     const faValues = { pin: '' }
@@ -20,11 +21,7 @@ const TwoFactorAuthentication = () => {
     const dispatch = useDispatch()
     const location = useLocation()
 
-    const [error, setError] = useState('')
-
-    const onCloseAlert = (e) => {
-        setError('')
-    };
+    const [message, setMessage, status, setStatus] = useErrorTimeout()
 
     const validationSchema = Yup.object({
         pin: Yup.string()
@@ -49,21 +46,20 @@ const TwoFactorAuthentication = () => {
                 navigate('/dashboard')
             }
         } catch (e) {
-            console.log(e)
+            console.log(e, '2fa')
             if (e?.success === false) {
-                setError(e?.errorMessage)
+                setStatus('error')
+                setMessage(e?.errorMessage)
             }
         }
     }
     return (
         <div>
-            {error?.length > 0 ? <div className="loginalert">
-                <Alert
-                    message={error}
-                    type="error"
-                    closable
-                    onClose={onCloseAlert} />
-            </div> : null}
+            {!!message ?
+                <Notification
+                    message={message}
+                    type={status}
+                /> : null}
             <NonAuthLayout
                 maxwidth='350px'
                 image={signBg}

@@ -46,38 +46,35 @@ const AddAUser = ({ setAddUser }) => {
 
   const onHandleSubmit = async (values) => {
 
-    let data
+    let data = {
+      firstName: values?.firstName,
+      lastName: values?.lastName,
+      email: values?.email
+    }
 
     try {
       if (values?.role === 'super_admin') {
         console.log('trigerr super admin')
-        data = {
-          firstName: values?.firstName,
-          lastName: values?.lastName,
-          email: values?.email
-        }
         const res = await dispatch(queryInviteSuperAdmin(data)).unwrap()
         if (res?.status === 'success') {
-          setStatus(res?.status)
+          setStatus('success')
           setMessage(res?.message)
         }
       } else {
         const role_id = roles?.role?.data?.find((id) => id?.name?.toLowerCase() === values?.role)
         data = {
-          firstName: values?.firstName,
-          lastName: values?.lastName,
-          email: values?.email,
+          ...data,
           roleId: role_id?.id
         }
         const res = await dispatch(queryInviteAdmin(data)).unwrap()
         if (res?.status === 'success') {
-          setStatus(res?.status)
+          setStatus('success')
           setMessage(res?.message)
         }
       }
     } catch (err) {
       if (err?.success === false) {
-        setStatus('failed')
+        setStatus('error')
         setMessage(err?.errorMessage)
       }
     }
@@ -87,7 +84,7 @@ const AddAUser = ({ setAddUser }) => {
       {!!message ?
         <Notification
           message={message}
-          type={`${status === 'failed' ? '"error"' : 'success'}`}
+          type={status}
         /> : null}
       <div>
         <CustomButton bg={color.white} radius='25px' color={color.coinColor} width='120px' border='1px solid #DBDBDB' text='Go Back' icon={<PiCaretLeft color={color.mainColor} fontSize={20} />} onClick={() => setAddUser(false)} className='flex items-center' />

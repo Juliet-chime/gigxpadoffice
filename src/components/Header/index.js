@@ -7,8 +7,9 @@ import { RxPerson } from 'react-icons/rx'
 import { PiCaretDown, PiCaretUp, PiCurrencyDollarSimple, PiSignOut } from 'react-icons/pi'
 import { GrFormCheckmark } from 'react-icons/gr'
 import { color } from "../../assets/color";
-import { FaCircle } from "react-icons/fa";
 import HeaderDropDownComponent from "./HeaderDropDonComponent";
+import { useSelector } from "react-redux";
+import { get2FaSelector } from "../../services/slices/auth/2fa";
 
 const { Header } = Layout;
 
@@ -20,32 +21,21 @@ const SubItems = ({ text, icon, active }) => {
   </div>
 }
 
-const NotificationItem = ({ text, icon, title }) => {
-  return <div className="flex items-center justify-between p-2">
-    <div>
-      <h5 className={`text-sm text-mainColor font-medium`}>{title}</h5>
-      <p className={`text-sm text-lighterAsh`}>{text}</p>
-    </div>
-    {icon ? <FaCircle fontSize={8} color={color.secondaryColor} /> : null}
-  </div>
-}
-
-export default function NavHeader() {
+export default function NavHeader({ dropdownRender }) {
 
   const [openMenu, setOpenMenu] = useState(false);
+
+  const user = useSelector(get2FaSelector)
+
+  const firstname = user?.user?.firstName
+  const lastName = user?.user?.lastName
 
   return (
     <Header className="bg-white p-2">
       <HeaderWrapper>
         <div className="notification-holder">
           <Dropdown
-            dropdownRender={(menus) => {
-              return <div className="shadow-lg rounded-md px-2 py-2 w-48 z-50 bg-white">
-                <NotificationItem title={'User invite accepted'} text={'56 minutes ago'} icon />
-                <NotificationItem title={'New Request Received'} text={'3 days ago'} />
-                <NotificationItem title={'User invite accepted'} text={'3 days ago'} />
-              </div>
-            }}
+            dropdownRender={dropdownRender}
             placement="bottomRight"
             trigger={['click']}
           >
@@ -77,7 +67,7 @@ export default function NavHeader() {
             <div className="user-section">
               <div>
                 <p className="user-info">
-                  <span className="user-name">Anselm Mba</span>
+                  <span className="user-name">{firstname} {' '} {lastName}</span>
                 </p>
 
               </div>

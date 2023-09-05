@@ -45,13 +45,31 @@ async function instantiateInstance() {
     return instance
 }
 
-export const makeApiRequest = async (method, url, data) => {
+export const makeApiRequest = async (method, url, data, params) => {
     await instantiateInstance()
+
+    const buildParams = (data) => {
+        const param = new window.URLSearchParams()
+
+        for (let [key, value] of Object.entries(data)) {
+            if (Array.isArray(value)) {
+                value.forEach((item, index) => {
+                    param.append(`${key}${index}`, item)
+                });
+            } else {
+                param.append(key, value)
+            }
+        }
+
+        return param;
+    }
+
+    if (params) url.search = buildParams(params)
 
     return instance.request({
         method,
         url,
-        data
+        data,
     })
     // .catch(async error => {
     //     console.log(error)

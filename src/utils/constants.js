@@ -20,3 +20,5 @@ export const roles = [
     }
 
 ]
+
+export const verify2FA = 'A verification code has been sent to your email. Please check your inbox and enter the code to complete the login process.'
