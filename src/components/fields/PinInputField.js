@@ -25,7 +25,6 @@ const PinInputField = (props) => {
       {...meta}
       initialValue={field?.value}
       onChange={(value) => {
-        console.log(value)
         helpers.setValue(value)
       }}
       {...props}
