@@ -1,24 +1,52 @@
 const loginUser = () => {
-    return `/admins/auth/login`;
+    return `/auth/login`;
 };
 
 const setPassword = () => {
-    return `/admins/auth/set-password`;
+    return `/auth/set-password`;
 };
 
 const twoFactorAuthentication = () => {
-    return `/admins/auth/login/2FA`;
+    return `/auth/login/2FA`;
 };
 
 const getRoles = () => {
-    return `/admins/roles`;
+    return `/roles`;
+};
+
+const inviteAdmin = () => {
+    return `/invite`;
 };
 
 const inviteSuperAdmin = () => {
-    return `/admins/invite-superadmin`;
+    return `/invite-superadmin`;
+};
+
+const getTransactions = () => {
+    return `/transactions/fiat`;
+};
+
+const getFiatMetrics = () => {
+    return `/dashboards/fiat-transaction-chart`;
+};
+
+const getFiatRevenue = () => {
+    return `/dashboards/fiat-profit-revenue-chart`;
+};
+
+const getFiatProfit = () => {
+    return `/dashboards/fiat-profit`;
+};
+
+const getCryptoMetrics = () => {
+    return `/dashboards/crypto-transaction-chart`;
+};
+
+const getUserMetrics = () => {
+    return `/dashboards/users-chart`;
 };
 
 export {
-    loginUser, setPassword, twoFactorAuthentication, getRoles,
-    inviteSuperAdmin
+    loginUser, setPassword, twoFactorAuthentication, getRoles, inviteAdmin,
+    inviteSuperAdmin, getTransactions, getFiatMetrics, getFiatRevenue, getFiatProfit, getCryptoMetrics, getUserMetrics
 }
