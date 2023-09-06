@@ -1,4 +1,4 @@
-import React, { useState} from 'react'
+import React, { useState } from 'react'
 import Dashboardheader from '../../components/dashboardComponents/Dashboardheader'
 import { Tabs } from 'antd';
 import UserManagement from './UserManagement';
@@ -13,7 +13,7 @@ const Settings = () => {
   const onChangeTab = (key) => {
     console.log(key);
   };
-  
+
   const items = [
     {
       key: '1',
@@ -33,6 +33,7 @@ const Settings = () => {
   ];
 
   return (
+
     <div>
       {addUser ? <AddAUser setAddUser={setAddUser} /> : <><Dashboardheader
         componentName={'System Settings'}
@@ -44,6 +45,7 @@ const Settings = () => {
         </div></>}
 
     </div>
+
   )
 }
 
