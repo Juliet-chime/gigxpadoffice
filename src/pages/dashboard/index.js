@@ -17,8 +17,13 @@ import OneDateRange from '../../components/chart/OneDateRange'
 import { formatDate } from '../../utils/helperFunctions'
 import { PiCaretUp, PiCaretDown } from 'react-icons/pi'
 import CustomTab from '../../components/tabination/CustomTab'
-import { useDispatch } from 'react-redux'
+ import { useDispatch } from 'react-redux'
 import { queryRoles } from '../../services/slices/roles/fetchRoles'
+// import { queryTransactions } from '../../services/slices/transactions/getTransactions'
+// import { queryFiatMetrics } from '../../services/slices/dashboard/fiatMetrics'
+//  import { queryFiatRevenue } from '../../services/slices/dashboard/fiatRevenue'
+// import { queryCryptoMetrics } from '../../services/slices/dashboard/cryptoMetrics'
+// import { queryFiatProfit } from '../../services/slices/dashboard/fiatProfit'
 
 export default function Dashboard() {
 
@@ -27,7 +32,7 @@ export default function Dashboard() {
   const [startDate, setStartDate] = useState(new Date());
   const [changeIcon, setChangeIcon] = useState(false);
   const [endDate, setEndDate] = useState(null);
-
+  
   const onChange = (dates) => {
     const [start, end] = dates;
     setStartDate(start);
@@ -45,6 +50,72 @@ export default function Dashboard() {
     }
      fetchRoles()
   }, [dispatch])
+
+  // useEffect(()=>{
+  //   const fetchTransaction = async() => {
+  //     try{
+  //       const res = await dispatch(queryTransactions()).unwrap()
+  //       console.log(res,'fect trxxxx')
+  //            } catch(e){
+  //       console.log(e)
+  //            }
+  //   }
+  //   fetchTransaction()
+  // },[dispatch])
+
+  // useEffect(()=>{
+  //   const fetchFiatMetrics = async() => {
+  //     try{
+  //       const res = await dispatch(queryFiatMetrics()).unwrap()
+  //       console.log(res,'fiat metrics')
+  //            } catch(e){
+  //       console.log(e)
+  //            }
+  //   }
+  //   fetchFiatMetrics()
+  // },[dispatch])
+
+  // useEffect(()=>{
+  //   const fetchFiatRevenue = async() => {
+  //     try{
+  //       const res = await dispatch(queryFiatRevenue(
+  //         {
+  //         from:'2020-02-12'
+  //       }
+  //       )).unwrap()
+  //       console.log(res,'fiat revenue')
+  //            } catch(e){
+  //       console.log(e)
+  //            }
+  //   }
+  //   fetchFiatRevenue()
+  // },[dispatch])
+
+  // useEffect(()=>{
+  //   const fetchProfit = async() => {
+  //     try{
+  //       const res = await dispatch(queryFiatProfit({
+  //         from:'2020-02-12'
+  //       })).unwrap()
+  //       console.log(res,'profit')
+  //            } catch(e){
+  //       console.log(e)
+  //            }
+  //   }
+  //   fetchProfit()
+  // },[dispatch])
+
+  // useEffect(()=>{
+  //   const fetchCryptoProfit = async() => {
+  //     try{
+  //       const res = await dispatch(queryCryptoMetrics()).unwrap()
+  //       console.log(res,'crypto metrics')
+  //            } catch(e){
+  //       console.log(e)
+  //            }
+  //   }
+  //   fetchCryptoProfit()
+  // },[dispatch])
 
   const ExampleCustomInput = forwardRef(({ value, onClick }, ref) => {
 
