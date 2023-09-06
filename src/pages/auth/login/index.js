@@ -22,7 +22,9 @@ import * as Yup from 'yup'
 import CustomFormikField from "../../../components/fields/CustomFormikField";
 import ErrorField from "../../../components/fields/ErrorField";
 import { querySetPassword } from "../../../services/slices/auth/setpassword";
-import { Alert } from "antd";
+import { useErrorTimeout } from "../../../hooks/useTimeout";
+import Notification from "../../../components/notification/Notification";
+import { verify2FA } from "../../../utils/constants";
 
 
 function Login() {
@@ -30,13 +32,12 @@ function Login() {
   const dispatch = useDispatch()
 
   const [show, setShow] = useState(false);
-  const [error, setError] = useState('');
+
+  const [message, setMessage, status, setStatus] = useErrorTimeout()
 
   const initialValues = { email: '', password: '' }
 
   const passwordResetValues = { password: '', confirmPassword: '' }
-
-  const msg = 'A verification code has been sent to your email. Please check your inbox and enter the code to complete the login process.'
 
   const validationSchema = Yup.object({
     email: Yup.string().email('Please enter a valid email').required('Please enter your email').matches(/^[A-Za-z0-9._%+-]+@gigxpad\.com$/, 'Invalid email address'),
@@ -55,10 +56,6 @@ function Login() {
       .oneOf([Yup.ref('password'), null], 'Password must match'),
   })
 
-  const onCloseLoginAlert = (e) => {
-    setError('')
-  };
-
   const onHandleSubmit = async (values) => {
     const data = {
       email: values?.email,
@@ -67,14 +64,13 @@ function Login() {
 
     try {
       const res = await dispatch(queryUserLogin(data)).unwrap()
-      console.log(res,'login ressss')
       if (res?.data?.passwordChanged === false) {
         const newUserToken = res?.accessToken
         localStorage.setItem('newUserToken', newUserToken)
         setShow(true)
       }
       else {
-        if (res?.message === msg) {
+        if (res?.message === verify2FA) {
           navigate('/2FA', { state: { email: values?.email } })
         } else {
           const token = res?.accessToken
@@ -84,7 +80,8 @@ function Login() {
       }
     } catch (e) {
       if (e?.success === false) {
-        setError(e?.errorMessage)
+        setStatus('error')
+        setMessage(e?.errorMessage)
       }
     }
   }
@@ -98,24 +95,25 @@ function Login() {
       if (res?.status === 'success') {
         localStorage.removeItem("newUserToken")
         setShow(false)
+        setStatus('success')
+        setMessage(res?.message)
       }
     }
     catch (e) {
       if (e?.success === false) {
-        setError(e?.errorMessage)
+        setStatus('error')
+        setMessage(e?.errorMessage)
       }
     }
   }
 
   return (
-    <div className="relative">
-      {error?.length > 0 ? <div className="loginalert">
-        <Alert
-          message={error}
-          type="error"
-          closable
-          onClose={onCloseLoginAlert} />
-      </div> : null}
+    <div>
+      {!!message ?
+        <Notification
+          message={message}
+          type={status}
+        /> : null}
       <NonAuthLayout
         image={show ? signBg1 : signBg}
         title={
