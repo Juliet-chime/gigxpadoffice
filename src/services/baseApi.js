@@ -4,6 +4,8 @@ import axios from 'axios';
 const API_URL = process.env.REACT_APP_PUBLIC_API_URL;
 const API_KEY = process.env.REACT_APP_PUBLIC_API_KEY;
 
+let instance;
+
 async function setAuthorization(headers) {
 
     const token = await localStorage.getItem('authToken')
@@ -41,7 +43,6 @@ async function instantiateInstance() {
         });
     }
 
-
     return instance
 }
 
@@ -68,12 +69,13 @@ export const makeApiRequest = async (method, url, data, params) => {
         params=buildParams(params)
     }
 
-    return instance.request({
-        method,
-        url,
-        data,
-        params
+    const res = await instance.request({
+    method,
+    url,
+    data,
+    params,
     })
+    return res
     // .catch(async error => {
     //     console.log(error)
     //     // if (error?.response) {
@@ -84,3 +86,5 @@ export const makeApiRequest = async (method, url, data, params) => {
     //     // } 
     // })
 };
+
+

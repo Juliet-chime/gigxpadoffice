@@ -27,7 +27,6 @@ export const twoFaSlice = createSlice({
         state.loading = true;
       })
       .addCase(query2FA.fulfilled, (state, { payload }) => {
-        console.log(payload, '2fa payload')
         state.loading = false;
         state.user = payload?.data?.admin;
       })
