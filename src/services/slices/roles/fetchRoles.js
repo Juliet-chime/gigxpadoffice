@@ -28,7 +28,7 @@ export const roleSlice = createSlice({
       })
       .addCase(queryRoles.fulfilled, (state, action) => {
         state.loading = false;
-        state.role = action.payload;
+        state.role = action?.payload;
       })
       .addCase(queryRoles.rejected, (state, { payload }) => {
         state.loading = false;
@@ -38,7 +38,7 @@ export const roleSlice = createSlice({
 });
 
 // A selector
-export const getrolesSelector = (state) => state?.roles;
+export const getRolesSelector = (state) => state.roles;
 
 // The reducer
 export default roleSlice.reducer;

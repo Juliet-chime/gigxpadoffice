@@ -4,48 +4,83 @@ import axios from 'axios';
 const API_URL = process.env.REACT_APP_PUBLIC_API_URL;
 const API_KEY = process.env.REACT_APP_PUBLIC_API_KEY;
 
-const REQUEST_TIMEOUT = 60000;
+async function setAuthorization(headers) {
 
-const headers = {
-    'Content-Type': 'application/json',
-    Accept: 'application/json',
-    'x-api-key': API_KEY,
-};
+    const token = await localStorage.getItem('authToken')
+    const newUserToken = await localStorage.getItem('newUserToken');
 
-const instance = axios.create({
-    baseURL: API_URL,
-    headers
-});
-
-instance.interceptors.request.use(
-    (request) => {
-        const token = localStorage.getItem("authToken");
-        const newUserToken = localStorage.getItem('newUserToken');
-        if (!!token) {
-            request.headers.Authorization = `Bearer ${token ? token : newUserToken}`;
-        }
-        return request;
-    },
-    (error) => Promise.reject(error)
-);
-
-instance.interceptors.response.use(undefined, (error) => {
-    if (
-        error?.response?.status === 401 ||
-        error?.response?.data?.message?.includes('InvalidToken')
-    ) {
-        localStorage.clear()
+    if (!!newUserToken) {
+        headers.Authorization = `Bearer ${newUserToken}`
     }
-    return Promise.reject(error);
-});
+    else if (!!token) {
+        headers.Authorization = `Bearer ${token}`
+    }
 
-instance.defaults.timeout = REQUEST_TIMEOUT;
+    return headers
 
-export const makeApiRequest = async (method, url, data) => {
-    const response = await instance.request({
+}
+
+async function instantiateInstance() {
+
+    let headers = {
+        'Content-Type': 'application/json',
+        Accept: 'application/json',
+        'x-api-key': API_KEY,
+    };
+
+    headers = await setAuthorization(headers)
+
+    if (!!instance) {
+
+        instance.defaults.headers.common['Authorization'] = headers.Authorization
+
+    } else {
+        instance = axios.create({
+            baseURL: API_URL,
+            headers
+        });
+    }
+
+
+    return instance
+}
+
+export const makeApiRequest = async (method, url, data, params) => {
+    await instantiateInstance()
+
+    const buildParams = (data) => {
+        const param = new window.URLSearchParams()
+
+        for (let [key, value] of Object.entries(data)) {
+            if (Array.isArray(value)) {
+                value.forEach((item, index) => {
+                    param.append(`${key}${index}`, item)
+                });
+            } else {
+                param.append(key, value)
+            }
+        }
+
+        return param;
+    }
+
+    if (params) {
+        params=buildParams(params)
+    }
+
+    return instance.request({
         method,
         url,
-        data
-    });
-    return response;
+        data,
+        params
+    })
+    // .catch(async error => {
+    //     console.log(error)
+    //     // if (error?.response) {
+    //     //     if(+error?.response?.status === 401){
+    //     //          await localStorage.setItem('authToken', "")
+    //     //          window?.location?.reload()
+    //     //     }
+    //     // } 
+    // })
 };

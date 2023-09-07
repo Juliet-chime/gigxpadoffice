@@ -22,20 +22,22 @@ import * as Yup from 'yup'
 import CustomFormikField from "../../../components/fields/CustomFormikField";
 import ErrorField from "../../../components/fields/ErrorField";
 import { querySetPassword } from "../../../services/slices/auth/setpassword";
-import { Alert } from "antd";
+import { useErrorTimeout } from "../../../hooks/useTimeout";
+import Notification from "../../../components/notification/Notification";
+import { verify2FA } from "../../../utils/constants";
 
-function Login(props) {
+
+function Login() {
   const navigate = useNavigate()
   const dispatch = useDispatch()
 
   const [show, setShow] = useState(false);
-  const [error, setError] = useState('');
+
+  const [message, setMessage, status, setStatus] = useErrorTimeout()
 
   const initialValues = { email: '', password: '' }
 
   const passwordResetValues = { password: '', confirmPassword: '' }
-
-  const msg = 'A verification code has been sent to your email. Please check your inbox and enter the code to complete the login process.'
 
   const validationSchema = Yup.object({
     email: Yup.string().email('Please enter a valid email').required('Please enter your email').matches(/^[A-Za-z0-9._%+-]+@gigxpad\.com$/, 'Invalid email address'),
@@ -54,10 +56,6 @@ function Login(props) {
       .oneOf([Yup.ref('password'), null], 'Password must match'),
   })
 
-  const onCloseLoginAlert = (e) => {
-    setError('')
-  };
-
   const onHandleSubmit = async (values) => {
     console.log('clicked')
     const data = {
@@ -73,7 +71,7 @@ function Login(props) {
         setShow(true)
       }
       else {
-        if (res?.message === msg) {
+        if (res?.message === verify2FA) {
           navigate('/2FA', { state: { email: values?.email } })
         } else {
           const token = res?.accessToken
@@ -83,35 +81,10 @@ function Login(props) {
       }
     } catch (e) {
       if (e?.success === false) {
-        setError(e?.errorMessage)
+        setStatus('error')
+        setMessage(e?.errorMessage)
       }
     }
-
-    // dispatch(queryUserLogin(data))
-    //   .unwrap()
-    //   .then((res) => {
-    //     if (res?.data?.passwordChanged === false) {
-    //       const newUserToken = res?.accessToken
-    //       localStorage.setItem('newUserToken', newUserToken)
-    //       setShow(true)
-    //     }
-
-    //     else {
-    //       if (res?.message === msg) {
-    //         navigate('/2FA', { state: { email: values?.email } })
-    //       } else {
-    //         const token = res?.accessToken
-    //         localStorage.setItem('authToken', token)
-    //         navigate('/dashboard')
-    //       }
-    //     }
-    //   })
-    //   .catch((e) => {
-    //     console.log(e)
-    //     // if(e?.response?.status === 400){
-    //     //   setError(e?.response?.data?.errorMessage)
-    //     // }
-    //   })
   }
   const onSetPassword = async (values) => {
     const data = {
@@ -123,25 +96,25 @@ function Login(props) {
       if (res?.status === 'success') {
         localStorage.removeItem("newUserToken")
         setShow(false)
+        setStatus('success')
+        setMessage(res?.message)
       }
     }
     catch (e) {
-      console.log(e)
       if (e?.success === false) {
-        setError(e?.errorMessage)
+        setStatus('error')
+        setMessage(e?.errorMessage)
       }
     }
   }
 
   return (
-    <div className="relative" style={{ border: 'solid blue' }}>
-      {error?.length > 0 ? <div className="loginalert">
-        <Alert
-          message={error}
-          type="error"
-          closable
-          onClose={onCloseLoginAlert} />
-      </div> : null}
+    <div>
+      {!!message ?
+        <Notification
+          message={message}
+          type={status}
+        /> : null}
       <NonAuthLayout
         image={show ? signBg1 : signBg}
         title={
