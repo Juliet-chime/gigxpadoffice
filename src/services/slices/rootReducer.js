@@ -1,4 +1,5 @@
 import { combineReducers } from "redux";
+// import loginReducer from './auth/login'
 import twoFaReducer from "./auth/2fa";
 import roleReducer from './roles/fetchRoles'
 import transactionReducer from './transactions/getTransactions'
@@ -9,6 +10,7 @@ import cryptoMetricsReducer from './dashboard/cryptoMetrics'
 import { clearLocalStorage } from "../../utils/authFunc";
 
 const combinedReducer = combineReducers({
+  // login:loginReducer,
   twoFA: twoFaReducer,
   roles: roleReducer,
   transactions: transactionReducer,
