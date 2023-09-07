@@ -54,7 +54,6 @@ const AddAUser = ({ setAddUser }) => {
 
     try {
       if (values?.role === 'super_admin') {
-        console.log('trigerr super admin')
         const res = await dispatch(queryInviteSuperAdmin(data)).unwrap()
         if (res?.status === 'success') {
           setStatus('success')
