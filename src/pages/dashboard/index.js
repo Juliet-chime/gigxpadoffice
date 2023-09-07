@@ -17,8 +17,9 @@ import OneDateRange from '../../components/chart/OneDateRange'
 import { formatDate } from '../../utils/helperFunctions'
 import { PiCaretUp, PiCaretDown } from 'react-icons/pi'
 import CustomTab from '../../components/tabination/CustomTab'
- import { useDispatch } from 'react-redux'
+ import { useDispatch, useSelector } from 'react-redux'
 import { queryRoles } from '../../services/slices/roles/fetchRoles'
+import { get2FaSelector } from '../../services/slices/auth/2fa'
 // import { queryTransactions } from '../../services/slices/transactions/getTransactions'
 // import { queryFiatMetrics } from '../../services/slices/dashboard/fiatMetrics'
 //  import { queryFiatRevenue } from '../../services/slices/dashboard/fiatRevenue'
@@ -32,6 +33,10 @@ export default function Dashboard() {
   const [startDate, setStartDate] = useState(new Date());
   const [changeIcon, setChangeIcon] = useState(false);
   const [endDate, setEndDate] = useState(null);
+
+  const user = useSelector(get2FaSelector)
+
+  const firstname = user?.user?.firstName
   
   const onChange = (dates) => {
     const [start, end] = dates;
@@ -158,7 +163,7 @@ export default function Dashboard() {
 
   return (
     <div className='overflow-hidden py-10'>
-      <Dashboardheader userName={'Hi Anselm,'} componentName={'Dashboard Overview'} />
+      <Dashboardheader userName={`Hi ${firstname},`} componentName={'Dashboard Overview'} />
       <section style={{ marginTop: '50px' }}>
         <SectionHeader header={'Wallet Balances'} />
         <Row
