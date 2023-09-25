@@ -8,6 +8,7 @@ import fiatRevenueReducer from './dashboard/fiatRevenue'
 import fiatProfitReducer from './dashboard/fiatProfit'
 import cryptoMetricsReducer from './dashboard/cryptoMetrics'
 import { clearLocalStorage } from "../../utils/authFunc";
+import userChartReducer from './user/userChart'
 
 const combinedReducer = combineReducers({
   // login:loginReducer,
@@ -17,7 +18,8 @@ const combinedReducer = combineReducers({
   fiatMetrics: fiatMetricsReducer,
   fiatRevenue: fiatRevenueReducer,
   fiatProfit: fiatProfitReducer,
-  cryptoMetrics: cryptoMetricsReducer
+  cryptoMetrics: cryptoMetricsReducer,
+  userChart: userChartReducer
 });
 
 export const rootReducer = (state, action) => {

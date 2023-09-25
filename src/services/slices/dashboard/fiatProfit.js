@@ -1,6 +1,6 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { makeApiRequest } from "../../baseApi";
-import { getFiatProfit } from "../../apis";
+// import { getFiatProfit } from "../../apis";
 
 const initialState = {
     loading: false,
@@ -10,7 +10,7 @@ const initialState = {
 
 export const queryFiatProfit = createAsyncThunk('fiatProfit/queryFiatProfit', async (params = null) => {
     try {
-        const response = await makeApiRequest('get', getFiatProfit(), null, params)
+        const response = await makeApiRequest('get','sd', null, params)
         return response?.data
     } catch (e) {
         console.log(e)

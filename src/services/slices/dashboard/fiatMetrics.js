@@ -8,9 +8,9 @@ const initialState = {
     fiatMetrics: {},
 };
 
-export const queryFiatMetrics = createAsyncThunk('fiatMetrics/queryFiatMetrics', async () => {
+export const queryFiatMetrics = createAsyncThunk('fiatMetrics/queryFiatMetrics', async (params=null) => {
     try {
-        const response = await makeApiRequest('get', getFiatMetrics())
+        const response = await makeApiRequest('get', getFiatMetrics(),null,params)
         return response?.data
     } catch (e) {
         console.log(e)

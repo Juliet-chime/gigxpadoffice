@@ -78,16 +78,16 @@ const TwoFactorAuthentication = () => {
                         validateOnChange={false}
                         validateOnMount={false}
                     >
-                        {({ handleSubmit, errors, isSubmitting }) => {
+                        {({ handleSubmit, errors, isSubmitting}) => {
 
                             const { pin } = errors
                             return (
                                 <Form className="" onSubmit={handleSubmit}>
                                     <div className="mb-10">
                                         <PinInputField
-                                            length={6}
-                                            type="numeric"
-                                            name="pin"
+                                        length={6}
+                                        type="numeric"
+                                        name="pin"
                                         />
                                         {pin ? <ErrorField error={pin} /> : null}
                                     </div>

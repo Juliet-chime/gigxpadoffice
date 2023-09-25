@@ -1,44 +1,44 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { makeApiRequest } from "../../baseApi";
-import { getTransactions } from "../../apis";
+import { getUserMetrics } from "../../apis";
 
 const initialState = {
   loading: false,
   error: null,
-  transactions: [],
+  userChart: {},
 };
 
-export const queryTransactions = createAsyncThunk('getTransactions/queryTransactions', async (params=null) => {
+export const queryUserChart = createAsyncThunk('getUserChart/queryUserChart', async () => {
   try {
-    const response = await makeApiRequest('get', getTransactions(),null,params)
+    const response = await makeApiRequest('get', getUserMetrics())
     return response?.data
   } catch (e) {
     console.log(e)
   }
 })
 
-export const transactionSlice = createSlice({
-  name: "getTransactions",
+export const userChartSlice = createSlice({
+  name: "userchart",
   initialState,
   reducers: {},
   extraReducers: (builder) => {
     builder
-      .addCase(queryTransactions.pending, (state) => {
+      .addCase(queryUserChart.pending, (state) => {
         return (state = {
           ...state,
           loading: true,
         });
       })
-      .addCase(queryTransactions.fulfilled, (state, action) => {
+      .addCase(queryUserChart.fulfilled, (state, action) => {
         // state.loading = false;
         // state.transactions = action?.payload;
         return (state = {
           ...state,
           loading: false,
-          transactions: action.payload,
+          userChart: action.payload,
         });
       })
-      .addCase(queryTransactions.rejected, (state, { payload }) => {
+      .addCase(queryUserChart.rejected, (state, { payload }) => {
         // state.loading = false;
         // state.error = payload;
         return (state = {
@@ -51,7 +51,7 @@ export const transactionSlice = createSlice({
 });
 
 // A selector
-export const getTransactionsSelector = (state) => state.transactions;
+export const getUserChartSelector = (state) => state.userChart;
 
 // The reducer
-export default transactionSlice.reducer;
+export default userChartSlice.reducer;
