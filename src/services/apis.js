@@ -34,9 +34,9 @@ const getFiatRevenue = () => {
     return `/dashboards/fiat-profit-revenue-chart`;
 };
 
-const getFiatProfit = () => {
-    return `/dashboards/fiat-profit`;
-};
+// const getFiatProfit = () => {
+//     return `/dashboards/fiat-revenue-chart`;
+// };
 
 const getCryptoMetrics = () => {
     return `/dashboards/crypto-transaction-chart`;
@@ -48,5 +48,5 @@ const getUserMetrics = () => {
 
 export {
     loginUser, setPassword, twoFactorAuthentication, getRoles, inviteAdmin,
-    inviteSuperAdmin, getTransactions, getFiatMetrics, getFiatRevenue, getFiatProfit, getCryptoMetrics, getUserMetrics
+    inviteSuperAdmin, getTransactions, getFiatMetrics, getFiatRevenue, getCryptoMetrics, getUserMetrics
 }
