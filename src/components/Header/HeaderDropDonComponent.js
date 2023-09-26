@@ -4,6 +4,7 @@ import { color } from '../../assets/color'
 
 
 const ComponentStyle = styled.div`
+cursor: pointer;
 .text-display{
 display: flex;
 align-items: center;

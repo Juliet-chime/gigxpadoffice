@@ -46,7 +46,10 @@ const getUserMetrics = () => {
     return `/dashboards/users-chart`;
 };
 
+const getAllUsers = () => {
+    return `/customers`;
+};
 export {
     loginUser, setPassword, twoFactorAuthentication, getRoles, inviteAdmin,
-    inviteSuperAdmin, getTransactions, getFiatMetrics, getFiatRevenue, getCryptoMetrics, getUserMetrics
+    inviteSuperAdmin, getTransactions, getFiatMetrics, getFiatRevenue, getCryptoMetrics, getUserMetrics, getAllUsers
 }
