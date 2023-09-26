@@ -1,15 +1,23 @@
 import { Dropdown } from 'antd';
-import React from 'react'
+import React, { useEffect } from 'react'
 import { SlOptionsVertical } from 'react-icons/sl';
 import CustomButton from '../../components/fields/CustomButton';
 import { color } from '../../assets/color';
 import CustomTable from '../../components/table/CustomTable';
+import { useDispatch } from 'react-redux';
+import { queryAllUser } from '../../services/slices/user/allUsers';
 
 const UserManagement = ({ setAddUser }) => {
+
+    const dispatch = useDispatch()
 
     const onAddUser = () => {
         setAddUser(true)
     }
+
+    useEffect(()=>{
+        dispatch(queryAllUser())
+    },[dispatch])
 
     const items = [
         {

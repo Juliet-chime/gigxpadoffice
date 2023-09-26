@@ -1,5 +1,4 @@
 import { combineReducers } from "redux";
-// import loginReducer from './auth/login'
 import twoFaReducer from "./auth/2fa";
 import roleReducer from './roles/fetchRoles'
 import transactionReducer from './transactions/getTransactions'
@@ -7,11 +6,11 @@ import fiatMetricsReducer from './dashboard/fiatMetrics'
 import fiatRevenueReducer from './dashboard/fiatRevenue'
 import fiatProfitReducer from './dashboard/fiatProfit'
 import cryptoMetricsReducer from './dashboard/cryptoMetrics'
-import { clearLocalStorage } from "../../utils/authFunc";
 import userChartReducer from './user/userChart'
+import allUsersReducer from './user/allUsers'
+import { clearLocalStorage } from "../../utils/authFunc";
 
 const combinedReducer = combineReducers({
-  // login:loginReducer,
   twoFA: twoFaReducer,
   roles: roleReducer,
   transactions: transactionReducer,
@@ -19,7 +18,8 @@ const combinedReducer = combineReducers({
   fiatRevenue: fiatRevenueReducer,
   fiatProfit: fiatProfitReducer,
   cryptoMetrics: cryptoMetricsReducer,
-  userChart: userChartReducer
+  userChart: userChartReducer,
+  allUsers: allUsersReducer
 });
 
 export const rootReducer = (state, action) => {
