@@ -25,12 +25,13 @@ import { queryFiatMetrics } from '../../services/slices/dashboard/fiatMetrics'
  import { queryFiatRevenue } from '../../services/slices/dashboard/fiatRevenue'
 import { queryCryptoMetrics } from '../../services/slices/dashboard/cryptoMetrics'
 import { queryUserChart } from '../../services/slices/user/userChart'
+import moment from 'moment'
 
 export default function Dashboard() {
 
   const dispatch = useDispatch()
 
-  const [startDate, setStartDate] = useState(new Date('2022-04-19'));
+  const [startDate, setStartDate] = useState(new Date('2022-09-05'));
   const [changeIcon, setChangeIcon] = useState(false);
   const [endDate, setEndDate] = useState(null);
 
@@ -50,11 +51,11 @@ try{
       await Promise.allSettled(
         [
         dispatch(queryRoles()).unwrap(),
-        dispatch(queryTransactions({from:startDate})).unwrap(),
-        dispatch(queryFiatMetrics({from:startDate})).unwrap(),
-        dispatch(queryFiatRevenue({from:startDate})).unwrap(),
+        dispatch(queryTransactions({from:moment(startDate).format('YYYY-MM-DD')})).unwrap(),
+        dispatch(queryFiatMetrics({from:moment(startDate).format('YYYY-MM-DD')})).unwrap(),
+        dispatch(queryFiatRevenue({from:moment(startDate).format('YYYY-MM-DD')})).unwrap(),
         dispatch(queryUserChart()).unwrap(),
-        dispatch(queryCryptoMetrics({from:startDate})).unwrap()
+        dispatch(queryCryptoMetrics({from:moment(startDate).format('YYYY-MM-DD')})).unwrap()
       ]
         )
 } catch(e){
