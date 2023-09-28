@@ -46,7 +46,6 @@ const TwoFactorAuthentication = () => {
                 navigate('/dashboard')
             }
         } catch (e) {
-            console.log(e, '2fa')
             if (e?.success === false) {
                 setStatus('error')
                 setMessage(e?.errorMessage)

@@ -1,44 +1,44 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { makeApiRequest } from "../../baseApi";
-import { getTransactions } from "../../apis";
+import { getFiatTransactions } from "../../apis";
 
 const initialState = {
   loading: false,
   error: null,
-  transactions: [],
+  fiatTransactions: [],
 };
 
-export const queryTransactions = createAsyncThunk('getTransactions/queryTransactions', async (params=null) => {
+export const queryFiatTransactions = createAsyncThunk('getFiatTransactions/queryFiatTransactions', async (params=null) => {
   try {
-    const response = await makeApiRequest('get', getTransactions(),null,params)
+    const response = await makeApiRequest('get', getFiatTransactions(),null,params)
     return response?.data
   } catch (e) {
     console.log(e)
   }
 })
 
-export const transactionSlice = createSlice({
-  name: "getTransactions",
+export const fiatTransactionSlice = createSlice({
+  name: "getFiatTransactions",
   initialState,
   reducers: {},
   extraReducers: (builder) => {
     builder
-      .addCase(queryTransactions.pending, (state) => {
+      .addCase(queryFiatTransactions.pending, (state) => {
         return (state = {
           ...state,
           loading: true,
         });
       })
-      .addCase(queryTransactions.fulfilled, (state, action) => {
+      .addCase(queryFiatTransactions.fulfilled, (state, action) => {
         // state.loading = false;
         // state.transactions = action?.payload;
         return (state = {
           ...state,
           loading: false,
-          transactions: action.payload,
+          fiatTransactions: action.payload,
         });
       })
-      .addCase(queryTransactions.rejected, (state, { payload }) => {
+      .addCase(queryFiatTransactions.rejected, (state, { payload }) => {
         // state.loading = false;
         // state.error = payload;
         return (state = {
@@ -51,7 +51,7 @@ export const transactionSlice = createSlice({
 });
 
 // A selector
-export const getTransactionsSelector = (state) => state.transactions;
+export const getFiatTransactionsSelector = (state) => state.fiatTransactions;
 
 // The reducer
-export default transactionSlice.reducer;
+export default fiatTransactionSlice.reducer;
