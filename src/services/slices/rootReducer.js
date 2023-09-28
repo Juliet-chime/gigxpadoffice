@@ -1,7 +1,12 @@
 import { combineReducers } from "redux";
 import twoFaReducer from "./auth/2fa";
 import roleReducer from './roles/fetchRoles'
-import transactionReducer from './transactions/getTransactions'
+import fiatTransactionReducer from './transactions/getFiatTransactions'
+import billTransactionReducer from './transactions/getBillTransactions'
+import cryptoTransactionReducer from './transactions/getCryptoTransactions'
+import oneFiatTransactionReducer from './transactions/getOneFiatTransaction'
+import oneBillTransactionReducer from './transactions/getOneBillTransaction'
+import oneCryptoTransactionReducer from './transactions/getOneCryptoTransaction'
 import fiatMetricsReducer from './dashboard/fiatMetrics'
 import fiatRevenueReducer from './dashboard/fiatRevenue'
 import fiatProfitReducer from './dashboard/fiatProfit'
@@ -13,7 +18,12 @@ import { clearLocalStorage } from "../../utils/authFunc";
 const combinedReducer = combineReducers({
   twoFA: twoFaReducer,
   roles: roleReducer,
-  transactions: transactionReducer,
+  fiatTransactions: fiatTransactionReducer,
+  oneBillTransaction:oneBillTransactionReducer,
+  billTransactions: billTransactionReducer,
+  oneFiatTransaction:oneFiatTransactionReducer,
+  cryptoTransactions:cryptoTransactionReducer,
+  oneCryptoTransaction:oneCryptoTransactionReducer,
   fiatMetrics: fiatMetricsReducer,
   fiatRevenue: fiatRevenueReducer,
   fiatProfit: fiatProfitReducer,

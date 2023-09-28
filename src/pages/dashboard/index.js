@@ -20,7 +20,7 @@ import CustomTab from '../../components/tabination/CustomTab'
  import { useDispatch, useSelector } from 'react-redux'
 import { queryRoles } from '../../services/slices/roles/fetchRoles'
 import { get2FaSelector } from '../../services/slices/auth/2fa'
-import { queryTransactions } from '../../services/slices/transactions/getTransactions'
+import { queryFiatTransactions } from '../../services/slices/transactions/getFiatTransactions'
 import { queryFiatMetrics } from '../../services/slices/dashboard/fiatMetrics'
  import { queryFiatRevenue } from '../../services/slices/dashboard/fiatRevenue'
 import { queryCryptoMetrics } from '../../services/slices/dashboard/cryptoMetrics'
@@ -51,7 +51,7 @@ try{
       await Promise.allSettled(
         [
         dispatch(queryRoles()).unwrap(),
-        dispatch(queryTransactions({from:moment(startDate).format('YYYY-MM-DD')})).unwrap(),
+        dispatch(queryFiatTransactions({from:moment(startDate).format('YYYY-MM-DD')})).unwrap(),
         dispatch(queryFiatMetrics({from:moment(startDate).format('YYYY-MM-DD')})).unwrap(),
         dispatch(queryFiatRevenue({from:moment(startDate).format('YYYY-MM-DD')})).unwrap(),
         dispatch(queryUserChart()).unwrap(),
