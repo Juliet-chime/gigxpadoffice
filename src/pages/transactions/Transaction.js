@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import CustomTable from '../../components/table/CustomTable'
+import CustomTable, { antIcon } from '../../components/table/CustomTable'
 import Dashboardheader from '../../components/dashboardComponents/Dashboardheader'
 import CustomDrawer from '../../components/fields/CustomDrawer';
 import TransactionDetails from './TransactionDetails';
@@ -21,6 +21,8 @@ const Transaction = () => {
 
   const [open, setOpen] = useState(false);
   const [startDate, setStartDate] = useState(new Date('2022-09-05'));
+  const [type, setType] = useState('');
+  const [status, setStatus] = useState('');
 
   const showDrawer = () => {
     setOpen(true);
@@ -79,7 +81,6 @@ const Transaction = () => {
       key: 'status',
       render: (text) => {
         return <StatusTag text={text}/>
-        //<h1 className={`${text === 'success'? 'bg-[#E8FFF7]': text === 'failed'?'bg-[#ff14141a]': text === 'pending'?'bg-[#ea7d1f1a]':null} ${text === 'success'? 'text-[#27B785]': text === 'failed'?'text-[#FF1414]': text === 'pending'?'text-[#EA7D1F]':null} rounded-[6px] text-center py-1`} style={{ textTransform: 'uppercase', fontWeight: 'bold', fontSize: '10px' }}>{text}</h1>
       },
     },
   ];
@@ -91,30 +92,15 @@ const Transaction = () => {
     }
   })
 
-  const data = [];
-  for (let i = 0; i < 46; i++) {
-    data.push({
-      key: i,
-      transactionId: '112039901',
-      sender: 'Harold Ajagu',
-      amount: '120,000',
-      type: 'Credit',
-      currency: 'Naira',
-      transactionReference: '190008377000',
-      status: 'success',
-      name: `Edward King ${i}`,
-      age: 32,
-      address: `London, Park Lane no. ${i}`,
-      people: "kadijatt",
-      email: 'harold.ajagz@gmail.com',
-      time: "22/10/2023, 10:56AM",
-      phone: "+23408099089002",
-      sourceAcctNo: '0118026649',
-      sourceAcctName: 'Harold Chuwuemeka',
-      receiverAcct: '0009839910',
-      receiverAcctName: 'Anita Uzumma'
-    });
-  }
+  const handleStatusChange = (value) => {
+    console.log(`selected ${value}`);
+    setStatus(value)
+};
+
+const handleTypeChange = async(value) => {
+  console.log(`selected ${value}`);
+  setType(value)
+};
 
   useEffect(()=>{
     async function getFiatTransactions(){
@@ -142,10 +128,13 @@ console.log(e)
       <CustomTable
         data={fiatTrx}
         columns={columns}
-        loading={fiatTransaction?.loading}
-        type
-        status
+        loading={{
+          spinning:fiatTransaction?.loading,
+          indicator:antIcon
+        }}
         filterHeader
+        handleStatusChange={handleStatusChange}
+        handleTypeChange={handleTypeChange}
         onRow={(record, rowIndex) => {
           return {
             onClick: (event) => OnEachRowClicked(event,record,record?.id), // click row
@@ -157,7 +146,7 @@ console.log(e)
         }}
       />
       <CustomDrawer placement="right" onClose={onClose} open={open}>
-        <TransactionDetails data={oneFiatTransaction?.oneFiatTransaction?.data} />
+        <TransactionDetails data={oneFiatTransaction?.oneFiatTransaction?.data} loading={oneFiatTransaction?.loading}/>
       </CustomDrawer>
     </div>
   )
