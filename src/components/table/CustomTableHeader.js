@@ -12,7 +12,7 @@ import CustomButton from '../fields/CustomButton'
 import DateRangeRender from './DateRangeRender'
 import { PiCaretDown, PiCaretUp } from 'react-icons/pi'
 
-const CustomTableHeader = ({ assest, type, status, bill, headerBorder, role, bottom }) => {
+const CustomTableHeader = ({ headerBorder,bottom,handleAssestChange,handleRoleChange,handleBillChange,handleStatusChange,handleTypeChange,...props }) => {
 
     const [showSearch, setShowSearch] = useState(false)
     const [showCalendar, setShowCalendar] = useState(false);
@@ -101,31 +101,39 @@ const CustomTableHeader = ({ assest, type, status, bill, headerBorder, role, bot
                     {!showSearch ? <div className='flex items-start lg:items-center xl:items-center justify-between'>
                         <h2 className='hidden lg:block xl:block font-bold text-sm sm:text-xs xs:text-xs text-filterColor font-circular'>FILTER TABLE</h2>
                         <div className='flex items-start lg:items-center xl:items-center gap-4'>
-                            {assest && <CustomSelect
+                            {handleAssestChange && <CustomSelect
                                 defaultValue="-Asset-"
                                 options={assestOptions}
-                                onChange={handleChange}
+                                onChange={handleAssestChange}
+                                // {...props}
                             />}
-                            {role && <CustomSelect defaultValue="-User Role-"
+                            {handleRoleChange && <CustomSelect 
+                                defaultValue="-User Role-"
                                 options={roleOptions}
-                                onChange={handleChange} />}
-                            {type && <CustomSelect
+                                 onChange={handleRoleChange} 
+                                // {...props}
+                                />
+                                }
+                            {handleTypeChange && <CustomSelect
                                 defaultValue="-Type-"
                                 options={typeOptions}
-                                onChange={handleChange}
+                                onChange={handleTypeChange}
+                                // {...props}
                             />}
                             {
-                                status && <CustomSelect
+                                handleStatusChange && <CustomSelect
                                     defaultValue="-Status-"
                                     options={successOptions}
-                                    onChange={handleChange}
+                                    onChange={handleStatusChange}
+                                    // {...props}
                                 />
                             }
                             {
-                                bill && <CustomSelect
+                                handleBillChange && <CustomSelect
                                     defaultValue="-Bill Type-"
                                     options={billsPayment}
-                                    onChange={handleChange}
+                                    onChange={handleBillChange}
+                                    // {...props}
                                 />
                             }
                         </div>
