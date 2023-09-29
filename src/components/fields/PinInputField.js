@@ -28,7 +28,7 @@ const PinInputField = (props) => {
         helpers.setValue(value)
       }}
       {...props}
-      
+
     />
   )
 }

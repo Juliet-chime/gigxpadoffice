@@ -9,13 +9,13 @@ export const antIcon = (
   <LoadingOutlined
     style={{
       fontSize: 24,
-      color:'#E25A5A'
+      color: '#E25A5A'
     }}
     spin
   />
 );
 
-const CustomTable = ({ columns, data, border, radius, headerBorder, bottom, top, filterHeader, handleStatusChange,handleTypeChange,handleBillChange,handleRoleChange,handleAssestChange, ...props }) => {
+const CustomTable = ({ columns, data, tableBorder, tableRadius, filterBorder, filterBottom, tableTop, filterHeader, handleStatusChange, handleTypeChange, handleBillChange, handleRoleChange, handleAssestChange, onHandleStartDate, onHandleEndDate, startDate, endDate, onInputChange, ...props }) => {
 
   const itemRender = (_, type, originalElement) => {
     if (type === "prev") {
@@ -28,26 +28,21 @@ const CustomTable = ({ columns, data, border, radius, headerBorder, bottom, top,
   };
 
   return (
-   <>
-    <TableWrapperStyles border={border} radius={radius} top={top}>
-      {filterHeader ? <CustomTableHeader handleAssestChange={handleAssestChange} handleBillChange={handleBillChange} handleStatusChange={handleStatusChange} handleTypeChange={handleTypeChange} role={handleRoleChange} headerBorder={headerBorder} bottom={bottom} /> : null}
-     {data?.length < 0 ?<NullTableComponent/>:<Table
-        columns={columns}
-        dataSource={data}
-        pagination={{
-          hideOnSinglePage: true,
-          pageSize: 7,
-          itemRender: itemRender
-        }}
-        // loading={{
-        //   spinning:loading,
-        //   indicator:antIcon
-        // }}
-        // indicator
-        rowClassName={'cursor-pointer'}
-        {...props}
-      />}
-    </TableWrapperStyles>
+    <>
+      <TableWrapperStyles tableBorder={tableBorder} tableRadius={tableRadius} tableTop={tableTop}>
+        {filterHeader ? <CustomTableHeader handleAssestChange={handleAssestChange} handleBillChange={handleBillChange} handleStatusChange={handleStatusChange} handleTypeChange={handleTypeChange} role={handleRoleChange} filterBorder={filterBorder} filterBottom={filterBottom} startDate={startDate} endDate={endDate} onHandleStartDate={onHandleStartDate} onHandleEndDate={onHandleEndDate} onInputChange={onInputChange} /> : null}
+        {data?.length > 0 ? <Table
+          columns={columns}
+          dataSource={data}
+          pagination={{
+            hideOnSinglePage: true,
+            pageSize: 7,
+            itemRender: itemRender
+          }}
+          rowClassName={'cursor-pointer'}
+          {...props}
+        /> : <NullTableComponent />}
+      </TableWrapperStyles>
     </>
   )
 }

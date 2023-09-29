@@ -8,7 +8,7 @@ const initialState = {
   oneFiatTransaction: {},
 };
 
-export const queryOneFiatTransactions = createAsyncThunk('getOneFiatTransactions/queryOneFiatTransactions', async ({id}) => {
+export const queryOneFiatTransactions = createAsyncThunk('getOneFiatTransactions/queryOneFiatTransactions', async ({ id }) => {
   try {
     const response = await makeApiRequest('get', getOneFiatTransactions(id))
     return response?.data

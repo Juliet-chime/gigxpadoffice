@@ -13,23 +13,27 @@ import fiatProfitReducer from './dashboard/fiatProfit'
 import cryptoMetricsReducer from './dashboard/cryptoMetrics'
 import userChartReducer from './user/userChart'
 import allUsersReducer from './user/allUsers'
+import oneUserReducer from './user/oneUser'
+import userAssestReducer from './user/userAssest'
 import { clearLocalStorage } from "../../utils/authFunc";
 
 const combinedReducer = combineReducers({
   twoFA: twoFaReducer,
   roles: roleReducer,
   fiatTransactions: fiatTransactionReducer,
-  oneBillTransaction:oneBillTransactionReducer,
+  oneBillTransaction: oneBillTransactionReducer,
   billTransactions: billTransactionReducer,
-  oneFiatTransaction:oneFiatTransactionReducer,
-  cryptoTransactions:cryptoTransactionReducer,
-  oneCryptoTransaction:oneCryptoTransactionReducer,
+  oneFiatTransaction: oneFiatTransactionReducer,
+  cryptoTransactions: cryptoTransactionReducer,
+  oneCryptoTransaction: oneCryptoTransactionReducer,
   fiatMetrics: fiatMetricsReducer,
   fiatRevenue: fiatRevenueReducer,
   fiatProfit: fiatProfitReducer,
   cryptoMetrics: cryptoMetricsReducer,
   userChart: userChartReducer,
-  allUsers: allUsersReducer
+  allUsers: allUsersReducer,
+  user: oneUserReducer,
+  userAssest: userAssestReducer
 });
 
 export const rootReducer = (state, action) => {

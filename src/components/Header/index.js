@@ -32,7 +32,7 @@ export default function NavHeader({ dropdownRender }) {
   const lastName = user?.user?.lastName
 
   const handleSignout = () => {
-    dispatch({type: 'logOut'})
+    dispatch({ type: 'logOut' })
     window.location.reload()
   }
 
