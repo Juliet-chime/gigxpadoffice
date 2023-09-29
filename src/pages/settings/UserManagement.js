@@ -15,9 +15,9 @@ const UserManagement = ({ setAddUser }) => {
         setAddUser(true)
     }
 
-    useEffect(()=>{
+    useEffect(() => {
         dispatch(queryAllUser())
-    },[dispatch])
+    }, [dispatch])
 
     const items = [
         {
@@ -137,7 +137,7 @@ const UserManagement = ({ setAddUser }) => {
         <div>
 
             <><div className='wallet-table mt-8'>
-                <CustomTable border={'none'} headerBorder={`1px solid #EEEEEE`} columns={columns} dataSource={data} filterHeader role status
+                <CustomTable tableBorder={'none'} filterBorder={`1px solid #EEEEEE`} columns={columns} dataSource={data} filterHeader role status
                     pagination={{
                         hideOnSinglePage: true,
                         pageSize: 7,

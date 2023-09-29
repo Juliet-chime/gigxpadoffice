@@ -1,100 +1,122 @@
-import React, { forwardRef, useState } from 'react'
+import React, { forwardRef, useEffect, useState } from 'react'
 import Dashboardheader from '../../components/dashboardComponents/Dashboardheader';
-import CustomTable from '../../components/table/CustomTable';
+import CustomTable, { antIcon } from '../../components/table/CustomTable';
 import CustomDrawer from '../../components/fields/CustomDrawer';
 import { Col, Row } from 'antd';
 import Blocks from '../../components/dashboardComponents/Blocks';
 import { color } from '../../assets/color';
 import OneDateRange from '../../components/chart/OneDateRange';
-import { formatDate } from '../../utils/helperFunctions';
+import { formatDate, formatMoney } from '../../utils/helperFunctions';
 import { PiCaretDown, PiCaretUp } from 'react-icons/pi';
 import CryptoDetails from '../transactions/CryptoDetails';
+import { getCryptoTransactionsSelector, queryCryptoTransactions } from '../../services/slices/transactions/getCryptoTransactions';
+import { useDispatch, useSelector } from 'react-redux';
+import moment from 'moment';
+import { capitalizeFLetter } from '../../utils/func';
+import StatusTag from '../../components/table/StatusTag';
+import { getOneCryptoTransactionsSelector, queryOneCryptoTransactions } from '../../services/slices/transactions/getOneCryptoTransaction';
 
 const Crypto = () => {
 
+  const dispatch = useDispatch()
+
   const [open, setOpen] = useState(false);
-  const [details, setDetails] = useState();
-  const [startDate, setStartDate] = useState(new Date());
+  const [startDate, setStartDate] = useState(new Date('2022-09-05'));
   const [changeIcon, setChangeIcon] = useState(false);
-  const [endDate, setEndDate] = useState(null);
+  const [endDate, setEndDate] = useState(new Date('2022-09-05'));
+ 
   const onChange = (dates) => {
     const [start, end] = dates;
     setStartDate(start);
     setEndDate(end);
   };
 
-  const showDrawer = () => {
-    setOpen(true);
-  };
+  // const showDrawer = () => {
+  //   setOpen(true);
+  // };
 
-  const onClose = () => {
-    setOpen(false);
-  };
+  // const onClose = () => {
+  //   setOpen(false);
+  // };
+
+  const cryptoTransaction = useSelector(getCryptoTransactionsSelector)
+  const oneCryptoTransaction = useSelector(getOneCryptoTransactionsSelector)
 
   const columns = [
     {
       title: 'Transaction Id',
-      dataIndex: 'trxId',
-      key: 'trxId'
+      dataIndex: 'transactionId',
+      key: 'transactionId'
     },
     {
       title: 'Sender',
-      dataIndex: 'sender',
-      key: 'sender'
+      dataIndex: 'customerName',
+      key: 'customerName',
+      render: (text) => {
+        return <p>{capitalizeFLetter(text)}</p>
+      },
     },
     {
       title: 'Amount',
       dataIndex: 'amount',
-      key: 'amount'
+      key: 'amount',
+      render: (text) => {
+        return <p>{formatMoney(text)}</p>
+      },
     },
     {
       title: 'Transaction Type',
-      dataIndex: 'trxType',
-      key: 'trxType'
+      dataIndex: 'type',
+      key: 'type',
+      render: (text) => {
+        return <p>{capitalizeFLetter(text)}</p>
+      },
     },
     {
       title: 'Assest',
-      dataIndex: 'assest',
-      key: 'assest'
+      dataIndex: 'currency',
+      key: 'currency',
+      render: (text) => {
+        return <p>{text?.name === 'usdt'? text?.name?.toUpperCase():capitalizeFLetter(text?.name)}</p>
+      },
     },
     {
       title: 'Transaction Reference',
-      dataIndex: 'trxRef',
-      key: 'trxRef'
+      dataIndex: 'transactionReference',
+      key: 'transactionReference',
+      render: (text) => {
+        return <p>{!!text ? text : '-'}</p>
+      },
     },
     {
       title: 'Status',
       dataIndex: 'status',
       key: 'status',
       render: (text) => {
-        return <h1 style={{ textTransform: 'uppercase', fontWeight: 'bold', fontSize: '10px', color: `${text === 'success' ? 'green' : 'red'}` }}>{text}</h1>
+        return <StatusTag text={text}/>
       },
     },
   ];
 
-  const data = [];
-  for (let i = 0; i < 46; i++) {
-    data.push({
-      key: i,
-      trxId: '112039901',
-      sender: 'Harold Ajagu',
-      amount: '120,000',
-      trxType: 'Credit',
-      currency: 'Naira',
-      trxRef: '190008377000',
-      status: 'success',
-      name: `Edward King ${i}`,
-      quidaxFee: `N50.00`,
-      xpadFee: `N50.00`,
-      people: "kadijatt",
-      email: 'harold.ajagz@gmail.com',
-      time: "22/10/2023, 10:56AM",
-      phone: "+23408099089002",
-      sourceWallet: 'bn90384999bsuuOUJkl38',
-      sourceWalletName: 'Harold Chuwuemeka',
-      designationWallet: 'cfx3828883tRss9888932344',
-    });
+  const OnEachRowClicked = (trxId) => {
+    setOpen(true);
+    dispatch(queryOneCryptoTransactions({id:trxId})).unwrap()
   }
+
+  const onInputChange = (e) => {
+    console.log(e.target.value)
+    }
+
+  useEffect(()=>{
+    async function getCryptoTransactions(){
+try{
+  dispatch(queryCryptoTransactions({from:moment(startDate).format('YYYY-MM-DD')})).unwrap()
+} catch(e){
+console.log(e)
+}
+    }
+    getCryptoTransactions()
+  },[startDate,dispatch])
 
   const ExampleCustomInput = forwardRef(({ value, onClick }, ref) => {
 
@@ -133,38 +155,46 @@ const Crypto = () => {
       </div>
       <div className='mt-12 mb-8'>
         <Row gutter={[16, 16]}>
-          <Col xs={24} sm={24} md={7} lg={6} xl={5}>
+          <Col xs={24} sm={24} md={8} lg={7} xl={6}>
             <Blocks name='Total Crypto Transfers' nameColor={color.mainColor} bigAmount={'858,800'} padding='20px' height='92px' bg={color.offWhite} border={`solid 1px ${color.lineAsh}`} />
           </Col>
-          <Col xs={24} sm={24} md={7} lg={6} xl={5}>
+          <Col xs={24} sm={24} md={8} lg={7} xl={6}>
             <Blocks name='Total Crypto Swaps' nameColor={color.mainColor} bigAmount={'858,800'} padding='20px' height='92px' bg={color.offWhite} border={`solid 1px ${color.lineAsh}`} />
           </Col>
-          <Col xs={24} sm={24} md={7} lg={6} xl={5}>
+          <Col xs={24} sm={24} md={8} lg={7} xl={6}>
             <Blocks name='Total FIAT to Crypto' nameColor={color.mainColor} bigAmount={'248'} padding='20px' height='92px' bg={color.offWhite} border={`solid 1px ${color.lineAsh}`} />
           </Col>
         </Row>
       </div>
       <CustomTable
-        data={data}
+        data={cryptoTransaction?.cryptoTransactions?.data}
         columns={columns}
-        type
-        assest
-        filterHeader
-        onRow={(record, rowIndex) => {
+        loading={{
+          spinning:cryptoTransaction?.loading,
+          indicator:antIcon
+        }}
+        filterHeader={true}
+        startDate={startDate}
+        endDate={endDate}
+        onInputChange={onInputChange}
+        handleTypeChange={(value)=>console.log(value)}
+        handleAssestChange={value=>console.log(value)}
+        onHandleStartDate={(date) => {
+          console.log(date,'start')
+          setStartDate(new Date(date))
+        }}
+        onHandleEndDate={(date) => {
+          console.log(date,'end')
+          setEndDate(new Date(date))
+        }}
+        onRow={(record) => {
           return {
-            onClick: (event) => {
-              showDrawer()
-              setDetails(record)
-            }, // click row
-            onDoubleClick: (event) => { }, // double click row
-            onContextMenu: (event) => { }, // right button click row
-            onMouseEnter: (event) => { }, // mouse enter row
-            onMouseLeave: (event) => { }, // mouse leave row
+            onClick: (event) => OnEachRowClicked(record?.id),
           };
         }}
       />
-      <CustomDrawer placement="right" onClose={onClose} open={open}>
-        < CryptoDetails data={details} />
+      <CustomDrawer placement="right" onClose={()=>setOpen(false)} open={open}>
+        < CryptoDetails loading={oneCryptoTransaction?.loading} data={oneCryptoTransaction?.oneCryptoTransaction?.data} />
       </CustomDrawer>
     </div>
   )

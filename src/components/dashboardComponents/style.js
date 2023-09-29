@@ -35,7 +35,7 @@ padding:${props => props.padding || '0px 30px'};
 display:${props => props.flexlayout ? 'flex' : props.display};
 flex-direction:${props => props.flexlayout ? 'row' : props.col};
 align-items:${props => props.flexlayout ? 'center' : props.align};
-justify-content:${props => props.flex ? 'center' : props.justify};
+justify-content:${props => props.flexlayout ? 'center' : props.justify};
 height: ${props => props.height || '135px'};
 gap:${props => props.gap};
 background-color:${props => props.bg};
@@ -47,21 +47,10 @@ background-color:${props => props.bg};
     display:flex;
 }
 p{
-    font-size:16px;
-font-family: 'Rubik', sans-serif;
 color: ${props => props.nameColor || color.lighterAsh};   
-@media (min-width: 768px) and (max-width: 1024px)  {
-   font-size:12px; 
-}
 }
 h2{
-    font-size:20px;
-font-family: 'Rubik', sans-serif;
 color: ${props => props.bigAmtColor || color.mainColor};
-font-weight:500;
-@media (min-width: 768px) and (max-width: 1024px)  {
-   font-size:18px; 
-}
 }
 h4{
 font-size:14px;

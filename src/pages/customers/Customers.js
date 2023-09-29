@@ -1,11 +1,32 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import CustomTable from '../../components/table/CustomTable'
 import Dashboardheader from '../../components/dashboardComponents/Dashboardheader'
 import { useNavigate } from 'react-router-dom';
+import { getAllUsersSelector, queryAllUser } from '../../services/slices/user/allUsers';
+import { useDispatch, useSelector } from 'react-redux';
+import { queryOneUser } from '../../services/slices/user/oneUser';
+import { queryUserAssest } from '../../services/slices/user/userAssest';
 
 const Customers = () => {
 
   const navigate = useNavigate()
+  const dispatch = useDispatch()
+
+  const allUsers = useSelector(getAllUsersSelector)
+  console.log(allUsers)
+
+  useEffect(() => {
+    async function getFiatTransactions() {
+      try {
+        dispatch(queryAllUser()).unwrap()
+        // dispatch(queryOneUser({id:'851827c0-d122-4edf-bbab-e2a1aa8460ef'})).unwrap()
+        // dispatch(queryUserAssest({id:'851827c0-d122-4edf-bbab-e2a1aa8460ef'})).unwrap()
+      } catch (e) {
+        console.log(e)
+      }
+    }
+    getFiatTransactions()
+  }, [dispatch])
 
   const columns = [
     {

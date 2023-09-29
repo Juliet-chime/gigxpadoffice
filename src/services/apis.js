@@ -75,6 +75,14 @@ const getAllUsers = () => {
     return `/customers`;
 };
 
+const getOneUser = (id) => {
+    return `/customers/${id}`;
+};
+
+const getUserAssest = (id) => {
+    return `/customers/${id}/assets`;
+};
+
 //micellanueos
 
 const getFiatRevenue = () => {
@@ -87,5 +95,5 @@ const getFiatRevenue = () => {
 
 export {
     loginUser, setPassword, twoFactorAuthentication, getRoles, inviteAdmin, getOneFiatTransactions, getBillTransactions, getOneBillTransactions, getCryptoTransactions, getOneCryptoTransactions,
-    inviteSuperAdmin, getFiatTransactions, getFiatMetrics, getFiatRevenue, getCryptoMetrics, getUserMetrics, getAllUsers
+    inviteSuperAdmin, getFiatTransactions, getFiatMetrics, getFiatRevenue, getCryptoMetrics, getUserMetrics, getAllUsers, getOneUser, getUserAssest
 }

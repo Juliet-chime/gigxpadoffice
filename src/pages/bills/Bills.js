@@ -1,36 +1,66 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import Dashboardheader from '../../components/dashboardComponents/Dashboardheader';
-import CustomTable from '../../components/table/CustomTable';
+import CustomTable, { antIcon } from '../../components/table/CustomTable';
 import CustomDrawer from '../../components/fields/CustomDrawer';
 import BillPaymentDetails from './BillPaymentDetails';
+import { useDispatch, useSelector } from 'react-redux';
+import { getBillTransactionsSelector, queryBillTransactions } from '../../services/slices/transactions/getBillTransactions';
+import moment from 'moment';
+import { capitalizeFLetter } from '../../utils/func';
+import { formatMoney } from '../../utils/helperFunctions';
+import StatusTag from '../../components/table/StatusTag';
+import { getOneBillTransactionsSelector, queryOneBillTransactions } from '../../services/slices/transactions/getOneBillTransaction';
 
 const Bills = () => {
+
+  const dispatch = useDispatch()
+
+  const billTransaction = useSelector(getBillTransactionsSelector)
+  //const oneBillTransaction = useSelector(getOneBillTransactionsSelector)
+
   const [open, setOpen] = useState(false);
   const [details, setDetails] = useState();
+  const [startDate, setStartDate] = useState(new Date('2022-09-05'));
+  const [endDate, setEndDate] = useState(new Date('2022-09-05'));
 
-  const showDrawer = () => {
-    setOpen(true);
-  };
+  // const showDrawer = () => {
+  //   setOpen(true);
+  // };
 
-  const onClose = () => {
-    setOpen(false);
-  };
+  // const onClose = () => {
+  //   setOpen(false);
+  // };
+
+  const onInputChange = (e) => {
+    console.log(e.target.value)
+  }
+
+  const OnEachRowClicked = (trxId) => {
+    setOpen(true)
+    dispatch(queryOneBillTransactions({ id: trxId })).unwrap()
+  }
 
   const columns = [
     {
       title: 'Transaction Id',
-      dataIndex: 'trxId',
-      key: 'trxId'
+      dataIndex: 'transactionId',
+      key: 'transactionId'
     },
     {
       title: 'Customer Name',
-      dataIndex: 'sender',
-      key: 'sender'
+      dataIndex: 'customerName',
+      key: 'customerName',
+      render: (text) => {
+        return <p>{capitalizeFLetter(text)}</p>
+      },
     },
     {
       title: 'Amount',
       dataIndex: 'amount',
-      key: 'amount'
+      key: 'amount',
+      render: (text) => {
+        return <p>{formatMoney(text)}</p>
+      },
     },
     {
       title: 'Description',
@@ -39,49 +69,40 @@ const Bills = () => {
     },
     {
       title: 'Bill Type',
-      dataIndex: 'billType',
-      key: 'billType'
+      dataIndex: 'type',
+      key: 'type',
+      render: (text) => {
+        return <p>{capitalizeFLetter(text)}</p>
+      },
     },
     {
       title: 'Transaction Reference',
-      dataIndex: 'trxRef',
-      key: 'trxRef'
+      dataIndex: 'transactionReference',
+      key: 'transactionReference',
+      render: (text) => {
+        return <p>{!!text ? text : '-'}</p>
+      },
     },
     {
       title: 'Status',
       dataIndex: 'status',
       key: 'status',
       render: (text) => {
-        return <h1 className={``} style={{ textTransform: 'uppercase', padding: "8px 10px", width: "90px", fontWeight: 'bold', fontSize: '10px', color: `${text === 'Completed' ? '#27B785' : text === 'Pending' ? '#EA7D1F' : text === 'Failed' ? '#FF1414' : null}`, background: `${text === 'Completed' ? '#E8FFF7' : text === 'Pending' ? '#ffe7e7' : text === 'Failed' ? '#FFE7E7' : null}` }}>{text}</h1>
+        return <StatusTag text={text} />
       },
     },
   ];
 
-  const data = [];
-  for (let i = 0; i < 46; i++) {
-    data.push({
-      key: i,
-      trxId: '112039901',
-      trxFee: 'N25.00',
-      sender: "Harold chukwuma",
-      amount: 'BillPaymentDetails',
-      baxiFee: 'N10.00',
-      currency: 'Naira',
-      trxRef: '190008377000',
-      status: `${i % 2 === 0 ? 'Completed' : i % 3 === 0 ? 'Failed' : i % 2 !== 0 ? 'Pending' : null}`,
-      name: `Edward King ${i}`,
-      vendor: `EkoDisco`,
-      people: "ka",
-      email: 'harold.ajagz@gmail.com',
-      time: "22/10/2023, 10:56AM",
-      phone: "+23408099089002",
-      sourceAcctName: 'Harold Chuwuemeka',
-      receiverAcct: '0009839910',
-      receiverAcctName: 'Anita Uzumma',
-      billType: 'Airtime',
-      description: '-'
-    });
-  }
+  useEffect(() => {
+    async function getBillTransactions() {
+      try {
+        dispatch(queryBillTransactions({ from: moment(startDate).format('YYYY-MM-DD') })).unwrap()
+      } catch (e) {
+        console.log(e)
+      }
+    }
+    getBillTransactions()
+  }, [startDate, dispatch])
   return (
     <div>
       <Dashboardheader
@@ -90,25 +111,33 @@ const Bills = () => {
         className='mb-6'
       />
       <CustomTable
-        data={data}
+        data={billTransaction?.billTransactions?.data}
         columns={columns}
-        bill
-        filterHeader
-        status
-        onRow={(record, rowIndex) => {
+        loading={{
+          spinning: billTransaction?.loading,
+          indicator: antIcon
+        }}
+        filterHeader={true}
+        startDate={startDate}
+        endDate={endDate}
+        onInputChange={onInputChange}
+        handleBillChange={value => console.log(value)}
+        handleStatusChange={(value) => console.log(value)}
+        onHandleStartDate={(date) => {
+          console.log(date, 'start')
+          setStartDate(new Date(date))
+        }}
+        onHandleEndDate={(date) => {
+          console.log(date, 'end')
+          setEndDate(new Date(date))
+        }}
+        onRow={(record) => {
           return {
-            onClick: (event) => {
-              showDrawer()
-              setDetails(record)
-            }, // click row
-            onDoubleClick: (event) => { }, // double click row
-            onContextMenu: (event) => { }, // right button click row
-            onMouseEnter: (event) => { }, // mouse enter row
-            onMouseLeave: (event) => { }, // mouse leave row
+            onClick: (event) => OnEachRowClicked(record?.id)
           };
         }}
       />
-      <CustomDrawer placement="right" onClose={onClose} open={open}>
+      <CustomDrawer placement="right" onClose={() => setOpen(false)} open={open}>
         <BillPaymentDetails data={details} />
       </CustomDrawer>
     </div>

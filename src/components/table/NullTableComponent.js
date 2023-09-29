@@ -2,7 +2,7 @@ import React from 'react'
 import { TbReload } from 'react-icons/tb'
 import { color } from '../../assets/color'
 
-const NullTableComponent = ({title,details}) => {
+const NullTableComponent = ({ title, details }) => {
     return (
         <div>
             <div className='w-full lg:w-half xl:w-half m-auto flex flex-col items-center justify-center gap-4 py-20'>

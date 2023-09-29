@@ -17,20 +17,20 @@ const Transaction = () => {
 
   const fiatTransaction = useSelector(getFiatTransactionsSelector)
   const oneFiatTransaction = useSelector(getOneFiatTransactionsSelector)
-  console.log({fiatTransaction,oneFiatTransaction},'fiat')
 
   const [open, setOpen] = useState(false);
   const [startDate, setStartDate] = useState(new Date('2022-09-05'));
-  const [type, setType] = useState('');
-  const [status, setStatus] = useState('');
+  const [endDate, setEndDate] = useState(new Date('2022-09-05'));
+  // const [type, setType] = useState('');
+  // const [status, setStatus] = useState('');
 
-  const showDrawer = () => {
-    setOpen(true);
-  };
+  // const showDrawer = () => {
+  //   setOpen(true);
+  // };
 
-  const onClose = () => {
-    setOpen(false);
-  };
+  // const onClose = () => {
+  //   setOpen(false);
+  // };
 
   const columns = [
     {
@@ -40,8 +40,11 @@ const Transaction = () => {
     },
     {
       title: 'Sender',
-      dataIndex: 'sender',
-      key: 'sender'
+      dataIndex: 'customerName',
+      key: 'customerName',
+      render: (text) => {
+        return <p>{capitalizeFLetter(text)}</p>
+      },
     },
     {
       title: 'Amount',
@@ -72,7 +75,7 @@ const Transaction = () => {
       dataIndex: 'transactionReference',
       key: 'trxRef',
       render: (text) => {
-        return <p className='ml-12'>{!text ? '-' : text}</p>
+        return <p>{!!text ? text : '-'}</p>
       },
     },
     {
@@ -80,42 +83,43 @@ const Transaction = () => {
       dataIndex: 'status',
       key: 'status',
       render: (text) => {
-        return <StatusTag text={text}/>
+        return <StatusTag text={text} />
       },
     },
   ];
 
-  const fiatTrx = fiatTransaction?.fiatTransactions?.data?.map((items)=>{
-    return {
-      ...items,
-    sender:items.customerName
-    }
-  })
-
   const handleStatusChange = (value) => {
     console.log(`selected ${value}`);
-    setStatus(value)
-};
+    // const val = value
+    // setStatus(val)
+    // dispatch(queryFiatTransactions({status}))
+  };
 
-const handleTypeChange = async(value) => {
-  console.log(`selected ${value}`);
-  setType(value)
-};
+  const handleTypeChange = async (value) => {
+    console.log(`selected ${value}`);
+    // const val = value
+    // setType(val)
+    // dispatch(queryFiatTransactions({type:value}))
+  };
 
-  useEffect(()=>{
-    async function getFiatTransactions(){
-try{
-  dispatch(queryFiatTransactions({from:moment(startDate).format('YYYY-MM-DD')})).unwrap()
-} catch(e){
-console.log(e)
-}
+  const onInputChange = (e) => {
+    console.log(e.target.value)
+  }
+
+  useEffect(() => {
+    async function getFiatTransactions() {
+      try {
+        dispatch(queryFiatTransactions({ from: moment(startDate).format('YYYY-MM-DD') })).unwrap()
+      } catch (e) {
+        console.log(e)
+      }
     }
     getFiatTransactions()
-  },[startDate,dispatch])
+  }, [startDate, dispatch])
 
-  const OnEachRowClicked = (event,record,trxId) => {
-    showDrawer()
-    dispatch(queryOneFiatTransactions({id:trxId})).unwrap()
+  const OnEachRowClicked = (trxId) => {
+    setOpen(true);
+    dispatch(queryOneFiatTransactions({ id: trxId })).unwrap()
   }
 
   return (
@@ -126,27 +130,34 @@ console.log(e)
         className='mb-6'
       />
       <CustomTable
-        data={fiatTrx}
+        data={fiatTransaction?.fiatTransactions?.data}
         columns={columns}
         loading={{
-          spinning:fiatTransaction?.loading,
-          indicator:antIcon
+          spinning: fiatTransaction?.loading,
+          indicator: antIcon
         }}
-        filterHeader
+        filterHeader={true}
+        startDate={startDate}
+        endDate={endDate}
+        onInputChange={onInputChange}
         handleStatusChange={handleStatusChange}
         handleTypeChange={handleTypeChange}
-        onRow={(record, rowIndex) => {
+        onHandleStartDate={(date) => {
+          console.log(date, 'start')
+          setStartDate(new Date(date))
+        }}
+        onHandleEndDate={(date) => {
+          console.log(date, 'end')
+          setEndDate(new Date(date))
+        }}
+        onRow={(record) => {
           return {
-            onClick: (event) => OnEachRowClicked(event,record,record?.id), // click row
-            onDoubleClick: (event) => { }, // double click row
-            onContextMenu: (event) => { }, // right button click row
-            onMouseEnter: (event) => { }, // mouse enter row
-            onMouseLeave: (event) => { }, // mouse leave row
+            onClick: (event) => OnEachRowClicked(record?.id), // click row
           };
         }}
       />
-      <CustomDrawer placement="right" onClose={onClose} open={open}>
-        <TransactionDetails data={oneFiatTransaction?.oneFiatTransaction?.data} loading={oneFiatTransaction?.loading}/>
+      <CustomDrawer placement="right" onClose={() => setOpen(false)} open={open}>
+        <TransactionDetails data={oneFiatTransaction?.oneFiatTransaction?.data} loading={oneFiatTransaction?.loading} />
       </CustomDrawer>
     </div>
   )

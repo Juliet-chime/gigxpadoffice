@@ -8,9 +8,9 @@ const initialState = {
   fiatTransactions: [],
 };
 
-export const queryFiatTransactions = createAsyncThunk('getFiatTransactions/queryFiatTransactions', async (params=null) => {
+export const queryFiatTransactions = createAsyncThunk('getFiatTransactions/queryFiatTransactions', async (params = null) => {
   try {
-    const response = await makeApiRequest('get', getFiatTransactions(),null,params)
+    const response = await makeApiRequest('get', getFiatTransactions(), null, params)
     return response?.data
   } catch (e) {
     console.log(e)
