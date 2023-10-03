@@ -8,9 +8,9 @@ const initialState = {
     cryptoMetrics: {},
 };
 
-export const queryCryptoMetrics = createAsyncThunk('cryptoMetrics/queryCryptoMetrics', async () => {
+export const queryCryptoMetrics = createAsyncThunk('cryptoMetrics/queryCryptoMetrics', async (params=null) => {
     try {
-        const response = await makeApiRequest('get', getCryptoMetrics())
+        const response = await makeApiRequest('get', getCryptoMetrics(),null,params)
         return response?.data
     } catch (e) {
         console.log(e)

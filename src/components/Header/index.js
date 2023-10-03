@@ -8,7 +8,7 @@ import { PiCaretDown, PiCaretUp, PiCurrencyDollarSimple, PiSignOut } from 'react
 import { GrFormCheckmark } from 'react-icons/gr'
 import { color } from "../../assets/color";
 import HeaderDropDownComponent from "./HeaderDropDonComponent";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { get2FaSelector } from "../../services/slices/auth/2fa";
 
 const { Header } = Layout;
@@ -26,9 +26,15 @@ export default function NavHeader({ dropdownRender }) {
   const [openMenu, setOpenMenu] = useState(false);
 
   const user = useSelector(get2FaSelector)
+  const dispatch = useDispatch()
 
   const firstname = user?.user?.firstName
   const lastName = user?.user?.lastName
+
+  const handleSignout = () => {
+    dispatch({ type: 'logOut' })
+    window.location.reload()
+  }
 
   return (
     <Header className="bg-white p-2">
@@ -59,7 +65,7 @@ export default function NavHeader({ dropdownRender }) {
                     <SubItems text={'Naira'} icon={GrFormCheckmark} active={true} />
                   </div>}
                 </HeaderDropDownComponent>
-                <HeaderDropDownComponent icon={PiSignOut} label={'SignOut'} margin='0px' />
+                <HeaderDropDownComponent icon={PiSignOut} label={'SignOut'} margin='0px' onClick={handleSignout} />
               </div>
             }}
             trigger={['click']}

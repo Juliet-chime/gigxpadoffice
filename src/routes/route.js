@@ -6,17 +6,17 @@ import { isSessionExpired } from "../utils/authUtils";
 
 const AllPages = () => {
 
-  useEffect(()=>{
-    const checkInvalidToken = async() => {
+  useEffect(() => {
+    const checkInvalidToken = async () => {
       const token = await localStorage.getItem('authToken')
-      if(isSessionExpired(token)){
+      if (isSessionExpired(token)) {
         await localStorage.setItem('authToken', "")
         window?.location?.reload()
       }
     }
 
     checkInvalidToken()
-  },[])
+  }, [])
 
   return (
     <BrowserRouter>

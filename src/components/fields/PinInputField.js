@@ -7,6 +7,8 @@ const PinInputField = (props) => {
   const [field, meta, helpers] = useField(props.name)
   return (
     <PinInput
+      {...field}
+      {...meta}
       inputStyle={
         props.inputstyle || {
           fontWeight: 'bold',
@@ -21,13 +23,12 @@ const PinInputField = (props) => {
       }
       type="numeric"
       focus
-      {...field}
-      {...meta}
       initialValue={field?.value}
       onChange={(value) => {
         helpers.setValue(value)
       }}
       {...props}
+
     />
   )
 }
