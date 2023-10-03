@@ -10,8 +10,12 @@ export function generateYearsBetween(startYear = 2000, endYear) {
 }
 
 function capitalizeFLetter(str) {
+if(!str) return
 
-  return str[0].toUpperCase() + str.slice(1).toLowerCase()
+const sliceStr = str.slice(1)
+
+  return str[0]?.toUpperCase() + sliceStr?.toLowerCase()
+
 }
 
 

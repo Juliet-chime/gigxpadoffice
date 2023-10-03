@@ -2,8 +2,20 @@ import React from 'react'
 import { Table } from 'antd';
 import { TableWrapperStyles } from './style';
 import CustomTableHeader from './CustomTableHeader';
+import { LoadingOutlined } from '@ant-design/icons';
+import NullTableComponent from './NullTableComponent';
 
-const CustomTable = ({ columns, data, assest, type, status, border, role, radius, headerBorder, bottom, top, filterHeader, ...props }) => {
+export const antIcon = (
+  <LoadingOutlined
+    style={{
+      fontSize: 24,
+      color: '#E25A5A'
+    }}
+    spin
+  />
+);
+
+const CustomTable = ({ columns, data, tableBorder, tableRadius, filterBorder, filterBottom, tableTop, filterHeader, handleStatusChange, handleTypeChange, handleBillChange, handleRoleChange, handleAssestChange, onHandleStartDate, onHandleEndDate, startDate, endDate, onInputChange, ...props }) => {
 
   const itemRender = (_, type, originalElement) => {
     if (type === "prev") {
@@ -14,21 +26,24 @@ const CustomTable = ({ columns, data, assest, type, status, border, role, radius
     }
     return originalElement;
   };
+
   return (
-    //  <NullTableComponent />
-    <TableWrapperStyles border={border} radius={radius} top={top}>
-      {filterHeader ? <CustomTableHeader assest={assest} type={type} status={status} role={role} headerBorder={headerBorder} bottom={bottom} /> : null}
-      <Table
-        columns={columns}
-        dataSource={data}
-        pagination={{
-          hideOnSinglePage: true,
-          pageSize: 7,
-          itemRender: itemRender
-        }}
-        {...props}
-      />
-    </TableWrapperStyles>
+    <>
+      <TableWrapperStyles tableBorder={tableBorder} tableRadius={tableRadius} tableTop={tableTop}>
+        {filterHeader ? <CustomTableHeader handleAssestChange={handleAssestChange} handleBillChange={handleBillChange} handleStatusChange={handleStatusChange} handleTypeChange={handleTypeChange} role={handleRoleChange} filterBorder={filterBorder} filterBottom={filterBottom} startDate={startDate} endDate={endDate} onHandleStartDate={onHandleStartDate} onHandleEndDate={onHandleEndDate} onInputChange={onInputChange} /> : null}
+        {data?.length > 0 ? <Table
+          columns={columns}
+          dataSource={data}
+          pagination={{
+            hideOnSinglePage: true,
+            pageSize: 7,
+            itemRender: itemRender
+          }}
+          rowClassName={'cursor-pointer'}
+          {...props}
+        /> : <NullTableComponent />}
+      </TableWrapperStyles>
+    </>
   )
 }
 

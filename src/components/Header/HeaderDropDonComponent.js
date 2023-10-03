@@ -4,6 +4,7 @@ import { color } from '../../assets/color'
 
 
 const ComponentStyle = styled.div`
+cursor: pointer;
 .text-display{
 display: flex;
 align-items: center;
@@ -26,13 +27,13 @@ const HeaderDropDownComponent = ({ icon, label, closeIcon, children, ...props })
   const CloseIcon = closeIcon
   return (
     <ComponentStyle {...props}>
-     <div className='text-display'>
-     <div className='flex items-center gap-3'>
-     <Icon />
-      <p>{label}</p>
-     </div>
-     {closeIcon ? <CloseIcon className='text-mainColor text-sm font-medium'/> : null}
-     </div>
+      <div className='text-display'>
+        <div className='flex items-center gap-3'>
+          <Icon />
+          <p>{label}</p>
+        </div>
+        {closeIcon ? <CloseIcon className='text-mainColor text-sm font-medium' /> : null}
+      </div>
       {children}
     </ComponentStyle>
   )

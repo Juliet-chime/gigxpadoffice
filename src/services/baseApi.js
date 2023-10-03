@@ -66,14 +66,14 @@ export const makeApiRequest = async (method, url, data, params) => {
     }
 
     if (params) {
-        params=buildParams(params)
+        params = buildParams(params)
     }
 
     const res = await instance.request({
-    method,
-    url,
-    data,
-    params,
+        method,
+        url,
+        data,
+        params,
     })
     return res
     // .catch(async error => {

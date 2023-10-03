@@ -14,8 +14,9 @@ padding: ${props => props.padding}!important;
 
 export const SelectStyle = styled(Select)`
 background-color:${props => props.bg || 'transparent'} !important;
-border: ${props => props.border || 'none'} !important;
+border: ${props => props.selectBorder || 'none'} !important;
 height: ${props => props.height}!important;
+width: ${props => props.width || '100%'}!important;
 color: ${props => props.color || 'black'}!important;
 border-radius: ${props => props.radius || '0.75rem'}!important;
 `

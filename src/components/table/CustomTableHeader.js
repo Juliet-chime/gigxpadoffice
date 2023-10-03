@@ -11,161 +11,99 @@ import OneDateRange from '../chart/OneDateRange'
 import CustomButton from '../fields/CustomButton'
 import DateRangeRender from './DateRangeRender'
 import { PiCaretDown, PiCaretUp } from 'react-icons/pi'
+import { assestOptions, billsPayment, roleOptions, statusOptions, typeOptions } from '../../utils/constants'
+import moment from 'moment'
 
-const CustomTableHeader = ({ assest, type, status, bill, headerBorder, role, bottom }) => {
+const CustomTableHeader = ({
+    filterBorder,
+    filterBottom,
+    startDate,
+    endDate,
+    handleAssestChange,
+    handleRoleChange,
+    handleBillChange,
+    handleStatusChange,
+    handleTypeChange,
+    onInputChange,
+    onHandleStartDate,
+    onHandleEndDate,
+}) => {
 
     const [showSearch, setShowSearch] = useState(false)
     const [showCalendar, setShowCalendar] = useState(false);
-    const [startDate, setStartDate] = useState();
-    const [endDate, setEndDate] = useState();
-
-    const typeOptions = [
-        {
-            value: 'credit',
-            label: 'Credit',
-        },
-        {
-            value: 'debit',
-            label: 'Debit',
-        },
-    ]
-
-    const assestOptions = [
-        {
-            value: 'bitcoin',
-            label: 'BitCoin',
-        },
-        {
-            value: 'usd',
-            label: 'USDT',
-        },
-    ]
-
-    const successOptions = [
-        {
-            value: 'success',
-            label: 'Success',
-        },
-        {
-            value: 'failed',
-            label: 'Failed',
-        },
-        {
-            value: 'pending',
-            label: 'Pending',
-        },
-    ]
-
-    const roleOptions = [
-        {
-            value: 'admininstrator',
-            label: 'Administrator',
-        },
-        {
-            value: 'finance',
-            label: 'Finance',
-        },
-        {
-            value: 'developer',
-            label: 'Developer',
-        },
-    ]
-
-    const billsPayment = [
-        {
-            value: 'electricity',
-            label: 'Electricity',
-        },
-        {
-            value: 'cable',
-            label: 'Cable Television',
-        },
-        {
-            value: 'airtime',
-            label: 'Airtime & Data',
-        },
-        {
-            value: 'sports',
-            label: 'Sports & Gaming',
-        },
-    ]
-
-    const handleChange = (value) => {
-        console.log(`selected ${value}`);
-    };
 
     return (
-        <CustomHeaderStyle headborder={headerBorder} bottom={bottom}>
-            <Row className='px-0 lg:px-4 xl:px-4'>
-                <Col xs={24} sm={24} md={9} lg={10} xl={10} className='border-r border-lightash p-1 md:p-2 lg:p-2 xl:p-2 mb-8 md:mb-0 lg:mb-0 xl:mb-0'>
-                    {!showSearch ? <div className='flex items-start lg:items-center xl:items-center justify-between'>
-                        <h2 className='hidden lg:block xl:block font-bold text-sm sm:text-xs xs:text-xs text-filterColor font-circular'>FILTER TABLE</h2>
-                        <div className='flex items-start lg:items-center xl:items-center gap-4'>
-                            {assest && <CustomSelect
-                                defaultValue="-Asset-"
-                                options={assestOptions}
-                                onChange={handleChange}
-                            />}
-                            {role && <CustomSelect defaultValue="-User Role-"
-                                options={roleOptions}
-                                onChange={handleChange} />}
-                            {type && <CustomSelect
-                                defaultValue="-Type-"
-                                options={typeOptions}
-                                onChange={handleChange}
-                            />}
-                            {
-                                status && <CustomSelect
-                                    defaultValue="-Status-"
-                                    options={successOptions}
-                                    onChange={handleChange}
+        <CustomHeaderStyle headborder={filterBorder} bottom={filterBottom}>
+            <Row className='px-2 lg:px-4 xl:px-4'>
+                <Col xs={24} sm={24} md={9} lg={10} xl={11} className='border-r border-lightash p-1 md:p-2 lg:p-2 xl:p-2 mb-2 md:mb-0 lg:mb-0 xl:mb-0'>
+                    {!showSearch ?
+                        <div className='flex items-start lg:items-center xl:items-center justify-between'>
+                            <h2 className='hidden lg:block xl:block font-bold text-sm sm:text-xs xs:text-xs text-filterColor font-circular'>FILTER TABLE</h2>
+                            <div className='flex items-start lg:items-center xl:items-center gap-4 w-[80%] md:w-[70%]'>
+                                {handleAssestChange && <CustomSelect
+                                    defaultValue="-Asset-"
+                                    options={assestOptions}
+                                    onChange={handleAssestChange}
                                 />
-                            }
-                            {
-                                bill && <CustomSelect
-                                    defaultValue="-Bill Type-"
-                                    options={billsPayment}
-                                    onChange={handleChange}
+                                }
+                                {handleRoleChange && <CustomSelect
+                                    defaultValue="-User Role-"
+                                    options={roleOptions}
+                                    onChange={handleRoleChange}
                                 />
-                            }
+                                }
+                                {handleTypeChange && <CustomSelect
+                                    defaultValue="-Type-"
+                                    options={typeOptions}
+                                    onChange={handleTypeChange}
+                                />}
+                                {
+                                    handleStatusChange && <CustomSelect
+                                        defaultValue="-Status-"
+                                        options={statusOptions}
+                                        onChange={handleStatusChange}
+                                    />
+                                }
+                                {
+                                    handleBillChange && <CustomSelect
+                                        defaultValue="-Bill Type-"
+                                        options={billsPayment}
+                                        onChange={handleBillChange}
+                                    />
+                                }
+                            </div>
+                            <div className='flex md:hidden lg:hidden xl:hidden text-search items-center justify-end cursor-pointer' onClick={() => setShowSearch(!showSearch)}>
+                                <p className='text-2xl'><BiSearch /></p>
+                            </div>
                         </div>
-                        <div className='flex md:hidden lg:hidden xl:hidden text-search items-center justify-end cursor-pointer' onClick={() => setShowSearch(!showSearch)}>
-                            <p className='text-2xl'><BiSearch /></p>
+                        :
+                        <div className='relative bg-tableInput transition-all duration-100 ease-linear'>
+                            <CustomInputField radius='0px' placeholder='Search Table' prefix={<BiSearch fontSize={18} color={color.mainColor} />} height='2.5rem' onChange={onInputChange} />
+                            <FaTimes className='flex md:hidden lg:hidden xl:hidden absolute right-4 top-3 text-lg cursor-pointer' onClick={() => setShowSearch(false)} />
                         </div>
-                    </div> : <div className='relative bg-tableInput'>
-                        <CustomInputField radius='0px' placeholder='Search Table' prefix={<BiSearch fontSize={18} color={color.mainColor} />} height='2.5rem' />
-                        <FaTimes className='flex md:hidden lg:hidden xl:hidden absolute right-4 top-3 text-lg cursor-pointer' onClick={() => setShowSearch(false)} />
-                    </div>}
+                    }
                 </Col>
-                <Col xs={14} sm={14} md={7} lg={6} xl={5} className='p-1 lg:p-3 xl:p-3 border-0 md:border-l lg:border-l xl:border-l md:border-r lg:border-r xl:border-r border-lightash'>
+                <Col xs={14} sm={14} md={7} lg={8} xl={6} className='p-1 lg:p-3 xl:p- 3 border-0 md:border-l lg:border-l xl:border-l md:border-r lg:border-r xl:border-r border-lightash'>
 
                     <div className='relative'>
-                        <div className='flex items-center justify-between'>
-                            <DateRangeRender startLabel={'Start Date'} startDate={'12 JULY 2021'} endLabel={'End Date'} endDate={'20 JULY 2021'} onClick={() => setShowCalendar(!showCalendar)} style={{ cursor: 'pointer' }} />
+                        <div className='flex items-center justify-between cursor-pointer' onClick={() => setShowCalendar(!showCalendar)}>
+                            <DateRangeRender startLabel={'Start Date'} startDate={moment(startDate).format('DD MMM YYYY')} endLabel={'End Date'} endDate={moment(endDate).format('DD MMM YYYY')} />
                             {showCalendar ? <PiCaretUp color={color.mainColor} fontSize={20} fontWeight={'bold'} /> : <PiCaretDown color={color.mainColor} fontSize={20} fontWeight={'bold'} />}
                         </div>
-
-
                         {showCalendar ? <div className='absolute top-12 z-50 bg-borderColor shadow-lg'>
                             <div className='flex p-4 gap-4'>
                                 <OneDateRange
                                     selected={startDate}
-                                    onChange={(date) => setStartDate(date)}
+                                    onChange={onHandleStartDate}
                                     selectsStart
-                                    startDate={startDate}
-                                    endDate={endDate}
-                                    showPopperArrow={false}
                                     inline
                                 />
                                 <div className='border border-borderLine' />
                                 <OneDateRange
                                     selected={endDate}
-                                    onChange={(date) => setEndDate(date)}
+                                    onChange={onHandleEndDate}
                                     selectsEnd
-                                    startDate={startDate}
-                                    endDate={endDate}
                                     minDate={startDate}
-                                    showPopperArrow={false}
                                     inline
                                 />
 
@@ -176,18 +114,18 @@ const CustomTableHeader = ({ assest, type, status, bill, headerBorder, role, bot
                                     <CustomButton text='CLEAR FILTER' color='#3E3E3E' bg={color.offWhite} radius='3px' size='10px' weight='bold' padding='10px 20px' height='30px' />
 
                                 </div>
-                                <DateRangeRender startLabel={'Starting From'} startDate={'12 JULY 2021'} endLabel={'Ending On'} endDate={'20 JULY 2021'} />
+                                <DateRangeRender startLabel={'Starting From'} startDate={moment(startDate).format('DD MMM YYYY')} endLabel={'Ending On'} endDate={moment(endDate).format('DD MMM YYYY')} />
                             </div>
                         </div> : null}
                     </div>
                 </Col>
-                <Col xs={0} sm={0} md={3} lg={3} xl={3} className='p-1 md:p-3 lg:p-3 xl:p-3 border-0 md:border-l lg:border-l xl:border-l md:border-r lg:border-r xl:border-r border-lightash'>
+                <Col xs={0} sm={0} md={3} lg={2} xl={3} className='p-1 md:p-3 lg:p-3 xl:p-3 border-0 md:border-l lg:border-l xl:border-l md:border-r lg:border-r xl:border-r border-lightash'>
 
                     <div className='text-search flex items-center justify-center cursor-pointer' onClick={() => setShowSearch(!showSearch)}>
                         {showSearch ? <p className='flex items-center gap-2 text-lg'><FaTimes />Cancel</p> : <p className='text-2xl'><BiSearch /></p>}
                     </div>
                 </Col>
-                <Col xs={10} sm={10} md={5} lg={5} xl={6} className='p-1 md:p-3 lg:p-4 xl:p-4'>
+                <Col xs={10} sm={10} md={5} lg={4} xl={4} className='p-1 md:p-3 lg:p-4 xl:p-4'>
                     <div className='cursor-pointer'>
                         <p className='flex items-center justify-center gap-2'>
                             <span><RiFileExcel2Fill color='#4BA787' fontSize={18} /> </span>
