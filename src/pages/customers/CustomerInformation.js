@@ -21,7 +21,7 @@ const CustomerInfoBlock = ({ title, value, icon, flag }) => {
     </div>
 }
 
-const CustomerInformation = () => {
+const CustomerInformation = ({data}) => {
     return (
         <div className='mt-6'>
             <Row>
@@ -34,19 +34,19 @@ const CustomerInformation = () => {
                     <div>
                         <Row gutter={[16, 16]}>
                             <Col span={12}>
-                                <CustomerInfoBlock title={'First Name'} value='Harold' />
+                                <CustomerInfoBlock title={'First Name'} value={data?.firstName} />
                             </Col>
                             <Col span={12}>
-                                <CustomerInfoBlock title={'Last Name'} value='Eze' />
+                                <CustomerInfoBlock title={'Last Name'} value={data?.lastName} />
                             </Col>
                             <Col span={24}>
-                                <CustomerInfoBlock title={'Email Address'} value='harold.ajagz@gmail.com' icon={IoIosCheckmarkCircleOutline} />
+                                <CustomerInfoBlock title={'Email Address'} value={data?.email} icon={IoIosCheckmarkCircleOutline} />
                             </Col>
                             <Col span={24}>
-                                <CustomerInfoBlock title={'Phone Number'} value='08045859549' icon={IoIosCheckmarkCircleOutline} />
+                                <CustomerInfoBlock title={'Phone Number'} value={'08099367838'} icon={IoIosCheckmarkCircleOutline} />
                             </Col>
                             <Col span={24}>
-                                <CustomerInfoBlock title={'Region'} value='Nigeria' flag={flag} />
+                                <CustomerInfoBlock title={'Region'} value={data?.country} flag={flag} />
                             </Col>
                             <Col span={12}>
                                 <CustomerInfoBlock title={'Account Level'} value='Tier 1' />

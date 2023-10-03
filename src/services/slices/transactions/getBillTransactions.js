@@ -8,9 +8,9 @@ const initialState = {
   billTransactions: [],
 };
 
-export const queryBillTransactions = createAsyncThunk('getBillTransactions/queryBillTransactions', async (params=null) => {
+export const queryBillTransactions = createAsyncThunk('getBillTransactions/queryBillTransactions', async (params = null) => {
   try {
-    const response = await makeApiRequest('get', getBillTransactions(),null,params)
+    const response = await makeApiRequest('get', getBillTransactions(), null, params)
     return response?.data
   } catch (e) {
     console.log(e)
@@ -33,7 +33,7 @@ export const billTransactionSlice = createSlice({
         return (state = {
           ...state,
           loading: false,
-          billTransactions: action.payload,
+          billTransactions: action.payload?.data,
         });
       })
       .addCase(queryBillTransactions.rejected, (state, { payload }) => {

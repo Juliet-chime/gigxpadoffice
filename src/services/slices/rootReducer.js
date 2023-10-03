@@ -15,6 +15,7 @@ import userChartReducer from './user/userChart'
 import allUsersReducer from './user/allUsers'
 import oneUserReducer from './user/oneUser'
 import userAssestReducer from './user/userAssest'
+import adminsReducer from './admin/fetchAdmins'
 import { clearLocalStorage } from "../../utils/authFunc";
 
 const combinedReducer = combineReducers({
@@ -33,7 +34,8 @@ const combinedReducer = combineReducers({
   userChart: userChartReducer,
   allUsers: allUsersReducer,
   user: oneUserReducer,
-  userAssest: userAssestReducer
+  userAssest: userAssestReducer,
+  admins: adminsReducer
 });
 
 export const rootReducer = (state, action) => {
