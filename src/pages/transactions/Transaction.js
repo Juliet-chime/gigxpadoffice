@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import CustomTable, { antIcon } from '../../components/table/CustomTable'
+import CustomTable from '../../components/table/CustomTable'
 import Dashboardheader from '../../components/dashboardComponents/Dashboardheader'
 import CustomDrawer from '../../components/fields/CustomDrawer';
 import TransactionDetails from './TransactionDetails';
@@ -21,16 +21,8 @@ const Transaction = () => {
   const [open, setOpen] = useState(false);
   const [startDate, setStartDate] = useState(new Date('2022-09-05'));
   const [endDate, setEndDate] = useState(new Date('2022-09-05'));
-  // const [type, setType] = useState('');
-  // const [status, setStatus] = useState('');
 
-  // const showDrawer = () => {
-  //   setOpen(true);
-  // };
-
-  // const onClose = () => {
-  //   setOpen(false);
-  // };
+  console.log(fiatTransaction?.loading, 'loading')
 
   const columns = [
     {
@@ -86,6 +78,14 @@ const Transaction = () => {
         return <StatusTag text={text} />
       },
     },
+    {
+      title: 'Timestamp',
+      dataIndex: 'createdAt',
+      key: 'createdAt',
+      render: (text) => {
+        return <p>{moment(text).format('DD/MM/YYYY, h:mm:ss')}</p>
+      },
+    },
   ];
 
   const handleStatusChange = (value) => {
@@ -132,10 +132,7 @@ const Transaction = () => {
       <CustomTable
         data={fiatTransaction?.fiatTransactions?.data}
         columns={columns}
-        loading={{
-          spinning: fiatTransaction?.loading,
-          indicator: antIcon
-        }}
+        isLoading={fiatTransaction?.loading}
         filterHeader={true}
         startDate={startDate}
         endDate={endDate}
