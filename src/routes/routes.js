@@ -17,7 +17,7 @@ const routes = [
     { path: '/', component: Login, ispublic: true },
     { path: '/access', component: AccessPage, ispublic: true },
     { path: '/accesslogin', component: AccessLogin, ispublic: true },
-    {path: '/2FA', component: TwoFactorAuthentication, ispublic:true},
+    { path: '/2FA', component: TwoFactorAuthentication, ispublic: true },
 
 
     //private Routes
