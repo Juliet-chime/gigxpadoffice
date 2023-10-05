@@ -28,7 +28,7 @@ export const fiatRevenueSlice = createSlice({
       })
       .addCase(queryFiatRevenue.fulfilled, (state, action) => {
         state.loading = false;
-        state.fiatRevenue = action?.payload;
+        state.fiatRevenue = action?.payload?.data;
       })
       .addCase(queryFiatRevenue.rejected, (state, { payload }) => {
         state.loading = false;

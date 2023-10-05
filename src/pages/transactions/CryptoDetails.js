@@ -8,10 +8,10 @@ const CryptoDetails = ({ data, loading }) => {
     return (
         <div>
             <h2 className='text-xl font-bold py-3 font-cabinetgrotesk'>Transaction Details</h2>
-            {loading ? <Loader /> : <>
+            {loading ? <div className='h-[300px]'><Loader /></div> : <>
                 <div>
                     <TrxDetailsValue name={'Transaction ID'} value={data?.transactionId} />
-                    <TrxDetailsValue name={'Transaction Fee'} value={'₦' + formatMoney(data?.amount)} />
+                    <TrxDetailsValue name={'Transaction Fee'} value={formatMoney({ amount: data?.amount })} />
                     {/* <TrxDetailsValue name={'Quidax Fee'} value={data?.quidaxFee} />
                 <TrxDetailsValue name={'XPAD Fee'} value={data?.xpadFee} /> */}
                     <TrxDetailsValue name={'Email address'} value={data?.email} />
