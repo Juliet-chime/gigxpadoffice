@@ -33,7 +33,7 @@ const CustomTable = ({ isLoading, columns, data, tableBorder, tableRadius, filte
       <TableWrapperStyles tableBorder={tableBorder} tableRadius={tableRadius} tableTop={tableTop}>
         {filterHeader ? <CustomTableHeader handleAssestChange={handleAssestChange} handleBillChange={handleBillChange} handleStatusChange={handleStatusChange} handleTypeChange={handleTypeChange} role={handleRoleChange} filterBorder={filterBorder} filterBottom={filterBottom} startDate={startDate} endDate={endDate} onHandleStartDate={onHandleStartDate} onHandleEndDate={onHandleEndDate} onInputChange={onInputChange} /> : null}
         {!!data?.length ? (<>
-          {isLoading ? <div className='bg-[blue] h-[400px]'><Loader /></div> : <Table
+          {isLoading ? <div className='h-[400px]'><Loader /></div> : <Table
             columns={columns}
             dataSource={data}
             pagination={{
