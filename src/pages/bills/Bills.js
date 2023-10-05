@@ -52,7 +52,7 @@ const Bills = () => {
       dataIndex: 'amount',
       key: 'amount',
       render: (text) => {
-        return <p>{formatMoney(text)}</p>
+        return <p>{formatMoney({ amount: text })}</p>
       },
     },
     {

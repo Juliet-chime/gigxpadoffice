@@ -249,12 +249,13 @@ export const sortDatesList = function (dates = [], ascending = true) {
   );
 };
 
-export const formatMoney = (
+export const formatMoney = ({
   amount,
   decimalCount = 2,
   decimal = ".",
-  thousands = ","
-) => {
+  thousands = ",",
+  currency = '₦'
+}) => {
   try {
     decimalCount = Math.abs(decimalCount);
     decimalCount = isNaN(decimalCount) ? 2 : decimalCount;
@@ -264,6 +265,7 @@ export const formatMoney = (
     ).toString();
     let j = i.length > 3 ? i.length % 3 : 0;
     return (
+      currency +
       negativeSign +
       (j ? i.substr(0, j) + thousands : "") +
       i.substr(j).replace(/(\d{3})(?=\d)/g, "$1" + thousands) +
