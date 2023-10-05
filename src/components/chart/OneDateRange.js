@@ -5,13 +5,12 @@ import { DateFilterStyle } from './style';
 import { allMonth, getCurrentYear, getMonthName } from '../../utils/helperFunctions';
 import { generateYearsBetween } from '../../utils/func';
 import CustomReactSelect from '../fields/CustomReactSelect';
+import CustomButton from '../fields/CustomButton';
+import { color } from '../../assets/color';
 
-const OneDateRange = ({ showDateFilter, children, ...props }) => {
+const OneDateRange = ({ showDateFilter, onApplyFilter, onClearFilter, filterStartDate, filterEndDate, children, ...props }) => {
 
-  const years = generateYearsBetween(1990, getCurrentYear())
-
-
-  const yearOptions = years.map((year) => ({
+  const yearOptions = generateYearsBetween(1990, getCurrentYear()).map((year) => ({
     value: year,
     label: year,
   }))
@@ -53,9 +52,9 @@ const OneDateRange = ({ showDateFilter, children, ...props }) => {
       {...props}
     >
       {showDateFilter ? <DateFilterStyle>
-        <p>APPLY FILTER</p>
+        <CustomButton color={color.mainColor} size='12px' weight='bold' onClick={onApplyFilter} disabled={!(filterStartDate && filterEndDate)}>APPLY FILTER</CustomButton>
         <p className='linethrough' />
-        <p className='clear'>CLEAR FILTER</p>
+        <CustomButton color={color.secondaryColor} size='12px' weight='bold' className='clear' onClick={onClearFilter}>CLEAR FILTER</CustomButton>
       </DateFilterStyle> : null}
       {children}
     </DatePicker>

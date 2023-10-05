@@ -40,6 +40,10 @@ font-weight: ${props => props.weight || 500}!important;
 font-size: ${props => props.size}!important;
 border-radius: ${props => props.radius || '0.75rem'}!important;
 box-shadow:none !important;
+cursor: pointer;
+&:disabled {
+    opacity: 0.2 !important;
+  }
 `
 
 export const CheckSpan = styled.span`
