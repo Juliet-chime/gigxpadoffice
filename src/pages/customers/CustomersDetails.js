@@ -19,7 +19,7 @@ const CustomersDetails = () => {
     const user = useSelector(getOneUserSelector)
     console.log(user)
 
-    const {id} = useParams()
+    const { id } = useParams()
 
     const onChange = (key) => {
         console.log(key);
@@ -40,7 +40,7 @@ const CustomersDetails = () => {
         {
             key: '1',
             label: `Basic Information`,
-            children: <CustomerInformation data={user?.user} />,
+            children: <CustomerInformation loading={user?.loading} data={user?.user} />,
         },
         {
             key: '2',
@@ -56,23 +56,23 @@ const CustomersDetails = () => {
 
     useEffect(() => {
         async function getFiatTransactions() {
-          try {
-            dispatch(queryOneUser({id})).unwrap()
-          } catch (e) {
-            console.log(e)
-          }
+            try {
+                dispatch(queryOneUser({ id })).unwrap()
+            } catch (e) {
+                console.log(e)
+            }
         }
         getFiatTransactions()
-      }, [dispatch,id])
+    }, [dispatch, id])
     return (
         <div>
             <Row justify="space-between" gutter={[0, 16]}>
                 <Col xs={24} sm={24} md={9} lg={9} xl={10}>
                     <div className='flex flex-col xl:flex-row items-start xl:items-center gap-0 md:gap-4'>
                         <div className=' w-10 h-10 flex items-center justify-center border border-borderLine rounded-[100%] cursor-pointer'>
-                            <Link to='/customers'> 
-                            <PiCaretLeft color={color.mainColor} fontSize={20}/>
-                             </Link>
+                            <Link to='/customers'>
+                                <PiCaretLeft color={color.mainColor} fontSize={20} />
+                            </Link>
                         </div>
                         <div className='mt-2 xl:mt-0'>
                             <h3 className='text-2xl font-bold text-mainColor font-cabinetgrotesk'>{user?.user?.firstName} {user?.user?.lastName}</h3>

@@ -14,35 +14,70 @@ import { DoughnutChart } from '../../components/chart/DoughnutChart'
 import CurrencyTabComponent from './CurrencyTabComponent'
 import ChartLabels from '../../components/chart/ChartLabels'
 import OneDateRange from '../../components/chart/OneDateRange'
-import { formatDate } from '../../utils/helperFunctions'
+import { formatMoney } from '../../utils/helperFunctions'
 import { PiCaretUp, PiCaretDown } from 'react-icons/pi'
 import CustomTab from '../../components/tabination/CustomTab'
 import { useDispatch, useSelector } from 'react-redux'
 import { queryRoles } from '../../services/slices/roles/fetchRoles'
 import { get2FaSelector } from '../../services/slices/auth/2fa'
-import { queryFiatMetrics } from '../../services/slices/dashboard/fiatMetrics'
-import { queryFiatRevenue } from '../../services/slices/dashboard/fiatRevenue'
-import { queryCryptoMetrics } from '../../services/slices/dashboard/cryptoMetrics'
+//import { queryFiatMetrics } from '../../services/slices/dashboard/fiatMetrics'
+import { getFiatRevenueSelector, queryFiatRevenue } from '../../services/slices/dashboard/fiatRevenue'
+//import { queryCryptoMetrics } from '../../services/slices/dashboard/cryptoMetrics'
 import { queryUserChart } from '../../services/slices/user/userChart'
 import moment from 'moment'
+import { revenueItem } from '../../utils/constants'
+
+let revenueFrom = moment(new Date('2022-09-05')).format("YYYY-MM-DD")
+let revenueTo = moment(new Date()).format("YYYY-MM-DD")
 
 export default function Dashboard() {
 
   const dispatch = useDispatch()
 
-  const [startDate, setStartDate] = useState(new Date('2022-09-05'));
-  const [changeIcon, setChangeIcon] = useState(false);
-  const [endDate, setEndDate] = useState(null);
-
   const user = useSelector(get2FaSelector)
-
   const firstname = user?.user?.firstName
+  const revenue = useSelector(getFiatRevenueSelector)
 
-  const onChange = (dates) => {
+  const revenueAmount = revenue?.fiatRevenue?.revenue
+  const revenueProfit = revenue?.fiatRevenue?.profit
+
+  const [changeIcon, setChangeIcon] = useState(false);
+  const [currencyType, setCurrencyType] = useState(revenueItem[0])
+  // const [startDate, setStartDate] = useState(new Date());
+  // const [endDate, setEndDate] = useState(null);
+  const [revenueStartDate, setRevenueStartDate] = useState('');
+  const [revenueEndDate, setRevenueEndDate] = useState('');
+
+  const items = revenueItem.map((data, index) => {
+    return {
+      key: index + 1,
+      label: data.toUpperCase(),
+      children: <CurrencyTabComponent loading={revenue?.loading} revenueAmount={formatMoney({ amount: (revenueAmount || [])[0]?.totalAmount })} profitAmount={formatMoney({ amount: (revenueProfit || [])[0]?.totalCharge })} />
+    }
+  })
+
+  const onChangeRevenueDate = (dates) => {
     const [start, end] = dates;
-    setStartDate(start);
-    setEndDate(end);
+    setRevenueStartDate(start);
+    setRevenueEndDate(end);
   };
+
+  const OnApplyRevenueFilter = () => {
+    const from = moment(revenueStartDate).format("YYYY-MM-DD")
+    const to = moment(revenueEndDate === null ? new Date() : revenueEndDate).format("YYYY-MM-DD")
+    dispatch(queryFiatRevenue({ from, to, currencyType })).unwrap()
+  }
+
+  const OnClearRevenueFilter = () => {
+    setRevenueStartDate('')
+    setRevenueEndDate('')
+    dispatch(queryFiatRevenue({ from: revenueFrom, to: revenueTo, currencyType })).unwrap()
+  }
+
+  const onChangeRevenueLabel = (e) => {
+    setCurrencyType(revenueItem[e - 1])
+    console.log(e)
+  }
 
   useEffect(() => {
     async function getData() {
@@ -50,10 +85,10 @@ export default function Dashboard() {
         await Promise.allSettled(
           [
             dispatch(queryRoles()).unwrap(),
-            dispatch(queryFiatMetrics({ from: moment(startDate).format('YYYY-MM-DD') })).unwrap(),
-            dispatch(queryFiatRevenue({ from: moment(startDate).format('YYYY-MM-DD'), currencyType: 'crypto' })).unwrap(),
+            // dispatch(queryFiatMetrics({ from: moment(startDate).format('YYYY-MM-DD') })).unwrap(),
+            // dispatch(queryFiatRevenue({ from: moment(startDate).format('YYYY-MM-DD'), currencyType })).unwrap(),
             dispatch(queryUserChart()).unwrap(),
-            dispatch(queryCryptoMetrics({ from: moment(startDate).format('YYYY-MM-DD') })).unwrap()
+            // dispatch(queryCryptoMetrics({ from: moment(startDate).format('YYYY-MM-DD') })).unwrap()
           ]
         )
       } catch (e) {
@@ -61,46 +96,42 @@ export default function Dashboard() {
       }
     }
     getData()
-  }, [dispatch, startDate])
+  }, [dispatch])
+
+  useEffect(() => {
+    async function getRevenueProfit() {
+      try {
+        dispatch(queryFiatRevenue({ from: revenueFrom, to: revenueTo, currencyType })).unwrap()
+      } catch (e) {
+        console.log(e)
+      }
+    }
+    getRevenueProfit()
+  }, [dispatch, currencyType])
+
+  // const ExampleCustomInputRef = forwardRef(({ value, onClick }, ref) => {
+
+  //   const newDate = value.split('-')[0].trim()
+
+  //   const today = formatDate()
+
+  //   return (
+  //     <p onClick={onClick} ref={ref} className={'rounded-large border border-dateLine cursor-pointer flex items-center gap-2 font-medium p-2 text-mainColor'}>
+  //       {newDate === today ? `Today` : value} {newDate === today ? changeIcon ? <PiCaretUp className='text-mainColor text-xs font-medium' /> : <PiCaretDown className='text-mainColor text-xs font-medium' /> : null}
+  //     </p>
+  //   )
+  // });
+
 
   const ExampleCustomInput = forwardRef(({ value, onClick }, ref) => {
-
     const newDate = value.split('-')[0].trim()
-
-    const today = formatDate()
-
+    const today = newDate === moment().format('MM/DD/YYYY')
     return (
       <p onClick={onClick} ref={ref} className={'rounded-large border border-dateLine py-3 px-3 cursor-pointer flex items-center gap-2 text-mainColor text-sm font-medium '}>
-        {newDate === today ? `Today` : value} {newDate === today ? changeIcon ? <PiCaretUp className='text-mainColor text-xl font-medium' /> : <PiCaretDown className='text-mainColor text-xl font-medium' /> : null}
+        {today ? `Today` : value || moment().format('MM/DD/YYYY')} {today ? changeIcon ? <PiCaretUp className='text-mainColor text-xl font-medium' /> : <PiCaretDown className='text-mainColor text-xl font-medium' /> : null}
       </p>
     )
   });
-
-  const ExampleCustomInputRef = forwardRef(({ value, onClick }, ref) => {
-
-    const newDate = value.split('-')[0].trim()
-
-    const today = formatDate()
-
-    return (
-      <p onClick={onClick} ref={ref} className={'rounded-large border border-dateLine cursor-pointer flex items-center gap-2 font-medium p-2 text-mainColor'}>
-        {newDate === today ? `Today` : value} {newDate === today ? changeIcon ? <PiCaretUp className='text-mainColor text-xs font-medium' /> : <PiCaretDown className='text-mainColor text-xs font-medium' /> : null}
-      </p>
-    )
-  });
-
-  const items = [
-    {
-      key: '1',
-      label: `FIAT`,
-      children: <CurrencyTabComponent revenueAmount={'₦6,390,050'} profitAmount={'₦2,950,000'} />,
-    },
-    {
-      key: '2',
-      label: `CRYPTO`,
-      children: <CurrencyTabComponent revenueAmount={'₦6,390,050'} profitAmount={'₦2,950,000'} />,
-    },
-  ];
 
   return (
     <div className='overflow-hidden py-10'>
@@ -151,7 +182,7 @@ export default function Dashboard() {
               <BlockStyle height='auto' padding='10px 20px'>
                 <div className='flex items-center justify-between'>
                   <ChartHeader label={'Total FIAT Transactions'} amount={'₦32,599,000'} details />
-                  <div>
+                  {/* <div>
                     <OneDateRange
                       selected={startDate}
                       onChange={onChange}
@@ -164,7 +195,7 @@ export default function Dashboard() {
                       onCalendarOpen={() => setChangeIcon(true)}
                       onCalendarClose={() => setChangeIcon(false)}
                     />
-                  </div>
+                  </div> */}
                 </div>
                 <Row gutter={[16, 16]} className='mt-5' align='middle'>
                   <Col xs={0} sm={0} md={24} lg={24} xl={8}>
@@ -189,7 +220,7 @@ export default function Dashboard() {
               <BlockStyle height='auto' padding='10px 30px'>
                 <div className='flex items-center justify-between'>
                   <ChartHeader label={'Total Crypto Transactions'} amount={'₦6,390,050'} details />
-                  <div>
+                  {/* <div>
                     <OneDateRange
                       selected={startDate}
                       onChange={onChange}
@@ -202,7 +233,7 @@ export default function Dashboard() {
                       onCalendarOpen={() => setChangeIcon(true)}
                       onCalendarClose={() => setChangeIcon(false)}
                     />
-                  </div>
+                  </div> */}
                 </div>
 
                 <Row gutter={[16, 16]} className='mt-5' align='middle'>
@@ -227,7 +258,7 @@ export default function Dashboard() {
       </section><br /><br /><br />
       <section>
         <Row gutter={[16, 16]}>
-          <Col xs={24} sm={24} md={12} lg={12} xl={9}>
+          <Col xs={24} sm={24} md={12} lg={12} xl={12}>
             <div>
               <BlockStyle height='285px' padding='20px 30px'>
                 <ChartHeader label={'Total Customers'} amount={'3,950'} details />
@@ -249,30 +280,35 @@ export default function Dashboard() {
               </BlockStyle>
             </div>
           </Col>
-          <Col xs={24} sm={24} md={12} lg={12} xl={9}>
+          <Col xs={24} sm={24} md={12} lg={12} xl={12}>
             <div>
               <BlockStyle height='285px' padding='20px 30px' className='relative'>
                 <div className='revenue w-full px-3'>
-                  <CustomTab items={items} />
+                  <CustomTab items={items} onChange={onChangeRevenueLabel} />
                 </div>
                 <div className='absolute top-3 md:top-4 lg:top-5 xl:top-5 right-2 lg:right-8 xl:right-8'>
                   <OneDateRange
-                    selected={startDate}
-                    onChange={onChange}
-                    startDate={startDate}
-                    endDate={endDate}
-                    selectsRange
-                    showDateFilter
-                    showPopperArrow={false}
-                    customInput={<ExampleCustomInputRef />}
+                    selected={revenueStartDate}
+                    onChange={onChangeRevenueDate}
+                    startDate={revenueStartDate}
+                    endDate={revenueEndDate}
+                    customInput={<ExampleCustomInput />}
                     onCalendarOpen={() => setChangeIcon(true)}
                     onCalendarClose={() => setChangeIcon(false)}
+                    onApplyFilter={OnApplyRevenueFilter}
+                    onClearFilter={OnClearRevenueFilter}
+                    shouldCloseOnSelect={false}
+                    filterStartDate={revenueStartDate}
+                    filterEndDate={revenueEndDate}
+                    selectsRange
+                    showDateFilter
                   />
+
                 </div>
               </BlockStyle>
             </div>
           </Col>
-          <Col xs={24} sm={24} md={12} lg={10} xl={5}>
+          {/* <Col xs={24} sm={24} md={12} lg={10} xl={5}>
             <div>
               <BlockStyle height='285px' padding='20px 10px'>
                 <div className='flex justify-end'>
@@ -297,7 +333,7 @@ export default function Dashboard() {
 
               </BlockStyle>
             </div>
-          </Col>
+          </Col> */}
         </Row>
       </section>
     </div>

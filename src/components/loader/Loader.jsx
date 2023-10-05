@@ -14,7 +14,7 @@ const antIcon = (
 
 const Loader = ({ ...props }) => {
     return (
-        <div className='flex items-center justify-center h-[50vh]'>
+        <div className='flex items-center justify-center h-full'>
             <Spin size="large" indicator={antIcon} {...props} />
         </div>
     )
