@@ -8,7 +8,7 @@ const initialState = {
   user: {},
 };
 
-export const queryOneUser = createAsyncThunk('getOneUser/queryOneUser', async ({id}) => {
+export const queryOneUser = createAsyncThunk('getOneUser/queryOneUser', async ({ id }) => {
   try {
     const response = await makeApiRequest('get', getOneUser(id))
     return response?.data
@@ -33,7 +33,7 @@ export const oneUserSlice = createSlice({
         return (state = {
           ...state,
           loading: false,
-          user: action.payload,
+          user: action.payload?.data,
         });
       })
       .addCase(queryOneUser.rejected, (state, { payload }) => {

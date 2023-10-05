@@ -96,7 +96,7 @@ const CustomerWalletBalance = () => {
                 </Col>
                 <Col xs={20} sm={20} md={24} lg={17} xl={19}>
                     <div className='wallet-table'>
-                        <CustomTable columns={columns} dataSource={data} tableBorder={'none'}
+                        <CustomTable columns={columns} data={data} tableBorder={'none'}
                             pagination={{
                                 hideOnSinglePage: true,
                                 pageSize: 7,

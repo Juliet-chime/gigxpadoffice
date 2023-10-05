@@ -1,6 +1,6 @@
 import React, { forwardRef, useEffect, useState } from 'react'
 import Dashboardheader from '../../components/dashboardComponents/Dashboardheader';
-import CustomTable, { antIcon } from '../../components/table/CustomTable';
+import CustomTable from '../../components/table/CustomTable';
 import CustomDrawer from '../../components/fields/CustomDrawer';
 import { Col, Row } from 'antd';
 import Blocks from '../../components/dashboardComponents/Blocks';
@@ -24,20 +24,12 @@ const Crypto = () => {
   const [startDate, setStartDate] = useState(new Date('2022-09-05'));
   const [changeIcon, setChangeIcon] = useState(false);
   const [endDate, setEndDate] = useState(new Date('2022-09-05'));
- 
+
   const onChange = (dates) => {
     const [start, end] = dates;
     setStartDate(start);
     setEndDate(end);
   };
-
-  // const showDrawer = () => {
-  //   setOpen(true);
-  // };
-
-  // const onClose = () => {
-  //   setOpen(false);
-  // };
 
   const cryptoTransaction = useSelector(getCryptoTransactionsSelector)
   const oneCryptoTransaction = useSelector(getOneCryptoTransactionsSelector)
@@ -77,7 +69,7 @@ const Crypto = () => {
       dataIndex: 'currency',
       key: 'currency',
       render: (text) => {
-        return <p>{text?.name === 'usdt'? text?.name?.toUpperCase():capitalizeFLetter(text?.name)}</p>
+        return <p>{text?.name === 'usdt' ? text?.name?.toUpperCase() : capitalizeFLetter(text?.name)}</p>
       },
     },
     {
@@ -93,30 +85,38 @@ const Crypto = () => {
       dataIndex: 'status',
       key: 'status',
       render: (text) => {
-        return <StatusTag text={text}/>
+        return <StatusTag text={text} />
+      },
+    },
+    {
+      title: 'Timestamp',
+      dataIndex: 'createdAt',
+      key: 'createdAt',
+      render: (text) => {
+        return <p>{moment(text).format('DD/MM/YYYY, h:mm:ss')}</p>
       },
     },
   ];
 
   const OnEachRowClicked = (trxId) => {
     setOpen(true);
-    dispatch(queryOneCryptoTransactions({id:trxId})).unwrap()
+    dispatch(queryOneCryptoTransactions({ id: trxId })).unwrap()
   }
 
   const onInputChange = (e) => {
     console.log(e.target.value)
-    }
+  }
 
-  useEffect(()=>{
-    async function getCryptoTransactions(){
-try{
-  dispatch(queryCryptoTransactions({from:moment(startDate).format('YYYY-MM-DD')})).unwrap()
-} catch(e){
-console.log(e)
-}
+  useEffect(() => {
+    async function getCryptoTransactions() {
+      try {
+        dispatch(queryCryptoTransactions({ from: moment(startDate).format('YYYY-MM-DD') })).unwrap()
+      } catch (e) {
+        console.log(e)
+      }
     }
     getCryptoTransactions()
-  },[startDate,dispatch])
+  }, [startDate, dispatch])
 
   const ExampleCustomInput = forwardRef(({ value, onClick }, ref) => {
 
@@ -169,22 +169,19 @@ console.log(e)
       <CustomTable
         data={cryptoTransaction?.cryptoTransactions?.data}
         columns={columns}
-        loading={{
-          spinning:cryptoTransaction?.loading,
-          indicator:antIcon
-        }}
+        isLoading={cryptoTransaction?.loading}
         filterHeader={true}
         startDate={startDate}
         endDate={endDate}
         onInputChange={onInputChange}
-        handleTypeChange={(value)=>console.log(value)}
-        handleAssestChange={value=>console.log(value)}
+        handleTypeChange={(value) => console.log(value)}
+        handleAssestChange={value => console.log(value)}
         onHandleStartDate={(date) => {
-          console.log(date,'start')
+          console.log(date, 'start')
           setStartDate(new Date(date))
         }}
         onHandleEndDate={(date) => {
-          console.log(date,'end')
+          console.log(date, 'end')
           setEndDate(new Date(date))
         }}
         onRow={(record) => {
@@ -193,7 +190,7 @@ console.log(e)
           };
         }}
       />
-      <CustomDrawer placement="right" onClose={()=>setOpen(false)} open={open}>
+      <CustomDrawer placement="right" onClose={() => setOpen(false)} open={open}>
         < CryptoDetails loading={oneCryptoTransaction?.loading} data={oneCryptoTransaction?.oneCryptoTransaction?.data} />
       </CustomDrawer>
     </div>

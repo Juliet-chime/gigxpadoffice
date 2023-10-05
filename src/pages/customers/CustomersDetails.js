@@ -1,5 +1,5 @@
 import { Col, Row, Tabs } from 'antd'
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { PiCaretLeft } from 'react-icons/pi'
 import { color } from '../../assets/color'
 import CustomButton from '../../components/fields/CustomButton'
@@ -8,8 +8,18 @@ import CustomerWalletBalance from './CustomerWalletBalance'
 import CustomerKYCDocumentation from './CustomerKYCDocumentation'
 import CustomModal from '../../components/modal/CustomModal'
 import { IoIosLock } from 'react-icons/io'
+import { Link, useParams } from 'react-router-dom'
+import { getOneUserSelector, queryOneUser } from '../../services/slices/user/oneUser'
+import { useDispatch, useSelector } from 'react-redux'
 
 const CustomersDetails = () => {
+
+    const dispatch = useDispatch()
+
+    const user = useSelector(getOneUserSelector)
+    console.log(user)
+
+    const {id} = useParams()
 
     const onChange = (key) => {
         console.log(key);
@@ -30,7 +40,7 @@ const CustomersDetails = () => {
         {
             key: '1',
             label: `Basic Information`,
-            children: <CustomerInformation />,
+            children: <CustomerInformation data={user?.user} />,
         },
         {
             key: '2',
@@ -43,21 +53,34 @@ const CustomersDetails = () => {
             children: <CustomerKYCDocumentation />,
         },
     ];
+
+    useEffect(() => {
+        async function getFiatTransactions() {
+          try {
+            dispatch(queryOneUser({id})).unwrap()
+          } catch (e) {
+            console.log(e)
+          }
+        }
+        getFiatTransactions()
+      }, [dispatch,id])
     return (
         <div>
             <Row justify="space-between" gutter={[0, 16]}>
-                <Col xs={24} sm={24} md={9} lg={9} xl={8}>
-                    <div className='flex items-center gap-3'>
-                        <div className='w-10 h-10 flex items-center justify-center border border-borderLine rounded-full cursor-pointer'>
-                            <PiCaretLeft color={color.mainColor} fontSize={20} />
+                <Col xs={24} sm={24} md={9} lg={9} xl={10}>
+                    <div className='flex flex-col xl:flex-row items-start xl:items-center gap-0 md:gap-4'>
+                        <div className=' w-10 h-10 flex items-center justify-center border border-borderLine rounded-[100%] cursor-pointer'>
+                            <Link to='/customers'> 
+                            <PiCaretLeft color={color.mainColor} fontSize={20}/>
+                             </Link>
                         </div>
-                        <div>
-                            <h3 className='text-2xl font-bold text-mainColor font-cabinetgrotesk'>Harold Ajagu</h3>
-                            <p className='text-lg text-lighterAsh'>harold.ajagu@gmail.com</p>
+                        <div className='mt-2 xl:mt-0'>
+                            <h3 className='text-2xl font-bold text-mainColor font-cabinetgrotesk'>{user?.user?.firstName} {user?.user?.lastName}</h3>
+                            <p className='text-lg text-lighterAsh'>{user?.user?.email}</p>
                         </div>
                     </div>
                 </Col>
-                <Col xs={24} sm={24} md={9} lg={6} xl={6}>
+                <Col xs={24} sm={24} md={9} lg={6} xl={4}>
                     <div className='flex justify-end gap-3'>
                         <CustomButton text={'Lock Account'} border='1px solid #DBDBDB' color={color.mainColor} radius='25px' onClick={showModal} />
                         <CustomButton text={'Suspend Account'} border='1px solid #DBDBDB' color={color.secondaryColor} radius='25px' />

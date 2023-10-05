@@ -63,6 +63,10 @@ const inviteSuperAdmin = () => {
     return `/invite-superadmin`;
 };
 
+const fetchAdmins = () => {
+    return `/admins`;
+};
+
 //role url
 
 const getRoles = () => {
@@ -95,5 +99,5 @@ const getFiatRevenue = () => {
 
 export {
     loginUser, setPassword, twoFactorAuthentication, getRoles, inviteAdmin, getOneFiatTransactions, getBillTransactions, getOneBillTransactions, getCryptoTransactions, getOneCryptoTransactions,
-    inviteSuperAdmin, getFiatTransactions, getFiatMetrics, getFiatRevenue, getCryptoMetrics, getUserMetrics, getAllUsers, getOneUser, getUserAssest
+    inviteSuperAdmin, getFiatTransactions, getFiatMetrics, getFiatRevenue, getCryptoMetrics, getUserMetrics, getAllUsers, getOneUser, getUserAssest, fetchAdmins
 }

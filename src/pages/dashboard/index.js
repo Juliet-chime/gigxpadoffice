@@ -51,7 +51,7 @@ export default function Dashboard() {
           [
             dispatch(queryRoles()).unwrap(),
             dispatch(queryFiatMetrics({ from: moment(startDate).format('YYYY-MM-DD') })).unwrap(),
-            dispatch(queryFiatRevenue({ from: moment(startDate).format('YYYY-MM-DD') })).unwrap(),
+            dispatch(queryFiatRevenue({ from: moment(startDate).format('YYYY-MM-DD'), currencyType: 'crypto' })).unwrap(),
             dispatch(queryUserChart()).unwrap(),
             dispatch(queryCryptoMetrics({ from: moment(startDate).format('YYYY-MM-DD') })).unwrap()
           ]

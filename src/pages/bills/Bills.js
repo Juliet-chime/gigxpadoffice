@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import Dashboardheader from '../../components/dashboardComponents/Dashboardheader';
-import CustomTable, { antIcon } from '../../components/table/CustomTable';
+import CustomTable from '../../components/table/CustomTable';
 import CustomDrawer from '../../components/fields/CustomDrawer';
 import BillPaymentDetails from './BillPaymentDetails';
 import { useDispatch, useSelector } from 'react-redux';
@@ -16,20 +16,13 @@ const Bills = () => {
   const dispatch = useDispatch()
 
   const billTransaction = useSelector(getBillTransactionsSelector)
-  //const oneBillTransaction = useSelector(getOneBillTransactionsSelector)
+  const oneBillTransaction = useSelector(getOneBillTransactionsSelector)
+
+  console.log(oneBillTransaction, 'onebilll')
 
   const [open, setOpen] = useState(false);
-  const [details, setDetails] = useState();
   const [startDate, setStartDate] = useState(new Date('2022-09-05'));
   const [endDate, setEndDate] = useState(new Date('2022-09-05'));
-
-  // const showDrawer = () => {
-  //   setOpen(true);
-  // };
-
-  // const onClose = () => {
-  //   setOpen(false);
-  // };
 
   const onInputChange = (e) => {
     console.log(e.target.value)
@@ -65,7 +58,10 @@ const Bills = () => {
     {
       title: 'Description',
       dataIndex: 'description',
-      key: 'description'
+      key: 'description',
+      render: (text) => {
+        return <p className='w-[270px]'>{text}</p>
+      },
     },
     {
       title: 'Bill Type',
@@ -91,6 +87,14 @@ const Bills = () => {
         return <StatusTag text={text} />
       },
     },
+    {
+      title: 'Timestamp',
+      dataIndex: 'createdAt',
+      key: 'createdAt',
+      render: (text) => {
+        return <p>{moment(text).format('DD/MM/YYYY, h:mm:ss')}</p>
+      },
+    },
   ];
 
   useEffect(() => {
@@ -111,12 +115,9 @@ const Bills = () => {
         className='mb-6'
       />
       <CustomTable
-        data={billTransaction?.billTransactions?.data}
+        data={billTransaction?.billTransactions}
         columns={columns}
-        loading={{
-          spinning: billTransaction?.loading,
-          indicator: antIcon
-        }}
+        isLoading={billTransaction?.loading}
         filterHeader={true}
         startDate={startDate}
         endDate={endDate}
@@ -138,7 +139,7 @@ const Bills = () => {
         }}
       />
       <CustomDrawer placement="right" onClose={() => setOpen(false)} open={open}>
-        <BillPaymentDetails data={details} />
+        <BillPaymentDetails data={oneBillTransaction?.oneBillTransaction} loading={oneBillTransaction?.loading} />
       </CustomDrawer>
     </div>
   )
