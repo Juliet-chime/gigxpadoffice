@@ -4,6 +4,7 @@ import dummyPerson from '../../assets/images/dummyPerson.svg'
 import { IoIosCheckmarkCircleOutline } from 'react-icons/io'
 import { color } from '../../assets/color'
 import flag from '../../assets/images/9jaflag.svg'
+import Loader from '../../components/loader/Loader'
 
 
 const CustomerInfoBlock = ({ title, value, icon, flag }) => {
@@ -21,10 +22,10 @@ const CustomerInfoBlock = ({ title, value, icon, flag }) => {
     </div>
 }
 
-const CustomerInformation = ({data}) => {
+const CustomerInformation = ({ data, loading }) => {
     return (
         <div className='mt-6'>
-            <Row>
+            {loading ? <div className='h-[300px]'><Loader /></div> : <Row>
                 <Col xs={4} sm={4} md={4} lg={4} xl={3}>
                     <div className='w-8 md:w-20 lg:w-20 xl:w-20 h-8  md:h-20 lg:h-20 xl:h-20 rounded-full flex items-center justify-center bg-ash-01'>
                         <img src={dummyPerson} alt='customer-profile' className='object-contain w-8 md:w-14 lg:w-14 xl:w-14 h-8  md:h-14 lg:h-14 xl:h-14 rounded-large' />
@@ -57,7 +58,7 @@ const CustomerInformation = ({data}) => {
                         </Row>
                     </div>
                 </Col>
-            </Row>
+            </Row>}
         </div>
     )
 }
