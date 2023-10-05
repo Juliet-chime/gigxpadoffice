@@ -8,10 +8,10 @@ const BillPaymentDetails = ({ data, loading }) => {
     return (
         <div>
             <h2 className='text-xl font-bold py-3 font-cabinetgrotesk'>Transaction Details</h2>
-            {loading ? <Loader /> : <>
+            {loading ? <div className='h-[300px]'><Loader /></div> : <>
                 <div>
                     <TrxDetailsValue name={'Transaction ID'} value={data?.transactionId} />
-                    <TrxDetailsValue name={'Amount'} value={'₦' + formatMoney(data?.amount)} />
+                    <TrxDetailsValue name={'Amount'} value={'₦' + formatMoney({ amount: data?.amount })} />
                     {/* <TrxDetailsValue name={'Transaction Fee'} value={data?.trxFee} />
                 <TrxDetailsValue name={'Baxi Fee'} value={data?.baxiFee} /> */}
                     <TrxDetailsValue name={'Transaction Time'} value={moment(data?.createdAt).format('MM/D/YYYY, h:mm a')} />
