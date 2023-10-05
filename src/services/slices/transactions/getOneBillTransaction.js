@@ -33,7 +33,7 @@ export const oneBillTransactionSlice = createSlice({
                 return (state = {
                     ...state,
                     loading: false,
-                    oneBillTransaction: action.payload,
+                    oneBillTransaction: action.payload?.data,
                 });
             })
             .addCase(queryOneBillTransactions.rejected, (state, { payload }) => {
