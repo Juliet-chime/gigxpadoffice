@@ -10,3 +10,5 @@ resources:
 
 images:
 - name: xpad-bko
+  newName: 622054843987.dkr.ecr.eu-west-2.amazonaws.com/gigxpad-web
+  newTag: d9fc6b15b87c9c10e71a6a850764ef8b731e7497-bko
