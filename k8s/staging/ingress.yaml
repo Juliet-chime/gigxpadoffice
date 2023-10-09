@@ -11,7 +11,7 @@ metadata:
 
 spec:
   rules:
-    - host: test-web.gigxpad.com
+    - host: test-bko.gigxpad.com
       http:
         paths:
           - path: /

@@ -11,17 +11,7 @@ metadata:
 
 spec:
   rules:
-    - host: gigxpad.com
-      http:
-        paths:
-          - path: /
-            pathType: Prefix
-            backend:
-              service:
-                name: xpad-bko
-                port:
-                  number: 3000
-    - host: www.gigxpad.com
+    - host: bko.gigxpad.com
       http:
         paths:
           - path: /

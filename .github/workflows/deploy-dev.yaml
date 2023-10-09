@@ -10,36 +10,27 @@ on:
       - k8s/dev/deployment.yaml
 
 jobs:
-  sonarcloud:
+  sonarqube:
     #needs: [ on-success ]
-    name: SonarCloud
+    name: sonarqube-scan
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
         with:
-          fetch-depth: 0 # Shallow clones should be disabled for a better relevancy of analysis....
-      - name: SonarCloud Scan
-        uses: SonarSource/sonarcloud-github-action@master
-        env:
-          GITHUB_TOKEN: ${{ secrets.PAT }} # Needed to get PR information, if any exist
-          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-        #run: npx sonarqube-scanner
-      - name: Get SonarCloud quality gate status
+          fetch-depth: 0  # Shallow clones should be disabled for a better relevancy of analysis
+      - uses: sonarsource/sonarqube-scan-action@master
         env:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-        run: |
-          RESULT=$(curl -u "$SONAR_TOKEN:" "https://sonarcloud.io/api/qualitygates/project_status?projectKey=GIGXPad-com_xpad-bko&analysisId=$SONAR_ANALYSIS_ID")
-          STATUS=$(echo $RESULT | jq -r .status)
-          echo $STATUS
-      - name: Check quality gate status
-        if: ${{ env.STATUS == 'ERROR' }}
-        run: |
-          echo "Quality gate status is ERROR"
-          exit 1
+          SONAR_HOST_URL: ${{ secrets.SONAR_HOST_URL }}
+      
+      - uses: sonarsource/sonarqube-quality-gate-action@master
+        timeout-minutes: 5
+        env:
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
 
   deploy:
     runs-on: ubuntu-latest
-    needs: [sonarcloud]
+    needs: [sonarqube]
     environment:
       name: develop
       url: https://dev-bko.gigxpad.com
@@ -102,21 +93,21 @@ jobs:
         with:
           token: ${{ secrets.PAT }}
           branch: develop
-      - name: Notify slack success
-        if: success()
-        env:
-          SLACK_BOT_TOKEN: ${{ secrets.SLACK_NOTIFICATIONS_BOT_TOKEN }}
-        uses: voxmedia/github-action-slack-notify-build@v1
-        with:
-          channel: gigxpad-app-alerts
-          status: SUCCESS
-          color: good
-      - name: Notify slack fail
-        if: failure()
-        env:
-          SLACK_BOT_TOKEN: ${{ secrets.SLACK_NOTIFICATIONS_BOT_TOKEN }}
-        uses: voxmedia/github-action-slack-notify-build@v1
-        with:
-          channel: gigxpad-app-alerts
-          status: FAILED
-          color: danger
+      # - name: Notify slack success
+      #   if: success()
+      #   env:
+      #     SLACK_BOT_TOKEN: ${{ secrets.SLACK_NOTIFICATIONS_BOT_TOKEN }}
+      #   uses: voxmedia/github-action-slack-notify-build@v1
+      #   with:
+      #     channel: gigxpad-app-alerts
+      #     status: SUCCESS
+      #     color: good
+      # - name: Notify slack fail
+      #   if: failure()
+      #   env:
+      #     SLACK_BOT_TOKEN: ${{ secrets.SLACK_NOTIFICATIONS_BOT_TOKEN }}
+      #   uses: voxmedia/github-action-slack-notify-build@v1
+      #   with:
+      #     channel: gigxpad-app-alerts
+      #     status: FAILED
+      #     color: danger
