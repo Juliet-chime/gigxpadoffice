@@ -19,31 +19,31 @@ spec:
           name: xpad-bko
           ports:
             - containerPort: 3000
-          env:
-            - name: NEXT_PUBLIC_API_URL
-              valueFrom:
-                secretKeyRef:
-                  name: gigxpad-bko-staging-secret
-                  key: NEXT_PUBLIC_API_URL
-                  optional: false
-            - name: NEXT_PUBLIC_API_KEY
-              valueFrom:
-                secretKeyRef:
-                  name: gigxpad-bko-staging-secret
-                  key: NEXT_PUBLIC_API_KEY
-                  optional: false
-            - name: NEXT_PUBLIC_ADMIN_EMAIL
-              valueFrom:
-                secretKeyRef:
-                  name: gigxpad-bko-staging-secret
-                  key: NEXT_PUBLIC_ADMIN_EMAIL
-                  optional: false
-            - name: NEXT_PUBLIC_ADMIN_PASS
-              valueFrom:
-                secretKeyRef:
-                  name: gigxpad-bko-staging-secret
-                  key: NEXT_PUBLIC_ADMIN_PASS
-                  optional: false
+          # env:
+          #   - name: NEXT_PUBLIC_API_URL
+          #     valueFrom:
+          #       secretKeyRef:
+          #         name: gigxpad-bko-staging-secret
+          #         key: NEXT_PUBLIC_API_URL
+          #         optional: false
+          #   - name: NEXT_PUBLIC_API_KEY
+          #     valueFrom:
+          #       secretKeyRef:
+          #         name: gigxpad-bko-staging-secret
+          #         key: NEXT_PUBLIC_API_KEY
+          #         optional: false
+          #   - name: NEXT_PUBLIC_ADMIN_EMAIL
+          #     valueFrom:
+          #       secretKeyRef:
+          #         name: gigxpad-bko-staging-secret
+          #         key: NEXT_PUBLIC_ADMIN_EMAIL
+          #         optional: false
+          #   - name: NEXT_PUBLIC_ADMIN_PASS
+          #     valueFrom:
+          #       secretKeyRef:
+          #         name: gigxpad-bko-staging-secret
+          #         key: NEXT_PUBLIC_ADMIN_PASS
+          #         optional: false
           #readinessProbe:
             #httpGet:
               #path: actuator/health
@@ -64,8 +64,8 @@ spec:
               cpu: 100m
               memory: 2Gi
           imagePullPolicy: Always
-          #envFrom:
-            #- secretRef:
-                #name: gigxpad-bko-dev-secret
+          envFrom:
+            - secretRef:
+                name: gigxpad-bko-dev-secret
       imagePullSecrets:
-        - name: xpad-bko-secret
+        - name: gigxpad-bko-staging-secret
