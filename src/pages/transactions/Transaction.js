@@ -28,7 +28,7 @@ const Transaction = () => {
     {
       title: 'Transaction Id',
       dataIndex: 'transactionId',
-      key: 'transactionId'
+      key: 'transactionId',
     },
     {
       title: 'Sender',
@@ -69,6 +69,7 @@ const Transaction = () => {
       render: (text) => {
         return <p>{!!text ? text : '-'}</p>
       },
+      align:'center'
     },
     {
       title: 'Status',

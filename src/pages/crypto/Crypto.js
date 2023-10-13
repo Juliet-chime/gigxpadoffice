@@ -79,6 +79,7 @@ const Crypto = () => {
       render: (text) => {
         return <p>{!!text ? text : '-'}</p>
       },
+      align:'center'
     },
     {
       title: 'Status',
