@@ -20,9 +20,9 @@ import CustomTab from '../../components/tabination/CustomTab'
 import { useDispatch, useSelector } from 'react-redux'
 import { queryRoles } from '../../services/slices/roles/fetchRoles'
 import { get2FaSelector } from '../../services/slices/auth/2fa'
-//import { queryFiatMetrics } from '../../services/slices/dashboard/fiatMetrics'
+import { queryFiatMetrics } from '../../services/slices/dashboard/fiatMetrics'
 import { getFiatRevenueSelector, queryFiatRevenue } from '../../services/slices/dashboard/fiatRevenue'
-//import { queryCryptoMetrics } from '../../services/slices/dashboard/cryptoMetrics'
+import { queryCryptoMetrics } from '../../services/slices/dashboard/cryptoMetrics'
 import { queryUserChart } from '../../services/slices/user/userChart'
 import moment from 'moment'
 import { revenueItem } from '../../utils/constants'
@@ -85,10 +85,9 @@ export default function Dashboard() {
         await Promise.allSettled(
           [
             dispatch(queryRoles()).unwrap(),
-            // dispatch(queryFiatMetrics({ from: moment(startDate).format('YYYY-MM-DD') })).unwrap(),
-            // dispatch(queryFiatRevenue({ from: moment(startDate).format('YYYY-MM-DD'), currencyType })).unwrap(),
+            dispatch(queryFiatMetrics({ from: moment('2022-04-19').format('YYYY-MM-DD'),to:'2023-10-10',currencyShortCode:'NGN' })).unwrap(),
             dispatch(queryUserChart()).unwrap(),
-            // dispatch(queryCryptoMetrics({ from: moment(startDate).format('YYYY-MM-DD') })).unwrap()
+            dispatch(queryCryptoMetrics({ from: moment('2022-04-19').format('YYYY-MM-DD'),to:'2023-10-10',currencyShortCode:'BTC' })).unwrap()
           ]
         )
       } catch (e) {
