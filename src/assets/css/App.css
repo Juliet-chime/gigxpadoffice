@@ -528,6 +528,21 @@ a {
   color: #1D3C48 !important;
 }
 
+.chart-container {
+  position: relative;
+  width: 100%;
+  padding-top: 10%;
+  /* Controls the aspect ratio, adjust as needed */
+}
+
+/* Additional styles for responsiveness */
+@media (max-width: 768px) {
+  .chart-container {
+    padding-top: 5%;
+    /* Modify for smaller screens if necessary */
+  }
+}
+
 @media only screen and (max-width: 1024px) {
   .nav-area .ant-layout-sider {
     padding: 0px;

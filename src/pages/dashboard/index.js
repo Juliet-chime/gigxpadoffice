@@ -14,7 +14,7 @@ import { DoughnutChart } from '../../components/chart/DoughnutChart'
 import CurrencyTabComponent from './CurrencyTabComponent'
 import ChartLabels from '../../components/chart/ChartLabels'
 import OneDateRange from '../../components/chart/OneDateRange'
-import { formatMoney} from '../../utils/helperFunctions'
+import { formatMoney } from '../../utils/helperFunctions'
 import { PiCaretUp, PiCaretDown } from 'react-icons/pi'
 import CustomTab from '../../components/tabination/CustomTab'
 import { useDispatch, useSelector } from 'react-redux'
@@ -31,8 +31,11 @@ import { GrFormCheckmark } from 'react-icons/gr'
 import ngflag from '../../assets/images/9jaflag.svg'
 import Loader from '../../components/loader/Loader'
 
-let revenueFrom = moment(new Date('2022-09-05')).format("YYYY-MM-DD")
-let revenueTo = moment(new Date()).format("YYYY-MM-DD")
+let initialStartDate = moment(new Date('2022-04-19')).format("YYYY-MM-DD")
+let InitialEndDate = moment(new Date()).format("YYYY-MM-DD")
+let initialFiatCurrency = 'NGN'
+let initialCryptoCurrency = 'BTC'
+let revenueCurrencyType = revenueItem[0]
 
 export default function Dashboard() {
 
@@ -56,14 +59,14 @@ export default function Dashboard() {
   const [currencyType, setCurrencyType] = useState(revenueItem[0])
   // const [startDate, setStartDate] = useState(new Date());
   // const [endDate, setEndDate] = useState(null);
-  const [fiatStartDate, setFiatStartDate] = useState(new Date('2022-04-19'));
-  const [fiatEndDate, setFiatEndDate] = useState(new Date('2023-10-10'));
-  const [cryptoStartDate, setCryptoStartDate] = useState(new Date('2022-04-19'));
-  const [cryptoEndDate, setCryptoEndDate] = useState(new Date('2023-10-10'));
+  const [fiatStartDate, setFiatStartDate] = useState('');
+  const [fiatEndDate, setFiatEndDate] = useState('');
+  const [cryptoStartDate, setCryptoStartDate] = useState('');
+  const [cryptoEndDate, setCryptoEndDate] = useState('');
   const [revenueStartDate, setRevenueStartDate] = useState('');
   const [revenueEndDate, setRevenueEndDate] = useState('');
-  const [fiatCurrency] = useState('NGN');
-  const [cryptoCurrency] = useState('BTC');
+  const [fiatCurrency, setFiatCurrency] = useState('NGN');
+  const [cryptoCurrency, setCryptoCurrency] = useState('BTC');
 
   const items = revenueItem.map((data, index) => {
     return {
@@ -73,7 +76,7 @@ export default function Dashboard() {
     }
   })
 
-
+  //fiat chart
   const fiatMetricData = Object.keys(fiatMetrics?.fiatMetrics || {}).filter(fiatName => fiatName !== 'total').map((items) => fiatMetrics?.fiatMetrics[items])
 
   const fiatDataSet = [
@@ -198,6 +201,8 @@ export default function Dashboard() {
     },
   };
 
+  //user Chart
+
   const userMetricData = Object.keys(userMetrics?.userChart || {}).filter(userName => userName !== 'totalCustomers').map((items) => userMetrics?.userChart[items])
 
   const doughnutOptions = {
@@ -230,19 +235,22 @@ export default function Dashboard() {
     ],
   };
 
+  //change revenue currency
 
+  const onChangeRevenueLabel = (e) => {
+    setCurrencyType(revenueItem[e - 1])
+    dispatch(queryFiatRevenue({ from: !!revenueStartDate ? moment(revenueStartDate).format('YYYY-MM-DD') : initialStartDate, to: !!revenueEndDate ? moment(revenueEndDate).format('YYYY-MM-DD') : InitialEndDate, currencyType:revenueItem[e - 1] })).unwrap()
+  }
   //onchange currency
 
   const onChangeFiatCurrency = (currency) => {
-    // let value = currency
-    // setFiatCurrency(value)
-    dispatch(queryFiatMetrics({ from: moment(fiatStartDate).format('YYYY-MM-DD'), to: moment(fiatEndDate).format('YYYY-MM-DD'), currencyShortCode: currency })).unwrap()
+    setFiatCurrency(currency)
+    dispatch(queryFiatMetrics({ from: fiatStartDate ? moment(fiatStartDate).format('YYYY-MM-DD') : initialStartDate, to: fiatEndDate ? moment(fiatEndDate).format('YYYY-MM-DD') : InitialEndDate, currencyShortCode: currency })).unwrap()
   };
 
   const onChangeCryptoCurrency = (currency) => {
-    // let value = currency
-    // setCryptoCurrency(value)
-    dispatch(queryCryptoMetrics({ from: moment(cryptoStartDate).format('YYYY-MM-DD'), to: moment(cryptoEndDate).format('YYYY-MM-DD'), currencyShortCode: currency })).unwrap()
+    setCryptoCurrency(currency)
+    dispatch(queryCryptoMetrics({ from: cryptoStartDate ? moment(cryptoStartDate).format('YYYY-MM-DD') : initialStartDate, to: cryptoEndDate ? moment(cryptoEndDate).format('YYYY-MM-DD') : InitialEndDate, currencyShortCode: currency })).unwrap()
   };
 
   //onchange metrics date
@@ -258,7 +266,6 @@ export default function Dashboard() {
     setFiatStartDate(start);
     setFiatEndDate(end);
   };
-
   const onChangeCryptoDate = (dates) => {
     const [start, end] = dates;
     setCryptoStartDate(start);
@@ -288,26 +295,23 @@ export default function Dashboard() {
   //clear metrics filter
 
   const OnClearFiatFilter = () => {
-    // setFiatStartDate(new Date('2022-04-19'))
-    // setFiatEndDate(new Date('2023-10-10'))
-    dispatch(queryFiatMetrics({ from: moment('2022-04-19').format('YYYY-MM-DD'), to: moment('2023-10-10').format('YYYY-MM-DD'), currencyShortCode: fiatCurrency })).unwrap()
+    setFiatStartDate('')
+    setFiatEndDate('')
+    dispatch(queryFiatMetrics({ from: initialStartDate, to: InitialEndDate, currencyShortCode: initialFiatCurrency })).unwrap()
   }
 
   const OnClearCryptoFilter = () => {
-    // setCryptoStartDate(new Date('2022-04-19'))
-    // setCryptoEndDate(new Date('2023-10-10'))
-    dispatch(queryCryptoMetrics({ from: moment('2022-04-19').format('YYYY-MM-DD'), to: moment('2023-10-10').format('YYYY-MM-DD'), currencyShortCode: cryptoCurrency })).unwrap()
+    setCryptoStartDate('')
+    setCryptoEndDate('')
+    dispatch(queryCryptoMetrics({ from: initialStartDate, to: InitialEndDate, currencyShortCode: initialCryptoCurrency })).unwrap()
   }
 
   const OnClearRevenueFilter = () => {
     setRevenueStartDate('')
     setRevenueEndDate('')
-    dispatch(queryFiatRevenue({ from: revenueFrom, to: revenueTo, currencyType })).unwrap()
+    dispatch(queryFiatRevenue({ from: initialStartDate, to: InitialEndDate, currencyType })).unwrap()
   }
 
-  const onChangeRevenueLabel = (e) => {
-    setCurrencyType(revenueItem[e - 1])
-  }
 
   useEffect(() => {
     async function getData() {
@@ -315,9 +319,9 @@ export default function Dashboard() {
         await Promise.allSettled(
           [
             dispatch(queryRoles()).unwrap(),
-            dispatch(queryFiatMetrics({ from: moment(fiatStartDate).format('YYYY-MM-DD'), to: moment(fiatEndDate).format('YYYY-MM-DD'), currencyShortCode: fiatCurrency })).unwrap(),
+            dispatch(queryFiatMetrics({ from: initialStartDate, to: InitialEndDate, currencyShortCode: initialFiatCurrency })).unwrap(),
             dispatch(queryUserChart()).unwrap(),
-            dispatch(queryCryptoMetrics({ from: moment(cryptoStartDate).format('YYYY-MM-DD'), to: moment(cryptoEndDate).format('YYYY-MM-DD'), currencyShortCode: cryptoCurrency })).unwrap()
+            dispatch(queryCryptoMetrics({ from: initialStartDate, to: InitialEndDate, currencyShortCode: initialCryptoCurrency })).unwrap()
           ]
         )
       } catch (e) {
@@ -330,26 +334,16 @@ export default function Dashboard() {
   useEffect(() => {
     async function getRevenueProfit() {
       try {
-        dispatch(queryFiatRevenue({ from: revenueFrom, to: revenueTo, currencyType })).unwrap()
+        
+        dispatch(queryFiatRevenue({ from: initialStartDate, to: InitialEndDate, currencyType:revenueCurrencyType })).unwrap()
       } catch (e) {
         console.log(e)
       }
     }
     getRevenueProfit()
-  }, [dispatch, currencyType])
+  }, [dispatch])
 
-  // const ExampleCustomInputRef = forwardRef(({ value, onClick }, ref) => {
-
-  //   const newDate = value.split('-')[0].trim()
-
-  //   const today = formatDate()
-
-  //   return (
-  //     <p onClick={onClick} ref={ref} className={'rounded-large border border-dateLine cursor-pointer flex items-center gap-2 font-medium p-2 text-mainColor'}>
-  //       {newDate === today ? `Today` : value} {newDate === today ? changeIcon ? <PiCaretUp className='text-mainColor text-xs font-medium' /> : <PiCaretDown className='text-mainColor text-xs font-medium' /> : null}
-  //     </p>
-  //   )
-  // });
+  //custom date input
 
   const FiatCustomInput = forwardRef(({ value, onClick }, ref) => {
     const newDate = value.split('-')[0].trim()
@@ -428,7 +422,7 @@ export default function Dashboard() {
         >
           <Col xs={24} sm={24} md={12} lg={12} xl={12}>
             <div>
-              <BlockStyle height='300px' padding='10px 20px'>
+              <BlockStyle height='auto' padding='10px 20px'>
                 <div className='flex flex-col xl:flex-row items-start xl:items-center justify-between gap-3 xl:gap-0'>
                   <ChartHeader label={'Total FIAT Transactions'} amount={`${formatMoney({ amount: fiatMetrics?.fiatMetrics?.total })}`} details />
                   <div className=' flex items-center gap-5'>
@@ -485,8 +479,12 @@ export default function Dashboard() {
                   </Col>
                   <Col xs={24} sm={24} md={24} lg={24} xl={16}>
                     <div>
-                      {!!fiatMetrics?.loading ? <div className='h-[200px]'><Loader /></div> : <BarChart labels={fiatLabels} datasets={fiatDataSet} options={fiatOptions} className='h-[200px] md:h-[100px] lg:h-[100px] xl:h-[200px]' />}
+                      {!!fiatMetrics?.loading ? <div className='h-[200px]'><Loader /></div> :
+                        <div className='chart-container'>
+                          <BarChart labels={fiatLabels} datasets={fiatDataSet} options={fiatOptions} />
+                        </div>}
                     </div>
+                    {/* className='h-[200px] md:h-[100px] lg:h-[100px] xl:h-[200px]' */}
                   </Col>
                 </Row>
               </BlockStyle>
@@ -494,7 +492,7 @@ export default function Dashboard() {
           </Col>
           <Col xs={24} sm={24} md={12} lg={12} xl={12}>
             <div>
-              <BlockStyle height='300px' padding='10px 30px'>
+              <BlockStyle height='auto' padding='10px 30px'>
                 <div className='flex flex-col xl:flex-row items-start xl:items-center justify-between gap-3 xl:gap-0'>
                   <ChartHeader label={'Total Crypto Transactions'} amount={`${formatMoney({ amount: cryptoMetrics?.cryptoMetrics?.total })}`} details />
                   <div className=' flex items-center gap-5'>
@@ -554,7 +552,10 @@ export default function Dashboard() {
                   </Col>
                   <Col xs={24} sm={24} md={24} lg={24} xl={16}>
                     <div>
-                      {!!cryptoMetrics?.loading ? <div className='h-[200px]'><Loader /></div> : <BarChart labels={cryptoLabels} datasets={cryptoDataSet} options={cryptoOptions} className='h-[200px] md:h-[100px] lg:h-[100px] xl:h-[200px]' />}
+                      {!!cryptoMetrics?.loading ? <div className='h-[200px]'><Loader /></div>
+                        :
+                        <div className='chart-container'><BarChart labels={cryptoLabels} datasets={cryptoDataSet} options={cryptoOptions} /></div>
+                      }
                     </div>
                   </Col>
                 </Row>
@@ -569,17 +570,20 @@ export default function Dashboard() {
             <div>
               <BlockStyle height='285px' padding='20px 30px'>
                 <ChartHeader label={'Total Customers'} amount={userMetrics?.userChart?.totalCustomers} details />
-                <Row gutter={[16, 16]} className='mt-5' align='middle'>
+                <Row gutter={[16, 16]} className='mt-3 relative' align='middle'>
                   <Col xs={0} sm={0} md={24} lg={24} xl={12}>
-                    <div className='flex flex-row xl:flex-col gap-2 flex-wrap xl:flex-nowrap'>
+                    <div className='absolute left-0 top-10 z-[99999] w-full xl:relative xl:top-0 xl:left-0'>
                       <ChartLabels name={'Active Users'} number={userMetrics?.userChart?.activeUsers} bgColor={'bg-[#D6FF79]'} />
                       <ChartLabels name={'Inactive Users'} number={userMetrics?.userChart?.inactiveUsers} bgColor={'bg-[#C5D3DE]'} />
                       <ChartLabels name={'Disabled Users'} number={userMetrics?.userChart?.blacklistedUsers} bgColor={'bg-[#FF9D79]'} />
                     </div>
                   </Col>
+                  {/* flex flex-row xl:flex-col gap-2 flex-wrap xl:flex-nowrap bg-[green] */}
                   <Col xs={24} sm={24} md={24} lg={24} xl={12}>
                     <div>
-                      {!!userMetrics?.loading ? <div className='h-[200px]'><Loader /></div> : <DoughnutChart options={doughnutOptions} data={doughnutdata} />}
+                      {!!userMetrics?.loading ? <div className='h-[200px]'><Loader /></div> : <div>
+                        <DoughnutChart options={doughnutOptions} data={doughnutdata} />
+                      </div>}
                     </div>
                   </Col>
                 </Row>
