@@ -279,3 +279,5 @@ export const formatMoney = ({
     );
   } catch (e) { }
 };
+
+export const log10 = (n) => { return Math.round(Math.log(n) / Math.log(10)) }

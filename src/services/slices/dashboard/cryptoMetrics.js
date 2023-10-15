@@ -28,7 +28,7 @@ export const cryptoMetricsSlice = createSlice({
             })
             .addCase(queryCryptoMetrics.fulfilled, (state, action) => {
                 state.loading = false;
-                state.cryptoMetrics = action?.payload;
+                state.cryptoMetrics = action?.payload?.data;
             })
             .addCase(queryCryptoMetrics.rejected, (state, { payload }) => {
                 state.loading = false;

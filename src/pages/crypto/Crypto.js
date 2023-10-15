@@ -79,7 +79,7 @@ const Crypto = () => {
       render: (text) => {
         return <p>{!!text ? text : '-'}</p>
       },
-      align:'center'
+      align: 'center'
     },
     {
       title: 'Status',
@@ -111,7 +111,7 @@ const Crypto = () => {
   useEffect(() => {
     async function getCryptoTransactions() {
       try {
-        dispatch(queryCryptoTransactions({ from: moment(startDate).format('YYYY-MM-DD') })).unwrap()
+        dispatch(queryCryptoTransactions({ from: moment(startDate).format('YYYY-MM-DD'), to: moment().format('YYYY-MM-DD') })).unwrap()
       } catch (e) {
         console.log(e)
       }

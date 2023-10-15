@@ -13,7 +13,7 @@ import { get2FaSelector } from "../../services/slices/auth/2fa";
 
 const { Header } = Layout;
 
-const SubItems = ({ text, icon, active }) => {
+export const SubItems = ({ text, icon, active }) => {
   const Icon = icon
   return <div className="flex items-center justify-between pl-8 pr-2 mb-2">
     <p className={`text-sm ${active ? 'text-mainColor' : 'text-lighterAsh'} ${active ? 'font-medium' : 'font-normal'}`}>{text}</p>

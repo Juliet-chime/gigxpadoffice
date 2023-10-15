@@ -22,8 +22,6 @@ const Transaction = () => {
   const [startDate, setStartDate] = useState(new Date('2022-09-05'));
   const [endDate, setEndDate] = useState(new Date('2022-09-05'));
 
-  console.log(fiatTransaction?.loading, 'loading')
-
   const columns = [
     {
       title: 'Transaction Id',
@@ -69,7 +67,7 @@ const Transaction = () => {
       render: (text) => {
         return <p>{!!text ? text : '-'}</p>
       },
-      align:'center'
+      align: 'center'
     },
     {
       title: 'Status',
@@ -110,7 +108,7 @@ const Transaction = () => {
   useEffect(() => {
     async function getFiatTransactions() {
       try {
-        dispatch(queryFiatTransactions({ from: moment(startDate).format('YYYY-MM-DD') })).unwrap()
+        dispatch(queryFiatTransactions({ from: moment(startDate).format('YYYY-MM-DD'), to: moment().format('YYYY-MM-DD') })).unwrap()
       } catch (e) {
         console.log(e)
       }
