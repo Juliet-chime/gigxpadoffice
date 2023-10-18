@@ -14,7 +14,8 @@ export const queryUserLogin = createAsyncThunk('loginUser/queryUserLogin', async
     return response?.data
   } catch (err) {
     console.log(err)
-    return rejectWithValue(err?.response?.data)
+    // return err
+     return rejectWithValue(err.data)
   }
 })
 
@@ -32,6 +33,7 @@ export const loginSlice = createSlice({
         state.user = payload;
       })
       .addCase(queryUserLogin.rejected, (state, { payload }) => {
+        console.log(payload,'login error payload')
         state.loading = false;
         state.error = payload;
       });
