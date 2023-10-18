@@ -27,6 +27,10 @@ const getUserMetrics = () => {
     return `/dashboards/users-chart`;
 };
 
+const getFiatRevenue = () => {
+    return `/dashboards/profit-revenue-chart`;
+};
+
 //transactions url
 
 const getFiatTransactions = () => {
@@ -85,12 +89,6 @@ const getOneUser = (id) => {
 
 const getUserAssest = (id) => {
     return `/customers/${id}/assets`;
-};
-
-//micellanueos
-
-const getFiatRevenue = () => {
-    return `/dashboards/fiat-profit-revenue-chart`;
 };
 
 // const getFiatProfit = () => {

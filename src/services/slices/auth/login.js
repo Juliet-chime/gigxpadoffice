@@ -13,6 +13,7 @@ export const queryUserLogin = createAsyncThunk('loginUser/queryUserLogin', async
     const response = await makeApiRequest('post', loginUser(), data)
     return response?.data
   } catch (err) {
+    console.log(err)
     return rejectWithValue(err?.response?.data)
   }
 })
