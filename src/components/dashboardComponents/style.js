@@ -41,6 +41,7 @@ gap:${props => props.gap};
 background-color:${props => props.bg};
 @media (max-width: 768px) {
     padding: 10px 5px !important;
+    height:100%;
 }
 .block-top{
     border:solid red;

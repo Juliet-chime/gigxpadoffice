@@ -42,12 +42,12 @@ async function instantiateInstance() {
             headers
         });
     }
-
     return instance
 }
 
 export const makeApiRequest = async (method, url, data, params) => {
     await instantiateInstance()
+
 
     const buildParams = (data) => {
         const param = new window.URLSearchParams()
@@ -75,7 +75,26 @@ export const makeApiRequest = async (method, url, data, params) => {
         data,
         params,
     })
+
+    // console.log(res,'ressssss')
     return res
+
+    //     try{
+    //         const res = await instance.request({
+    //             method,
+    //             url,
+    //             data,
+    //             params,
+    //         })
+
+    //         console.log(res,'ressssss')
+    //         return res
+    //     } catch(e){
+    //         console.log(e,'base error')
+    //      return e
+    //    }
+
+
     // .catch(async error => {
     //     console.log(error)
     //     // if (error?.response) {
