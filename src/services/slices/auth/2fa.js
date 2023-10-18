@@ -13,7 +13,7 @@ export const query2FA = createAsyncThunk('login-2fa/query2FA', async (data, { re
     const response = await makeApiRequest('post', twoFactorAuthentication(), data)
     return response?.data
   } catch (err) {
-    return rejectWithValue(err?.response?.data)
+    return rejectWithValue(err.data)
   }
 })
 

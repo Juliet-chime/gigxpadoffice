@@ -6,10 +6,17 @@ const API_KEY = process.env.REACT_APP_PUBLIC_API_KEY;
 
 let instance;
 
-async function setAuthorization(headers) {
+// let ggg = axios.create({
+//     baseURL: API_URL,
+// });
 
-    const token = await localStorage.getItem('authToken')
-    const newUserToken = await localStorage.getItem('newUserToken');
+// ggg.post()
+
+
+function setAuthorization(headers) {
+
+    const token = localStorage.getItem('authToken')
+    const newUserToken = localStorage.getItem('newUserToken');
 
     if (!!newUserToken) {
         headers.Authorization = `Bearer ${newUserToken}`
@@ -22,7 +29,7 @@ async function setAuthorization(headers) {
 
 }
 
-async function instantiateInstance() {
+function instantiateInstance() {
 
     let headers = {
         'Content-Type': 'application/json',
@@ -30,7 +37,7 @@ async function instantiateInstance() {
         'x-api-key': API_KEY,
     };
 
-    headers = await setAuthorization(headers)
+    headers = setAuthorization(headers)
 
     if (!!instance) {
 
@@ -39,14 +46,14 @@ async function instantiateInstance() {
     } else {
         instance = axios.create({
             baseURL: API_URL,
-            headers
+            headers,
         });
     }
     return instance
 }
 
 export const makeApiRequest = async (method, url, data, params) => {
-    await instantiateInstance()
+    instantiateInstance()
 
 
     const buildParams = (data) => {
@@ -69,30 +76,42 @@ export const makeApiRequest = async (method, url, data, params) => {
         params = buildParams(params)
     }
 
-    const res = await instance.request({
-        method,
-        url,
-        data,
-        params,
-    })
+    // const res = await instance.request({
+    //     method,
+    //     url,
+    //     data,
+    //     params,
+    // })
 
-    // console.log(res,'ressssss')
-    return res
+    // // console.log(res,'ressssss')
+    // return res
 
-    //     try{
-    //         const res = await instance.request({
-    //             method,
-    //             url,
-    //             data,
-    //             params,
-    //         })
+    try {
+        const res = await instance.request({
+            method,
+            url,
+            data,
+            params,
+        })
 
-    //         console.log(res,'ressssss')
-    //         return res
-    //     } catch(e){
-    //         console.log(e,'base error')
-    //      return e
-    //    }
+        console.log(res, 'ressssss')
+        return res
+    } catch (e) {
+        console.log({ errmsg: e.response.data.errorMessage, err: e }, 'base error')
+        if (e.response.status === 401 && e.response.data.errorMessage.toLowerCase().includes('error occured while validating token')) {
+            console.log('perform logout action')
+            const token = localStorage.getItem('authToken')
+            const isExpired = isSessionExpired(token)
+            if (isExpired) {
+                localStorage.setItem('authToken', "")
+                window?.location?.reload()
+            }
+        }
+        throw e.response
+    }
+
+
+
 
 
     // .catch(async error => {
@@ -105,5 +124,4 @@ export const makeApiRequest = async (method, url, data, params) => {
     //     // } 
     // })
 };
-
 
