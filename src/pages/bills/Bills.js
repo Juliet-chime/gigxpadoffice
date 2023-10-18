@@ -78,6 +78,7 @@ const Bills = () => {
       render: (text) => {
         return <p>{!!text ? text : '-'}</p>
       },
+      align: 'center'
     },
     {
       title: 'Status',
@@ -100,7 +101,7 @@ const Bills = () => {
   useEffect(() => {
     async function getBillTransactions() {
       try {
-        dispatch(queryBillTransactions({ from: moment(startDate).format('YYYY-MM-DD') })).unwrap()
+        dispatch(queryBillTransactions({ from: moment(startDate).format('YYYY-MM-DD'), to: moment().format('YYYY-MM-DD') })).unwrap()
       } catch (e) {
         console.log(e)
       }
