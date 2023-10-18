@@ -42,13 +42,15 @@ const barOptions = {
   scales: {
     y: {
       position: 'right',
+      suggestedMin: 0,
+      suggestedMax: 400000000,
       // max: 100,
       // min: 0,
       grid: {
         color: '#E4E4E4',
         drawTicks: false
       },
-      ticks: { stepSize: 15 },
+      // ticks: { stepSize: 15 },
       border: {
         dash: [2, 4]
       }
@@ -75,7 +77,7 @@ const barOptions = {
   },
 };
 
-const barLabels = ['January', 'February', 'March', 'April',];
+const barLabels = ['', '', '',];
 
 
 export { doughnutOptions, doughnutdata, barDataSet, barLabels, barOptions }

@@ -35,7 +35,7 @@ export const userChartSlice = createSlice({
         return (state = {
           ...state,
           loading: false,
-          userChart: action.payload,
+          userChart: action.payload?.data,
         });
       })
       .addCase(queryUserChart.rejected, (state, { payload }) => {

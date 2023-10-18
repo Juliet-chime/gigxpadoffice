@@ -32,7 +32,7 @@ export const fiatMetricsSlice = createSlice({
             })
             .addCase(queryFiatMetrics.fulfilled, (state, action) => {
                 state.loading = false;
-                state.fiatMetrics = action?.payload;
+                state.fiatMetrics = action?.payload?.data;
                 // return (state = {
                 //   ...state,
                 //   loading: false,

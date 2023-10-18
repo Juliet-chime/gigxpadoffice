@@ -1,5 +1,9 @@
+import usdt from '../assets/images/USDT.svg'
+import bitcoin from '../assets/images/bitcoin.svg'
+
 export const AUTH_TOKEN = "__API_TOKEN__";
 export const REDIRECT_URL = "__REDIRECT_URL__";
+
 
 export const revenueItem = ['fiat', 'crypto']
 
@@ -57,6 +61,26 @@ export const statusOptions = [
     {
         value: 'pending',
         label: 'Pending',
+    },
+]
+
+export const fiatCurrencyOptions = [
+    {
+        value: 'NGN',
+        label: 'Naira',
+    },
+]
+
+export const cryptoCurrencyOptions = [
+    {
+        value: 'USDT',
+        label: 'USDT',
+        logo: usdt
+    },
+    {
+        value: 'BTC',
+        label: 'Bitcoin',
+        logo: bitcoin
     },
 ]
 
