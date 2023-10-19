@@ -13,7 +13,7 @@ export const querySetPassword = createAsyncThunk('setPassword/querySetPassword '
     const response = await makeApiRequest('post', setPassword(), data)
     return response?.data
   } catch (err) {
-    return rejectWithValue(err?.response?.data)
+    return rejectWithValue(err.data)
   }
 })
 

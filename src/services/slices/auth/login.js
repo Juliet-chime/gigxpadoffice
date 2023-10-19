@@ -13,9 +13,7 @@ export const queryUserLogin = createAsyncThunk('loginUser/queryUserLogin', async
     const response = await makeApiRequest('post', loginUser(), data)
     return response?.data
   } catch (err) {
-    console.log(err)
-    // return err
-     return rejectWithValue(err.data)
+    return rejectWithValue(err.data)
   }
 })
 
@@ -33,7 +31,6 @@ export const loginSlice = createSlice({
         state.user = payload;
       })
       .addCase(queryUserLogin.rejected, (state, { payload }) => {
-        console.log(payload,'login error payload')
         state.loading = false;
         state.error = payload;
       });

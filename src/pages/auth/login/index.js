@@ -79,7 +79,7 @@ function Login() {
         }
       }
     } catch (e) {
-      console.log(e,'login fromeeee')
+      // console.log(e,'login fromeeee')
       if (e?.success === false) {
         setStatus('error')
         setMessage(e?.errorMessage)
