@@ -1,17 +1,11 @@
 import axios from 'axios';
+import { isSessionExpired } from '../utils/authUtils';
 
 /* eslint-disable no-undef */
 const API_URL = process.env.REACT_APP_PUBLIC_API_URL;
 const API_KEY = process.env.REACT_APP_PUBLIC_API_KEY;
 
 let instance;
-
-// let ggg = axios.create({
-//     baseURL: API_URL,
-// });
-
-// ggg.post()
-
 
 function setAuthorization(headers) {
 
@@ -76,16 +70,6 @@ export const makeApiRequest = async (method, url, data, params) => {
         params = buildParams(params)
     }
 
-    // const res = await instance.request({
-    //     method,
-    //     url,
-    //     data,
-    //     params,
-    // })
-
-    // // console.log(res,'ressssss')
-    // return res
-
     try {
         const res = await instance.request({
             method,
@@ -97,9 +81,7 @@ export const makeApiRequest = async (method, url, data, params) => {
         console.log(res, 'ressssss')
         return res
     } catch (e) {
-        console.log({ errmsg: e.response.data.errorMessage, err: e }, 'base error')
         if (e.response.status === 401 && e.response.data.errorMessage.toLowerCase().includes('error occured while validating token')) {
-            console.log('perform logout action')
             const token = localStorage.getItem('authToken')
             const isExpired = isSessionExpired(token)
             if (isExpired) {
@@ -109,19 +91,5 @@ export const makeApiRequest = async (method, url, data, params) => {
         }
         throw e.response
     }
-
-
-
-
-
-    // .catch(async error => {
-    //     console.log(error)
-    //     // if (error?.response) {
-    //     //     if(+error?.response?.status === 401){
-    //     //          await localStorage.setItem('authToken', "")
-    //     //          window?.location?.reload()
-    //     //     }
-    //     // } 
-    // })
 };
 

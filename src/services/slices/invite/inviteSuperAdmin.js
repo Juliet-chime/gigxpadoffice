@@ -7,6 +7,6 @@ export const queryInviteSuperAdmin = createAsyncThunk('invite/queryInviteSuperAd
     const response = await makeApiRequest('post', inviteSuperAdmin(), data)
     return response?.data
   } catch (err) {
-    return rejectWithValue(err?.response?.data)
+    return rejectWithValue(err.data)
   }
 })
