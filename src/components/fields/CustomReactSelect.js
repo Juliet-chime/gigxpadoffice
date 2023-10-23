@@ -6,7 +6,7 @@ const CustomReactSelect = ({ ...props }) => {
         control: (baseStyles, state) => ({
             ...baseStyles,
             borderColor: '1px solid #EEEEEE',
-            borderRadius: '5px'
+            borderRadius: '5px',
         }),
         valueContainer: (provided, state) => ({
             ...provided,
@@ -16,12 +16,7 @@ const CustomReactSelect = ({ ...props }) => {
             display: 'none',
         }),
     }
-    return (
-        <Select
-            styles={customStyles}
-            {...props}
-        />
-    )
+    return <Select styles={customStyles} {...props} />
 }
 
 export default CustomReactSelect
