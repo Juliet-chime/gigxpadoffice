@@ -8,20 +8,31 @@ import naira from '../../assets/images/naira.svg'
 import { SlOptionsVertical } from 'react-icons/sl'
 import CustomTable from '../../components/table/CustomTable'
 
-
 const CustomerWalletBalance = () => {
-
     const columns = [
         {
             title: 'Assest',
             dataIndex: 'assest',
             key: 'assest',
-            render: (text) => <div className='flex items-center gap-4'>
-                <div>
-                    <img src={text === 'Bitcoin' ? bitcoin : text === 'USDT' ? usd : text === 'Naira' ? naira : null} alt='' />
+            render: (text) => (
+                <div className="flex items-center gap-4">
+                    <div>
+                        <img
+                            src={
+                                text === 'Bitcoin'
+                                    ? bitcoin
+                                    : text === 'USDT'
+                                    ? usd
+                                    : text === 'Naira'
+                                    ? naira
+                                    : null
+                            }
+                            alt=""
+                        />
+                    </div>
+                    <p> {text}</p>
                 </div>
-                <p> {text}</p>
-            </div>,
+            ),
         },
         {
             title: 'Balance',
@@ -38,7 +49,13 @@ const CustomerWalletBalance = () => {
             dataIndex: 'status',
             key: 'status',
             render: (text) => (
-                <p className={`${text === 'active' ? 'text-statusGreen' : null}`}>{text}</p>
+                <p
+                    className={`${
+                        text === 'active' ? 'text-statusGreen' : null
+                    }`}
+                >
+                    {text}
+                </p>
             ),
         },
         {
@@ -47,7 +64,7 @@ const CustomerWalletBalance = () => {
             key: '',
             render: (_, record) => (
                 <div>
-                    <SlOptionsVertical color='#67777E' />
+                    <SlOptionsVertical color="#67777E" />
                 </div>
             ),
         },
@@ -81,22 +98,49 @@ const CustomerWalletBalance = () => {
             date: '23/04/2023, 11:38.00',
             status: 'active',
         },
-    ];
+    ]
     return (
         <div>
             <Row gutter={[16, 16]}>
                 <Col xs={24} sm={24} md={24} lg={7} xl={5}>
-                    <div className='flex flex-row lg:flex-col xl:flex-col flex-wrap lg:flex-nowrap xl:flex-nowrap gap-1 md:gap-3 lg:gap-3 xl:gap-3'>
-                        <Blocks name='Total Wallet Balance' nameColor={color.mainColor} bigAmount={'₦3,699,800'} padding='20px' height='92px' bg={color.offWhite} border={`solid 1px ${color.lineAsh}`} />
+                    <div className="flex flex-row lg:flex-col xl:flex-col flex-wrap lg:flex-nowrap xl:flex-nowrap gap-1 md:gap-3 lg:gap-3 xl:gap-3">
+                        <Blocks
+                            name="Total Wallet Balance"
+                            nameColor={color.mainColor}
+                            bigAmount={'₦3,699,800'}
+                            padding="20px"
+                            height="92px"
+                            bg={color.offWhite}
+                            border={`solid 1px ${color.lineAsh}`}
+                        />
 
-                        <Blocks name='Total Crypto Balance' nameColor={color.mainColor} bigAmount={'₦3,699,800'} padding='20px' height='92px' bg={color.offWhite} border={`solid 1px ${color.lineAsh}`} />
+                        <Blocks
+                            name="Total Crypto Balance"
+                            nameColor={color.mainColor}
+                            bigAmount={'₦3,699,800'}
+                            padding="20px"
+                            height="92px"
+                            bg={color.offWhite}
+                            border={`solid 1px ${color.lineAsh}`}
+                        />
 
-                        <Blocks name='Total FIAT Balance' nameColor={color.mainColor} bigAmount={'₦3,699,800'} padding='20px' height='92px' bg={color.offWhite} border={`solid 1px ${color.lineAsh}`} />
+                        <Blocks
+                            name="Total FIAT Balance"
+                            nameColor={color.mainColor}
+                            bigAmount={'₦3,699,800'}
+                            padding="20px"
+                            height="92px"
+                            bg={color.offWhite}
+                            border={`solid 1px ${color.lineAsh}`}
+                        />
                     </div>
                 </Col>
                 <Col xs={20} sm={20} md={24} lg={17} xl={19}>
-                    <div className='wallet-table'>
-                        <CustomTable columns={columns} data={data} tableBorder={'none'}
+                    <div className="wallet-table">
+                        <CustomTable
+                            columns={columns}
+                            data={data}
+                            tableBorder={'none'}
                             pagination={{
                                 hideOnSinglePage: true,
                                 pageSize: 7,

@@ -1,44 +1,50 @@
-import React, { useEffect } from "react";
-import { BrowserRouter, Routes, Route, } from "react-router-dom";
-import routes from "./routes";
-import PrivateRoute from "./privateRoute";
-import { isSessionExpired } from "../utils/authUtils";
+import React from 'react'
+import { BrowserRouter, Routes, Route } from 'react-router-dom'
+import routes from './routes'
+import PrivateRoute from './privateRoute'
+// import { isSessionExpired } from "../utils/authUtils";
 
 const AllPages = () => {
+    // useEffect(() => {
+    //   const checkInvalidToken = async () => {
+    //     const token = await localStorage.getItem('authToken')
+    //     if (isSessionExpired(token)) {
+    //       await localStorage.setItem('authToken', "")
+    //       window?.location?.reload()
+    //     }
+    //   }
 
-  useEffect(() => {
-    const checkInvalidToken = async () => {
-      const token = await localStorage.getItem('authToken')
-      if (isSessionExpired(token)) {
-        await localStorage.setItem('authToken', "")
-        window?.location?.reload()
-      }
-    }
+    //   checkInvalidToken()
+    // }, [])
 
-    checkInvalidToken()
-  }, [])
-
-  return (
-    <BrowserRouter>
-      <Routes>
-        {routes.map((route, idx) => {
-          const Component = route.component
-          if (route?.ispublic) return (
-            <Route
-              path={route?.path}
-              element={<Component />}
-              key={idx}
-            />
-          )
-          return <Route path={route?.path}
-            element={<PrivateRoute><Component /></PrivateRoute>}
-            key={idx} />
-
-        }
-        )}
-      </Routes>
-    </BrowserRouter>
-  );
+    return (
+        <BrowserRouter>
+            <Routes>
+                {routes.map((route, idx) => {
+                    const Component = route.component
+                    if (route?.ispublic)
+                        return (
+                            <Route
+                                path={route?.path}
+                                element={<Component />}
+                                key={idx}
+                            />
+                        )
+                    return (
+                        <Route
+                            path={route?.path}
+                            element={
+                                <PrivateRoute>
+                                    <Component />
+                                </PrivateRoute>
+                            }
+                            key={idx}
+                        />
+                    )
+                })}
+            </Routes>
+        </BrowserRouter>
+    )
 }
 
-export default AllPages;
+export default AllPages
