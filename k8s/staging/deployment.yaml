@@ -1,8 +1,8 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-    name: xpad-bko
-    namespace: gigxpad-staging
+  name: xpad-bko
+  namespace: gigxpad-staging
 spec:
   replicas: 1
   revisionHistoryLimit: 3
@@ -41,6 +41,6 @@ spec:
           imagePullPolicy: Always
           envFrom:
             - secretRef:
-                name: gigxpad-bko-dev-secret
+                name: gigxpad-bko-staging-secret
       imagePullSecrets:
-        - name: gigxpad-bko-dev-secret
+        - name: gigxpad-bko-staging-secret
