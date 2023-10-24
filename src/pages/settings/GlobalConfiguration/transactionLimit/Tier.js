@@ -12,23 +12,27 @@ const Tier = () => {
                 <SectionHeader header={'Deposit'} />
                 <Row gutter={[16, 16]}>
                     <Col xs={24} sm={24} md={7} lg={7} xl={5}>
-                        <div className='bg-fieldAsh rounded-md py-3 px-4'>
-                            <p className='text-xs text-lighterAsh'>Min Amount ($)</p>
+                        <div className="bg-fieldAsh rounded-md py-3 px-4">
+                            <p className="text-xs text-lighterAsh">
+                                Min Amount ($)
+                            </p>
                             <CustomInputField
-                                height='1rem'
-                                value='190'
-                                padding='0px'
+                                height="1rem"
+                                value="190"
+                                padding="0px"
                                 bordered={false}
                             />
                         </div>
                     </Col>
                     <Col xs={24} sm={24} md={7} lg={7} xl={5}>
-                        <div className='bg-fieldAsh rounded-md py-3 px-4'>
-                            <p className='text-xs text-lighterAsh'>Max Amount ($)</p>
+                        <div className="bg-fieldAsh rounded-md py-3 px-4">
+                            <p className="text-xs text-lighterAsh">
+                                Max Amount ($)
+                            </p>
                             <CustomInputField
-                                height='1rem'
-                                value='190'
-                                padding='0px'
+                                height="1rem"
+                                value="190"
+                                padding="0px"
                                 bordered={false}
                             />
                         </div>
@@ -37,23 +41,27 @@ const Tier = () => {
                 <SectionHeader header={'Withdrawal'} />
                 <Row gutter={[16, 16]}>
                     <Col xs={24} sm={24} md={7} lg={7} xl={5}>
-                        <div className='bg-fieldAsh rounded-md py-3 px-4'>
-                            <p className='text-xs text-lighterAsh'>Min Amount ($)</p>
+                        <div className="bg-fieldAsh rounded-md py-3 px-4">
+                            <p className="text-xs text-lighterAsh">
+                                Min Amount ($)
+                            </p>
                             <CustomInputField
-                                height='1rem'
-                                value='190'
-                                padding='0px'
+                                height="1rem"
+                                value="190"
+                                padding="0px"
                                 bordered={false}
                             />
                         </div>
                     </Col>
                     <Col xs={24} sm={24} md={7} lg={7} xl={5}>
-                        <div className='bg-fieldAsh rounded-md py-3 px-4'>
-                            <p className='text-xs text-lighterAsh'>Max Amount ($)</p>
+                        <div className="bg-fieldAsh rounded-md py-3 px-4">
+                            <p className="text-xs text-lighterAsh">
+                                Max Amount ($)
+                            </p>
                             <CustomInputField
-                                height='1rem'
-                                value='190'
-                                padding='0px'
+                                height="1rem"
+                                value="190"
+                                padding="0px"
                                 bordered={false}
                             />
                         </div>
