@@ -161,6 +161,7 @@ const UserManagement = ({ setAddUser }) => {
                         showExportCSV={false}
                         handleRoleChange={onHandleRoleChange}
                         handleStatusChange={onHandleStatusChange}
+                        //  rowClassName={'border border-red-900'}
                         pagination={{
                             hideOnSinglePage: true,
                             pageSize: 7,
