@@ -1,18 +1,18 @@
 import React from 'react'
 import NonAuthLayout from '../../../components/layout/NonAuthLayout'
-import signBg from "../../../assets/images/signBg.png";
-import PinInputField from '../../../components/fields/PinInputField';
-import { Formik } from 'formik';
-import { Form } from 'formik-antd';
+import signBg from '../../../assets/images/signBg.png'
+import PinInputField from '../../../components/fields/PinInputField'
+import { Formik } from 'formik'
+import { Form } from 'formik-antd'
 import * as Yup from 'yup'
-import { CustomFormikButton } from '../../../components/fields/CustomButton';
-import { color } from '../../../assets/color';
-import ErrorField from '../../../components/fields/ErrorField';
-import { useLocation, useNavigate } from 'react-router-dom';
-import { useDispatch } from 'react-redux';
-import { query2FA } from '../../../services/slices/auth/2fa';
-import { useErrorTimeout } from '../../../hooks/useTimeout';
-import Notification from '../../../components/notification/Notification';
+import { CustomFormikButton } from '../../../components/fields/CustomButton'
+import { color } from '../../../assets/color'
+import ErrorField from '../../../components/fields/ErrorField'
+import { useLocation, useNavigate } from 'react-router-dom'
+import { useDispatch } from 'react-redux'
+import { query2FA } from '../../../services/slices/auth/2fa'
+import { useErrorTimeout } from '../../../hooks/useTimeout'
+import Notification from '../../../components/notification/Notification'
 
 const TwoFactorAuthentication = () => {
     const faValues = { pin: '' }
@@ -31,17 +31,16 @@ const TwoFactorAuthentication = () => {
             .max(6, 'Pin must be exactly 6 digits'),
     })
 
-
     const onHandleSubmit = async (values) => {
         const data = {
             email: location?.state?.email,
-            code: values?.pin
+            code: values?.pin,
         }
 
         try {
             const res = await dispatch(query2FA(data)).unwrap()
 
-            if (res?.status === "success") {
+            if (res?.status === 'success') {
                 localStorage.setItem('authToken', res?.data?.accessToken)
                 navigate('/dashboard')
             }
@@ -54,22 +53,16 @@ const TwoFactorAuthentication = () => {
     }
     return (
         <div>
-            {!!message ?
-                <Notification
-                    message={message}
-                    type={status}
-                /> : null}
+            {!!message ? (
+                <Notification message={message} type={status} />
+            ) : null}
             <NonAuthLayout
-                maxwidth='350px'
+                maxwidth="350px"
                 image={signBg}
-                title={
-                    "Two factor Authentication"
-                }
-                subText={
-                    "Please enter authentication code."
-                }
+                title={'Two factor Authentication'}
+                subText={'Please enter authentication code.'}
             >
-                <div className='mt-10'>
+                <div className="mt-10">
                     <Formik
                         initialValues={faValues}
                         onSubmit={onHandleSubmit}
@@ -78,7 +71,6 @@ const TwoFactorAuthentication = () => {
                         validateOnMount={false}
                     >
                         {({ handleSubmit, errors, isSubmitting }) => {
-
                             const { pin } = errors
                             return (
                                 <Form className="" onSubmit={handleSubmit}>
@@ -88,13 +80,15 @@ const TwoFactorAuthentication = () => {
                                             type="numeric"
                                             name="pin"
                                         />
-                                        {pin ? <ErrorField error={pin} /> : null}
+                                        {pin ? (
+                                            <ErrorField error={pin} />
+                                        ) : null}
                                     </div>
 
                                     <CustomFormikButton
                                         bg={color.secondaryColor}
                                         text="Verify"
-                                        type='submit'
+                                        type="submit"
                                         disabled={isSubmitting}
                                         width="100%"
                                     />
@@ -102,7 +96,6 @@ const TwoFactorAuthentication = () => {
                             )
                         }}
                     </Formik>
-
                 </div>
             </NonAuthLayout>
         </div>
