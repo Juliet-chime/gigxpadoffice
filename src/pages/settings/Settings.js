@@ -10,7 +10,7 @@ const Settings = () => {
     const [addUser, setAddUser] = useState(false)
 
     const onChangeTab = (key) => {
-        console.log(key)
+        alert(key)
     }
 
     const items = [

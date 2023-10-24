@@ -14,9 +14,7 @@ export const queryUserChart = createAsyncThunk(
         try {
             const response = await makeApiRequest('get', getUserMetrics())
             return response?.data
-        } catch (e) {
-            console.log(e)
-        }
+        } catch (e) {}
     }
 )
 

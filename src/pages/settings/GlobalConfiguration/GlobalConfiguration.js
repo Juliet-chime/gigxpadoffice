@@ -9,7 +9,7 @@ import FeeStructure from './FeeStructure'
 
 const GlobalConfiguration = () => {
     const onChange = (key) => {
-        console.log(key)
+        alert(key)
     }
     const items = [
         {

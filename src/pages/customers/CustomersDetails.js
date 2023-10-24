@@ -19,12 +19,11 @@ const CustomersDetails = () => {
     const dispatch = useDispatch()
 
     const user = useSelector(getOneUserSelector)
-    console.log(user)
 
     const { id } = useParams()
 
     const onChange = (key) => {
-        console.log(key)
+        alert(key)
     }
 
     const [isModalOpen, setIsModalOpen] = useState(false)
@@ -65,9 +64,7 @@ const CustomersDetails = () => {
         async function getFiatTransactions() {
             try {
                 dispatch(queryOneUser({ id })).unwrap()
-            } catch (e) {
-                console.log(e)
-            }
+            } catch (e) {}
         }
         getFiatTransactions()
     }, [dispatch, id])

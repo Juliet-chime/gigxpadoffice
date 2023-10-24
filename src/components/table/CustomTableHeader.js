@@ -54,13 +54,12 @@ const CustomTableHeader = ({
                     xl={!showDateFilter ? 21 : 11}
                     className="border-r border-lightash p-1 md:p-2 lg:p-2 xl:p-2 mb-2 md:mb-0 lg:mb-0 xl:mb-0"
                 >
-                    {/* flex items-start lg:items-center xl:items-center justify-end gap-4 w-[80%] md:w-[70%] */}
                     {!showSearch ? (
                         <div className="flex items-start lg:items-center xl:items-center justify-between">
                             <h2 className="hidden lg:block xl:block font-bold text-sm sm:text-xs xs:text-xs text-filterColor font-circular uppercase">
                                 {tableName || ' FILTER TABLE'}
                             </h2>
-                            <div className="">
+                            <div className="border border-red-950 flex items-start lg:items-center justify-end gap-4 w-[90%] lg:w-[70%]">
                                 {handleAssestChange && (
                                     <CustomSelect
                                         defaultValue="-Asset-"
