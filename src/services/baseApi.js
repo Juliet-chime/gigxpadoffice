@@ -1,53 +1,48 @@
-import axios from 'axios';
+import axios from 'axios'
+import { isSessionExpired } from '../utils/authUtils'
 
 /* eslint-disable no-undef */
-const API_URL = process.env.REACT_APP_PUBLIC_API_URL;
-const API_KEY = process.env.REACT_APP_PUBLIC_API_KEY;
+const API_URL = process.env.REACT_APP_PUBLIC_API_URL
+const API_KEY = process.env.REACT_APP_PUBLIC_API_KEY
 
-let instance;
+let instance
 
-async function setAuthorization(headers) {
-
-    const token = await localStorage.getItem('authToken')
-    const newUserToken = await localStorage.getItem('newUserToken');
+function setAuthorization(headers) {
+    const token = localStorage.getItem('authToken')
+    const newUserToken = localStorage.getItem('newUserToken')
 
     if (!!newUserToken) {
         headers.Authorization = `Bearer ${newUserToken}`
-    }
-    else if (!!token) {
+    } else if (!!token) {
         headers.Authorization = `Bearer ${token}`
     }
 
     return headers
-
 }
 
-async function instantiateInstance() {
-
+function instantiateInstance() {
     let headers = {
         'Content-Type': 'application/json',
         Accept: 'application/json',
         'x-api-key': API_KEY,
-    };
+    }
 
-    headers = await setAuthorization(headers)
+    headers = setAuthorization(headers)
 
     if (!!instance) {
-
-        instance.defaults.headers.common['Authorization'] = headers.Authorization
-
+        instance.defaults.headers.common['Authorization'] =
+            headers.Authorization
     } else {
         instance = axios.create({
             baseURL: API_URL,
-            headers
-        });
+            headers,
+        })
     }
     return instance
 }
 
 export const makeApiRequest = async (method, url, data, params) => {
-    await instantiateInstance()
-
+    instantiateInstance()
 
     const buildParams = (data) => {
         const param = new window.URLSearchParams()
@@ -56,54 +51,43 @@ export const makeApiRequest = async (method, url, data, params) => {
             if (Array.isArray(value)) {
                 value.forEach((item, index) => {
                     param.append(`${key}${index}`, item)
-                });
+                })
             } else {
                 param.append(key, value)
             }
         }
 
-        return param;
+        return param
     }
 
     if (params) {
         params = buildParams(params)
     }
 
-    const res = await instance.request({
-        method,
-        url,
-        data,
-        params,
-    })
+    try {
+        const res = await instance.request({
+            method,
+            url,
+            data,
+            params,
+        })
 
-    // console.log(res,'ressssss')
-    return res
-
-    //     try{
-    //         const res = await instance.request({
-    //             method,
-    //             url,
-    //             data,
-    //             params,
-    //         })
-
-    //         console.log(res,'ressssss')
-    //         return res
-    //     } catch(e){
-    //         console.log(e,'base error')
-    //      return e
-    //    }
-
-
-    // .catch(async error => {
-    //     console.log(error)
-    //     // if (error?.response) {
-    //     //     if(+error?.response?.status === 401){
-    //     //          await localStorage.setItem('authToken', "")
-    //     //          window?.location?.reload()
-    //     //     }
-    //     // } 
-    // })
-};
-
-
+        console.log(res, 'ressssss')
+        return res
+    } catch (e) {
+        if (
+            e.response.status === 401 &&
+            e.response.data.errorMessage
+                .toLowerCase()
+                .includes('error occured while validating token')
+        ) {
+            const token = localStorage.getItem('authToken')
+            const isExpired = isSessionExpired(token)
+            if (isExpired) {
+                localStorage.setItem('authToken', '')
+                window?.location?.reload()
+            }
+        }
+        throw e.response
+    }
+}

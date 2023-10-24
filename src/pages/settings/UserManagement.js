@@ -1,68 +1,66 @@
-import { Dropdown } from 'antd';
+import { Dropdown } from 'antd'
 import React, { useEffect } from 'react'
-import { SlOptionsVertical } from 'react-icons/sl';
-import CustomButton from '../../components/fields/CustomButton';
-import { color } from '../../assets/color';
-import CustomTable from '../../components/table/CustomTable';
-import { useDispatch } from 'react-redux';
+import { SlOptionsVertical } from 'react-icons/sl'
+import CustomButton from '../../components/fields/CustomButton'
+import { color } from '../../assets/color'
+import CustomTable from '../../components/table/CustomTable'
+import { useDispatch, useSelector } from 'react-redux'
 // import { queryAllUser } from '../../services/slices/user/allUsers';
-import { queryAdmins } from '../../services/slices/admin/fetchAdmins';
+import {
+    getAdminsSelector,
+    queryAdmins,
+} from '../../services/slices/admin/fetchAdmins'
+
+const SettingActions = ({ text, color, ...props }) => {
+    return (
+        <span
+            className={`${
+                color || 'text-mainColor'
+            } text-[12px] font-medium cursor my-1 cursor-pointer`}
+            {...props}
+        >
+            {text}
+        </span>
+    )
+}
 
 const UserManagement = ({ setAddUser }) => {
-
     const dispatch = useDispatch()
+
+    const { admins, loading } = useSelector(getAdminsSelector)
+    console.log({ loading, admins })
 
     const onAddUser = () => {
         setAddUser(true)
+    }
+
+    const onHandleStatusChange = (e) => {
+        console.log(e)
+    }
+    const onHandleRoleChange = (e) => {
+        console.log(e)
     }
 
     useEffect(() => {
         dispatch(queryAdmins())
     }, [dispatch])
 
-    const items = [
-        {
-            key: '1',
-            label: (
-                <CustomButton height='auto' color={color.mainColor} width='auto'>
-                    Resend Invite
-                </CustomButton>
-            ),
-        },
-        {
-            key: '2',
-            label: (
-                <CustomButton height='auto' color={'#EF1A1A'} width='auto'>
-                    Remove User
-                </CustomButton>
-            ),
-        },
-    ];
-
-    // const items2 = [
-    //     {
-    //         key: '1',
-    //         label: (
-    //             <CustomButton height='auto' color={color.mainColor} width='auto'>
-    //                This user is the super admin
-    //             </CustomButton>
-    //         ),
-    //     },
-    // ];
-
     const columns = [
         {
             title: 'No',
-            dataIndex: 'key',
-            key: 'key',
-            render: (_, title) => {
-                return <p>{title.key}.</p>
+            dataIndex: '',
+            key: '',
+            render: (_, title, index) => {
+                return <p>{index + 1}.</p>
             },
         },
         {
             title: 'User Name',
             dataIndex: 'name',
             key: 'name',
+            render: (_, title, index) => {
+                return <p>{title.lastName + ' ' + title.firstName}.</p>
+            },
         },
         {
             title: 'Email Address',
@@ -71,36 +69,75 @@ const UserManagement = ({ setAddUser }) => {
         },
         {
             title: 'Role',
-            dataIndex: 'role',
-            key: 'role',
+            dataIndex: '',
+            key: '',
+            render: (_, title, index) => {
+                console.log({ _, title, index }, 'fhgjk')
+                return <p>{(title.roles || [])[0]?.name}</p>
+            },
         },
-        {
-            title: 'Last Login',
-            dataIndex: 'date',
-            key: 'date',
-        },
-        {
-            title: 'Status',
-            dataIndex: 'status',
-            key: 'status',
-            render: (text) => (
-                <p className={`${text === 'active' ? 'text-statusGreen' : text === 'pending' ? 'text-statusPending' : null}`}>{text}</p>
-            ),
-        },
+        // {
+        //     title: 'Last Login',
+        //     dataIndex: 'date',
+        //     key: 'date',
+        // },
+        // {
+        //     title: 'Status',
+        //     dataIndex: 'status',
+        //     key: 'status',
+        //     render: (text) => {
+        //         return (
+        //             <p
+        //                 className={`${
+        //                     text === 'active'
+        //                         ? 'text-statusGreen'
+        //                         : text === 'pending'
+        //                         ? 'text-statusPending'
+        //                         : null
+        //                 }`}
+        //             >
+        //                 {text}
+        //             </p>
+        //         )
+        //     },
+        // },
         {
             title: ' ',
             dataIndex: '',
             key: '',
             render: (_, record) => {
+                const { roles } = record
                 return (
                     <div>
                         <Dropdown
-                            menu={{ items }}
+                            dropdownRender={(menus) => {
+                                return (
+                                    <div className="shadow-lg rounded px-4 py-3 bg-white">
+                                        {(roles || [])[0]?.name
+                                            .toLowerCase()
+                                            .includes('super') ? (
+                                            <p className="max-w-[100px] font-medium text-[12px] text-lighterAsh">
+                                                This user is the super admin
+                                            </p>
+                                        ) : (
+                                            <div className="flex flex-col">
+                                                <SettingActions text="Resend Invite" />
+                                                <SettingActions text="Change Role" />
+                                                <SettingActions text="Send Password Reset" />
+                                                <SettingActions
+                                                    text="Remove User"
+                                                    color="text-secondaryColor"
+                                                />
+                                            </div>
+                                        )}
+                                    </div>
+                                )
+                            }}
                             arrow={false}
-                            trigger='click'
+                            trigger="click"
                         >
-                            <div className='cursor-pointer'>
-                                <SlOptionsVertical color='#67777E' />
+                            <div className="cursor-pointer">
+                                <SlOptionsVertical color="#67777E" />
                             </div>
                         </Dropdown>
                     </div>
@@ -108,44 +145,36 @@ const UserManagement = ({ setAddUser }) => {
             },
         },
     ]
-    const data = [
-        {
-            key: '1',
-            name: 'Osamede Ahrumwunde',
-            email: 'osamede@gmail.com',
-            role: 'Super Admin',
-            date: '23/04/2023, 11:38.00',
-            status: 'active',
-        },
-        {
-            key: '2',
-            name: 'Osamede Ahrumwunde',
-            email: 'osamede@gmail.com',
-            role: 'Administrator',
-            date: '23/04/2023, 11:38.00',
-            status: 'pending',
-        },
-        {
-            key: '3',
-            name: 'Osamede Ahrumwunde',
-            email: 'osamede@gmail.com',
-            role: 'Super Admin',
-            date: '23/04/2023, 11:38.00',
-            status: 'pending',
-        },
-    ];
     return (
         <div>
-
-            <><div className='wallet-table mt-8'>
-                <CustomTable tableBorder={'none'} filterBorder={`1px solid #EEEEEE`} columns={columns} data={data} filterHeader role status
-                    pagination={{
-                        hideOnSinglePage: true,
-                        pageSize: 7,
-                    }}
+            <>
+                <div className="wallet-table mt-8">
+                    <CustomTable
+                        tableBorder={'none'}
+                        filterBorder={`1px solid #EEEEEE`}
+                        columns={columns}
+                        tableName={'Filter Users'}
+                        data={admins}
+                        filterHeader
+                        isLoading={loading}
+                        showDateFilter={false}
+                        showExportCSV={false}
+                        handleRoleChange={onHandleRoleChange}
+                        handleStatusChange={onHandleStatusChange}
+                        pagination={{
+                            hideOnSinglePage: true,
+                            pageSize: 7,
+                        }}
+                    />
+                </div>
+                <CustomButton
+                    text={'Invite New User'}
+                    width="180px"
+                    color={color.mainColor}
+                    bg={color.fieldColor}
+                    onClick={onAddUser}
+                    className="mt-6"
                 />
-            </div>
-                <CustomButton text={'Invite New User'} width='180px' color={color.mainColor} bg={color.fieldColor} onClick={onAddUser} className='mt-6' />
             </>
         </div>
     )
