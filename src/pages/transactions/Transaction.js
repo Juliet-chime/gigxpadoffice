@@ -93,21 +93,21 @@ const Transaction = () => {
     ]
 
     const handleStatusChange = (value) => {
-        console.log(`selected ${value}`)
+        alert(`selected ${value}`)
         // const val = value
         // setStatus(val)
         // dispatch(queryFiatTransactions({status}))
     }
 
     const handleTypeChange = async (value) => {
-        console.log(`selected ${value}`)
+        alert(`selected ${value}`)
         // const val = value
         // setType(val)
         // dispatch(queryFiatTransactions({type:value}))
     }
 
     const onInputChange = (e) => {
-        console.log(e.target.value)
+        alert(e.target.value)
     }
 
     useEffect(() => {
@@ -119,9 +119,7 @@ const Transaction = () => {
                         to: moment().format('YYYY-MM-DD'),
                     })
                 ).unwrap()
-            } catch (e) {
-                console.log(e)
-            }
+            } catch (e) {}
         }
         getFiatTransactions()
     }, [startDate, dispatch])
@@ -149,11 +147,9 @@ const Transaction = () => {
                 handleStatusChange={handleStatusChange}
                 handleTypeChange={handleTypeChange}
                 onHandleStartDate={(date) => {
-                    console.log(date, 'start')
                     setStartDate(new Date(date))
                 }}
                 onHandleEndDate={(date) => {
-                    console.log(date, 'end')
                     setEndDate(new Date(date))
                 }}
                 onRow={(record) => {
