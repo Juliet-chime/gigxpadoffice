@@ -2,12 +2,12 @@ apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 namespace: gigxpad-dev
 resources:
-    - deployment.yaml
-    - service.yaml
-    - configmap.yaml
-    - ingress.yaml
+- deployment.yaml
+- service.yaml
+- configmap.yaml
+- ingress.yaml
 
 images:
-    - name: xpad-bko
-      newName: 622054843987.dkr.ecr.eu-west-2.amazonaws.com/gigxpad-web
-      newTag: b9dcc34a9d7674047a12c7df11f62f427fcc73c8-bko
+- name: xpad-bko
+  newName: 622054843987.dkr.ecr.eu-west-2.amazonaws.com/gigxpad-web
+  newTag: 33f8194dc73ca45d19ced2b1dd407d9315f6cd5e-bko
