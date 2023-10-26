@@ -5,9 +5,11 @@ import UserManagement from './UserManagement'
 import AddAUser from './AddAUser'
 import RolesPermission from './RolesPermission'
 import GlobalConfiguration from './GlobalConfiguration/GlobalConfiguration'
+import AddARole from './AddARole'
 
 const Settings = () => {
     const [addUser, setAddUser] = useState(false)
+    const [addRole, setAddRole] = useState(false)
 
     const onChangeTab = (key) => {
         alert(key)
@@ -22,7 +24,7 @@ const Settings = () => {
         {
             key: '2',
             label: `Roles and Permissions`,
-            children: <RolesPermission />,
+            children: <RolesPermission setAddRole={setAddRole} />,
         },
         {
             key: '3',
@@ -35,6 +37,8 @@ const Settings = () => {
         <div>
             {addUser ? (
                 <AddAUser setAddUser={setAddUser} />
+            ) : addRole ? (
+                <AddARole setAddRole={setAddRole} />
             ) : (
                 <>
                     <Dashboardheader
