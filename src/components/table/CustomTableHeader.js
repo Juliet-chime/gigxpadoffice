@@ -59,7 +59,7 @@ const CustomTableHeader = ({
                             <h2 className="hidden lg:block xl:block font-bold text-sm sm:text-xs xs:text-xs text-filterColor font-circular uppercase">
                                 {tableName || ' FILTER TABLE'}
                             </h2>
-                            <div className="border border-red-950 flex items-start lg:items-center justify-end gap-4 w-[90%] lg:w-[70%]">
+                            <div className="flex items-start lg:items-center justify-end gap-4 w-[90%] lg:w-[70%]">
                                 {handleAssestChange && (
                                     <CustomSelect
                                         defaultValue="-Asset-"
