@@ -536,26 +536,30 @@ button,
     border: 1px solid #C4C4C4;
 }
 
-.ant-switch:hover:not(.ant-switch-disabled) {
+.privilege-title .ant-switch.ant-switch-checked {
+    background-color: #E5E8E9 !important;
+}
+
+.privilege-title .ant-switch:hover:not(.ant-switch-disabled) {
     background-color: #E5E8E9;
 }
 
-.ant-switch.ant-switch-checked:hover:not(.ant-switch-disabled) {
-    background-color: #1D3C48;
+.privilege-title .ant-switch.ant-switch-checked:hover:not(.ant-switch-disabled) {
+    background-color: #E5E8E9;
 }
 
-/* .access-title .ant-checkbox-wrapper:not(.ant-checkbox-wrapper-disabled):hover .ant-checkbox-checked:not(.ant-checkbox-disabled) .ant-checkbox-inner {
-    background-color: red !important;
-} */
+.privilege-title .ant-switch .ant-switch-handle::before {
+    background-color: #B0B9BD !important;
+}
 
-/* .ant-switch .ant-switch-inner .ant-switch-inner-checked {
+.privilege-title .ant-switch-checked .ant-switch-handle::before {
     background-color: #1D3C48 !important;
 }
 
-.ant-switch .ant-switch-inner .ant-switch-inner-unchecked {
-    background-color: #E5E8E9 !important;
-} */
-/* .privilege-title */
+.ant-checkbox-checked .ant-checkbox-inner {
+    background-color: #E25A5A !important;
+    border-color: #E25A5A !important;
+}
 
 .chart-container {
     position: relative;
