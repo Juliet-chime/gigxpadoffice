@@ -51,9 +51,7 @@ const AccessandPrivileges = () => {
                                     title={'Dashboard'}
                                     checked={dashboardChecked}
                                     onChange={(e) => {
-                                        console.log(e)
                                         if (!e) {
-                                            console.log('runn')
                                             setWalletBalChecked(false)
                                         }
                                         setDashboardChecked(e)
@@ -62,7 +60,7 @@ const AccessandPrivileges = () => {
                                 <div className="border w-0 h-4 m-auto" />
 
                                 <div
-                                    onClick={() => console.log('ff')}
+                                    onClick={() => {}}
                                     className={privilegesWrapper}
                                 >
                                     <AccessTitle
@@ -71,7 +69,6 @@ const AccessandPrivileges = () => {
                                             setWalletBalChecked(
                                                 e.target.checked
                                             )
-                                            console.log(e)
                                         }}
                                         checked={walletBalChecked}
                                         titleChecked={dashboardChecked}
@@ -100,9 +97,7 @@ const AccessandPrivileges = () => {
                                     title={'Finance'}
                                     checked={financeChecked}
                                     onChange={(e) => {
-                                        console.log(e)
                                         if (!e) {
-                                            console.log('runn')
                                             setFiatTrx(false)
                                         }
                                         setFinanceChecked(e)
@@ -111,7 +106,7 @@ const AccessandPrivileges = () => {
                                 <div className="border w-0 h-4 m-auto" />
                                 <div>
                                     <div
-                                        onClick={() => console.log('ff')}
+                                        onClick={() => {}}
                                         className={`${
                                             financeChecked
                                                 ? 'bg-[white] pointer-events-auto'
@@ -146,7 +141,7 @@ const AccessandPrivileges = () => {
                                     </div>
                                     <div className="border w-0 h-4 m-auto" />
                                     <div
-                                        onClick={() => console.log('ff')}
+                                        onClick={() => {}}
                                         className={`${
                                             financeChecked
                                                 ? 'bg-[white] pointer-events-auto'
@@ -178,33 +173,11 @@ const AccessandPrivileges = () => {
                                                 />
                                             </div>
                                         </div>
-
-                                        {/* <AccessTitle
-                                        name={'Wallet Balances'}
-                                        onChange={(e) => {
-                                            setWalletBalChecked(
-                                                e.target.checked
-                                            )
-                                            console.log(e)
-                                        }}
-                                        checked={walletBalChecked}
-                                    />
-                                    <AccessTitle
-                                        name={'Total Failed Transactions'}
-                                    />
-                                    <AccessTitle
-                                        name={'Total Crypto Transactions'}
-                                    />
-                                    <AccessTitle name={'Total Customers'} />
-                                    <AccessTitle name={'Total Fiat Revenue'} />
-                                    <AccessTitle
-                                        name={'Total Crypto Revenue'}
-                                    /> */}
                                     </div>
                                     <div className="border w-0 h-4 m-auto" />
 
                                     <div
-                                        onClick={() => console.log('ff')}
+                                        onClick={() => {}}
                                         className={`${
                                             financeChecked
                                                 ? 'bg-[white] pointer-events-auto'
@@ -244,9 +217,7 @@ const AccessandPrivileges = () => {
                                     title={'Wallets'}
                                     checked={dashboardChecked}
                                     onChange={(e) => {
-                                        console.log(e)
                                         if (!e) {
-                                            console.log('runn')
                                             setWalletBalChecked(false)
                                         }
                                         setDashboardChecked(e)
@@ -255,7 +226,7 @@ const AccessandPrivileges = () => {
                                 <div className="border w-0 h-4 m-auto" />
 
                                 <div
-                                    onClick={() => console.log('ff')}
+                                    onClick={() => {}}
                                     className={privilegesWrapper}
                                 >
                                     <AccessTitle
@@ -264,7 +235,6 @@ const AccessandPrivileges = () => {
                                             setWalletBalChecked(
                                                 e.target.checked
                                             )
-                                            console.log(e)
                                         }}
                                         checked={walletBalChecked}
                                     />
@@ -286,9 +256,7 @@ const AccessandPrivileges = () => {
                                     title={'Virtual Cards'}
                                     checked={dashboardChecked}
                                     onChange={(e) => {
-                                        console.log(e)
                                         if (!e) {
-                                            console.log('runn')
                                             setWalletBalChecked(false)
                                         }
                                         setDashboardChecked(e)
@@ -297,7 +265,7 @@ const AccessandPrivileges = () => {
                                 <div className="border w-0 h-4 m-auto" />
 
                                 <div
-                                    onClick={() => console.log('ff')}
+                                    onClick={() => {}}
                                     className={privilegesWrapper}
                                 >
                                     <AccessTitle
@@ -306,7 +274,6 @@ const AccessandPrivileges = () => {
                                             setWalletBalChecked(
                                                 e.target.checked
                                             )
-                                            console.log(e)
                                         }}
                                         checked={walletBalChecked}
                                     />
@@ -321,9 +288,7 @@ const AccessandPrivileges = () => {
                                     title={'Customers'}
                                     checked={dashboardChecked}
                                     onChange={(e) => {
-                                        console.log(e)
                                         if (!e) {
-                                            console.log('runn')
                                             setWalletBalChecked(false)
                                         }
                                         setDashboardChecked(e)
@@ -332,7 +297,7 @@ const AccessandPrivileges = () => {
                                 <div className="border w-0 h-4 m-auto" />
 
                                 <div
-                                    onClick={() => console.log('ff')}
+                                    onClick={() => {}}
                                     className={privilegesWrapper}
                                 >
                                     <AccessTitle
@@ -341,7 +306,6 @@ const AccessandPrivileges = () => {
                                             setWalletBalChecked(
                                                 e.target.checked
                                             )
-                                            console.log(e)
                                         }}
                                         checked={walletBalChecked}
                                     />
@@ -364,9 +328,7 @@ const AccessandPrivileges = () => {
                                     title={'Settings'}
                                     checked={financeChecked}
                                     onChange={(e) => {
-                                        console.log(e)
                                         if (!e) {
-                                            console.log('runn')
                                             setFiatTrx(false)
                                         }
                                         setFinanceChecked(e)
@@ -375,7 +337,7 @@ const AccessandPrivileges = () => {
                                 <div className="border w-0 h-4 m-auto" />
                                 <div>
                                     <div
-                                        onClick={() => console.log('ff')}
+                                        onClick={() => {}}
                                         className={`${
                                             financeChecked
                                                 ? 'bg-[white] pointer-events-auto'
@@ -410,7 +372,7 @@ const AccessandPrivileges = () => {
                                     </div>
                                     <div className="border w-0 h-4 m-auto" />
                                     <div
-                                        onClick={() => console.log('ff')}
+                                        onClick={() => {}}
                                         className={`${
                                             financeChecked
                                                 ? 'bg-[white] pointer-events-auto'
@@ -446,7 +408,7 @@ const AccessandPrivileges = () => {
                                     <div className="border w-0 h-4 m-auto" />
 
                                     <div
-                                        onClick={() => console.log('ff')}
+                                        onClick={() => {}}
                                         className={`${
                                             financeChecked
                                                 ? 'bg-[white] pointer-events-auto'
