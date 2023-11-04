@@ -116,7 +116,7 @@ const Crypto = () => {
     }
 
     const onInputChange = (e) => {
-        console.log(e.target.value)
+        alert(e.target.value)
     }
 
     useEffect(() => {
@@ -128,9 +128,7 @@ const Crypto = () => {
                         to: moment().format('YYYY-MM-DD'),
                     })
                 ).unwrap()
-            } catch (e) {
-                console.log(e)
-            }
+            } catch (e) {}
         }
         getCryptoTransactions()
     }, [startDate, dispatch])
@@ -227,14 +225,12 @@ const Crypto = () => {
                 startDate={startDate}
                 endDate={endDate}
                 onInputChange={onInputChange}
-                handleTypeChange={(value) => console.log(value)}
-                handleAssestChange={(value) => console.log(value)}
+                handleTypeChange={(value) => alert(value)}
+                handleAssestChange={(value) => alert(value)}
                 onHandleStartDate={(date) => {
-                    console.log(date, 'start')
                     setStartDate(new Date(date))
                 }}
                 onHandleEndDate={(date) => {
-                    console.log(date, 'end')
                     setEndDate(new Date(date))
                 }}
                 onRow={(record) => {

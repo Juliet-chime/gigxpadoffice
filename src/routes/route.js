@@ -2,21 +2,8 @@ import React from 'react'
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
 import routes from './routes'
 import PrivateRoute from './privateRoute'
-// import { isSessionExpired } from "../utils/authUtils";
 
 const AllPages = () => {
-    // useEffect(() => {
-    //   const checkInvalidToken = async () => {
-    //     const token = await localStorage.getItem('authToken')
-    //     if (isSessionExpired(token)) {
-    //       await localStorage.setItem('authToken', "")
-    //       window?.location?.reload()
-    //     }
-    //   }
-
-    //   checkInvalidToken()
-    // }, [])
-
     return (
         <BrowserRouter>
             <Routes>

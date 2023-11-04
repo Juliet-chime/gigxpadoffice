@@ -13,16 +13,13 @@ import DeveloperDetails from './RolesDetails/DeveloperDetails'
 import CustomModal from '../../components/modal/CustomModal'
 import CustomButton from '../../components/fields/CustomButton'
 
-const RolesPermission = () => {
+const RolesPermission = ({ setAddRole }) => {
     const [open, setOpen] = useState(false)
     const [openAdmin, setOpenAdmin] = useState(false)
     const [openDeveloper, setOpenDeveloper] = useState(false)
     const [openFinance, setOpenFinance] = useState(false)
     const [isModalOpen, setIsModalOpen] = useState(false)
 
-    const showModal = (e) => {
-        setIsModalOpen(true)
-    }
     const handleOk = () => {
         setIsModalOpen(false)
     }
@@ -162,7 +159,7 @@ const RolesPermission = () => {
                         border="2px dashed #E3E3E3"
                         radius="8px"
                         className="cursor-pointer"
-                        onClick={showModal}
+                        onClick={() => setAddRole(true)}
                     >
                         <BiPlusCircle fontSize={26} color={color.mainColor} />
                         <p className="text-sm text-mainColor">Add New Role</p>
