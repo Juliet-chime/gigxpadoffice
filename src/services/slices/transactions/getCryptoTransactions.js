@@ -19,9 +19,7 @@ export const queryCryptoTransactions = createAsyncThunk(
                 params
             )
             return response?.data
-        } catch (e) {
-            console.log(e)
-        }
+        } catch (e) {}
     }
 )
 

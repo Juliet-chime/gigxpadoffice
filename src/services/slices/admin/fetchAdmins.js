@@ -14,9 +14,7 @@ export const queryAdmins = createAsyncThunk(
         try {
             const response = await makeApiRequest('get', fetchAdmins())
             return response?.data
-        } catch (e) {
-            console.log(e)
-        }
+        } catch (e) {}
     }
 )
 
