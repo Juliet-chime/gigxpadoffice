@@ -65,6 +65,10 @@ const inviteSuperAdmin = () => {
     return `/invite-superadmin`
 }
 
+const resendInviteAdmin = () => {
+    return `/resend-invite`
+}
+
 const fetchAdmins = () => {
     return `/`
 }
@@ -114,4 +118,5 @@ export {
     getOneUser,
     getUserAssest,
     fetchAdmins,
+    resendInviteAdmin,
 }

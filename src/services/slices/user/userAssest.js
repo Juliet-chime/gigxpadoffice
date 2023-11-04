@@ -14,9 +14,7 @@ export const queryUserAssest = createAsyncThunk(
         try {
             const response = await makeApiRequest('get', getUserAssest(id))
             return response?.data
-        } catch (e) {
-            console.log(e)
-        }
+        } catch (e) {}
     }
 )
 

@@ -72,7 +72,6 @@ export const makeApiRequest = async (method, url, data, params) => {
             params,
         })
 
-        console.log(res, 'ressssss')
         return res
     } catch (e) {
         if (

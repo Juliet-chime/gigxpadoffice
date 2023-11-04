@@ -23,14 +23,12 @@ const Bills = () => {
     const billTransaction = useSelector(getBillTransactionsSelector)
     const oneBillTransaction = useSelector(getOneBillTransactionsSelector)
 
-    console.log(oneBillTransaction, 'onebilll')
-
     const [open, setOpen] = useState(false)
     const [startDate, setStartDate] = useState(new Date('2022-09-05'))
     const [endDate, setEndDate] = useState(new Date('2022-09-05'))
 
     const onInputChange = (e) => {
-        console.log(e.target.value)
+        alert(e.target.value)
     }
 
     const OnEachRowClicked = (trxId) => {
@@ -112,9 +110,7 @@ const Bills = () => {
                         to: moment().format('YYYY-MM-DD'),
                     })
                 ).unwrap()
-            } catch (e) {
-                console.log(e)
-            }
+            } catch (e) {}
         }
         getBillTransactions()
     }, [startDate, dispatch])
@@ -133,14 +129,12 @@ const Bills = () => {
                 startDate={startDate}
                 endDate={endDate}
                 onInputChange={onInputChange}
-                handleBillChange={(value) => console.log(value)}
-                handleStatusChange={(value) => console.log(value)}
+                handleBillChange={(value) => alert(value)}
+                handleStatusChange={(value) => alert(value)}
                 onHandleStartDate={(date) => {
-                    console.log(date, 'start')
                     setStartDate(new Date(date))
                 }}
                 onHandleEndDate={(date) => {
-                    console.log(date, 'end')
                     setEndDate(new Date(date))
                 }}
                 onRow={(record) => {

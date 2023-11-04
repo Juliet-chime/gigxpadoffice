@@ -17,9 +17,7 @@ export const queryOneBillTransactions = createAsyncThunk(
                 getOneBillTransactions(id)
             )
             return response?.data
-        } catch (e) {
-            console.log(e)
-        }
+        } catch (e) {}
     }
 )
 

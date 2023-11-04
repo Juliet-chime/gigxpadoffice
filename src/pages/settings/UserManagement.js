@@ -10,6 +10,8 @@ import {
     getAdminsSelector,
     queryAdmins,
 } from '../../services/slices/admin/fetchAdmins'
+// import { queryResendInviteAdmin } from '../../services/slices/invite/resendInvite'
+// import { useErrorTimeout } from '../../hooks/useTimeout'
 
 const SettingActions = ({ text, color, ...props }) => {
     return (
@@ -27,18 +29,25 @@ const SettingActions = ({ text, color, ...props }) => {
 const UserManagement = ({ setAddUser }) => {
     const dispatch = useDispatch()
 
+    //const [message, setMessage, status, setStatus] = useErrorTimeout()
+
     const { admins, loading } = useSelector(getAdminsSelector)
-    console.log({ loading, admins })
 
     const onAddUser = () => {
         setAddUser(true)
     }
 
     const onHandleStatusChange = (e) => {
-        console.log(e)
+        alert(e)
     }
     const onHandleRoleChange = (e) => {
-        console.log(e)
+        alert(e)
+    }
+
+    const onHandleResendInvite = async (data) => {
+        try {
+            //const res = await dispatch(queryResendInviteAdmin(data))
+        } catch (e) {}
     }
 
     useEffect(() => {
@@ -72,7 +81,6 @@ const UserManagement = ({ setAddUser }) => {
             dataIndex: '',
             key: '',
             render: (_, title, index) => {
-                console.log({ _, title, index }, 'fhgjk')
                 return <p>{(title.roles || [])[0]?.name}</p>
             },
         },
@@ -121,8 +129,14 @@ const UserManagement = ({ setAddUser }) => {
                                             </p>
                                         ) : (
                                             <div className="flex flex-col">
-                                                <SettingActions text="Resend Invite" />
-                                                <SettingActions text="Change Role" />
+                                                <SettingActions
+                                                    text="Resend Invite"
+                                                    onClick={() =>
+                                                        onHandleResendInvite({
+                                                            email: record?.email,
+                                                        })
+                                                    }
+                                                />
                                                 <SettingActions text="Send Password Reset" />
                                                 <SettingActions
                                                     text="Remove User"
@@ -161,6 +175,7 @@ const UserManagement = ({ setAddUser }) => {
                         showExportCSV={false}
                         handleRoleChange={onHandleRoleChange}
                         handleStatusChange={onHandleStatusChange}
+                        //  rowClassName={'border border-red-900'}
                         pagination={{
                             hideOnSinglePage: true,
                             pageSize: 7,
