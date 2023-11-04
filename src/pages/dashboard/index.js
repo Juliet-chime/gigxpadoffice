@@ -126,14 +126,10 @@ export default function Dashboard() {
                 ticks: {
                     stepSize: 2000000,
                     callback: function (label, index, labels) {
-                        // console.log(label,'labelll')
                         // const num = log10(label)
-
-                        // console.log(num)
 
                         return Math.round(label / 1000000) + 'M'
                     },
-                    // format:
                 },
                 grid: {
                     color: '#E4E4E4',
@@ -418,9 +414,7 @@ export default function Dashboard() {
                         })
                     ).unwrap(),
                 ])
-            } catch (e) {
-                console.log(e)
-            }
+            } catch (e) {}
         }
         getData()
     }, [dispatch])
@@ -435,9 +429,7 @@ export default function Dashboard() {
                         currencyType: revenueCurrencyType,
                     })
                 ).unwrap()
-            } catch (e) {
-                console.log(e)
-            }
+            } catch (e) {}
         }
         getRevenueProfit()
     }, [dispatch])

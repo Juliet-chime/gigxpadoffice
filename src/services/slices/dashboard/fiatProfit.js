@@ -14,9 +14,7 @@ export const queryFiatProfit = createAsyncThunk(
         try {
             const response = await makeApiRequest('get', 'sd', null, params)
             return response?.data
-        } catch (e) {
-            console.log(e)
-        }
+        } catch (e) {}
     }
 )
 

@@ -67,9 +67,7 @@ const Customers = () => {
                 // dispatch(queryAdmins()).unwrap()
                 // dispatch(queryOneUser({id:'851827c0-d122-4edf-bbab-e2a1aa8460ef'})).unwrap()
                 // dispatch(queryUserAssest({id:'851827c0-d122-4edf-bbab-e2a1aa8460ef'})).unwrap()
-            } catch (e) {
-                console.log(e)
-            }
+            } catch (e) {}
         }
         getCustomers()
     }, [dispatch])
