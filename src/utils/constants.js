@@ -111,7 +111,7 @@ export const billsPayment = [
         label: 'Airtime & Data',
     },
     {
-        value: 'sports',
+        value: 'betting',
         label: 'Sports & Gaming',
     },
 ]
