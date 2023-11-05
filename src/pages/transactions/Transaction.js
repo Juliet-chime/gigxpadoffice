@@ -17,6 +17,9 @@ import {
     queryOneFiatTransactions,
 } from '../../services/slices/transactions/getOneFiatTransaction'
 
+let initialStartDate = moment(new Date('2022-09-05')).format('YYYY-MM-DD')
+let InitialEndDate = moment(new Date()).format('YYYY-MM-DD')
+
 const Transaction = () => {
     const dispatch = useDispatch()
 
@@ -24,8 +27,10 @@ const Transaction = () => {
     const oneFiatTransaction = useSelector(getOneFiatTransactionsSelector)
 
     const [open, setOpen] = useState(false)
-    const [startDate, setStartDate] = useState(new Date('2022-09-05'))
-    const [endDate, setEndDate] = useState(new Date('2022-09-05'))
+    const [startDate, setStartDate] = useState('')
+    const [endDate, setEndDate] = useState('')
+    const [status, setStatus] = useState('')
+    const [type, setType] = useState('')
 
     const columns = [
         {
@@ -93,21 +98,68 @@ const Transaction = () => {
     ]
 
     const handleStatusChange = (value) => {
-        alert(`selected ${value}`)
-        // const val = value
-        // setStatus(val)
-        // dispatch(queryFiatTransactions({status}))
+        setStatus(value)
+        dispatch(
+            queryFiatTransactions({
+                from: startDate || initialStartDate,
+                to: endDate || InitialEndDate,
+                status: value,
+                ...(!!type ? { type } : {}),
+            })
+        )
     }
 
     const handleTypeChange = async (value) => {
-        alert(`selected ${value}`)
-        // const val = value
-        // setType(val)
-        // dispatch(queryFiatTransactions({type:value}))
+        setType(value)
+        dispatch(
+            queryFiatTransactions({
+                from: startDate || initialStartDate,
+                to: endDate || InitialEndDate,
+                type: value,
+                ...(!!status ? { status } : {}),
+            })
+        )
+    }
+
+    const handleStartDate = async (date) => {
+        setStartDate(date)
+    }
+
+    const handleApplyFilter = async () => {
+        dispatch(
+            queryFiatTransactions({
+                from:
+                    moment(startDate).format('YYYY-MM-DD') || initialStartDate,
+                to: moment(endDate).format('YYYY-MM-DD') || InitialEndDate,
+                ...(!!status ? { status } : {}),
+                ...(!!type ? { type } : {}),
+            })
+        )
+    }
+    const handleClearFilter = async () => {
+        setStartDate('')
+        setEndDate('')
+        dispatch(
+            queryFiatTransactions({
+                from: initialStartDate,
+                to: InitialEndDate,
+                ...(!!status ? { status } : {}),
+                ...(!!type ? { type } : {}),
+            })
+        )
+    }
+
+    const handleEndDate = async (date) => {
+        setEndDate(date)
     }
 
     const onInputChange = (e) => {
         alert(e.target.value)
+    }
+
+    const OnEachRowClicked = (trxId) => {
+        setOpen(true)
+        dispatch(queryOneFiatTransactions({ id: trxId })).unwrap()
     }
 
     useEffect(() => {
@@ -115,19 +167,14 @@ const Transaction = () => {
             try {
                 dispatch(
                     queryFiatTransactions({
-                        from: moment(startDate).format('YYYY-MM-DD'),
-                        to: moment().format('YYYY-MM-DD'),
+                        from: initialStartDate,
+                        to: InitialEndDate,
                     })
                 ).unwrap()
             } catch (e) {}
         }
         getFiatTransactions()
-    }, [startDate, dispatch])
-
-    const OnEachRowClicked = (trxId) => {
-        setOpen(true)
-        dispatch(queryOneFiatTransactions({ id: trxId })).unwrap()
-    }
+    }, [dispatch])
 
     return (
         <div>
@@ -141,17 +188,15 @@ const Transaction = () => {
                 columns={columns}
                 isLoading={fiatTransaction?.loading}
                 filterHeader={true}
-                startDate={startDate}
-                endDate={endDate}
+                startDate={startDate || new Date('2022-09-05')}
+                endDate={endDate || new Date()}
+                handelApplyFilter={handleApplyFilter}
+                handleClearFilter={handleClearFilter}
                 onInputChange={onInputChange}
                 handleStatusChange={handleStatusChange}
                 handleTypeChange={handleTypeChange}
-                onHandleStartDate={(date) => {
-                    setStartDate(new Date(date))
-                }}
-                onHandleEndDate={(date) => {
-                    setEndDate(new Date(date))
-                }}
+                onHandleStartDate={handleStartDate}
+                onHandleEndDate={handleEndDate}
                 onRow={(record) => {
                     return {
                         onClick: (event) => OnEachRowClicked(record?.id), // click row

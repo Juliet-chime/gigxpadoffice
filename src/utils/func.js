@@ -17,4 +17,8 @@ function capitalizeFLetter(str) {
     return str[0]?.toUpperCase() + sliceStr?.toLowerCase()
 }
 
-export { capitalizeFLetter }
+function filterCurrencies({ currencies = [], str }) {
+    return currencies?.data.filter((curr) => curr.type !== str)
+}
+
+export { capitalizeFLetter, filterCurrencies }

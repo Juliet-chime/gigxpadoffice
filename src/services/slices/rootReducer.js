@@ -16,6 +16,9 @@ import allUsersReducer from './user/allUsers'
 import oneUserReducer from './user/oneUser'
 import userAssestReducer from './user/userAssest'
 import adminsReducer from './admin/fetchAdmins'
+import currenciesReducer from './misc/getCurrencies'
+import stellasBalanceReducer from './dashboard/stellaBalance'
+import baxiBalanceReducer from './dashboard/BaxiBalance'
 import { clearLocalStorage } from '../../utils/authFunc'
 
 const combinedReducer = combineReducers({
@@ -36,6 +39,9 @@ const combinedReducer = combineReducers({
     user: oneUserReducer,
     userAssest: userAssestReducer,
     admins: adminsReducer,
+    currency: currenciesReducer,
+    stellasBalance: stellasBalanceReducer,
+    baxiBalance: baxiBalanceReducer,
 })
 
 export const rootReducer = (state, action) => {
