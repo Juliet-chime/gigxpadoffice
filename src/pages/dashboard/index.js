@@ -9,7 +9,6 @@ import { MdArrowOutward } from 'react-icons/md'
 import { BlockStyle } from '../../components/dashboardComponents/style'
 import ChartHeader from '../../components/chart/ChartHeader'
 import BarChart from '../../components/chart/BarChart'
-// import { , doughnutdata, barLabels, } from '../../components/chart/data'
 import { DoughnutChart } from '../../components/chart/DoughnutChart'
 import CurrencyTabComponent from './CurrencyTabComponent'
 import ChartLabels from '../../components/chart/ChartLabels'
@@ -37,15 +36,15 @@ import {
     queryUserChart,
 } from '../../services/slices/user/userChart'
 import moment from 'moment'
-import {
-    cryptoCurrencyOptions,
-    fiatCurrencyOptions,
-    revenueItem,
-} from '../../utils/constants'
+import { revenueItem } from '../../utils/constants'
 import CustomSelect from '../../components/fields/CustomSelect'
 import { GrFormCheckmark } from 'react-icons/gr'
-import ngflag from '../../assets/images/9jaflag.svg'
 import Loader from '../../components/loader/Loader'
+import {
+    getCurrenciesSelector,
+    queryCurrencies,
+} from '../../services/slices/misc/getCurrencies'
+import { capitalizeFLetter, filterCurrencies } from '../../utils/func'
 
 let initialStartDate = moment(new Date('2022-04-19')).format('YYYY-MM-DD')
 let InitialEndDate = moment(new Date()).format('YYYY-MM-DD')
@@ -62,6 +61,12 @@ export default function Dashboard() {
     const fiatMetrics = useSelector(getFiatMetricSelector)
     const cryptoMetrics = useSelector(getCryptoMetricsSelector)
     const userMetrics = useSelector(getUserChartSelector)
+    const { currencies, loading: isCurrenLoading } = useSelector(
+        getCurrenciesSelector
+    )
+
+    const fiatCurrencyOption = filterCurrencies({ currencies, str: 'crypto' })
+    const cryptoCurrencyOption = filterCurrencies({ currencies, str: 'fiat' })
 
     const revenueAmount = revenue?.fiatRevenue?.revenue
     const revenueProfit = revenue?.fiatRevenue?.profit
@@ -70,16 +75,18 @@ export default function Dashboard() {
     const [changeCryptoIcon, setChangeCryptoIcon] = useState(false)
     const [changeIcon, setChangeIcon] = useState(false)
     const [currencyType, setCurrencyType] = useState(revenueItem[0])
-    // const [startDate, setStartDate] = useState(new Date());
-    // const [endDate, setEndDate] = useState(null);
     const [fiatStartDate, setFiatStartDate] = useState('')
     const [fiatEndDate, setFiatEndDate] = useState('')
     const [cryptoStartDate, setCryptoStartDate] = useState('')
     const [cryptoEndDate, setCryptoEndDate] = useState('')
     const [revenueStartDate, setRevenueStartDate] = useState('')
     const [revenueEndDate, setRevenueEndDate] = useState('')
-    const [fiatCurrency, setFiatCurrency] = useState('NGN')
-    const [cryptoCurrency, setCryptoCurrency] = useState('BTC')
+    const [fiatCurrency, setFiatCurrency] = useState(
+        (fiatCurrencyOption || [])[0]?.symbol
+    )
+    const [cryptoCurrency, setCryptoCurrency] = useState(
+        (cryptoCurrencyOption || [])[0]?.symbol
+    )
 
     const items = revenueItem.map((data, index) => {
         return {
@@ -397,6 +404,10 @@ export default function Dashboard() {
         async function getData() {
             try {
                 await Promise.allSettled([
+                    //dispatch(queryStellasBalance()).unwrap(),
+                    //dispatch(queryFireBlockTrx({currency:'usdt'})).unwrap(),
+                    // dispatch(queryFireBlockSaving({currency:'usdt'})).unwrap(),
+                    // dispatch(queryBaxiBalance()).unwrap(),
                     dispatch(queryRoles()).unwrap(),
                     dispatch(
                         queryFiatMetrics({
@@ -413,6 +424,7 @@ export default function Dashboard() {
                             currencyShortCode: initialCryptoCurrency,
                         })
                     ).unwrap(),
+                    dispatch(queryCurrencies()).unwrap(),
                 ])
             } catch (e) {}
         }
@@ -594,43 +606,52 @@ export default function Dashboard() {
                                                 ) => {
                                                     return (
                                                         <div>
-                                                            <ul>
-                                                                {fiatCurrencyOptions.map(
-                                                                    (items) => (
-                                                                        <li
-                                                                            onClick={() =>
-                                                                                onChangeFiatCurrency(
-                                                                                    items.value
-                                                                                )
-                                                                            }
-                                                                            className="cursor-pointer"
-                                                                        >
-                                                                            <div className="flex items-center justify-between px-2">
-                                                                                <div className="flex items-center gap-2">
-                                                                                    <img
-                                                                                        src={
-                                                                                            ngflag
-                                                                                        }
-                                                                                        alt="najia flag"
-                                                                                        className="w-[15px] h-[15px]"
-                                                                                    />
-                                                                                    <p>
-                                                                                        {
-                                                                                            items.label
-                                                                                        }
-                                                                                    </p>
-                                                                                </div>
-                                                                                <p>
-                                                                                    {fiatCurrency ===
-                                                                                    items.value ? (
-                                                                                        <GrFormCheckmark color="#E25A5A" />
-                                                                                    ) : null}
-                                                                                </p>
-                                                                            </div>
-                                                                        </li>
-                                                                    )
-                                                                )}
-                                                            </ul>
+                                                            {isCurrenLoading ? (
+                                                                <div>
+                                                                    <Loader />
+                                                                </div>
+                                                            ) : (
+                                                                <ul>
+                                                                    {!!fiatCurrencyOption?.length &&
+                                                                        fiatCurrencyOption.map(
+                                                                            (
+                                                                                items
+                                                                            ) => (
+                                                                                <li
+                                                                                    onClick={() =>
+                                                                                        onChangeFiatCurrency(
+                                                                                            items?.symbol
+                                                                                        )
+                                                                                    }
+                                                                                    className="cursor-pointer"
+                                                                                >
+                                                                                    <div className="flex items-center justify-between px-2">
+                                                                                        <div className="flex items-center gap-2">
+                                                                                            <img
+                                                                                                src={
+                                                                                                    items?.iconUrl
+                                                                                                }
+                                                                                                alt={`${items?.name} flag`}
+                                                                                                className="w-[15px] h-[15px]"
+                                                                                            />
+                                                                                            <p>
+                                                                                                {capitalizeFLetter(
+                                                                                                    items?.name
+                                                                                                )}
+                                                                                            </p>
+                                                                                        </div>
+                                                                                        <p>
+                                                                                            {fiatCurrency ===
+                                                                                            items?.symbol ? (
+                                                                                                <GrFormCheckmark color="#E25A5A" />
+                                                                                            ) : null}
+                                                                                        </p>
+                                                                                    </div>
+                                                                                </li>
+                                                                            )
+                                                                        )}
+                                                                </ul>
+                                                            )}
                                                         </div>
                                                     )
                                                 }}
@@ -729,49 +750,52 @@ export default function Dashboard() {
                                                 ) => {
                                                     return (
                                                         <div>
-                                                            <ul>
-                                                                {cryptoCurrencyOptions.map(
-                                                                    (items) => (
-                                                                        <li
-                                                                            onClick={() =>
-                                                                                onChangeCryptoCurrency(
-                                                                                    items.value
-                                                                                )
-                                                                            }
-                                                                            className="cursor-pointer"
-                                                                        >
-                                                                            <div className="flex items-center justify-between px-1">
-                                                                                <div className="flex items-center gap-1">
-                                                                                    <img
-                                                                                        src={
-                                                                                            items.logo
-                                                                                        }
-                                                                                        alt={
-                                                                                            items.label
-                                                                                        }
-                                                                                        className="w-[15px] h-[15px]"
-                                                                                    />
-                                                                                    <p>
-                                                                                        {
-                                                                                            items.label
-                                                                                        }
-                                                                                    </p>
-                                                                                </div>
-                                                                                <p>
-                                                                                    {cryptoCurrency ===
-                                                                                    items.value ? (
-                                                                                        <GrFormCheckmark
-                                                                                            color={
-                                                                                                color.secondaryColor
-                                                                                            }
-                                                                                        />
-                                                                                    ) : null}
-                                                                                </p>
-                                                                            </div>
-                                                                        </li>
-                                                                    )
-                                                                )}
-                                                            </ul>
+                                                            {isCurrenLoading ? (
+                                                                <div>
+                                                                    <Loader />
+                                                                </div>
+                                                            ) : (
+                                                                <ul>
+                                                                    {!!cryptoCurrencyOption?.length &&
+                                                                        cryptoCurrencyOption.map(
+                                                                            (
+                                                                                items
+                                                                            ) => (
+                                                                                <li
+                                                                                    onClick={() =>
+                                                                                        onChangeCryptoCurrency(
+                                                                                            items?.symbol
+                                                                                        )
+                                                                                    }
+                                                                                    className="cursor-pointer"
+                                                                                >
+                                                                                    <div className="flex items-center justify-between px-1">
+                                                                                        <div className="flex items-center gap-1">
+                                                                                            <img
+                                                                                                src={
+                                                                                                    items?.iconUrl
+                                                                                                }
+                                                                                                alt={`${items?.name} flag`}
+                                                                                                className="w-[15px] h-[15px]"
+                                                                                            />
+                                                                                            <p>
+                                                                                                {capitalizeFLetter(
+                                                                                                    items?.name
+                                                                                                )}
+                                                                                            </p>
+                                                                                        </div>
+                                                                                        <p>
+                                                                                            {cryptoCurrency ===
+                                                                                            items?.symbol ? (
+                                                                                                <GrFormCheckmark color="#E25A5A" />
+                                                                                            ) : null}
+                                                                                        </p>
+                                                                                    </div>
+                                                                                </li>
+                                                                            )
+                                                                        )}
+                                                                </ul>
+                                                            )}
                                                         </div>
                                                     )
                                                 }}
@@ -968,32 +992,6 @@ export default function Dashboard() {
                             </BlockStyle>
                         </div>
                     </Col>
-                    {/* <Col xs={24} sm={24} md={12} lg={10} xl={5}>
-            <div>
-              <BlockStyle height='285px' padding='20px 10px'>
-                <div className='flex justify-end'>
-                  <OneDateRange
-                    selected={startDate}
-                    onChange={onChange}
-                    startDate={startDate}
-                    endDate={endDate}
-                    selectsRange
-                    showDateFilter
-                    showPopperArrow={false}
-                    customInput={<ExampleCustomInput />}
-                    onCalendarOpen={() => setChangeIcon(true)}
-                    onCalendarClose={() => setChangeIcon(false)}
-                  />
-                </div>
-
-                <div className='flex flex-col items-center justify-center py-14'>
-                  <p>Average Transaction</p>
-                  <h2>6,390,050</h2>
-                </div>
-
-              </BlockStyle>
-            </div>
-          </Col> */}
                 </Row>
             </section>
         </div>

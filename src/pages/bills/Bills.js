@@ -17,6 +17,9 @@ import {
     queryOneBillTransactions,
 } from '../../services/slices/transactions/getOneBillTransaction'
 
+let initialStartDate = moment(new Date('2022-09-05')).format('YYYY-MM-DD')
+let InitialEndDate = moment(new Date()).format('YYYY-MM-DD')
+
 const Bills = () => {
     const dispatch = useDispatch()
 
@@ -24,8 +27,66 @@ const Bills = () => {
     const oneBillTransaction = useSelector(getOneBillTransactionsSelector)
 
     const [open, setOpen] = useState(false)
-    const [startDate, setStartDate] = useState(new Date('2022-09-05'))
-    const [endDate, setEndDate] = useState(new Date('2022-09-05'))
+    const [startDate, setStartDate] = useState('')
+    const [endDate, setEndDate] = useState('')
+    const [status, setStatus] = useState('')
+    const [billType, setBillType] = useState('')
+
+    const handleStatusChange = (value) => {
+        setStatus(value)
+        dispatch(
+            queryBillTransactions({
+                from: startDate || initialStartDate,
+                to: endDate || InitialEndDate,
+                status: value,
+                ...(!!billType ? { type: billType } : {}),
+            })
+        )
+    }
+
+    const handleBillType = async (value) => {
+        setBillType(value)
+        dispatch(
+            queryBillTransactions({
+                from: startDate || initialStartDate,
+                to: endDate || InitialEndDate,
+                type: value,
+                ...(!!status ? { status } : {}),
+            })
+        )
+    }
+
+    const handleStartDate = async (date) => {
+        setStartDate(date)
+    }
+
+    const handleEndDate = async (date) => {
+        setEndDate(date)
+    }
+
+    const handleApplyFilter = async () => {
+        dispatch(
+            queryBillTransactions({
+                from:
+                    moment(startDate).format('YYYY-MM-DD') || initialStartDate,
+                to: moment(endDate).format('YYYY-MM-DD') || InitialEndDate,
+                ...(!!status ? { status } : {}),
+                ...(!!billType ? { type: billType } : {}),
+            })
+        )
+    }
+    const handleClearFilter = async () => {
+        setStartDate('')
+        setEndDate('')
+        dispatch(
+            queryBillTransactions({
+                from: initialStartDate,
+                to: InitialEndDate,
+                ...(!!status ? { status } : {}),
+                ...(!!billType ? { type: billType } : {}),
+            })
+        )
+    }
 
     const onInputChange = (e) => {
         alert(e.target.value)
@@ -106,14 +167,14 @@ const Bills = () => {
             try {
                 dispatch(
                     queryBillTransactions({
-                        from: moment(startDate).format('YYYY-MM-DD'),
-                        to: moment().format('YYYY-MM-DD'),
+                        from: initialStartDate,
+                        to: InitialEndDate,
                     })
                 ).unwrap()
             } catch (e) {}
         }
         getBillTransactions()
-    }, [startDate, dispatch])
+    }, [dispatch])
     return (
         <div>
             <Dashboardheader
@@ -126,17 +187,15 @@ const Bills = () => {
                 columns={columns}
                 isLoading={billTransaction?.loading}
                 filterHeader={true}
-                startDate={startDate}
-                endDate={endDate}
+                startDate={startDate || new Date('2022-09-05')}
+                endDate={endDate || new Date()}
                 onInputChange={onInputChange}
-                handleBillChange={(value) => alert(value)}
-                handleStatusChange={(value) => alert(value)}
-                onHandleStartDate={(date) => {
-                    setStartDate(new Date(date))
-                }}
-                onHandleEndDate={(date) => {
-                    setEndDate(new Date(date))
-                }}
+                handleBillChange={handleBillType}
+                handleStatusChange={handleStatusChange}
+                onHandleStartDate={handleStartDate}
+                onHandleEndDate={handleEndDate}
+                handelApplyFilter={handleApplyFilter}
+                handleClearFilter={handleClearFilter}
                 onRow={(record) => {
                     return {
                         onClick: (event) => OnEachRowClicked(record?.id),
