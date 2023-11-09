@@ -1,6 +1,5 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
 import { makeApiRequest } from '../../baseApi'
-// import { getFiatProfit } from "../../apis";
 
 const initialState = {
     loading: false,

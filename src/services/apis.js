@@ -29,6 +29,13 @@ const getFiatRevenue = () => {
     return `/dashboards/profit-revenue-chart`
 }
 
+const getStellasBalance = () => {
+    return `wallets/stellas`
+}
+
+const getBaxiBalance = () => {
+    return `wallets/baxi`
+}
 //transactions url
 
 const getFiatTransactions = () => {
@@ -93,9 +100,20 @@ const getUserAssest = (id) => {
     return `/customers/${id}/assets`
 }
 
-// const getFiatProfit = () => {
-//     return `/dashboards/fiat-revenue-chart`;
-// };
+//ledger
+const getFireBlockTrx = (currency) => {
+    return `/ledgers/fireblocks-transaction/${currency}`
+}
+
+const getFireBlockSaving = (currency) => {
+    return `/ledgers/fireblocks-savings/${currency}`
+}
+
+//miscellanous
+
+const getCurrencies = () => {
+    return `/settings/currencies`
+}
 
 export {
     loginUser,
@@ -119,4 +137,9 @@ export {
     getUserAssest,
     fetchAdmins,
     resendInviteAdmin,
+    getStellasBalance,
+    getBaxiBalance,
+    getCurrencies,
+    getFireBlockTrx,
+    getFireBlockSaving,
 }
