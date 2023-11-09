@@ -34,11 +34,23 @@ const CustomTableHeader = ({
     onInputChange,
     onHandleStartDate,
     onHandleEndDate,
+    handelApplyFilter,
+    handleClearFilter,
     showDateFilter = true,
     showExportCSV = true,
 }) => {
     const [showSearch, setShowSearch] = useState(false)
     const [showCalendar, setShowCalendar] = useState(false)
+
+    const onHandleApplyFilter = () => {
+        handelApplyFilter()
+        setShowCalendar(false)
+    }
+
+    const onHandleClearFilter = () => {
+        handleClearFilter()
+        setShowCalendar(false)
+    }
 
     return (
         <CustomHeaderStyle
@@ -191,6 +203,7 @@ const CustomTableHeader = ({
                                         <div className="flex items-center gap-3">
                                             <CustomButton
                                                 text="APPLY FILTER"
+                                                onClick={onHandleApplyFilter}
                                                 bg={color.secondaryColor}
                                                 radius="3px"
                                                 size="10px"
@@ -200,6 +213,7 @@ const CustomTableHeader = ({
                                             />
                                             <CustomButton
                                                 text="CLEAR FILTER"
+                                                onClick={onHandleClearFilter}
                                                 color="#3E3E3E"
                                                 bg={color.offWhite}
                                                 radius="3px"
