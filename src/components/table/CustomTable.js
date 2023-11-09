@@ -27,6 +27,8 @@ const CustomTable = ({
     filterBottom,
     tableTop,
     filterHeader,
+    handelApplyFilter,
+    handleClearFilter,
     handleStatusChange,
     handleTypeChange,
     handleBillChange,
@@ -67,6 +69,8 @@ const CustomTable = ({
                         handleRoleChange={handleRoleChange}
                         filterBorder={filterBorder}
                         filterBottom={filterBottom}
+                        handelApplyFilter={handelApplyFilter}
+                        handleClearFilter={handleClearFilter}
                         startDate={startDate}
                         endDate={endDate}
                         onHandleStartDate={onHandleStartDate}

@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router-dom'
 import { ReactComponent as DashboardIcon } from '../../assets/images/dashboardIcon.svg'
 import { ReactComponent as TransactionsIcon } from '../../assets/images/transactionsIcon.svg'
 import { ReactComponent as WalletIcon } from '../../assets/images/walletIcon.svg'
-import { ReactComponent as CardIcon } from '../../assets/images/cardsIcon.svg'
+// import { ReactComponent as CardIcon } from '../../assets/images/cardsIcon.svg'
 import { ReactComponent as CustomerIcon } from '../../assets/images/customersIcon.svg'
 import { ReactComponent as SettingsIcon } from '../../assets/images/settingsIcon.svg'
 import logo from '../../assets/images/x-pad-logo.svg'
@@ -27,7 +27,7 @@ const items = [
         getItem('Bill Payments', '/bills'),
     ]),
     getItem('Wallets', '/wallets', <WalletIcon />),
-    getItem('Virtual Cards', '/cards', <CardIcon />),
+    // getItem('Virtual Cards', '/cards', <CardIcon />),
 
     getItem('Customers', '/customers', <CustomerIcon />),
     getItem('Settings', '/settings', <SettingsIcon />),
