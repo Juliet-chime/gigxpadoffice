@@ -19,6 +19,10 @@ import adminsReducer from './admin/fetchAdmins'
 import currenciesReducer from './misc/getCurrencies'
 import stellasBalanceReducer from './dashboard/stellaBalance'
 import baxiBalanceReducer from './dashboard/BaxiBalance'
+import ratesReducer from './settings/globalconfig/getRate'
+import feesReducer from './settings/globalconfig/getFees'
+import fireBlockTrxReducer from './ledger/blocksTrx'
+import fireblockTrxSavingReducer from './ledger/blocksSaving'
 import { clearLocalStorage } from '../../utils/authFunc'
 
 const combinedReducer = combineReducers({
@@ -42,6 +46,10 @@ const combinedReducer = combineReducers({
     currency: currenciesReducer,
     stellasBalance: stellasBalanceReducer,
     baxiBalance: baxiBalanceReducer,
+    rates: ratesReducer,
+    fees: feesReducer,
+    fireblockTrx: fireBlockTrxReducer,
+    fireblockTrxSaving: fireblockTrxSavingReducer
 })
 
 export const rootReducer = (state, action) => {

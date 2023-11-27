@@ -1,12 +1,54 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import Dashboardheader from '../../components/dashboardComponents/Dashboardheader'
 import { Collapse } from 'antd'
 import { PiCaretUp, PiCaretDown } from 'react-icons/pi'
 import { color } from '../../assets/color'
-import QuidaxContent from './accordionContent/QuidaxContent'
+import { useDispatch } from 'react-redux'
+import { queryFireBlockTrxCard } from '../../services/slices/ledger/blocksTrxCard'
+import { queryFireBlockSavingCard } from '../../services/slices/ledger/blocksSavingCard'
+import FireBlockContent from './accordionContent/FireBlockContent'
 
 const Wallets = () => {
     const onChange = (key) => {}
+
+    const [fireBlockUSDTrx, setFireBlockUSDTrx] = useState(null)
+    const [fireBlockUSDSaving, setFireBlockUSDSaving] = useState(null)
+    const [fireBlockBTCTrx, setFireBlockBTCTrx] = useState(null)
+    const [fireBlockBTCSaving, setFireBlockBTCSaving] = useState(null)
+    const [loadingLedger, setLoadingLedger] = useState(false)
+
+    const dispatch = useDispatch()
+
+    useEffect(() => {
+        async function getWalletData() {
+            setLoadingLedger(true)
+            try {
+                const res = await Promise.allSettled([
+                    dispatch(
+                        queryFireBlockTrxCard({ currency: 'usdt' })
+                    ).unwrap(),
+                    dispatch(
+                        queryFireBlockSavingCard({ currency: 'usdt' })
+                    ).unwrap(),
+                    dispatch(
+                        queryFireBlockTrxCard({ currency: 'btc' })
+                    ).unwrap(),
+                    dispatch(
+                        queryFireBlockSavingCard({ currency: 'btc' })
+                    ).unwrap(),
+                ])
+                setFireBlockUSDTrx((res || [])[0]?.value)
+                setFireBlockUSDSaving((res || [])[1]?.value)
+                setFireBlockBTCTrx((res || [])[2]?.value)
+                setFireBlockBTCSaving((res || [])[3]?.value)
+            } catch (e) {
+                console.log(e)
+            } finally {
+                setLoadingLedger(false)
+            }
+        }
+        getWalletData()
+    }, [dispatch])
 
     const text = `
   A dog is a type of domesticated animal.
@@ -18,16 +60,24 @@ const Wallets = () => {
             key: '1',
             label: (
                 <p className="text-mainColor font-bold font-cabinetgrotesk text-xl">
-                    Quidax
+                    Fire Blocks
                 </p>
             ),
-            children: <QuidaxContent />,
+            children: (
+                <FireBlockContent
+                    fireBlockUSDTrx={fireBlockUSDTrx}
+                    fireBlockUSDSaving={fireBlockUSDSaving}
+                    fireBlockBTCTrx={fireBlockBTCTrx}
+                    fireBlockBTCSaving={fireBlockBTCSaving}
+                    loading={loadingLedger}
+                />
+            ),
         },
         {
             key: '2',
             label: (
                 <p className="text-mainColor font-bold font-cabinetgrotesk text-xl">
-                    Fire Blocks
+                    Quidax
                 </p>
             ),
             children: <p>{text}</p>,
