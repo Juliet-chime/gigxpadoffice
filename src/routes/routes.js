@@ -11,6 +11,8 @@ import AccessPage from '../pages/auth/access'
 import AccessLogin from '../pages/auth/accessLogin/AccessLogin'
 import CustomersDetails from '../pages/customers/CustomersDetails'
 import TwoFactorAuthentication from '../pages/auth/2fa'
+import FireBlockTrxDetails from '../pages/wallets/fireblockLedgerDetails/FireBlockTrxDetails'
+import FireBlockSavingsDetails from '../pages/wallets/fireblockLedgerDetails/FireBlockSavingsDetails'
 
 const routes = [
     // public Routes
@@ -24,7 +26,12 @@ const routes = [
     { path: '/transactions', component: Transaction },
     { path: '/crypto', component: Crypto },
     { path: '/bills', component: Bills },
-    { path: '/wallets', component: Wallets },
+    { path: '/ledger', component: Wallets },
+    {
+        path: '/ledger/fireblockstransaction/:id',
+        component: FireBlockTrxDetails,
+    },
+    { path: '/ledger/fireblocksaving/:id', component: FireBlockSavingsDetails },
     { path: '/cards', component: Card },
     { path: '/customers', component: Customers },
     { path: '/customers/:id', component: CustomersDetails },

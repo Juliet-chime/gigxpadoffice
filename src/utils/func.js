@@ -18,7 +18,19 @@ function capitalizeFLetter(str) {
 }
 
 function filterCurrencies({ currencies = [], str }) {
-    return currencies?.data.filter((curr) => curr.type !== str)
+    return currencies?.data?.filter((curr) => curr.type !== str)
 }
 
-export { capitalizeFLetter, filterCurrencies }
+function convertNairaToDollar({ amount, exchangeRates, currencyPair }) {
+    const rate = exchangeRates?.find((rates) =>
+        rates?.currencyPair?.toLowerCase().includes(currencyPair?.toLowerCase())
+    )
+
+    const nairaToDollar = amount / rate?.rate
+
+    return Number.isInteger(nairaToDollar)
+        ? nairaToDollar
+        : parseFloat(nairaToDollar.toFixed(3))
+}
+
+export { capitalizeFLetter, filterCurrencies, convertNairaToDollar }
