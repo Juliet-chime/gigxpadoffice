@@ -21,7 +21,7 @@ const CustomFormikField = ({ type, ...props }) => {
             ) : type === 'password' ? (
                 <Input.Password {...props} />
             ) : (
-                <FieldStyle {...props} />
+                <FieldStyle type={type} {...props} />
             )}
         </>
     )
