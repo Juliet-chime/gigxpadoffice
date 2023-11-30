@@ -90,7 +90,7 @@ const RolesPermission = ({ setAddRole }) => {
                                     <PersonWrapper
                                         width="60px"
                                         height="60px"
-                                        personSize="55px"
+                                        personsize="55px"
                                     >
                                         <GoPersonFill className="person" />
                                     </PersonWrapper>
