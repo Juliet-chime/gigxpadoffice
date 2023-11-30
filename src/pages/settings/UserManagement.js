@@ -178,8 +178,8 @@ const UserManagement = ({ setAddUser, setMessage, setStatus }) => {
             <>
                 <div className="wallet-table mt-8">
                     <CustomTable
-                        tableBorder={'none'}
-                        filterBorder={`1px solid #EEEEEE`}
+                        tableborder={'none'}
+                        filterborder={`1px solid #EEEEEE`}
                         columns={columns}
                         tableName={'Filter Users'}
                         data={admins}

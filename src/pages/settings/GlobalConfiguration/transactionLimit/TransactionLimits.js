@@ -1,29 +1,37 @@
 import { Tabs } from 'antd'
-import React from 'react'
+import React, { useState } from 'react'
 import Tier from './Tier'
 
 const TransactionLimits = () => {
+    const [level, setLevel] = useState(1)
+
     const items = [
         {
             key: '1',
             label: `Tier 1`,
-            children: <Tier />,
+            children: <Tier level={level} />,
         },
         {
             key: '2',
             label: `Tier 2`,
-            children: <Tier />,
+            children: <Tier level={level} />,
         },
         {
             key: '3',
             label: `Tier 3`,
-            children: <Tier />,
+            children: <Tier level={level} />,
         },
     ]
 
     return (
         <div className="limits border border-ash-3 rounded-lg p-2 md:p-6 lg:p-6 xl:p-6">
-            <Tabs tabPosition={'left'} items={items} />
+            <Tabs
+                tabPosition={'left'}
+                items={items}
+                onChange={(key) => {
+                    setLevel(Number(key))
+                }}
+            />
         </div>
     )
 }
