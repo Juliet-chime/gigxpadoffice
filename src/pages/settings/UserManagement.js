@@ -1,17 +1,15 @@
 import { Dropdown } from 'antd'
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import { SlOptionsVertical } from 'react-icons/sl'
 import CustomButton from '../../components/fields/CustomButton'
 import { color } from '../../assets/color'
 import CustomTable from '../../components/table/CustomTable'
 import { useDispatch, useSelector } from 'react-redux'
-// import { queryAllUser } from '../../services/slices/user/allUsers';
 import {
     getAdminsSelector,
     queryAdmins,
 } from '../../services/slices/admin/fetchAdmins'
-// import { queryResendInviteAdmin } from '../../services/slices/invite/resendInvite'
-// import { useErrorTimeout } from '../../hooks/useTimeout'
+import { queryResendInviteAdmin } from '../../services/slices/invite/resendInvite'
 
 const SettingActions = ({ text, color, ...props }) => {
     return (
@@ -26,10 +24,10 @@ const SettingActions = ({ text, color, ...props }) => {
     )
 }
 
-const UserManagement = ({ setAddUser }) => {
+const UserManagement = ({ setAddUser, setMessage, setStatus }) => {
     const dispatch = useDispatch()
 
-    //const [message, setMessage, status, setStatus] = useErrorTimeout()
+    const [reSendInviteLoading, setResendInviteLoading] = useState(false)
 
     const { admins, loading } = useSelector(getAdminsSelector)
 
@@ -46,8 +44,17 @@ const UserManagement = ({ setAddUser }) => {
 
     const onHandleResendInvite = async (data) => {
         try {
-            //const res = await dispatch(queryResendInviteAdmin(data))
-        } catch (e) {}
+            setResendInviteLoading(true)
+            const res = await dispatch(queryResendInviteAdmin(data)).unwrap()
+            setResendInviteLoading(false)
+            setStatus(res?.status)
+            setMessage(res?.message)
+        } catch (e) {
+            setStatus('error')
+            setMessage(e?.errorMessage)
+        } finally {
+            setResendInviteLoading(false)
+        }
     }
 
     useEffect(() => {
@@ -130,11 +137,18 @@ const UserManagement = ({ setAddUser }) => {
                                         ) : (
                                             <div className="flex flex-col">
                                                 <SettingActions
-                                                    text="Resend Invite"
+                                                    text={
+                                                        reSendInviteLoading
+                                                            ? 'Resending...'
+                                                            : 'Resend Invite'
+                                                    }
                                                     onClick={() =>
                                                         onHandleResendInvite({
                                                             email: record?.email,
                                                         })
+                                                    }
+                                                    disable={
+                                                        reSendInviteLoading
                                                     }
                                                 />
                                                 <SettingActions text="Send Password Reset" />

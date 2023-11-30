@@ -34,7 +34,7 @@ export const stellasBalanceSlice = createSlice({
             })
             .addCase(queryStellasBalance.fulfilled, (state, action) => {
                 state.loading = false
-                state.stellaBalance = action?.payload?.data
+                state.stellasBalance = action?.payload?.data
             })
             .addCase(queryStellasBalance.rejected, (state, { payload }) => {
                 state.loading = false

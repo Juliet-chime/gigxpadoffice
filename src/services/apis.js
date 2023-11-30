@@ -28,14 +28,6 @@ const getUserMetrics = () => {
 const getFiatRevenue = () => {
     return `/dashboards/profit-revenue-chart`
 }
-
-const getStellasBalance = () => {
-    return `wallets/stellas`
-}
-
-const getBaxiBalance = () => {
-    return `wallets/baxi`
-}
 //transactions url
 
 const getFiatTransactions = () => {
@@ -100,13 +92,46 @@ const getUserAssest = (id) => {
     return `/customers/${id}/assets`
 }
 
-//ledger
+//ledger (on click of fireblocks card)
 const getFireBlockTrx = (currency) => {
     return `/ledgers/fireblocks-transaction/${currency}`
 }
 
 const getFireBlockSaving = (currency) => {
     return `/ledgers/fireblocks-savings/${currency}`
+}
+
+//wallets card
+//fireblock card (display fireblocks card)
+const getFireBlockTrxCard = (currency) => {
+    return `/wallets/fireblocks-transaction/${currency}`
+}
+
+const getFireBlockSavingCard = (currency) => {
+    return `/wallets/fireblocks-savings/${currency}`
+}
+
+//baxi
+
+const getBaxiBalance = () => {
+    return `wallets/baxi`
+}
+//stellas
+const getStellasBalance = () => {
+    return `wallets/stellas`
+}
+
+//settings global config
+// const getTransactionLimit = () => {
+//     return ``
+// }
+
+const getRate = () => {
+    return `/settings/exchange-rates`
+}
+
+const getFees = () => {
+    return `/settings/fees`
 }
 
 //miscellanous
@@ -142,4 +167,8 @@ export {
     getCurrencies,
     getFireBlockTrx,
     getFireBlockSaving,
+    getFireBlockTrxCard,
+    getFireBlockSavingCard,
+    getFees,
+    getRate,
 }
