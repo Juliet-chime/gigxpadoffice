@@ -17,7 +17,6 @@ import { formatMoney } from '../../utils/helperFunctions'
 import { PiCaretUp, PiCaretDown } from 'react-icons/pi'
 import CustomTab from '../../components/tabination/CustomTab'
 import { useDispatch, useSelector } from 'react-redux'
-import { queryRoles } from '../../services/slices/roles/fetchRoles'
 import { get2FaSelector } from '../../services/slices/auth/2fa'
 import {
     getFiatMetricSelector,
@@ -44,7 +43,23 @@ import {
     getCurrenciesSelector,
     queryCurrencies,
 } from '../../services/slices/misc/getCurrencies'
-import { capitalizeFLetter, filterCurrencies } from '../../utils/func'
+import {
+    capitalizeFLetter,
+    convertNairaToDollar,
+    filterCurrencies,
+} from '../../utils/func'
+import {
+    getRatesSelector,
+    queryRates,
+} from '../../services/slices/settings/globalconfig/getRate'
+import {
+    getBaxiBalanceSelector,
+    queryBaxiBalance,
+} from '../../services/slices/dashboard/BaxiBalance'
+import {
+    getStellasBalanceSelector,
+    queryStellasBalance,
+} from '../../services/slices/dashboard/stellaBalance'
 
 let initialStartDate = moment(new Date('2022-04-19')).format('YYYY-MM-DD')
 let InitialEndDate = moment(new Date()).format('YYYY-MM-DD')
@@ -61,9 +76,24 @@ export default function Dashboard() {
     const fiatMetrics = useSelector(getFiatMetricSelector)
     const cryptoMetrics = useSelector(getCryptoMetricsSelector)
     const userMetrics = useSelector(getUserChartSelector)
+    const { stellasBalance } = useSelector(getStellasBalanceSelector)
+    const { baxiBalance } = useSelector(getBaxiBalanceSelector)
+    const { rates } = useSelector(getRatesSelector)
     const { currencies, loading: isCurrenLoading } = useSelector(
         getCurrenciesSelector
     )
+
+    const usdStellas = convertNairaToDollar({
+        exchangeRates: rates,
+        currencyPair: 'usd/ngn',
+        amount: stellasBalance?.accountBalance,
+    })
+
+    const usdBaxi = convertNairaToDollar({
+        exchangeRates: rates,
+        currencyPair: 'usd/ngn',
+        amount: baxiBalance?.accountBalance,
+    })
 
     const fiatCurrencyOption = filterCurrencies({ currencies, str: 'crypto' })
     const cryptoCurrencyOption = filterCurrencies({ currencies, str: 'fiat' })
@@ -88,6 +118,13 @@ export default function Dashboard() {
         (cryptoCurrencyOption || [])[0]?.symbol
     )
 
+    const [cryptoName, setCryptoName] = useState(
+        (cryptoCurrencyOption || [])[0]?.name
+    )
+
+    const [fiatName, setFiatName] = useState(
+        (fiatCurrencyOption || [])[0]?.name
+    )
     const items = revenueItem.map((data, index) => {
         return {
             key: index + 1,
@@ -105,7 +142,6 @@ export default function Dashboard() {
             ),
         }
     })
-
     //fiat chart
     const fiatMetricData = Object.keys(fiatMetrics?.fiatMetrics || {})
         .filter((fiatName) => fiatName !== 'total')
@@ -283,8 +319,9 @@ export default function Dashboard() {
     }
     //onchange currency
 
-    const onChangeFiatCurrency = (currency) => {
+    const onChangeFiatCurrency = (currency, name) => {
         setFiatCurrency(currency)
+        setFiatName(name)
         dispatch(
             queryFiatMetrics({
                 from: fiatStartDate
@@ -298,7 +335,8 @@ export default function Dashboard() {
         ).unwrap()
     }
 
-    const onChangeCryptoCurrency = (currency) => {
+    const onChangeCryptoCurrency = (currency, name) => {
+        setCryptoName(name)
         setCryptoCurrency(currency)
         dispatch(
             queryCryptoMetrics({
@@ -404,11 +442,11 @@ export default function Dashboard() {
         async function getData() {
             try {
                 await Promise.allSettled([
-                    //dispatch(queryStellasBalance()).unwrap(),
-                    //dispatch(queryFireBlockTrx({currency:'usdt'})).unwrap(),
-                    // dispatch(queryFireBlockSaving({currency:'usdt'})).unwrap(),
-                    // dispatch(queryBaxiBalance()).unwrap(),
-                    dispatch(queryRoles()).unwrap(),
+                    dispatch(queryRates()).unwrap(),
+                    dispatch(queryStellasBalance()).unwrap(),
+                    dispatch(queryBaxiBalance()).unwrap(),
+                    // dispatch(queryFees()).unwrap(),
+                    // dispatch(queryRoles()).unwrap(),
                     dispatch(
                         queryFiatMetrics({
                             from: initialStartDate,
@@ -529,10 +567,16 @@ export default function Dashboard() {
                     <Col xs={24} sm={24} md={6} lg={6} xl={6}>
                         <div>
                             <Blocks
-                                name="Quidax"
-                                bigAmount={'₦3,204,490'}
-                                smallAmount={'6,448'}
-                                curreny={'USD'}
+                                name="Stellas"
+                                bigAmount={formatMoney({
+                                    amount: stellasBalance?.accountBalance,
+                                })}
+                                smallAmount={formatMoney({
+                                    amount: usdStellas,
+                                    decimalCount: 3,
+                                    currency: '',
+                                })}
+                                currency={'USD'}
                                 padding="30px"
                             />
                         </div>
@@ -540,28 +584,38 @@ export default function Dashboard() {
                     <Col xs={24} sm={24} md={6} lg={6} xl={6}>
                         <div>
                             <Blocks
-                                name="Quidax"
-                                bigAmount={'₦3,204,490'}
-                                smallAmount={'6,448'}
-                                curreny={'USD'}
+                                name="Baxi"
+                                bigAmount={formatMoney({
+                                    amount: baxiBalance?.accountBalance,
+                                })}
+                                smallAmount={formatMoney({
+                                    amount: usdBaxi,
+                                    decimalCount: 3,
+                                    currency: '',
+                                })}
+                                currency={'USD'}
                                 padding="30px"
                             />
                         </div>
                     </Col>
+                    {/* <Col xs={24} sm={24} md={6} lg={6} xl={6}>
+                       <div>
+                           <Blocks
+                               name="Quidax"
+                               bigAmount={'₦3,204,490'}
+                               smallAmount={'6,448'}
+                               curreny={'USD'}
+                               padding="30px"
+                           />
+                       </div>
+                   </Col> */}
                     <Col xs={24} sm={24} md={6} lg={6} xl={6}>
                         <div>
                             <Blocks
-                                name="Quidax"
-                                bigAmount={'₦3,204,490'}
-                                smallAmount={'6,448'}
-                                curreny={'USD'}
-                                padding="30px"
-                            />
-                        </div>
-                    </Col>
-                    <Col xs={24} sm={24} md={6} lg={6} xl={6}>
-                        <div>
-                            <Blocks radius="71px" bg={color.blockBg} flexlayout>
+                                radius="71px"
+                                bg={color.blockBg}
+                                flexlayout={'true'}
+                            >
                                 <Link to="/wallets">
                                     <div
                                         style={{
@@ -599,7 +653,9 @@ export default function Dashboard() {
                                     <div className=" flex items-center gap-5">
                                         <div>
                                             <CustomSelect
-                                                defaultValue="Naira"
+                                                value={capitalizeFLetter(
+                                                    fiatName
+                                                )}
                                                 width="100px"
                                                 dropdownRender={(
                                                     ReactNodevalue
@@ -615,12 +671,17 @@ export default function Dashboard() {
                                                                     {!!fiatCurrencyOption?.length &&
                                                                         fiatCurrencyOption.map(
                                                                             (
-                                                                                items
+                                                                                items,
+                                                                                index
                                                                             ) => (
                                                                                 <li
+                                                                                    key={
+                                                                                        index
+                                                                                    }
                                                                                     onClick={() =>
                                                                                         onChangeFiatCurrency(
-                                                                                            items?.symbol
+                                                                                            items?.symbol,
+                                                                                            items?.name
                                                                                         )
                                                                                     }
                                                                                     className="cursor-pointer"
@@ -743,7 +804,9 @@ export default function Dashboard() {
                                     <div className=" flex items-center gap-5">
                                         <div>
                                             <CustomSelect
-                                                defaultValue="Bitcoin"
+                                                value={capitalizeFLetter(
+                                                    cryptoName
+                                                )}
                                                 width="100px"
                                                 dropdownRender={(
                                                     ReactNodevalue
@@ -759,12 +822,17 @@ export default function Dashboard() {
                                                                     {!!cryptoCurrencyOption?.length &&
                                                                         cryptoCurrencyOption.map(
                                                                             (
-                                                                                items
+                                                                                items,
+                                                                                index
                                                                             ) => (
                                                                                 <li
+                                                                                    key={
+                                                                                        index
+                                                                                    }
                                                                                     onClick={() =>
                                                                                         onChangeCryptoCurrency(
-                                                                                            items?.symbol
+                                                                                            items?.symbol,
+                                                                                            items?.name
                                                                                         )
                                                                                     }
                                                                                     className="cursor-pointer"
