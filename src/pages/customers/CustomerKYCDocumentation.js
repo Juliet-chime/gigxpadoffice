@@ -160,7 +160,7 @@ const CustomerKYCDocumentation = () => {
     return (
         <div className="wallet-table">
             <CustomTable
-                tableBorder={'none'}
+                tableborder={'none'}
                 columns={columns}
                 data={data}
                 pagination={{

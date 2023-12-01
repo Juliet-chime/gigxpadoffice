@@ -134,6 +134,10 @@ const getFees = () => {
     return `/settings/fees`
 }
 
+const updateLimit = () => {
+    return `/settings/transaction-limit`
+}
+
 //miscellanous
 
 const getCurrencies = () => {
@@ -171,4 +175,5 @@ export {
     getFireBlockSavingCard,
     getFees,
     getRate,
+    updateLimit,
 }

@@ -21,7 +21,7 @@ import {
 import moment from 'moment'
 
 const CustomTableHeader = ({
-    filterBorder,
+    filterborder,
     filterBottom,
     startDate,
     tableName,
@@ -54,7 +54,7 @@ const CustomTableHeader = ({
 
     return (
         <CustomHeaderStyle
-            filterBorder={filterBorder}
+            filterborder={filterborder}
             filterBottom={filterBottom}
         >
             <Row align="middle" className="px-2 lg:px-4 xl:px-4">
