@@ -116,5 +116,16 @@ export const billsPayment = [
     },
 ]
 
+export const feeOptions = [
+    {
+        value: 'percentage',
+        label: 'Percentage',
+    },
+    {
+        value: 'fixed',
+        label: 'Fixed Rate',
+    },
+]
+
 export const verify2FA =
     'A verification code has been sent to your email. Please check your inbox and enter the code to complete the login process.'

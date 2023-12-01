@@ -8,9 +8,7 @@ import OTCRate from './OTCRate/OTCRate'
 import FeeStructure from './FeeStructure'
 
 const GlobalConfiguration = () => {
-    const onChange = (key) => {
-        alert(key)
-    }
+    const onChange = (key) => {}
     const items = [
         {
             key: '1',
@@ -49,6 +47,7 @@ const GlobalConfiguration = () => {
             children: <OTCRate />,
         },
     ]
+
     return (
         <div className="config">
             <Collapse

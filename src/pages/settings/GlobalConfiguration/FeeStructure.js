@@ -1,16 +1,64 @@
 import { Col, Row } from 'antd'
-import React from 'react'
+import React, { useState } from 'react'
 import CustomInputField from '../../../components/fields/CustomField'
 import { color } from '../../../assets/color'
 import CustomButton from '../../../components/fields/CustomButton'
+import { useDispatch, useSelector } from 'react-redux'
+import { filterCurrencies } from '../../../utils/func'
+import { getCurrenciesSelector } from '../../../services/slices/misc/getCurrencies'
+import CurrencyDropdown from '../../../components/dashboardComponents/CurrencyDropdown'
+import { feeOptions } from '../../../utils/constants'
+import CustomSelect from '../../../components/fields/CustomSelect'
+import { queryUpdateFee } from '../../../services/slices/settings/globalconfig/updateFee'
 
 const FeeStructure = () => {
+    const dispatch = useDispatch()
+    const { currencies, loading: isCurrencyLoading } = useSelector(
+        getCurrenciesSelector
+    )
+    const fiatCurrencyOption = filterCurrencies({ currencies, str: 'crypto' })
+
+    const [feeType, setFeeType] = useState((feeOptions || [])[0].value)
+    const [fiatCurrency, setFiatCurrency] = useState(
+        (fiatCurrencyOption || [])[0]?.symbol
+    )
+    const [fiatName, setFiatName] = useState(
+        (fiatCurrencyOption || [])[0]?.name
+    )
+    const [billPayment, setBillPayment] = useState('')
+    const [withdrawalFee, setWithdrawalFee] = useState('')
+
+    const onChangeFiatCurrency = (currency, name) => {
+        setFiatCurrency(currency)
+        setFiatName(name)
+    }
+    const onChangeFeeOptions = (value) => {
+        setFeeType(value)
+    }
+
+    const data = {
+        feeType: !!billPayment ? 'billpayment' : 'withdrawal',
+        feeMethod: 'flatFee',
+        currencyShortCode: fiatCurrency,
+        ...(feeType === 'fixed'
+            ? { percentageFee: Number(billPayment) }
+            : { amountFee: 10 }),
+    }
+
+    const onUpdateBillPayment = async () => {
+        await dispatch(queryUpdateFee({ data }))
+    }
+
+    const onUpdateWithdrawalFee = () => {
+        console.log('submitting for withdrawl')
+    }
+
     return (
         <div className="border border-ash-3 rounded-lg p-2 md:p-6 lg:p-6 xl:p-6">
             <Row gutter={[16, 16]}>
                 <Col xs={24} sm={24} md={12} lg={12} xl={12}>
                     <div className="border border-ash-3 rounded-24">
-                        <h2 className="border-b border-ash-3 font-medium text-mainColor text-sm p-6 pb-3">
+                        <h2 className="border-b border-ash-3 font-medium text-mainColor text-sm p-6 pt-6 pb-3">
                             CRYPTO FEES
                         </h2>
                         <div className="p-6">
@@ -49,7 +97,14 @@ const FeeStructure = () => {
                                             />
                                         </div>
                                     </Col>
-                                </Row>
+                                </Row>{' '}
+                                <div className="flex justify-end mt-5">
+                                    <CustomButton
+                                        width="181px"
+                                        bg={color.secondaryColor}
+                                        text="Apply Changes"
+                                    />
+                                </div>
                             </div>
                             <br />
                             <div>
@@ -91,78 +146,96 @@ const FeeStructure = () => {
                                         </div>
                                     </Col>
                                 </Row>
+                                <div className="flex justify-end mt-5">
+                                    <CustomButton
+                                        width="181px"
+                                        bg={color.secondaryColor}
+                                        text="Apply Changes"
+                                    />
+                                </div>
                             </div>
                         </div>
                     </div>
                 </Col>
                 <Col xs={24} sm={24} md={12} lg={12} xl={12}>
                     <div className="border border-ash-3 rounded-24">
-                        <h2 className="border-b border-ash-3 font-medium text-mainColor text-sm p-6 pb-3">
-                            Fiat Fees
-                        </h2>
+                        <div className="flex justify-between items-center border-b border-ash-3 p-6 pt-1 pb-3">
+                            <h2 className=" font-medium text-mainColor text-sm ">
+                                FIAT FEES
+                            </h2>
+                            <div className="flex items-center gap-5">
+                                <div className="roundedSelect">
+                                    <CustomSelect
+                                        value={feeType}
+                                        options={feeOptions}
+                                        onChange={onChangeFeeOptions}
+                                        width="130px"
+                                    />
+                                </div>
+
+                                <CurrencyDropdown
+                                    isCurrencyLoading={isCurrencyLoading}
+                                    options={fiatCurrencyOption}
+                                    currency={fiatCurrency}
+                                    currencyName={fiatName}
+                                    onChangeCurrency={onChangeFiatCurrency}
+                                />
+                            </div>
+                        </div>
+
                         <div className="p-6">
-                            <h3 className="text-sm font-semibold text-black-200 mb-4">
-                                Bill Payment
-                            </h3>
-                            <CustomInputField
-                                placeholder="Fee Amount (%)"
-                                bg={color.fieldColor}
-                                radius="12px"
-                            />
-                            <br />
+                            <div>
+                                <h3 className="text-sm font-semibold text-black-200 mb-4">
+                                    Bill Payment
+                                </h3>
+                                <CustomInputField
+                                    placeholder="Fee Amount (%)"
+                                    bg={color.fieldColor}
+                                    radius="12px"
+                                    type={'number'}
+                                    onChange={(e) =>
+                                        setBillPayment(e.target.value)
+                                    }
+                                />
+                                <div className="flex justify-end mt-5">
+                                    <CustomButton
+                                        width="181px"
+                                        bg={color.secondaryColor}
+                                        text="Apply Changes"
+                                        onClick={onUpdateBillPayment}
+                                        disabled={!billPayment}
+                                    />
+                                </div>
+                            </div>
                             <br />
 
                             <div>
-                                <Row gutter={[16, 16]}>
-                                    <Col
-                                        xs={24}
-                                        sm={24}
-                                        md={12}
-                                        lg={12}
-                                        xl={12}
-                                    >
-                                        <div>
-                                            <h3 className="text-sm font-semibold text-black-200 mb-4">
-                                                Withdrawal
-                                            </h3>
-                                            <CustomInputField
-                                                placeholder="Fee Amount (%)"
-                                                bg={color.fieldColor}
-                                                radius="12px"
-                                            />
-                                        </div>
-                                    </Col>
-                                    <Col
-                                        xs={24}
-                                        sm={24}
-                                        md={12}
-                                        lg={12}
-                                        xl={12}
-                                    >
-                                        <div>
-                                            <h3 className="text-sm font-semibold text-black-200 mb-4">
-                                                Transfer
-                                            </h3>
-                                            <CustomInputField
-                                                placeholder="Fee Amount"
-                                                bg={color.fieldColor}
-                                                radius="12px"
-                                            />
-                                        </div>
-                                    </Col>
-                                </Row>
+                                <h3 className="text-sm font-semibold text-black-200 mb-4">
+                                    Withdrawal
+                                </h3>
+                                <CustomInputField
+                                    placeholder="Fee Amount (%)"
+                                    bg={color.fieldColor}
+                                    radius="12px"
+                                    onChange={(e) =>
+                                        setWithdrawalFee(e.target.value)
+                                    }
+                                    type={'number'}
+                                />
+                                <div className="flex justify-end mt-5">
+                                    <CustomButton
+                                        width="181px"
+                                        bg={color.secondaryColor}
+                                        text="Apply Changes"
+                                        disabled={!withdrawalFee}
+                                        onClick={onUpdateWithdrawalFee}
+                                    />
+                                </div>
                             </div>
                         </div>
                     </div>
                 </Col>
             </Row>
-            <div className="flex justify-end mt-5">
-                <CustomButton
-                    width="181px"
-                    bg={color.secondaryColor}
-                    text="Apply Changes"
-                />
-            </div>
         </div>
     )
 }

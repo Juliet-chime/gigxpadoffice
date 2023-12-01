@@ -140,7 +140,7 @@ const CustomerWalletBalance = () => {
                         <CustomTable
                             columns={columns}
                             data={data}
-                            tableBorder={'none'}
+                            tableborder={'none'}
                             pagination={{
                                 hideOnSinglePage: true,
                                 pageSize: 7,
