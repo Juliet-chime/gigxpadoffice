@@ -21,6 +21,7 @@ import stellasBalanceReducer from './dashboard/stellaBalance'
 import baxiBalanceReducer from './dashboard/BaxiBalance'
 import ratesReducer from './settings/globalconfig/getRate'
 import feesReducer from './settings/globalconfig/getFees'
+import limitReducer from './settings/globalconfig/limit'
 import fireBlockTrxReducer from './ledger/blocksTrx'
 import fireblockTrxSavingReducer from './ledger/blocksSaving'
 import { clearLocalStorage } from '../../utils/authFunc'
@@ -48,6 +49,7 @@ const combinedReducer = combineReducers({
     baxiBalance: baxiBalanceReducer,
     rates: ratesReducer,
     fees: feesReducer,
+    limit: limitReducer,
     fireblockTrx: fireBlockTrxReducer,
     fireblockTrxSaving: fireblockTrxSavingReducer,
 })

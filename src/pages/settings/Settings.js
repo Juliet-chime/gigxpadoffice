@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import Dashboardheader from '../../components/dashboardComponents/Dashboardheader'
 import { Tabs } from 'antd'
 import UserManagement from './UserManagement'
@@ -8,16 +8,20 @@ import GlobalConfiguration from './GlobalConfiguration/GlobalConfiguration'
 import AddARole from './AddARole'
 import { useErrorTimeout } from '../../hooks/useTimeout'
 import Notification from '../../components/notification/Notification'
+import { useDispatch } from 'react-redux'
+import { queryLimit } from '../../services/slices/settings/globalconfig/limit'
+import { queryFees } from '../../services/slices/settings/globalconfig/getFees'
+import { queryRates } from '../../services/slices/settings/globalconfig/getRate'
 
 const Settings = () => {
     const [addUser, setAddUser] = useState(false)
     const [addRole, setAddRole] = useState(false)
 
+    const dispatch = useDispatch()
+
     const [message, setMessage, status, setStatus] = useErrorTimeout(3000)
 
-    const onChangeTab = (key) => {
-        alert(key)
-    }
+    const onChangeTab = (key) => {}
 
     const items = [
         {
@@ -42,6 +46,15 @@ const Settings = () => {
             children: <GlobalConfiguration />,
         },
     ]
+
+    useEffect(() => {
+        const getLimit = async () => {
+            dispatch(queryLimit())
+            dispatch(queryFees())
+            dispatch(queryRates())
+        }
+        getLimit()
+    }, [dispatch])
 
     return (
         <div>
