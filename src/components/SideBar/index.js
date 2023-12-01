@@ -25,7 +25,7 @@ const items = [
         getItem('Crypto Transactions', '/crypto'),
         getItem('Bill Payments', '/bills'),
     ]),
-    getItem('Ledger', '/ledger', <WalletIcon />),
+    getItem('Ledgers', '/ledger', <WalletIcon />),
 
     getItem('Customers', '/customers', <CustomerIcon />),
     getItem('Settings', '/settings', <SettingsIcon />),
