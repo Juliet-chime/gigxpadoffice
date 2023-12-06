@@ -127,7 +127,7 @@ const getStellasBalance = () => {
 // }
 
 const getRate = () => {
-    return `/settings/exchange-rates`
+    return `/settings/app-rates`
 }
 
 const getFees = () => {

@@ -10,47 +10,56 @@ import CurrencyDropdown from '../../../components/dashboardComponents/CurrencyDr
 import { feeOptions } from '../../../utils/constants'
 import CustomSelect from '../../../components/fields/CustomSelect'
 import { queryUpdateFee } from '../../../services/slices/settings/globalconfig/updateFee'
+import Loader from '../../../components/loader/Loader'
 
 const FeeStructure = () => {
     const dispatch = useDispatch()
     const { currencies, loading: isCurrencyLoading } = useSelector(
         getCurrenciesSelector
     )
+    const [isLoadingLimit, setIsLoadingLimit] = useState(false)
     const fiatCurrencyOption = filterCurrencies({ currencies, str: 'crypto' })
 
-    const [feeType, setFeeType] = useState((feeOptions || [])[0].value)
+    const [limitType, setLimitType] = useState((feeOptions || [])[0].value)
     const [fiatCurrency, setFiatCurrency] = useState(
         (fiatCurrencyOption || [])[0]?.symbol
     )
     const [fiatName, setFiatName] = useState(
         (fiatCurrencyOption || [])[0]?.name
     )
-    const [billPayment, setBillPayment] = useState('')
-    const [withdrawalFee, setWithdrawalFee] = useState('')
+    // const [billPayment, setBillPayment] = useState('')
+    const [fee, setFee] = useState('')
 
     const onChangeFiatCurrency = (currency, name) => {
         setFiatCurrency(currency)
         setFiatName(name)
     }
     const onChangeFeeOptions = (value) => {
-        setFeeType(value)
+        setLimitType(value)
     }
 
-    const data = {
-        feeType: !!billPayment ? 'billpayment' : 'withdrawal',
-        feeMethod: 'flatFee',
-        currencyShortCode: fiatCurrency,
-        ...(feeType === 'fixed'
-            ? { percentageFee: Number(billPayment) }
-            : { amountFee: 10 }),
-    }
+    // const onUpdateBillPayment = async () => {
+    //     await dispatch(queryUpdateFee({ data }))
+    // }
 
-    const onUpdateBillPayment = async () => {
-        await dispatch(queryUpdateFee({ data }))
-    }
-
-    const onUpdateWithdrawalFee = () => {
-        console.log('submitting for withdrawl')
+    const onUpdateWithdrawalFee = async () => {
+        const data = {
+            feeType: 'fiatTransaction',
+            feeMethod: limitType === 'percentage' ? 'percentageFee' : 'flatFee',
+            currencyShortCode: fiatCurrency,
+            ...(limitType === 'percentage'
+                ? { percentageFee: Number(fee) }
+                : { amountFee: Number(fee) }),
+        }
+        try {
+            setIsLoadingLimit(true)
+            console.log('submitting for withdrawl')
+            await dispatch(queryUpdateFee({ data }))
+            setIsLoadingLimit(false)
+        } catch (e) {
+            console.log(e)
+            setIsLoadingLimit(false)
+        }
     }
 
     return (
@@ -166,7 +175,7 @@ const FeeStructure = () => {
                             <div className="flex items-center gap-5">
                                 <div className="roundedSelect">
                                     <CustomSelect
-                                        value={feeType}
+                                        value={limitType}
                                         options={feeOptions}
                                         onChange={onChangeFeeOptions}
                                         width="130px"
@@ -184,7 +193,7 @@ const FeeStructure = () => {
                         </div>
 
                         <div className="p-6">
-                            <div>
+                            {/* <div>
                                 <h3 className="text-sm font-semibold text-black-200 mb-4">
                                     Bill Payment
                                 </h3>
@@ -206,7 +215,7 @@ const FeeStructure = () => {
                                         disabled={!billPayment}
                                     />
                                 </div>
-                            </div>
+                            </div> */}
                             <br />
 
                             <div>
@@ -217,17 +226,16 @@ const FeeStructure = () => {
                                     placeholder="Fee Amount (%)"
                                     bg={color.fieldColor}
                                     radius="12px"
-                                    onChange={(e) =>
-                                        setWithdrawalFee(e.target.value)
-                                    }
+                                    onChange={(e) => setFee(e.target.value)}
                                     type={'number'}
                                 />
                                 <div className="flex justify-end mt-5">
                                     <CustomButton
                                         width="181px"
                                         bg={color.secondaryColor}
-                                        text="Apply Changes"
-                                        disabled={!withdrawalFee}
+                                        text={'Apply Changes'}
+                                        loading={isLoadingLimit}
+                                        disabled={!fee}
                                         onClick={onUpdateWithdrawalFee}
                                     />
                                 </div>

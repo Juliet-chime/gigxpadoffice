@@ -16,6 +16,7 @@ import { queryRates } from '../../services/slices/settings/globalconfig/getRate'
 const Settings = () => {
     const [addUser, setAddUser] = useState(false)
     const [addRole, setAddRole] = useState(false)
+    const [changeRole, setChangeRole] = useState(false)
 
     const dispatch = useDispatch()
 
@@ -74,6 +75,8 @@ const Settings = () => {
                 <AddAUser setAddUser={setAddUser} />
             ) : addRole ? (
                 <AddARole setAddRole={setAddRole} />
+            ) : changeRole ? (
+                <div>Change role</div>
             ) : (
                 <>
                     <Dashboardheader
