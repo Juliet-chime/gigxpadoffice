@@ -1,6 +1,6 @@
 import { createAsyncThunk } from '@reduxjs/toolkit'
 import { makeApiRequest } from '../../../baseApi'
-import getRate from './getRate'
+import { getRate } from '../../../apis'
 
 export const queryUpdateRates = createAsyncThunk(
     'rates/updateRates',

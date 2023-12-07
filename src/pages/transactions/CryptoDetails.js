@@ -33,7 +33,7 @@ const CryptoDetails = ({ data, loading }) => {
                         />
                         <TrxDetailsValue
                             name={'Phone Number'}
-                            value={data?.phone}
+                            value={data?.phoneNumber}
                         />
                         <TrxDetailsValue
                             name={'Transaction Time'}
@@ -43,11 +43,26 @@ const CryptoDetails = ({ data, loading }) => {
                         />
                     </div>
 
-                    {/* <div className='mt-10'>
-                <TrxDetailsValue name={'Source Wallet'} value={data?.sourceWallet} />
-                <TrxDetailsValue name={'Source Wallet Name'} value={data?.sourceWalletName} />
-                <TrxDetailsValue name={'Designation Wallet'} value={data?.designationWallet} />
-            </div> */}
+                    <div className="mt-10">
+                        <TrxDetailsValue
+                            name={'Source Wallet'}
+                            value={`${data?.metadata?.webhookData?.sourceAddress.slice(
+                                0,
+                                17
+                            )}...`}
+                        />
+                        <TrxDetailsValue
+                            name={'Source Wallet Name'}
+                            value={data?.metadata?.webhookData?.source?.name}
+                        />
+                        <TrxDetailsValue
+                            name={'Designation Wallet'}
+                            value={`${data?.metadata?.webhookData?.destinationAddress.slice(
+                                0,
+                                17
+                            )}...`}
+                        />
+                    </div>
                 </>
             )}
         </div>

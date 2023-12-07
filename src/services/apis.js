@@ -121,6 +121,10 @@ const getStellasBalance = () => {
     return `wallets/stellas`
 }
 
+//fireblockwallet
+const getFireBlockWalletTrx = (currency) => {
+    return `/wallets/fireblocks-transaction/${currency}`
+}
 //settings global config
 // const getTransactionLimit = () => {
 //     return ``
@@ -142,6 +146,22 @@ const updateLimit = () => {
 
 const getCurrencies = () => {
     return `/settings/currencies`
+}
+
+//lock account
+
+const lockAccount = (id) => {
+    return `/customers/${id}/block`
+}
+
+const unlockAccount = (id) => {
+    return `/customers/${id}/unblock`
+}
+
+//suspend Account
+
+const suspendAccount = () => {
+    return `/customers/status`
 }
 
 export {
@@ -176,4 +196,8 @@ export {
     getFees,
     getRate,
     updateLimit,
+    getFireBlockWalletTrx,
+    lockAccount,
+    unlockAccount,
+    suspendAccount,
 }

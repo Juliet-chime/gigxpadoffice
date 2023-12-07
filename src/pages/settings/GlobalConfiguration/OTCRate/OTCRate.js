@@ -5,11 +5,14 @@ import { useDispatch, useSelector } from 'react-redux'
 import { getRatesSelector } from '../../../../services/slices/settings/globalconfig/getRate'
 import ReactCountryFlag from 'react-country-flag'
 import { queryUpdateRates } from '../../../../services/slices/settings/globalconfig/updateRate'
+import { useErrorTimeout } from '../../../../hooks/useTimeout'
 
 const OTCRate = () => {
     const { rates } = useSelector(getRatesSelector)
 
     const dispatch = useDispatch()
+
+    const [message, status] = useErrorTimeout(3000)
 
     const [activeKey, setActiveKey] = useState(1)
     const [loading, setLoading] = useState(false)
@@ -24,15 +27,14 @@ const OTCRate = () => {
 
     const onChangeRate = async () => {
         let data = {
-            currencyPair: initialRate.currencyPair,
+            currencyPair: `${currencies[activeKey - 1].toLowerCase()}tongn`,
             rate: rateValue,
         }
 
         try {
             setLoading(true)
-            const res = await dispatch(queryUpdateRates({ data }))
+            await dispatch(queryUpdateRates({ data }))
             setLoading(false)
-            console.log(res)
         } catch (e) {
             setLoading(false)
         }
@@ -54,43 +56,13 @@ const OTCRate = () => {
                     setRateValue={setRateValue}
                     onChangeRate={onChangeRate}
                     loading={loading}
+                    message={message}
+                    status={status}
                 />
             ),
         }
     })
 
-    // const items = [
-    //     {
-    //         key: '1',
-    //         label: (
-    //             <div className="flex items-center gap-2">
-    //                 <img src={CNY} alt="CNY" />
-    //                 <h3>CNY</h3>
-    //             </div>
-    //         ),
-    //         children: <OtcChange />,
-    //     },
-    //     {
-    //         key: '2',
-    //         label: (
-    //             <div className="flex items-center gap-2">
-    //                 <img src={USA} alt="CNY" />
-    //                 <h3>USD</h3>
-    //             </div>
-    //         ),
-    //         children: <OtcChange />,
-    //     },
-    //     {
-    //         key: '3',
-    //         label: (
-    //             <div className="flex items-center gap-2">
-    //                 <img src={CAD} alt="CNY" />
-    //                 <h3>CAD</h3>
-    //             </div>
-    //         ),
-    //         children: <OtcChange />,
-    //     },
-    // ]
     return (
         <div className="limits border border-ash-3 rounded-lg p-2 md:p-6 lg:p-6 xl:p-6">
             <Tabs

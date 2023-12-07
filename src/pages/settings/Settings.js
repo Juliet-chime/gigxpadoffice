@@ -10,13 +10,11 @@ import { useErrorTimeout } from '../../hooks/useTimeout'
 import Notification from '../../components/notification/Notification'
 import { useDispatch } from 'react-redux'
 import { queryLimit } from '../../services/slices/settings/globalconfig/limit'
-import { queryFees } from '../../services/slices/settings/globalconfig/getFees'
 import { queryRates } from '../../services/slices/settings/globalconfig/getRate'
 
 const Settings = () => {
     const [addUser, setAddUser] = useState(false)
     const [addRole, setAddRole] = useState(false)
-    const [changeRole, setChangeRole] = useState(false)
 
     const dispatch = useDispatch()
 
@@ -51,11 +49,14 @@ const Settings = () => {
     useEffect(() => {
         const getLimit = async () => {
             dispatch(queryLimit())
-            dispatch(queryFees())
             dispatch(queryRates())
         }
         getLimit()
     }, [dispatch])
+
+    // : changeRole ? (
+    //     <ChangeRole setChangeRole={setChangeRole} />
+    // )
 
     return (
         <div>
@@ -75,8 +76,6 @@ const Settings = () => {
                 <AddAUser setAddUser={setAddUser} />
             ) : addRole ? (
                 <AddARole setAddRole={setAddRole} />
-            ) : changeRole ? (
-                <div>Change role</div>
             ) : (
                 <>
                     <Dashboardheader

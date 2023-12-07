@@ -13,6 +13,7 @@ import CustomersDetails from '../pages/customers/CustomersDetails'
 import TwoFactorAuthentication from '../pages/auth/2fa'
 import FireBlockTrxDetails from '../pages/wallets/fireblockLedgerDetails/FireBlockTrxDetails'
 import FireBlockSavingsDetails from '../pages/wallets/fireblockLedgerDetails/FireBlockSavingsDetails'
+import ChangeRole from '../pages/settings/ChangeRole'
 
 const routes = [
     // public Routes
@@ -36,6 +37,7 @@ const routes = [
     { path: '/customers', component: Customers },
     { path: '/customers/:id', component: CustomersDetails },
     { path: '/settings', component: Settings },
+    { path: '/settings/changerole/:id', component: ChangeRole },
 ]
 
 export default routes

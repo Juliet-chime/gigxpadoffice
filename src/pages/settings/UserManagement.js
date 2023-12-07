@@ -10,6 +10,7 @@ import {
     queryAdmins,
 } from '../../services/slices/admin/fetchAdmins'
 import { queryResendInviteAdmin } from '../../services/slices/invite/resendInvite'
+import { useNavigate } from 'react-router-dom'
 
 const SettingActions = ({ text, color, ...props }) => {
     return (
@@ -24,8 +25,14 @@ const SettingActions = ({ text, color, ...props }) => {
     )
 }
 
-const UserManagement = ({ setAddUser, setMessage, setStatus }) => {
+const UserManagement = ({
+    setAddUser,
+    setMessage,
+    setStatus,
+    setChangeRole,
+}) => {
     const dispatch = useDispatch()
+    const navigate = useNavigate()
 
     const [reSendInviteLoading, setResendInviteLoading] = useState(false)
 
@@ -88,7 +95,21 @@ const UserManagement = ({ setAddUser, setMessage, setStatus }) => {
             dataIndex: '',
             key: '',
             render: (_, title, index) => {
-                return <p>{(title.roles || [])[0]?.name}</p>
+                const role = title.roles.map((role) => role.name)
+                console.log(title.roles, role)
+                return (
+                    <p>
+                        {role?.length === 1 ? (
+                            <span>{(role || [])[0]}</span>
+                        ) : (
+                            <span>
+                                {(role || [])[0]}{' '}
+                                <span className="text-secondaryColor">+</span>
+                                {role.length - 1}
+                            </span>
+                        )}
+                    </p>
+                )
             },
         },
         // {
@@ -122,6 +143,7 @@ const UserManagement = ({ setAddUser, setMessage, setStatus }) => {
             key: '',
             render: (_, record) => {
                 const { roles } = record
+                console.log(record)
                 return (
                     <div>
                         <Dropdown
@@ -152,6 +174,19 @@ const UserManagement = ({ setAddUser, setMessage, setStatus }) => {
                                                     }
                                                 />
                                                 <SettingActions text="Send Password Reset" />
+                                                <SettingActions
+                                                    text="Change Role"
+                                                    onClick={() => {
+                                                        navigate(
+                                                            `/settings/changerole/${record.firstName}`,
+                                                            {
+                                                                state: {
+                                                                    data: record,
+                                                                },
+                                                            }
+                                                        )
+                                                    }}
+                                                />
                                                 <SettingActions
                                                     text="Remove User"
                                                     color="text-secondaryColor"
