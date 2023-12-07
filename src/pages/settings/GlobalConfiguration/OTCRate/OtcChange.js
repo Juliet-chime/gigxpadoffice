@@ -5,6 +5,7 @@ import CustomInputField from '../../../../components/fields/CustomField'
 import CustomButton from '../../../../components/fields/CustomButton'
 import { color } from '../../../../assets/color'
 import { Tooltip } from 'antd'
+import MessageComponent from '../../../../components/notification/MessageComponent'
 
 const OtcChange = ({
     currencyName,
@@ -12,6 +13,8 @@ const OtcChange = ({
     setRateValue,
     loading,
     onChangeRate,
+    message,
+    status,
 }) => {
     console.log(rateValue)
     const unEditRateStyle = {
@@ -21,6 +24,9 @@ const OtcChange = ({
 
     return (
         <div>
+            {message ? (
+                <MessageComponent msg={message} status={status} />
+            ) : null}
             <form>
                 <SectionHeader header={'Exchange Rate'} />
                 <Row gutter={[16, 16]}>

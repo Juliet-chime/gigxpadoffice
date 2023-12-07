@@ -10,10 +10,14 @@ import CurrencyDropdown from '../../../components/dashboardComponents/CurrencyDr
 import { feeOptions } from '../../../utils/constants'
 import CustomSelect from '../../../components/fields/CustomSelect'
 import { queryUpdateFee } from '../../../services/slices/settings/globalconfig/updateFee'
-import Loader from '../../../components/loader/Loader'
+import { useErrorTimeout } from '../../../hooks/useTimeout'
+import MessageComponent from '../../../components/notification/MessageComponent'
 
 const FeeStructure = () => {
     const dispatch = useDispatch()
+
+    const [message, setMessage, status, setStatus] = useErrorTimeout(3000)
+
     const { currencies, loading: isCurrencyLoading } = useSelector(
         getCurrenciesSelector
     )
@@ -29,6 +33,7 @@ const FeeStructure = () => {
     )
     // const [billPayment, setBillPayment] = useState('')
     const [fee, setFee] = useState('')
+    // const [updateMsg, setUpdateMsg] = useState('')
 
     const onChangeFiatCurrency = (currency, name) => {
         setFiatCurrency(currency)
@@ -53,8 +58,10 @@ const FeeStructure = () => {
         }
         try {
             setIsLoadingLimit(true)
-            console.log('submitting for withdrawl')
-            await dispatch(queryUpdateFee({ data }))
+            const res = await dispatch(queryUpdateFee({ data }))
+            const { payload = {} } = res
+            setStatus(payload?.status)
+            setMessage(payload?.message)
             setIsLoadingLimit(false)
         } catch (e) {
             console.log(e)
@@ -216,7 +223,13 @@ const FeeStructure = () => {
                                     />
                                 </div>
                             </div> */}
-                            <br />
+
+                            {message ? (
+                                <MessageComponent
+                                    msg={message}
+                                    status={status}
+                                />
+                            ) : null}
 
                             <div>
                                 <h3 className="text-sm font-semibold text-black-200 mb-4">

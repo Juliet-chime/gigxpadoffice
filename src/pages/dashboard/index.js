@@ -52,6 +52,8 @@ import {
     queryStellasBalance,
 } from '../../services/slices/dashboard/stellaBalance'
 import CurrencyDropdown from '../../components/dashboardComponents/CurrencyDropdown'
+import { queryFireBlockWalletTrx } from '../../services/slices/dashboard/fireBlockTrx'
+import { queryRoles } from '../../services/slices/roles/fetchRoles'
 
 let initialStartDate = moment(new Date('2022-04-19')).format('YYYY-MM-DD')
 let InitialEndDate = moment(new Date()).format('YYYY-MM-DD')
@@ -434,8 +436,8 @@ export default function Dashboard() {
                     dispatch(queryRates()).unwrap(),
                     dispatch(queryStellasBalance()).unwrap(),
                     dispatch(queryBaxiBalance()).unwrap(),
-                    // dispatch(queryFees()).unwrap(),
-                    // dispatch(queryRoles()).unwrap(),
+                    dispatch(queryFireBlockWalletTrx({ currency: 'ustd' }))
+                        .unwrap,
                     dispatch(
                         queryFiatMetrics({
                             from: initialStartDate,
@@ -452,6 +454,7 @@ export default function Dashboard() {
                         })
                     ).unwrap(),
                     dispatch(queryCurrencies()).unwrap(),
+                    dispatch(queryRoles()).unwrap(),
                 ])
             } catch (e) {}
         }

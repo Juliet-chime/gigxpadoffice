@@ -72,6 +72,10 @@ button,
     border-radius: 1.875rem;
 }
 
+/* .ant-layout-header {
+    background-color: #fafafa;
+} */
+
 
 .ant-menu-item.ant-menu-item-selected.ant-menu-item-only-child {
     background: transparent;
@@ -625,6 +629,13 @@ button,
     padding: 11px 15px !important;
     display: flex !important;
     align-items: center !important;
+}
+
+.changerole .ant-select-selector {
+    background-color: transparent !important;
+    border-radius: 0px !important;
+    border: none !important;
+    height: 100% !important;
 }
 
 
