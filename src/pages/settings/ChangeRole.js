@@ -10,6 +10,7 @@ import { capitalizeFLetter } from '../../utils/func'
 import CustomSelect from '../../components/fields/CustomSelect'
 import { BgHolder } from './style'
 import { useNavigate, useLocation } from 'react-router-dom'
+import AdminNameDisplay from './AdminNameDisplay'
 
 const ChangeRole = ({ setChangeRole, ...props }) => {
     const roles = useSelector(getRolesSelector)
@@ -51,7 +52,21 @@ const ChangeRole = ({ setChangeRole, ...props }) => {
                                 <FormParagraph>
                                     Add or remove access role for this user
                                 </FormParagraph>
-                                <div className="flex flex-col md:flex-row items-center justify-center md:justify-start gap-0 md:gap-4 bg-white rounded-[12px] bottom-1 border-[#eeeeee] shadow-md p-3 md:p-10 mt-6">
+
+                                <AdminNameDisplay
+                                    background="white"
+                                    radius="12px"
+                                    border="1px solid #eeeeee"
+                                    name={` ${userData?.firstName}${' '}
+                                            ${userData?.lastName}`}
+                                    initials={`${userData?.firstName.slice(
+                                        0,
+                                        1
+                                    )}
+                                            ${userData?.lastName.slice(0, 1)}`}
+                                    email={userData?.email}
+                                />
+                                {/* <div className="flex flex-col md:flex-row items-center justify-center md:justify-start gap-0 md:gap-4 bg-white rounded-[12px] bottom-1 border-[#eeeeee] shadow-md p-3 md:p-10 mt-6">
                                     <div
                                         className="w-[35px] md:w-[79px] h-[35px] md:h-[79px] bg-[#E2F2F4] flex items-center justify-center"
                                         style={{ borderRadius: '100%' }}
@@ -70,7 +85,7 @@ const ChangeRole = ({ setChangeRole, ...props }) => {
                                             {userData?.email}
                                         </h4>
                                     </div>
-                                </div>
+                                </div> */}
 
                                 <div className="mt-8 changerole">
                                     <p className="mb-4 text-mainColor font-semibold text-[14px]">
