@@ -11,6 +11,7 @@ import {
 } from '../../services/slices/admin/fetchAdmins'
 import { queryResendInviteAdmin } from '../../services/slices/invite/resendInvite'
 import { useNavigate } from 'react-router-dom'
+import CustomDrawer from '../../components/fields/CustomDrawer'
 
 const SettingActions = ({ text, color, ...props }) => {
     return (
@@ -35,6 +36,10 @@ const UserManagement = ({
     const navigate = useNavigate()
 
     const [reSendInviteLoading, setResendInviteLoading] = useState(false)
+    const [open, setOpen] = useState(false)
+    const [adminDetail, setAdminDetail] = useState(null)
+
+    console.log({ open, adminDetail })
 
     const { admins, loading } = useSelector(getAdminsSelector)
 
@@ -47,6 +52,11 @@ const UserManagement = ({
     }
     const onHandleRoleChange = (e) => {
         alert(e)
+    }
+
+    const OnEachRowClicked = (detail) => {
+        setOpen(true)
+        setAdminDetail(detail)
     }
 
     const onHandleResendInvite = async (data) => {
@@ -73,6 +83,13 @@ const UserManagement = ({
             title: 'No',
             dataIndex: '',
             key: '',
+            onCell: (record, rowIndex) => {
+                return {
+                    onClick: (ev) => {
+                        console.log(record, rowIndex)
+                    },
+                }
+            },
             render: (_, title, index) => {
                 return <p>{index + 1}.</p>
             },
@@ -229,6 +246,11 @@ const UserManagement = ({
                             hideOnSinglePage: true,
                             pageSize: 7,
                         }}
+                        // onRow={(record) => {
+                        //     return {
+                        //         onClick: (event) => OnEachRowClicked(record), // click row
+                        //     }
+                        // }}
                     />
                 </div>
                 <CustomButton
@@ -239,6 +261,13 @@ const UserManagement = ({
                     onClick={onAddUser}
                     className="mt-6"
                 />
+                <CustomDrawer
+                    placement="right"
+                    onClose={() => setOpen(false)}
+                    open={open}
+                >
+                    <div>Admin details</div>
+                </CustomDrawer>
             </>
         </div>
     )
