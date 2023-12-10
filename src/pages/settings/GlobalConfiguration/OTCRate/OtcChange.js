@@ -16,7 +16,6 @@ const OtcChange = ({
     message,
     status,
 }) => {
-    console.log(rateValue)
     const unEditRateStyle = {
         color: '#88979E',
         fontSize: '12px',
