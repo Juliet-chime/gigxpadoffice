@@ -65,13 +65,11 @@ const CustomersDetails = () => {
     ]
 
     const onLockAccount = async () => {
-        console.log('lock')
         const res = await dispatch(queryLockAccount({ id }))
         console.log(res)
     }
 
     const onUnlockAccount = async () => {
-        console.log('lock')
         const res = await dispatch(queryUnlockAccount({ id }))
         console.log(res)
     }

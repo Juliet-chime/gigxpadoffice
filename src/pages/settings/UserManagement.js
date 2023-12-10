@@ -12,6 +12,7 @@ import {
 import { queryResendInviteAdmin } from '../../services/slices/invite/resendInvite'
 import { useNavigate } from 'react-router-dom'
 import CustomDrawer from '../../components/fields/CustomDrawer'
+import AdminDetails from './AdminDetails'
 
 const SettingActions = ({ text, color, ...props }) => {
     return (
@@ -38,8 +39,6 @@ const UserManagement = ({
     const [reSendInviteLoading, setResendInviteLoading] = useState(false)
     const [open, setOpen] = useState(false)
     const [adminDetail, setAdminDetail] = useState(null)
-
-    console.log({ open, adminDetail })
 
     const { admins, loading } = useSelector(getAdminsSelector)
 
@@ -86,7 +85,7 @@ const UserManagement = ({
             onCell: (record, rowIndex) => {
                 return {
                     onClick: (ev) => {
-                        console.log(record, rowIndex)
+                        OnEachRowClicked(record)
                     },
                 }
             },
@@ -98,6 +97,13 @@ const UserManagement = ({
             title: 'User Name',
             dataIndex: 'name',
             key: 'name',
+            onCell: (record, rowIndex) => {
+                return {
+                    onClick: (ev) => {
+                        OnEachRowClicked(record)
+                    },
+                }
+            },
             render: (_, title, index) => {
                 return <p>{title.lastName + ' ' + title.firstName}.</p>
             },
@@ -106,14 +112,27 @@ const UserManagement = ({
             title: 'Email Address',
             dataIndex: 'email',
             key: 'email',
+            onCell: (record, rowIndex) => {
+                return {
+                    onClick: (ev) => {
+                        OnEachRowClicked(record)
+                    },
+                }
+            },
         },
         {
             title: 'Role',
             dataIndex: '',
             key: '',
+            onCell: (record, rowIndex) => {
+                return {
+                    onClick: (ev) => {
+                        OnEachRowClicked(record)
+                    },
+                }
+            },
             render: (_, title, index) => {
                 const role = title.roles.map((role) => role.name)
-                console.log(title.roles, role)
                 return (
                     <p>
                         {role?.length === 1 ? (
@@ -160,7 +179,6 @@ const UserManagement = ({
             key: '',
             render: (_, record) => {
                 const { roles } = record
-                console.log(record)
                 return (
                     <div>
                         <Dropdown
@@ -261,13 +279,16 @@ const UserManagement = ({
                     onClick={onAddUser}
                     className="mt-6"
                 />
-                <CustomDrawer
-                    placement="right"
-                    onClose={() => setOpen(false)}
-                    open={open}
-                >
-                    <div>Admin details</div>
-                </CustomDrawer>
+
+                <div className="admindetail">
+                    <CustomDrawer
+                        placement="right"
+                        onClose={() => setOpen(false)}
+                        open={open}
+                    >
+                        <AdminDetails userData={adminDetail} />
+                    </CustomDrawer>
+                </div>
             </>
         </div>
     )

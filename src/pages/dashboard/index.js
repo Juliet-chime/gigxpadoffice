@@ -107,15 +107,6 @@ export default function Dashboard() {
         (fiatCurrencyOption || [])[0]?.name
     )
 
-    console.log({
-        fiatName,
-        cryptoName,
-        cryptoCurrencyOption,
-        fiatCurrencyOption,
-    })
-
-    console.log((fiatCurrencyOption || [])[0]?.name)
-
     const items = revenueItem.map((data, index) => {
         return {
             key: index + 1,

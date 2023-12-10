@@ -7,7 +7,6 @@ export const queryUpdateFee = createAsyncThunk(
     async ({ data }) => {
         try {
             const response = await makeApiRequest('post', getFees(), data)
-            console.log(response.data)
             return response?.data
         } catch (e) {}
     }

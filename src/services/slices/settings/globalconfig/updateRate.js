@@ -7,7 +7,6 @@ export const queryUpdateRates = createAsyncThunk(
     async ({ data }) => {
         try {
             const response = await makeApiRequest('post', getRate(), data)
-            console.log(response.data, 'ssssssssss')
             return response?.data
         } catch (e) {}
     }
