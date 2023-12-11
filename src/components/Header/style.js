@@ -73,7 +73,7 @@ export const PersonWrapper = styled.div`
     justify-content: center;
     .person {
         margin-bottom: -5px;
-        font-size: ${(props) => props.personSize || '35px'};
+        font-size: ${(props) => props.personsize || '35px'};
         color: ${color.white};
     }
 `

@@ -21,9 +21,9 @@ const CustomTable = ({
     columns,
     data,
     tableName,
-    tableBorder,
+    tableborder,
     tableRadius,
-    filterBorder,
+    filterborder,
     filterBottom,
     tableTop,
     filterHeader,
@@ -56,7 +56,7 @@ const CustomTable = ({
     return (
         <>
             <TableWrapperStyles
-                tableBorder={tableBorder}
+                tableborder={tableborder}
                 tableRadius={tableRadius}
                 tableTop={tableTop}
             >
@@ -67,7 +67,7 @@ const CustomTable = ({
                         handleStatusChange={handleStatusChange}
                         handleTypeChange={handleTypeChange}
                         handleRoleChange={handleRoleChange}
-                        filterBorder={filterBorder}
+                        filterborder={filterborder}
                         filterBottom={filterBottom}
                         handelApplyFilter={handelApplyFilter}
                         handleClearFilter={handleClearFilter}

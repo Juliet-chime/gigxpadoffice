@@ -1,10 +1,15 @@
 import StatusTag from '../../components/table/StatusTag'
 
-const TrxDetailsValue = ({ name, value, status }) => {
+const TrxDetailsValue = ({ name, value, status, tag }) => {
+    const Tag = tag
     return (
         <div className="my-2">
             <p className="text-ash status-sm">{name}</p>
-            <h3 className="text-mainColor text-lg font-medium">{value}</h3>
+            <div>
+                <h3 className="text-mainColor text-lg font-medium">{value}</h3>
+                {tag && <Tag />}
+            </div>
+
             <StatusTag
                 text={
                     status === 'success' || status === 'successful'

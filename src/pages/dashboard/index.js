@@ -41,6 +41,7 @@ import {
     getCurrenciesSelector,
     queryCurrencies,
 } from '../../services/slices/misc/getCurrencies'
+<<<<<<< HEAD
 import {
     convertNairaToDollar,
     filterCurrencies,
@@ -49,6 +50,10 @@ import {
     getRatesSelector,
     queryRates,
 } from '../../services/slices/settings/globalconfig/getRate'
+=======
+import { filterCurrencies } from '../../utils/func'
+import { queryRates } from '../../services/slices/settings/globalconfig/getRate'
+>>>>>>> dd1ea5e1933355b3b4b812746b3f419c3a54d85a
 import {
     getBaxiBalanceSelector,
     queryBaxiBalance,
@@ -58,6 +63,10 @@ import {
     queryStellasBalance,
 } from '../../services/slices/dashboard/stellaBalance'
 import CurrencyDropdown from '../../components/dashboardComponents/CurrencyDropdown'
+<<<<<<< HEAD
+=======
+import { queryFireBlockWalletTrx } from '../../services/slices/dashboard/fireBlockTrx'
+>>>>>>> dd1ea5e1933355b3b4b812746b3f419c3a54d85a
 import { queryRoles } from '../../services/slices/roles/fetchRoles'
 
 let initialStartDate = moment(new Date('2022-04-19')).format('YYYY-MM-DD')
@@ -77,7 +86,10 @@ export default function Dashboard() {
     const userMetrics = useSelector(getUserChartSelector)
     const { stellasBalance } = useSelector(getStellasBalanceSelector)
     const { baxiBalance } = useSelector(getBaxiBalanceSelector)
+<<<<<<< HEAD
     const { rates } = useSelector(getRatesSelector)
+=======
+>>>>>>> dd1ea5e1933355b3b4b812746b3f419c3a54d85a
     const { currencies, loading: isCurrencyLoading } = useSelector(
         getCurrenciesSelector
     )
@@ -117,7 +129,10 @@ export default function Dashboard() {
         (cryptoCurrencyOption || [])[0]?.symbol
     )
 
+<<<<<<< HEAD
 
+=======
+>>>>>>> dd1ea5e1933355b3b4b812746b3f419c3a54d85a
     const [cryptoName, setCryptoName] = useState(
         (cryptoCurrencyOption || [])[0]?.name
     )
@@ -126,8 +141,11 @@ export default function Dashboard() {
         (fiatCurrencyOption || [])[0]?.name
     )
 
+<<<<<<< HEAD
     console.log(fiatCurrency,fiatName)
 
+=======
+>>>>>>> dd1ea5e1933355b3b4b812746b3f419c3a54d85a
     const items = revenueItem.map((data, index) => {
         return {
             key: index + 1,
@@ -322,7 +340,7 @@ export default function Dashboard() {
     }
     //onchange currency
 
-    const onChangeFiatCurrency = (currency,name) => {
+    const onChangeFiatCurrency = (currency, name) => {
         setFiatCurrency(currency)
         setFiatName(name)
         dispatch(
@@ -338,7 +356,7 @@ export default function Dashboard() {
         ).unwrap()
     }
 
-    const onChangeCryptoCurrency = (currency,name) => {
+    const onChangeCryptoCurrency = (currency, name) => {
         setCryptoCurrency(currency)
         setCryptoName(name)
         dispatch(
@@ -448,8 +466,8 @@ export default function Dashboard() {
                     dispatch(queryRates()).unwrap(),
                     dispatch(queryStellasBalance()).unwrap(),
                     dispatch(queryBaxiBalance()).unwrap(),
-                    // dispatch(queryFees()).unwrap(),
-                    // dispatch(queryRoles()).unwrap(),
+                    dispatch(queryFireBlockWalletTrx({ currency: 'ustd' }))
+                        .unwrap,
                     dispatch(
                         queryFiatMetrics({
                             from: initialStartDate,
@@ -576,13 +594,14 @@ export default function Dashboard() {
                                 bigAmount={formatMoney({
                                     amount: stellasBalance?.accountBalance,
                                 })}
-                                smallAmount={formatMoney({
-                                    amount: usdStellas,
-                                    decimalCount: 3,
-                                    currency: '',
-                                })}
+                                // smallAmount={formatMoney({
+                                //     amount: usdStellas,
+                                //     decimalCount: 3,
+                                //     currency: '',
+                                // })}
                                 currency={'USD'}
                                 padding="30px"
+                                height="auto"
                             />
                         </div>
                     </Col>
@@ -593,35 +612,37 @@ export default function Dashboard() {
                                 bigAmount={formatMoney({
                                     amount: baxiBalance?.accountBalance,
                                 })}
-                                smallAmount={formatMoney({
-                                    amount: usdBaxi,
-                                    decimalCount: 3,
-                                    currency: '',
-                                })}
+                                // smallAmount={formatMoney({
+                                //     amount: usdBaxi,
+                                //     decimalCount: 3,
+                                //     currency: '',
+                                // })}
                                 currency={'USD'}
                                 padding="30px"
+                                height="auto"
                             />
                         </div>
                     </Col>
                     {/* <Col xs={24} sm={24} md={6} lg={6} xl={6}>
-                        <div>
-                            <Blocks
-                                name="Quidax"
-                                bigAmount={'₦3,204,490'}
-                                smallAmount={'6,448'}
-                                curreny={'USD'}
-                                padding="30px"
-                            />
-                        </div>
-                    </Col> */}
+                       <div>
+                           <Blocks
+                               name="Quidax"
+                               bigAmount={'₦3,204,490'}
+                               smallAmount={'6,448'}
+                               curreny={'USD'}
+                               padding="30px"
+                           />
+                       </div>
+                   </Col> */}
                     <Col xs={24} sm={24} md={6} lg={6} xl={6}>
                         <div>
                             <Blocks
                                 radius="71px"
                                 bg={color.blockBg}
                                 flexlayout={'true'}
+                                height="110px"
                             >
-                                <Link to="/wallets">
+                                <Link to="/ledger">
                                     <div
                                         style={{
                                             display: 'flex',
@@ -663,9 +684,11 @@ export default function Dashboard() {
                                             options={fiatCurrencyOption}
                                             currency={fiatCurrency}
                                             currencyName={fiatName}
-                                            onChangeCurrency={ onChangeFiatCurrency}
+                                            onChangeCurrency={
+                                                onChangeFiatCurrency
+                                            }
                                         />
-                                      
+
                                         <div>
                                             <OneDateRange
                                                 selected={fiatStartDate}
@@ -750,14 +773,16 @@ export default function Dashboard() {
                                         details
                                     />
                                     <div className=" flex items-center gap-5">
-                                    <CurrencyDropdown
+                                        <CurrencyDropdown
                                             isCurrencyLoading={
                                                 isCurrencyLoading
                                             }
                                             options={cryptoCurrencyOption}
                                             currency={cryptoCurrency}
                                             currencyName={cryptoName}
-                                            onChangeCurrency={ onChangeCryptoCurrency}
+                                            onChangeCurrency={
+                                                onChangeCryptoCurrency
+                                            }
                                         />
                                         <div>
                                             <OneDateRange
