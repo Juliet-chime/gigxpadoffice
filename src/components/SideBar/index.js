@@ -25,12 +25,7 @@ const items = [
         getItem('Crypto Transactions', '/crypto'),
         getItem('Bill Payments', '/bills'),
     ]),
-<<<<<<< HEAD
-    getItem('Wallets', '/ledger', <WalletIcon />),
-    // getItem('Virtual Cards', '/cards', <CardIcon />),
-=======
     getItem('Ledgers', '/ledger', <WalletIcon />),
->>>>>>> dd1ea5e1933355b3b4b812746b3f419c3a54d85a
 
     getItem('Customers', '/customers', <CustomerIcon />),
     getItem('Settings', '/settings', <SettingsIcon />),

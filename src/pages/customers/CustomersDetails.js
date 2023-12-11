@@ -7,24 +7,16 @@ import CustomerWalletBalance from './CustomerWalletBalance'
 import CustomerKYCDocumentation from './CustomerKYCDocumentation'
 import CustomModal from '../../components/modal/CustomModal'
 import { IoIosLock } from 'react-icons/io'
-<<<<<<< HEAD
-import { useParams } from 'react-router-dom'
-=======
 import { IoCheckmarkCircle } from 'react-icons/io5'
 import { Link, useParams } from 'react-router-dom'
->>>>>>> dd1ea5e1933355b3b4b812746b3f419c3a54d85a
 import {
     getOneUserSelector,
     queryOneUser,
 } from '../../services/slices/user/oneUser'
 import { useDispatch, useSelector } from 'react-redux'
-<<<<<<< HEAD
-import DetailsHeader from '../../components/dashboardComponents/DetailsHeader'
-=======
 import { queryLockAccount } from '../../services/slices/settings/usermanagement/lockAccount'
 import { queryUnlockAccount } from '../../services/slices/settings/usermanagement/unlockAccount'
 import { querySuspendAccount } from '../../services/slices/settings/usermanagement/suspendAccount'
->>>>>>> dd1ea5e1933355b3b4b812746b3f419c3a54d85a
 
 const CustomersDetails = () => {
     const dispatch = useDispatch()
@@ -94,7 +86,7 @@ const CustomersDetails = () => {
         async function getFiatTransactions() {
             try {
                 dispatch(queryOneUser({ id })).unwrap()
-            } catch (e) {}
+            } catch (e) { }
         }
         getFiatTransactions()
     }, [dispatch, id])
