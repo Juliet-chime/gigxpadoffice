@@ -36,15 +36,12 @@ import {
 } from '../../services/slices/user/userChart'
 import moment from 'moment'
 import { revenueItem } from '../../utils/constants'
-import CustomSelect from '../../components/fields/CustomSelect'
-import { GrFormCheckmark } from 'react-icons/gr'
 import Loader from '../../components/loader/Loader'
 import {
     getCurrenciesSelector,
     queryCurrencies,
 } from '../../services/slices/misc/getCurrencies'
 import {
-    capitalizeFLetter,
     convertNairaToDollar,
     filterCurrencies,
 } from '../../utils/func'
@@ -60,6 +57,8 @@ import {
     getStellasBalanceSelector,
     queryStellasBalance,
 } from '../../services/slices/dashboard/stellaBalance'
+import CurrencyDropdown from '../../components/dashboardComponents/CurrencyDropdown'
+import { queryRoles } from '../../services/slices/roles/fetchRoles'
 
 let initialStartDate = moment(new Date('2022-04-19')).format('YYYY-MM-DD')
 let InitialEndDate = moment(new Date()).format('YYYY-MM-DD')
@@ -79,7 +78,7 @@ export default function Dashboard() {
     const { stellasBalance } = useSelector(getStellasBalanceSelector)
     const { baxiBalance } = useSelector(getBaxiBalanceSelector)
     const { rates } = useSelector(getRatesSelector)
-    const { currencies, loading: isCurrenLoading } = useSelector(
+    const { currencies, loading: isCurrencyLoading } = useSelector(
         getCurrenciesSelector
     )
 
@@ -117,6 +116,17 @@ export default function Dashboard() {
     const [cryptoCurrency, setCryptoCurrency] = useState(
         (cryptoCurrencyOption || [])[0]?.symbol
     )
+
+
+    const [cryptoName, setCryptoName] = useState(
+        (cryptoCurrencyOption || [])[0]?.name
+    )
+
+    const [fiatName, setFiatName] = useState(
+        (fiatCurrencyOption || [])[0]?.name
+    )
+
+    console.log(fiatCurrency,fiatName)
 
     const items = revenueItem.map((data, index) => {
         return {
@@ -312,8 +322,9 @@ export default function Dashboard() {
     }
     //onchange currency
 
-    const onChangeFiatCurrency = (currency) => {
+    const onChangeFiatCurrency = (currency,name) => {
         setFiatCurrency(currency)
+        setFiatName(name)
         dispatch(
             queryFiatMetrics({
                 from: fiatStartDate
@@ -327,8 +338,9 @@ export default function Dashboard() {
         ).unwrap()
     }
 
-    const onChangeCryptoCurrency = (currency) => {
+    const onChangeCryptoCurrency = (currency,name) => {
         setCryptoCurrency(currency)
+        setCryptoName(name)
         dispatch(
             queryCryptoMetrics({
                 from: cryptoStartDate
@@ -454,6 +466,7 @@ export default function Dashboard() {
                         })
                     ).unwrap(),
                     dispatch(queryCurrencies()).unwrap(),
+                    dispatch(queryRoles()).unwrap(),
                 ])
             } catch (e) {}
         }
@@ -472,7 +485,8 @@ export default function Dashboard() {
                 ).unwrap()
             } catch (e) {}
         }
-        getRevenueProfit()
+        getRevenuePro
+        fit()
     }, [dispatch])
 
     //custom date input
@@ -642,70 +656,16 @@ export default function Dashboard() {
                                         details
                                     />
                                     <div className=" flex items-center gap-5">
-                                        <div>
-                                            <CustomSelect
-                                                defaultValue="Naira"
-                                                width="100px"
-                                                dropdownRender={(
-                                                    ReactNodevalue
-                                                ) => {
-                                                    return (
-                                                        <div>
-                                                            {isCurrenLoading ? (
-                                                                <div>
-                                                                    <Loader />
-                                                                </div>
-                                                            ) : (
-                                                                <ul>
-                                                                    {!!fiatCurrencyOption?.length &&
-                                                                        fiatCurrencyOption.map(
-                                                                            (
-                                                                                items,
-                                                                                index
-                                                                            ) => (
-                                                                                <li
-                                                                                    key={
-                                                                                        index
-                                                                                    }
-                                                                                    onClick={() =>
-                                                                                        onChangeFiatCurrency(
-                                                                                            items?.symbol
-                                                                                        )
-                                                                                    }
-                                                                                    className="cursor-pointer"
-                                                                                >
-                                                                                    <div className="flex items-center justify-between px-2">
-                                                                                        <div className="flex items-center gap-2">
-                                                                                            <img
-                                                                                                src={
-                                                                                                    items?.iconUrl
-                                                                                                }
-                                                                                                alt={`${items?.name} flag`}
-                                                                                                className="w-[15px] h-[15px]"
-                                                                                            />
-                                                                                            <p>
-                                                                                                {capitalizeFLetter(
-                                                                                                    items?.name
-                                                                                                )}
-                                                                                            </p>
-                                                                                        </div>
-                                                                                        <p>
-                                                                                            {fiatCurrency ===
-                                                                                            items?.symbol ? (
-                                                                                                <GrFormCheckmark color="#E25A5A" />
-                                                                                            ) : null}
-                                                                                        </p>
-                                                                                    </div>
-                                                                                </li>
-                                                                            )
-                                                                        )}
-                                                                </ul>
-                                                            )}
-                                                        </div>
-                                                    )
-                                                }}
-                                            />
-                                        </div>
+                                        <CurrencyDropdown
+                                            isCurrencyLoading={
+                                                isCurrencyLoading
+                                            }
+                                            options={fiatCurrencyOption}
+                                            currency={fiatCurrency}
+                                            currencyName={fiatName}
+                                            onChangeCurrency={ onChangeFiatCurrency}
+                                        />
+                                      
                                         <div>
                                             <OneDateRange
                                                 selected={fiatStartDate}
@@ -790,70 +750,15 @@ export default function Dashboard() {
                                         details
                                     />
                                     <div className=" flex items-center gap-5">
-                                        <div>
-                                            <CustomSelect
-                                                defaultValue="Bitcoin"
-                                                width="100px"
-                                                dropdownRender={(
-                                                    ReactNodevalue
-                                                ) => {
-                                                    return (
-                                                        <div>
-                                                            {isCurrenLoading ? (
-                                                                <div>
-                                                                    <Loader />
-                                                                </div>
-                                                            ) : (
-                                                                <ul>
-                                                                    {!!cryptoCurrencyOption?.length &&
-                                                                        cryptoCurrencyOption.map(
-                                                                            (
-                                                                                items,
-                                                                                index
-                                                                            ) => (
-                                                                                <li
-                                                                                    key={
-                                                                                        index
-                                                                                    }
-                                                                                    onClick={() =>
-                                                                                        onChangeCryptoCurrency(
-                                                                                            items?.symbol
-                                                                                        )
-                                                                                    }
-                                                                                    className="cursor-pointer"
-                                                                                >
-                                                                                    <div className="flex items-center justify-between px-1">
-                                                                                        <div className="flex items-center gap-1">
-                                                                                            <img
-                                                                                                src={
-                                                                                                    items?.iconUrl
-                                                                                                }
-                                                                                                alt={`${items?.name} flag`}
-                                                                                                className="w-[15px] h-[15px]"
-                                                                                            />
-                                                                                            <p>
-                                                                                                {capitalizeFLetter(
-                                                                                                    items?.name
-                                                                                                )}
-                                                                                            </p>
-                                                                                        </div>
-                                                                                        <p>
-                                                                                            {cryptoCurrency ===
-                                                                                            items?.symbol ? (
-                                                                                                <GrFormCheckmark color="#E25A5A" />
-                                                                                            ) : null}
-                                                                                        </p>
-                                                                                    </div>
-                                                                                </li>
-                                                                            )
-                                                                        )}
-                                                                </ul>
-                                                            )}
-                                                        </div>
-                                                    )
-                                                }}
-                                            />
-                                        </div>
+                                    <CurrencyDropdown
+                                            isCurrencyLoading={
+                                                isCurrencyLoading
+                                            }
+                                            options={cryptoCurrencyOption}
+                                            currency={cryptoCurrency}
+                                            currencyName={cryptoName}
+                                            onChangeCurrency={ onChangeCryptoCurrency}
+                                        />
                                         <div>
                                             <OneDateRange
                                                 selected={cryptoStartDate}
