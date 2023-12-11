@@ -66,7 +66,7 @@ const FireBlockTrxDetails = () => {
     useEffect(() => {
         async function getLedgerDetails() {
             try {
-               await Promise.allSettled([
+                await Promise.allSettled([
                     dispatch(queryFireBlockTrx({ currency })).unwrap(),
                 ])
             } catch (e) {

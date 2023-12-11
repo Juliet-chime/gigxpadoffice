@@ -4,16 +4,17 @@ import { color } from '../../assets/color'
 
 export const AddUserStyle = styled('div')`
     height: auto;
+`
 
-    .bgHolder {
-        height: 604px;
-        background-image: url(${image});
-        background-repeat: no-repeat;
-        background-size: cover;
-        background-position: center center;
-        @media (max-width: 1024px) {
-            height: 100%;
-        }
+export const BgHolder = styled.div`
+    height: 480px;
+    max-height: 500px;
+    background-image: url(${image});
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center center;
+    @media (max-width: 1024px) {
+        height: 100%;
     }
 `
 

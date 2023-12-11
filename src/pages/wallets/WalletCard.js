@@ -29,6 +29,10 @@ const WalletCard = ({
                         </p>
                         <h3 className="truncate text-xs ms:text-xl lg:text-xl xl-text-xl text-mainColor">
                             {coin}
+                            <span className="text-[10px]"> ({name})</span>
+                        </h3>
+                        <h3 className="text-xs ms:text-xl lg:text-xl xl-text-xl text-mainColor">
+                            {Number(coin).toFixed(8)}
                         </h3>
                         <h5 className="text-xs md:text-sm lg:text-sm xl-text-sm text-mainColor">
                             {coinAmt}
@@ -36,6 +40,9 @@ const WalletCard = ({
                     </div>
                     <div className="rate mt-10">
                         <p className="text-[12px] text-lighterAsh">Rate</p>
+                        <p className="text-[12px] text-lighterAsh">
+                            Amount in USD
+                        </p>
                         <h6 className="text-[16px] text-mainColor">{rate}</h6>
                     </div>
                     <div className="viewledger mt-10">

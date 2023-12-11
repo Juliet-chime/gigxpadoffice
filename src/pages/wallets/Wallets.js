@@ -55,6 +55,11 @@ const Wallets = () => {
   Known for its loyalty and faithfulness,
   it can be found as a welcome guest in many households across the world.
 `
+    //     const text = `
+    //  A dog is a type of domesticated animal.
+    //  Known for its loyalty and faithfulness,
+    //  it can be found as a welcome guest in many households across the world.
+    // `
     const items = [
         {
             key: '1',
@@ -80,35 +85,52 @@ const Wallets = () => {
                     Quidax
                 </p>
             ),
-            children: <p>{text}</p>,
-        },
-        {
-            key: '3',
-            label: (
-                <p className="text-mainColor font-bold font-cabinetgrotesk text-xl">
-                    Binance
-                </p>
+            children: (
+                <FireBlockContent
+                    fireBlockUSDTrx={fireBlockUSDTrx}
+                    fireBlockUSDSaving={fireBlockUSDSaving}
+                    fireBlockBTCTrx={fireBlockBTCTrx}
+                    fireBlockBTCSaving={fireBlockBTCSaving}
+                    loading={loadingLedger}
+                />
             ),
-            children: <p>{text}</p>,
         },
-        {
-            key: '4',
-            label: (
-                <p className="text-mainColor font-bold font-cabinetgrotesk text-xl">
-                    Baxi
-                </p>
-            ),
-            children: <p>{text}</p>,
-        },
-        {
-            key: '5',
-            label: (
-                <p className="text-mainColor font-bold font-cabinetgrotesk text-xl">
-                    MapleRad
-                </p>
-            ),
-            children: <p>{text}</p>,
-        },
+        // {
+        //     key: '2',
+        //     label: (
+        //         <p className="text-mainColor font-bold font-cabinetgrotesk text-xl">
+        //             Quidax
+        //         </p>
+        //     ),
+        //     children: <p>{text}</p>,
+        // },
+        // {
+        //     key: '3',
+        //     label: (
+        //         <p className="text-mainColor font-bold font-cabinetgrotesk text-xl">
+        //             Binance
+        //         </p>
+        //     ),
+        //     children: <p>{text}</p>,
+        // },
+        // {
+        //     key: '4',
+        //     label: (
+        //         <p className="text-mainColor font-bold font-cabinetgrotesk text-xl">
+        //             Baxi
+        //         </p>
+        //     ),
+        //     children: <p>{text}</p>,
+        // },
+        // {
+        //     key: '5',
+        //     label: (
+        //         <p className="text-mainColor font-bold font-cabinetgrotesk text-xl">
+        //             MapleRad
+        //         </p>
+        //     ),
+        //     children: <p>{text}</p>,
+        // },
     ]
     return (
         <div>
