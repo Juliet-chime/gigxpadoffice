@@ -1,6 +1,5 @@
-import styled from "styled-components";
-
+import styled from 'styled-components'
 
 export const InputHolder = styled.div`
-margin-top: 1rem;
+    margin-top: 2rem;
 `

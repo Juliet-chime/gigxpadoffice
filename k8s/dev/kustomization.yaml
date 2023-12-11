@@ -7,8 +7,7 @@ resources:
 - configmap.yaml
 - ingress.yaml
 
-
 images:
 - name: xpad-bko
   newName: 622054843987.dkr.ecr.eu-west-2.amazonaws.com/gigxpad-web
-  newTag: d9fc6b15b87c9c10e71a6a850764ef8b731e7497-bko
+  newTag: cff66ab2e666bddfcd35082319519e4c50769d03-bko

@@ -1,26 +1,28 @@
-export const AUTH_TOKEN = "__API_TOKEN__";
-export const REDIRECT_URL = "__REDIRECT_URL__";
+import usdt from '../assets/images/USDT.svg'
+import bitcoin from '../assets/images/bitcoin.svg'
+
+export const AUTH_TOKEN = '__API_TOKEN__'
+export const REDIRECT_URL = '__REDIRECT_URL__'
 
 export const revenueItem = ['fiat', 'crypto']
 
 export const roles = [
     {
         role: 'Super Admin',
-        user: 1
+        user: 1,
     },
     {
         role: 'Administrator',
-        user: 2
+        user: 2,
     },
     {
         role: 'Developer',
-        user: 1
+        user: 1,
     },
     {
         role: 'Finance',
-        user: 1
-    }
-
+        user: 1,
+    },
 ]
 
 export const typeOptions = [
@@ -60,6 +62,26 @@ export const statusOptions = [
     },
 ]
 
+export const fiatCurrencyOptions = [
+    {
+        value: 'NGN',
+        label: 'Naira',
+    },
+]
+
+export const cryptoCurrencyOptions = [
+    {
+        value: 'USDT',
+        label: 'USDT',
+        logo: usdt,
+    },
+    {
+        value: 'BTC',
+        label: 'Bitcoin',
+        logo: bitcoin,
+    },
+]
+
 export const roleOptions = [
     {
         value: 'admininstrator',
@@ -89,9 +111,21 @@ export const billsPayment = [
         label: 'Airtime & Data',
     },
     {
-        value: 'sports',
+        value: 'betting',
         label: 'Sports & Gaming',
     },
 ]
 
-export const verify2FA = 'A verification code has been sent to your email. Please check your inbox and enter the code to complete the login process.'
+export const feeOptions = [
+    {
+        value: 'percentage',
+        label: 'Percentage',
+    },
+    {
+        value: 'fixed',
+        label: 'Fixed Rate',
+    },
+]
+
+export const verify2FA =
+    'A verification code has been sent to your email. Please check your inbox and enter the code to complete the login process.'

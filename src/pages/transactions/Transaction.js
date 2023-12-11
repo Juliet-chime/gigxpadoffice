@@ -1,163 +1,220 @@
 import React, { useEffect, useState } from 'react'
 import CustomTable from '../../components/table/CustomTable'
 import Dashboardheader from '../../components/dashboardComponents/Dashboardheader'
-import CustomDrawer from '../../components/fields/CustomDrawer';
-import TransactionDetails from './TransactionDetails';
-import { useDispatch, useSelector } from 'react-redux';
-import { getFiatTransactionsSelector, queryFiatTransactions } from '../../services/slices/transactions/getFiatTransactions';
+import CustomDrawer from '../../components/fields/CustomDrawer'
+import TransactionDetails from './TransactionDetails'
+import { useDispatch, useSelector } from 'react-redux'
+import {
+    getFiatTransactionsSelector,
+    queryFiatTransactions,
+} from '../../services/slices/transactions/getFiatTransactions'
 import moment from 'moment'
-import { capitalizeFLetter } from '../../utils/func';
-import StatusTag from '../../components/table/StatusTag';
-import { formatMoney } from '../../utils/helperFunctions';
-import { getOneFiatTransactionsSelector, queryOneFiatTransactions } from '../../services/slices/transactions/getOneFiatTransaction';
+import { capitalizeFLetter } from '../../utils/func'
+import StatusTag from '../../components/table/StatusTag'
+import { formatMoney } from '../../utils/helperFunctions'
+import {
+    getOneFiatTransactionsSelector,
+    queryOneFiatTransactions,
+} from '../../services/slices/transactions/getOneFiatTransaction'
+
+let initialStartDate = moment(new Date('2022-09-05')).format('YYYY-MM-DD')
+let InitialEndDate = moment(new Date()).format('YYYY-MM-DD')
 
 const Transaction = () => {
+    const dispatch = useDispatch()
 
-  const dispatch = useDispatch()
+    const fiatTransaction = useSelector(getFiatTransactionsSelector)
+    const oneFiatTransaction = useSelector(getOneFiatTransactionsSelector)
 
-  const fiatTransaction = useSelector(getFiatTransactionsSelector)
-  const oneFiatTransaction = useSelector(getOneFiatTransactionsSelector)
+    const [open, setOpen] = useState(false)
+    const [startDate, setStartDate] = useState('')
+    const [endDate, setEndDate] = useState('')
+    const [status, setStatus] = useState('')
+    const [type, setType] = useState('')
 
-  const [open, setOpen] = useState(false);
-  const [startDate, setStartDate] = useState(new Date('2022-09-05'));
-  const [endDate, setEndDate] = useState(new Date('2022-09-05'));
+    const columns = [
+        {
+            title: 'Transaction Id',
+            dataIndex: 'transactionId',
+            key: 'transactionId',
+        },
+        {
+            title: 'Sender',
+            dataIndex: 'customerName',
+            key: 'customerName',
+            render: (text) => {
+                return <p>{capitalizeFLetter(text)}</p>
+            },
+        },
+        {
+            title: 'Amount',
+            dataIndex: 'amount',
+            key: 'amount',
+            render: (text) => {
+                return <p>{formatMoney({ amount: text })}</p>
+            },
+        },
+        {
+            title: 'Transaction Type',
+            dataIndex: 'type',
+            key: 'type',
+            render: (text) => {
+                return <p>{capitalizeFLetter(text)}</p>
+            },
+        },
+        {
+            title: 'Currency',
+            dataIndex: 'currency',
+            key: 'currency',
+            render: (text) => {
+                return <p>{capitalizeFLetter(text?.name)}</p>
+            },
+        },
+        {
+            title: 'Transaction Reference',
+            dataIndex: 'transactionReference',
+            key: 'trxRef',
+            render: (text) => {
+                return <p>{!!text ? text : '-'}</p>
+            },
+            align: 'center',
+        },
+        {
+            title: 'Status',
+            dataIndex: 'status',
+            key: 'status',
+            render: (text) => {
+                return <StatusTag text={text} />
+            },
+        },
+        {
+            title: 'Timestamp',
+            dataIndex: 'createdAt',
+            key: 'createdAt',
+            render: (text) => {
+                return <p>{moment(text).format('DD/MM/YYYY, h:mm:ss')}</p>
+            },
+        },
+    ]
 
-  console.log(fiatTransaction?.loading, 'loading')
-
-  const columns = [
-    {
-      title: 'Transaction Id',
-      dataIndex: 'transactionId',
-      key: 'transactionId'
-    },
-    {
-      title: 'Sender',
-      dataIndex: 'customerName',
-      key: 'customerName',
-      render: (text) => {
-        return <p>{capitalizeFLetter(text)}</p>
-      },
-    },
-    {
-      title: 'Amount',
-      dataIndex: 'amount',
-      key: 'amount',
-      render: (text) => {
-        return <p>{formatMoney({ amount: text })}</p>
-      },
-    },
-    {
-      title: 'Transaction Type',
-      dataIndex: 'type',
-      key: 'type',
-      render: (text) => {
-        return <p>{capitalizeFLetter(text)}</p>
-      },
-    },
-    {
-      title: 'Currency',
-      dataIndex: 'currency',
-      key: 'currency',
-      render: (text) => {
-        return <p>{capitalizeFLetter(text?.name)}</p>
-      },
-    },
-    {
-      title: 'Transaction Reference',
-      dataIndex: 'transactionReference',
-      key: 'trxRef',
-      render: (text) => {
-        return <p>{!!text ? text : '-'}</p>
-      },
-    },
-    {
-      title: 'Status',
-      dataIndex: 'status',
-      key: 'status',
-      render: (text) => {
-        return <StatusTag text={text} />
-      },
-    },
-    {
-      title: 'Timestamp',
-      dataIndex: 'createdAt',
-      key: 'createdAt',
-      render: (text) => {
-        return <p>{moment(text).format('DD/MM/YYYY, h:mm:ss')}</p>
-      },
-    },
-  ];
-
-  const handleStatusChange = (value) => {
-    console.log(`selected ${value}`);
-    // const val = value
-    // setStatus(val)
-    // dispatch(queryFiatTransactions({status}))
-  };
-
-  const handleTypeChange = async (value) => {
-    console.log(`selected ${value}`);
-    // const val = value
-    // setType(val)
-    // dispatch(queryFiatTransactions({type:value}))
-  };
-
-  const onInputChange = (e) => {
-    console.log(e.target.value)
-  }
-
-  useEffect(() => {
-    async function getFiatTransactions() {
-      try {
-        dispatch(queryFiatTransactions({ from: moment(startDate).format('YYYY-MM-DD') })).unwrap()
-      } catch (e) {
-        console.log(e)
-      }
+    const handleStatusChange = (value) => {
+        setStatus(value)
+        dispatch(
+            queryFiatTransactions({
+                from: startDate || initialStartDate,
+                to: endDate || InitialEndDate,
+                status: value,
+                ...(!!type ? { type } : {}),
+            })
+        )
     }
-    getFiatTransactions()
-  }, [startDate, dispatch])
 
-  const OnEachRowClicked = (trxId) => {
-    setOpen(true);
-    dispatch(queryOneFiatTransactions({ id: trxId })).unwrap()
-  }
+    const handleTypeChange = async (value) => {
+        setType(value)
+        dispatch(
+            queryFiatTransactions({
+                from: startDate || initialStartDate,
+                to: endDate || InitialEndDate,
+                type: value,
+                ...(!!status ? { status } : {}),
+            })
+        )
+    }
 
-  return (
-    <div>
-      <Dashboardheader
-        componentName={'FIAT Transactions'}
-        label={'Manage and Monitor FIAT transactions'}
-        className='mb-6'
-      />
-      <CustomTable
-        data={fiatTransaction?.fiatTransactions?.data}
-        columns={columns}
-        isLoading={fiatTransaction?.loading}
-        filterHeader={true}
-        startDate={startDate}
-        endDate={endDate}
-        onInputChange={onInputChange}
-        handleStatusChange={handleStatusChange}
-        handleTypeChange={handleTypeChange}
-        onHandleStartDate={(date) => {
-          console.log(date, 'start')
-          setStartDate(new Date(date))
-        }}
-        onHandleEndDate={(date) => {
-          console.log(date, 'end')
-          setEndDate(new Date(date))
-        }}
-        onRow={(record) => {
-          return {
-            onClick: (event) => OnEachRowClicked(record?.id), // click row
-          };
-        }}
-      />
-      <CustomDrawer placement="right" onClose={() => setOpen(false)} open={open}>
-        <TransactionDetails data={oneFiatTransaction?.oneFiatTransaction?.data} loading={oneFiatTransaction?.loading} />
-      </CustomDrawer>
-    </div>
-  )
+    const handleStartDate = async (date) => {
+        setStartDate(date)
+    }
+
+    const handleApplyFilter = async () => {
+        dispatch(
+            queryFiatTransactions({
+                from:
+                    moment(startDate).format('YYYY-MM-DD') || initialStartDate,
+                to: moment(endDate).format('YYYY-MM-DD') || InitialEndDate,
+                ...(!!status ? { status } : {}),
+                ...(!!type ? { type } : {}),
+            })
+        )
+    }
+    const handleClearFilter = async () => {
+        setStartDate('')
+        setEndDate('')
+        dispatch(
+            queryFiatTransactions({
+                from: initialStartDate,
+                to: InitialEndDate,
+                ...(!!status ? { status } : {}),
+                ...(!!type ? { type } : {}),
+            })
+        )
+    }
+
+    const handleEndDate = async (date) => {
+        setEndDate(date)
+    }
+
+    const onInputChange = (e) => {
+        alert(e.target.value)
+    }
+
+    const OnEachRowClicked = (trxId) => {
+        setOpen(true)
+        dispatch(queryOneFiatTransactions({ id: trxId })).unwrap()
+    }
+
+    useEffect(() => {
+        async function getFiatTransactions() {
+            try {
+                dispatch(
+                    queryFiatTransactions({
+                        from: initialStartDate,
+                        to: InitialEndDate,
+                    })
+                ).unwrap()
+            } catch (e) {}
+        }
+        getFiatTransactions()
+    }, [dispatch])
+
+    return (
+        <div>
+            <Dashboardheader
+                componentName={'FIAT Transactions'}
+                label={'Manage and Monitor FIAT transactions'}
+                className="mb-6"
+            />
+            <CustomTable
+                data={fiatTransaction?.fiatTransactions?.data}
+                columns={columns}
+                isLoading={fiatTransaction?.loading}
+                filterHeader={true}
+                startDate={startDate || new Date('2022-09-05')}
+                endDate={endDate || new Date()}
+                handelApplyFilter={handleApplyFilter}
+                handleClearFilter={handleClearFilter}
+                onInputChange={onInputChange}
+                handleStatusChange={handleStatusChange}
+                handleTypeChange={handleTypeChange}
+                onHandleStartDate={handleStartDate}
+                onHandleEndDate={handleEndDate}
+                onRow={(record) => {
+                    return {
+                        onClick: (event) => OnEachRowClicked(record?.id), // click row
+                    }
+                }}
+            />
+            <CustomDrawer
+                placement="right"
+                onClose={() => setOpen(false)}
+                open={open}
+            >
+                <TransactionDetails
+                    data={oneFiatTransaction?.oneFiatTransaction?.data}
+                    loading={oneFiatTransaction?.loading}
+                />
+            </CustomDrawer>
+        </div>
+    )
 }
 
 export default Transaction
