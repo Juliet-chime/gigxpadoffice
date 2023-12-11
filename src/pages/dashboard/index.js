@@ -41,19 +41,8 @@ import {
     getCurrenciesSelector,
     queryCurrencies,
 } from '../../services/slices/misc/getCurrencies'
-<<<<<<< HEAD
-import {
-    convertNairaToDollar,
-    filterCurrencies,
-} from '../../utils/func'
-import {
-    getRatesSelector,
-    queryRates,
-} from '../../services/slices/settings/globalconfig/getRate'
-=======
 import { filterCurrencies } from '../../utils/func'
 import { queryRates } from '../../services/slices/settings/globalconfig/getRate'
->>>>>>> dd1ea5e1933355b3b4b812746b3f419c3a54d85a
 import {
     getBaxiBalanceSelector,
     queryBaxiBalance,
@@ -63,10 +52,7 @@ import {
     queryStellasBalance,
 } from '../../services/slices/dashboard/stellaBalance'
 import CurrencyDropdown from '../../components/dashboardComponents/CurrencyDropdown'
-<<<<<<< HEAD
-=======
 import { queryFireBlockWalletTrx } from '../../services/slices/dashboard/fireBlockTrx'
->>>>>>> dd1ea5e1933355b3b4b812746b3f419c3a54d85a
 import { queryRoles } from '../../services/slices/roles/fetchRoles'
 
 let initialStartDate = moment(new Date('2022-04-19')).format('YYYY-MM-DD')
@@ -86,10 +72,6 @@ export default function Dashboard() {
     const userMetrics = useSelector(getUserChartSelector)
     const { stellasBalance } = useSelector(getStellasBalanceSelector)
     const { baxiBalance } = useSelector(getBaxiBalanceSelector)
-<<<<<<< HEAD
-    const { rates } = useSelector(getRatesSelector)
-=======
->>>>>>> dd1ea5e1933355b3b4b812746b3f419c3a54d85a
     const { currencies, loading: isCurrencyLoading } = useSelector(
         getCurrenciesSelector
     )
@@ -129,10 +111,6 @@ export default function Dashboard() {
         (cryptoCurrencyOption || [])[0]?.symbol
     )
 
-<<<<<<< HEAD
-
-=======
->>>>>>> dd1ea5e1933355b3b4b812746b3f419c3a54d85a
     const [cryptoName, setCryptoName] = useState(
         (cryptoCurrencyOption || [])[0]?.name
     )
@@ -141,11 +119,6 @@ export default function Dashboard() {
         (fiatCurrencyOption || [])[0]?.name
     )
 
-<<<<<<< HEAD
-    console.log(fiatCurrency,fiatName)
-
-=======
->>>>>>> dd1ea5e1933355b3b4b812746b3f419c3a54d85a
     const items = revenueItem.map((data, index) => {
         return {
             key: index + 1,
@@ -486,7 +459,7 @@ export default function Dashboard() {
                     dispatch(queryCurrencies()).unwrap(),
                     dispatch(queryRoles()).unwrap(),
                 ])
-            } catch (e) {}
+            } catch (e) { }
         }
         getData()
     }, [dispatch])
@@ -501,7 +474,7 @@ export default function Dashboard() {
                         currencyType: revenueCurrencyType,
                     })
                 ).unwrap()
-            } catch (e) {}
+            } catch (e) { }
         }
         getRevenuePro
         fit()

@@ -20,7 +20,7 @@ const Settings = () => {
 
     const [message, setMessage, status, setStatus] = useErrorTimeout(3000)
 
-    const onChangeTab = (key) => {}
+    const onChangeTab = (key) => { }
 
     const items = [
         {
@@ -60,11 +60,6 @@ const Settings = () => {
 
     return (
         <div>
-<<<<<<< HEAD
-         {!!message ? <div style={{position:'absolute',top:'0px',left:'0px',right:'0px'}}>
-            <Notification message={message} type={status} />
-            </div> : null}
-=======
             {!!message ? (
                 <div
                     style={{
@@ -77,7 +72,6 @@ const Settings = () => {
                     <Notification message={message} type={status} />
                 </div>
             ) : null}
->>>>>>> dd1ea5e1933355b3b4b812746b3f419c3a54d85a
             {addUser ? (
                 <AddAUser setAddUser={setAddUser} />
             ) : addRole ? (

@@ -9,7 +9,7 @@ import { queryFireBlockSavingCard } from '../../services/slices/ledger/blocksSav
 import FireBlockContent from './accordionContent/FireBlockContent'
 
 const Wallets = () => {
-    const onChange = (key) => {}
+    const onChange = (key) => { }
 
     const [fireBlockUSDTrx, setFireBlockUSDTrx] = useState(null)
     const [fireBlockUSDSaving, setFireBlockUSDSaving] = useState(null)
