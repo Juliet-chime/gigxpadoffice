@@ -76,18 +76,6 @@ export default function Dashboard() {
         getCurrenciesSelector
     )
 
-    const usdStellas = convertNairaToDollar({
-        exchangeRates: rates,
-        currencyPair: 'usd/ngn',
-        amount: stellasBalance?.accountBalance,
-    })
-
-    const usdBaxi = convertNairaToDollar({
-        exchangeRates: rates,
-        currencyPair: 'usd/ngn',
-        amount: baxiBalance?.accountBalance,
-    })
-
     const fiatCurrencyOption = filterCurrencies({ currencies, str: 'crypto' })
     const cryptoCurrencyOption = filterCurrencies({ currencies, str: 'fiat' })
 
@@ -459,7 +447,7 @@ export default function Dashboard() {
                     dispatch(queryCurrencies()).unwrap(),
                     dispatch(queryRoles()).unwrap(),
                 ])
-            } catch (e) { }
+            } catch (e) {}
         }
         getData()
     }, [dispatch])
@@ -474,10 +462,9 @@ export default function Dashboard() {
                         currencyType: revenueCurrencyType,
                     })
                 ).unwrap()
-            } catch (e) { }
+            } catch (e) {}
         }
-        getRevenuePro
-        fit()
+        getRevenueProfit()
     }, [dispatch])
 
     //custom date input
@@ -615,7 +602,7 @@ export default function Dashboard() {
                                 flexlayout={'true'}
                                 height="110px"
                             >
-                                <Link to="/ledger">
+                                <Link to="/wallets">
                                     <div
                                         style={{
                                             display: 'flex',

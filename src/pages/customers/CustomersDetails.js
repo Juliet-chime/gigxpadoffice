@@ -17,6 +17,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { queryLockAccount } from '../../services/slices/settings/usermanagement/lockAccount'
 import { queryUnlockAccount } from '../../services/slices/settings/usermanagement/unlockAccount'
 import { querySuspendAccount } from '../../services/slices/settings/usermanagement/suspendAccount'
+import DetailsHeader from '../../components/dashboardComponents/DetailsHeader'
 
 const CustomersDetails = () => {
     const dispatch = useDispatch()
