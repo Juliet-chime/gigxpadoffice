@@ -9,7 +9,7 @@ import { queryFireBlockSavingCard } from '../../services/slices/ledger/blocksSav
 import FireBlockContent from './accordionContent/FireBlockContent'
 
 const Wallets = () => {
-    const onChange = (key) => { }
+    const onChange = (key) => {}
 
     const [fireBlockUSDTrx, setFireBlockUSDTrx] = useState(null)
     const [fireBlockUSDSaving, setFireBlockUSDSaving] = useState(null)
@@ -50,11 +50,6 @@ const Wallets = () => {
         getWalletData()
     }, [dispatch])
 
-    const text = `
-  A dog is a type of domesticated animal.
-  Known for its loyalty and faithfulness,
-  it can be found as a welcome guest in many households across the world.
-`
     //     const text = `
     //  A dog is a type of domesticated animal.
     //  Known for its loyalty and faithfulness,
@@ -70,24 +65,7 @@ const Wallets = () => {
             ),
             children: (
                 <FireBlockContent
-                    fireBlockUSDTrx={fireBlockUSDTrx}
-                    fireBlockUSDSaving={fireBlockUSDSaving}
-                    fireBlockBTCTrx={fireBlockBTCTrx}
-                    fireBlockBTCSaving={fireBlockBTCSaving}
-                    loading={loadingLedger}
-                />
-            ),
-        },
-        {
-            key: '2',
-            label: (
-                <p className="text-mainColor font-bold font-cabinetgrotesk text-xl">
-                    Quidax
-                </p>
-            ),
-            children: (
-                <FireBlockContent
-                    fireBlockUSDTrx={fireBlockUSDTrx}
+                   fireBlockUSDTrx={fireBlockUSDTrx}
                     fireBlockUSDSaving={fireBlockUSDSaving}
                     fireBlockBTCTrx={fireBlockBTCTrx}
                     fireBlockBTCSaving={fireBlockBTCSaving}
