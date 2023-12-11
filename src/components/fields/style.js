@@ -45,7 +45,7 @@ export const BtnStyle = styled(Button)`
     box-shadow: none !important;
     cursor: pointer;
     &:disabled {
-        opacity: 0.2 !important;
+        opacity: 0.5 !important;
     }
 `
 

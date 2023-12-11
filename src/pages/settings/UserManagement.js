@@ -10,6 +10,9 @@ import {
     queryAdmins,
 } from '../../services/slices/admin/fetchAdmins'
 import { queryResendInviteAdmin } from '../../services/slices/invite/resendInvite'
+import { useNavigate } from 'react-router-dom'
+import CustomDrawer from '../../components/fields/CustomDrawer'
+import AdminDetails from './AdminDetails'
 
 const SettingActions = ({ text, color, ...props }) => {
     return (
@@ -24,10 +27,18 @@ const SettingActions = ({ text, color, ...props }) => {
     )
 }
 
-const UserManagement = ({ setAddUser, setMessage, setStatus }) => {
+const UserManagement = ({
+    setAddUser,
+    setMessage,
+    setStatus,
+    setChangeRole,
+}) => {
     const dispatch = useDispatch()
+    const navigate = useNavigate()
 
     const [reSendInviteLoading, setResendInviteLoading] = useState(false)
+    const [open, setOpen] = useState(false)
+    const [adminDetail, setAdminDetail] = useState(null)
 
     const { admins, loading } = useSelector(getAdminsSelector)
 
@@ -40,6 +51,11 @@ const UserManagement = ({ setAddUser, setMessage, setStatus }) => {
     }
     const onHandleRoleChange = (e) => {
         alert(e)
+    }
+
+    const OnEachRowClicked = (detail) => {
+        setOpen(true)
+        setAdminDetail(detail)
     }
 
     const onHandleResendInvite = async (data) => {
@@ -66,6 +82,13 @@ const UserManagement = ({ setAddUser, setMessage, setStatus }) => {
             title: 'No',
             dataIndex: '',
             key: '',
+            onCell: (record, rowIndex) => {
+                return {
+                    onClick: (ev) => {
+                        OnEachRowClicked(record)
+                    },
+                }
+            },
             render: (_, title, index) => {
                 return <p>{index + 1}.</p>
             },
@@ -74,6 +97,13 @@ const UserManagement = ({ setAddUser, setMessage, setStatus }) => {
             title: 'User Name',
             dataIndex: 'name',
             key: 'name',
+            onCell: (record, rowIndex) => {
+                return {
+                    onClick: (ev) => {
+                        OnEachRowClicked(record)
+                    },
+                }
+            },
             render: (_, title, index) => {
                 return <p>{title.lastName + ' ' + title.firstName}.</p>
             },
@@ -82,13 +112,40 @@ const UserManagement = ({ setAddUser, setMessage, setStatus }) => {
             title: 'Email Address',
             dataIndex: 'email',
             key: 'email',
+            onCell: (record, rowIndex) => {
+                return {
+                    onClick: (ev) => {
+                        OnEachRowClicked(record)
+                    },
+                }
+            },
         },
         {
             title: 'Role',
             dataIndex: '',
             key: '',
+            onCell: (record, rowIndex) => {
+                return {
+                    onClick: (ev) => {
+                        OnEachRowClicked(record)
+                    },
+                }
+            },
             render: (_, title, index) => {
-                return <p>{(title.roles || [])[0]?.name}</p>
+                const role = title.roles.map((role) => role.name)
+                return (
+                    <p>
+                        {role?.length === 1 ? (
+                            <span>{(role || [])[0]}</span>
+                        ) : (
+                            <span>
+                                {(role || [])[0]}{' '}
+                                <span className="text-secondaryColor">+</span>
+                                {role.length - 1}
+                            </span>
+                        )}
+                    </p>
+                )
             },
         },
         // {
@@ -153,6 +210,19 @@ const UserManagement = ({ setAddUser, setMessage, setStatus }) => {
                                                 />
                                                 <SettingActions text="Send Password Reset" />
                                                 <SettingActions
+                                                    text="Change Role"
+                                                    onClick={() => {
+                                                        navigate(
+                                                            `/settings/changerole/${record.firstName}`,
+                                                            {
+                                                                state: {
+                                                                    data: record,
+                                                                },
+                                                            }
+                                                        )
+                                                    }}
+                                                />
+                                                <SettingActions
                                                     text="Remove User"
                                                     color="text-secondaryColor"
                                                 />
@@ -194,6 +264,11 @@ const UserManagement = ({ setAddUser, setMessage, setStatus }) => {
                             hideOnSinglePage: true,
                             pageSize: 7,
                         }}
+                        // onRow={(record) => {
+                        //     return {
+                        //         onClick: (event) => OnEachRowClicked(record), // click row
+                        //     }
+                        // }}
                     />
                 </div>
                 <CustomButton
@@ -204,6 +279,16 @@ const UserManagement = ({ setAddUser, setMessage, setStatus }) => {
                     onClick={onAddUser}
                     className="mt-6"
                 />
+
+                <div className="admindetail">
+                    <CustomDrawer
+                        placement="right"
+                        onClose={() => setOpen(false)}
+                        open={open}
+                    >
+                        <AdminDetails userData={adminDetail} />
+                    </CustomDrawer>
+                </div>
             </>
         </div>
     )

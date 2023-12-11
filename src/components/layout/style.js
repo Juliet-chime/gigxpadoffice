@@ -2,44 +2,35 @@ import styled from 'styled-components'
 import { color } from '../../assets/color'
 
 export const LayoutContainer = styled.div`
-    height: 100vh;
     background: ${color.offWhite};
 `
 
-export const LayoutChildwrapper = styled.div`
-    width: ${(props) => props.width || '500px'};
+export const InputContainer = styled.div`
+    width: 500px;
     margin: auto;
-    margin-top: 10%;
-
-    @media (max-width: 920px) {
-        width: 95%;
-        margin-top: 10%;
-        padding: 1rem;
-        box-shadow: 1px 1px 9px 0px rgba(0, 0, 0, 0.75);
-        -webkit-box-shadow: 1px 1px 9px 0px rgba(0, 0, 0, 0.75);
-        -moz-box-shadow: 1px 1px 9px 0px rgba(0, 0, 0, 0.75);
+    margin-top: 3rem;
+    padding: 0rem;
+    @media (max-width: 768px) {
+        padding: 2rem;
+        width: 100%;
+        margin-top: 0.5rem;
     }
-
-    @media (min-width: 768px) and (max-width: 920px) {
-        width: 65%;
-    }
-
-    h1 {
-        font-weight: bold;
-        font-size: 30px;
-        font-family: CabinetGrotesk;
-        color: ${color.mainColor};
-        max-width: ${(props) => props.maxwidth || '296px'};
-        margin-bottom: 6px;
-        letter-spacing: 0px;
-    }
-    p {
-        font-family: 'Rubik', sans-serif;
-        font-size: 14px;
-        font-weight: normal;
-        color: #67777e;
-        max-width: ${(props) => props.spanWidth || '370px'};
-    }
+`
+export const FormHeading = styled.h1`
+    font-weight: bold;
+    font-size: 30px;
+    font-family: CabinetGrotesk;
+    color: ${color.mainColor};
+    max-width: ${(props) => props.maxwidth || '296px'};
+    margin-bottom: 6px;
+    letter-spacing: 0px;
+`
+export const FormParagraph = styled.p`
+    font-family: 'Rubik', sans-serif;
+    font-size: 14px;
+    font-weight: normal;
+    color: #67777e;
+    max-width: ${(props) => props.spanWidth || '370px'};
 `
 
 export const LayoutBgContainer = styled.div`
