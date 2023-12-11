@@ -24,6 +24,7 @@ import feesReducer from './settings/globalconfig/getFees'
 import limitReducer from './settings/globalconfig/limit'
 import fireBlockTrxReducer from './ledger/blocksTrx'
 import fireblockTrxSavingReducer from './ledger/blocksSaving'
+import fireBlockWalletReducer from './dashboard/fireBlockTrx'
 import { clearLocalStorage } from '../../utils/authFunc'
 
 const combinedReducer = combineReducers({
@@ -51,6 +52,7 @@ const combinedReducer = combineReducers({
     fees: feesReducer,
     limit: limitReducer,
     fireblockTrx: fireBlockTrxReducer,
+    fireBlockWallet: fiatMetricsReducer,
     fireblockTrxSaving: fireblockTrxSavingReducer,
 })
 
