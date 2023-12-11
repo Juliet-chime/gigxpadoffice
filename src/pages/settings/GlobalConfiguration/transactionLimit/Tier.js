@@ -20,8 +20,6 @@ const Tier = ({ level }) => {
 
     const defaultVal = limit?.find((item) => item?.level === level)
 
-    console.log({ limit, defaultVal })
-
     const initialValues = {
         min: defaultVal?.minimumAmount,
         max: defaultVal?.maximumAmount,

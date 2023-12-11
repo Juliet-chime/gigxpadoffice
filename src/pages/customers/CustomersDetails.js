@@ -8,12 +8,16 @@ import CustomerWalletBalance from './CustomerWalletBalance'
 import CustomerKYCDocumentation from './CustomerKYCDocumentation'
 import CustomModal from '../../components/modal/CustomModal'
 import { IoIosLock } from 'react-icons/io'
+import { IoCheckmarkCircle } from 'react-icons/io5'
 import { Link, useParams } from 'react-router-dom'
 import {
     getOneUserSelector,
     queryOneUser,
 } from '../../services/slices/user/oneUser'
 import { useDispatch, useSelector } from 'react-redux'
+import { queryLockAccount } from '../../services/slices/settings/usermanagement/lockAccount'
+import { queryUnlockAccount } from '../../services/slices/settings/usermanagement/unlockAccount'
+import { querySuspendAccount } from '../../services/slices/settings/usermanagement/suspendAccount'
 
 const CustomersDetails = () => {
     const dispatch = useDispatch()
@@ -60,6 +64,25 @@ const CustomersDetails = () => {
         },
     ]
 
+    const onLockAccount = async () => {
+        const res = await dispatch(queryLockAccount({ id }))
+        console.log(res)
+    }
+
+    const onUnlockAccount = async () => {
+        const res = await dispatch(queryUnlockAccount({ id }))
+        console.log(res)
+    }
+
+    const onSuspendAccount = async () => {
+        const data = {
+            userId: id,
+            status: 'locked',
+        }
+        const res = dispatch(querySuspendAccount({ data }))
+        console.log(res, data)
+    }
+
     useEffect(() => {
         async function getFiatTransactions() {
             try {
@@ -93,19 +116,40 @@ const CustomersDetails = () => {
                 </Col>
                 <Col xs={24} sm={24} md={9} lg={6} xl={4}>
                     <div className="flex justify-end gap-3">
-                        <CustomButton
-                            text={'Lock Account'}
-                            border="1px solid #DBDBDB"
-                            color={color.mainColor}
-                            radius="25px"
-                            onClick={showModal}
-                        />
-                        <CustomButton
-                            text={'Suspend Account'}
-                            border="1px solid #DBDBDB"
-                            color={color.secondaryColor}
-                            radius="25px"
-                        />
+                        {!true ? (
+                            <CustomButton
+                                text={'Unlock Account'}
+                                border="1px solid #DBDBDB"
+                                color={color.mainColor}
+                                radius="25px"
+                                onClick={onUnlockAccount}
+                            />
+                        ) : (
+                            <CustomButton
+                                text={'Lock Account'}
+                                border="1px solid #DBDBDB"
+                                color={color.mainColor}
+                                radius="25px"
+                                onClick={showModal}
+                            />
+                        )}
+                        {!true ? (
+                            <CustomButton
+                                text={'Account Suspended'}
+                                border="1px solid #DBDBDB"
+                                color={color.secondaryColor}
+                                radius="25px"
+                                disabled={true}
+                            />
+                        ) : (
+                            <CustomButton
+                                text={'Suspend Account'}
+                                border="1px solid #DBDBDB"
+                                color={color.secondaryColor}
+                                radius="25px"
+                                onClick={onSuspendAccount}
+                            />
+                        )}
                     </div>
                 </Col>
             </Row>
@@ -120,25 +164,37 @@ const CustomersDetails = () => {
                 onCancel={handleCancel}
                 footer={null}
             >
-                <div className="flex flex-col items-center justify-center gap-4 pt-20">
-                    <div className="w-16 h-16 border border-fieldAsh flex items-center justify-center rounded-full bg-fieldAsh">
-                        <IoIosLock fontSize={24} />
+                {!true ? (
+                    <div className="flex flex-col items-center justify-center gap-4 pt-20 pb-10">
+                        <div className="w-12 h-12 border border-fieldAsh flex items-center justify-center rounded-full bg-fieldAsh">
+                            <IoCheckmarkCircle fontSize={28} color="#4CAF50" />
+                        </div>
+                        <h2 className="text-xl font-bold font-cabinetgrotesk">
+                            Account successfully locked
+                        </h2>
                     </div>
-                    <h2 className="text-xl font-bold font-cabinetgrotesk">
-                        Lock this account?
-                    </h2>
-                    <p className="text-lighterAsh text-lg text-center">
-                        This user will not be able to make any transactions but
-                        can however still log into the mobile app
-                    </p>
-                    <CustomButton
-                        text={'Yes, lock account'}
-                        bg={color.fieldColor}
-                        color={color.accessBtnColor}
-                        weight="700"
-                        height="3.75rem"
-                    />
-                </div>
+                ) : (
+                    <div className="flex flex-col items-center justify-center gap-4 pt-20">
+                        <div className="w-16 h-16 border border-fieldAsh flex items-center justify-center rounded-full bg-fieldAsh">
+                            <IoIosLock fontSize={24} />
+                        </div>
+                        <h2 className="text-xl font-bold font-cabinetgrotesk">
+                            Lock this account?
+                        </h2>
+                        <p className="text-lighterAsh text-lg text-center">
+                            This user will not be able to make any transactions
+                            but can however still log into the mobile app
+                        </p>
+                        <CustomButton
+                            text={'Yes, lock account'}
+                            bg={color.fieldColor}
+                            color={color.accessBtnColor}
+                            weight="700"
+                            height="3.75rem"
+                            onClick={onLockAccount}
+                        />
+                    </div>
+                )}
             </CustomModal>
         </div>
     )
