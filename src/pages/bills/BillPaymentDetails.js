@@ -3,6 +3,7 @@ import TrxDetailsValue from '../transactions/TrxDetailsValue'
 import moment from 'moment'
 import { formatMoney } from '../../utils/helperFunctions'
 import Loader from '../../components/loader/Loader'
+import { capitalizeFLetter } from '../../utils/func'
 
 const BillPaymentDetails = ({ data, loading }) => {
     return (
@@ -23,7 +24,7 @@ const BillPaymentDetails = ({ data, loading }) => {
                         />
                         <TrxDetailsValue
                             name={'Amount'}
-                            value={'₦' + formatMoney({ amount: data?.amount })}
+                            value={formatMoney({ amount: data?.amount })}
                         />
                         {/* <TrxDetailsValue name={'Transaction Fee'} value={data?.trxFee} />
                 <TrxDetailsValue name={'Baxi Fee'} value={data?.baxiFee} /> */}
@@ -42,10 +43,19 @@ const BillPaymentDetails = ({ data, loading }) => {
                     <div className="mt-10">
                         <TrxDetailsValue
                             name={'Bill Type'}
-                            value={data?.metadata?.type}
+                            value={capitalizeFLetter(data?.metadata?.type)}
                         />
-                        {/* <TrxDetailsValue name={'Vendor'} value={data?.vendor} /> */}
-                        {/* <TrxDetailsValue name={'Transaction Reference'} value={data?.transactionReference} /> */}
+                        <TrxDetailsValue
+                            name={'Vendor'}
+                            value={capitalizeFLetter(data?.metadata?.provider)}
+                        />
+                        <TrxDetailsValue
+                            name={'Transaction Reference'}
+                            value={
+                                data?.metadata?.baxiResponse
+                                    ?.transactionReference
+                            }
+                        />
                     </div>
                 </>
             )}

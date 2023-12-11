@@ -27,11 +27,11 @@ const TransactionDetails = ({ data, loading }) => {
                         />
                         <TrxDetailsValue
                             name={'Email address'}
-                            value={data?.address}
+                            value={data?.email}
                         />
                         <TrxDetailsValue
                             name={'Phone Number'}
-                            value={data?.phone}
+                            value={data?.phoneNumber}
                         />
                         <TrxDetailsValue
                             name={'Transaction Time'}

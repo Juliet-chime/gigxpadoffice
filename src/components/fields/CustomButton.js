@@ -2,6 +2,7 @@ import React from 'react'
 import { BtnStyle } from './style'
 import { SubmitButton } from 'formik-antd'
 import styled from 'styled-components'
+import Loader from '../loader/Loader'
 
 const FormikBtnStyle = styled(SubmitButton)`
     background-color: ${(props) => props.bg || 'transparent'} !important;
@@ -16,10 +17,10 @@ const FormikBtnStyle = styled(SubmitButton)`
     box-shadow: none !important;
 `
 
-export const CustomFormikButton = ({ text, children, ...props }) => {
+export const CustomFormikButton = ({ text, children, loading, ...props }) => {
     return (
         <FormikBtnStyle {...props}>
-            {text}
+            {loading ? <Loader /> : text}
             {children ? children : null}
         </FormikBtnStyle>
     )

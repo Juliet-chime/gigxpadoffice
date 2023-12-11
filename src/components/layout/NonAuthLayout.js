@@ -1,7 +1,9 @@
 import React from 'react'
 import {
+    FormHeading,
+    FormParagraph,
+    InputContainer,
     LayoutBgContainer,
-    LayoutChildwrapper,
     LayoutContainer,
     LogoLock,
 } from './style'
@@ -20,39 +22,46 @@ const NonAuthLayout = ({
     spanWidth,
 }) => {
     return (
-        <LayoutContainer>
-            <Row>
-                <Col xs={0} sm={0} md={0} lg={8} xl={8}>
-                    <LayoutBgContainer image={image}>
-                        <div className="logo-container">
-                            <img src={gpad} alt="logo" />
-                        </div>
-                    </LayoutBgContainer>
-                </Col>
-                <Col xs={24} sm={24} md={24} lg={16} xl={16}>
-                    <LogoLock lock={lock}>
-                        <div className="mobile_logo">
-                            <img src={gpad} alt="logo" />
-                        </div>
-                        {lock ? (
-                            <div className="lock" justify="end">
-                                <IoMdLock className="iLock" />
+        <LayoutContainer className="h-full md:h-[100vh]">
+            <div>
+                <Row>
+                    <Col xs={0} sm={0} md={0} lg={8} xl={8}>
+                        <LayoutBgContainer image={image}>
+                            <div className="logo-container">
+                                <img src={gpad} alt="logo" />
                             </div>
-                        ) : null}
-                    </LogoLock>
+                        </LayoutBgContainer>
+                    </Col>
+                    <Col xs={24} sm={24} md={24} lg={16} xl={16}>
+                        <LogoLock lock={lock}>
+                            <div className="mobile_logo">
+                                <img src={gpad} alt="logo" />
+                            </div>
+                            {lock ? (
+                                <div className="lock" justify="end">
+                                    <IoMdLock className="iLock" />
+                                </div>
+                            ) : null}
+                        </LogoLock>
 
-                    <LayoutChildwrapper
-                        width={width}
-                        maxwidth={maxwidth}
-                        lock={lock}
-                        spanWidth={spanWidth}
-                    >
-                        {title ? <h1>{title}</h1> : null}
-                        {subText ? <p>{subText}</p> : null}
-                        {children}
-                    </LayoutChildwrapper>
-                </Col>
-            </Row>
+                        <div>
+                            <InputContainer>
+                                {title ? (
+                                    <FormHeading maxwidth={maxwidth}>
+                                        {title}
+                                    </FormHeading>
+                                ) : null}
+                                {subText ? (
+                                    <FormParagraph spanWidth={spanWidth}>
+                                        {subText}
+                                    </FormParagraph>
+                                ) : null}
+                                {children}
+                            </InputContainer>
+                        </div>
+                    </Col>
+                </Row>
+            </div>
         </LayoutContainer>
     )
 }
