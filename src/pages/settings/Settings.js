@@ -73,7 +73,7 @@ const Settings = () => {
                 </div>
             ) : null}
             {addUser ? (
-                <AddAUser setAddUser={setAddUser} />
+                <AddAUser setAddUser={setAddUser} status={status} message={message} setMessage={setMessage} setStatus={setStatus} />
             ) : addRole ? (
                 <AddARole setAddRole={setAddRole} />
             ) : (
