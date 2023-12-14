@@ -24,9 +24,7 @@ import feesReducer from './settings/globalconfig/getFees'
 import fireBlockTrxReducer from './ledger/blocksTrx'
 import fireblockTrxSavingReducer from './ledger/blocksSaving'
 import limitReducer from './settings/globalconfig/limit'
-// import fireBlockTrxReducer from './ledger/blocksTrx'
-// import fireblockTrxSavingReducer from './ledger/blocksSaving'
-import fireBlockWalletReducer from './dashboard/fireBlockTrx'
+import stellaBaxiLedgerReducer from './ledger/stella-baxi'
 import { clearLocalStorage } from '../../utils/authFunc'
 
 const combinedReducer = combineReducers({
@@ -55,9 +53,8 @@ const combinedReducer = combineReducers({
     fireblockTrx: fireBlockTrxReducer,
     fireblockTrxSaving: fireblockTrxSavingReducer,
     limit: limitReducer,
-    fireblockTrx: fireBlockTrxReducer,
     fireBlockWallet: fiatMetricsReducer,
-    fireblockTrxSaving: fireblockTrxSavingReducer,
+    stellaBaxi: stellaBaxiLedgerReducer
 })
 
 export const rootReducer = (state, action) => {

@@ -8,16 +8,16 @@ import CustomerKYCDocumentation from './CustomerKYCDocumentation'
 import CustomModal from '../../components/modal/CustomModal'
 import { IoIosLock } from 'react-icons/io'
 import { IoCheckmarkCircle } from 'react-icons/io5'
-import { Link, useParams } from 'react-router-dom'
+import { useParams } from 'react-router-dom'
 import {
     getOneUserSelector,
     queryOneUser,
 } from '../../services/slices/user/oneUser'
 import { useDispatch, useSelector } from 'react-redux'
-import { queryLockAccount } from '../../services/slices/settings/usermanagement/lockAccount'
-import { queryUnlockAccount } from '../../services/slices/settings/usermanagement/unlockAccount'
-import { querySuspendAccount } from '../../services/slices/settings/usermanagement/suspendAccount'
+// import { queryLockAccount } from '../../services/slices/settings/usermanagement/lockAccount'
+// import { querySuspendAccount } from '../../services/slices/settings/usermanagement/suspendAccount'
 import DetailsHeader from '../../components/dashboardComponents/DetailsHeader'
+// import { queryUnsuspendAccount } from '../../services/slices/settings/usermanagement/unSuspendAccount'
 
 const CustomersDetails = () => {
     const dispatch = useDispatch()
@@ -65,22 +65,34 @@ const CustomersDetails = () => {
     ]
 
     const onLockAccount = async () => {
-        const res = await dispatch(queryLockAccount({ id }))
-        console.log(res)
+
+        // let data = {
+        //     userId: id,
+        //     status: 'locked',
+        // }
+
+        // const res = await dispatch(queryLockAccount({ data }))
+
     }
 
     const onUnlockAccount = async () => {
-        const res = await dispatch(queryUnlockAccount({ id }))
-        console.log(res)
+        // let data = {
+        //     userId: id,
+        //     status: 'active',
+        // }
+
+        // const res = await dispatch(queryLockAccount({ data }))
+
+    }
+
+    const onUnsuspendAccount = async () => {
+        // const res = await dispatch(queryUnsuspendAccount({ id }))
+
     }
 
     const onSuspendAccount = async () => {
-        const data = {
-            userId: id,
-            status: 'locked',
-        }
-        const res = dispatch(querySuspendAccount({ data }))
-        console.log(res, data)
+        // const res = await dispatch(querySuspendAccount({ id }))
+
     }
 
     useEffect(() => {
@@ -129,6 +141,7 @@ const CustomersDetails = () => {
                                 color={color.secondaryColor}
                                 radius="25px"
                                 disabled={true}
+                                onClick={onUnsuspendAccount}
                             />
                         ) : (
                             <CustomButton
@@ -170,7 +183,7 @@ const CustomersDetails = () => {
                         <h2 className="text-xl font-bold font-cabinetgrotesk">
                             Lock this account?
                         </h2>
-                        <p className="text-lighterAsh text-lg text-center">
+                        <p className="text-lighterAsh text-md text-center">
                             This user will not be able to make any transactions
                             but can however still log into the mobile app
                         </p>
@@ -180,6 +193,7 @@ const CustomersDetails = () => {
                             color={color.accessBtnColor}
                             weight="700"
                             height="3.75rem"
+                            className='mt-2'
                             onClick={onLockAccount}
                         />
                     </div>

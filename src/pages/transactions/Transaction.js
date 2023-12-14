@@ -171,7 +171,7 @@ const Transaction = () => {
                         to: InitialEndDate,
                     })
                 ).unwrap()
-            } catch (e) {}
+            } catch (e) { }
         }
         getFiatTransactions()
     }, [dispatch])
