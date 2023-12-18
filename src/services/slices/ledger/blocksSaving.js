@@ -19,7 +19,7 @@ export const queryFireBlockSaving = createAsyncThunk(
                 params
             )
             return response?.data
-        } catch (e) {}
+        } catch (e) { }
     }
 )
 

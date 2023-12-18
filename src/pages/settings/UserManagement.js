@@ -17,15 +17,15 @@ import AdminDetails from './AdminDetails'
 const SettingActions = ({ text, color, ...props }) => {
     return (
         <span
-            className={`${
-                color || 'text-mainColor'
-            } text-[12px] font-medium cursor my-1 cursor-pointer`}
+            className={`${color || 'text-mainColor'
+                } text-[12px] font-medium cursor my-1 cursor-pointer`}
             {...props}
         >
             {text}
         </span>
     )
 }
+
 
 const UserManagement = ({
     setAddUser,
@@ -264,11 +264,11 @@ const UserManagement = ({
                             hideOnSinglePage: true,
                             pageSize: 7,
                         }}
-                        // onRow={(record) => {
-                        //     return {
-                        //         onClick: (event) => OnEachRowClicked(record), // click row
-                        //     }
-                        // }}
+                    // onRow={(record) => {
+                    //     return {
+                    //         onClick: (event) => OnEachRowClicked(record), // click row
+                    //     }
+                    // }}
                     />
                 </div>
                 <CustomButton
