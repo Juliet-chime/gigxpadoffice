@@ -7,9 +7,11 @@ import { useDispatch } from 'react-redux'
 import { queryFireBlockTrxCard } from '../../services/slices/ledger/blocksTrxCard'
 import { queryFireBlockSavingCard } from '../../services/slices/ledger/blocksSavingCard'
 import FireBlockContent from './accordionContent/FireBlockContent'
+import StellaContent from './accordionContent/StellaContent'
+import BaxiContent from './accordionContent/BaxiContent'
 
 const Wallets = () => {
-    const onChange = (key) => {}
+    const onChange = (key) => { }
 
     const [fireBlockUSDTrx, setFireBlockUSDTrx] = useState(null)
     const [fireBlockUSDSaving, setFireBlockUSDSaving] = useState(null)
@@ -49,12 +51,6 @@ const Wallets = () => {
         }
         getWalletData()
     }, [dispatch])
-
-    //     const text = `
-    //  A dog is a type of domesticated animal.
-    //  Known for its loyalty and faithfulness,
-    //  it can be found as a welcome guest in many households across the world.
-    // `
     const items = [
         {
             key: '1',
@@ -73,42 +69,24 @@ const Wallets = () => {
                 />
             ),
         },
-        // {
-        //     key: '2',
-        //     label: (
-        //         <p className="text-mainColor font-bold font-cabinetgrotesk text-xl">
-        //             Quidax
-        //         </p>
-        //     ),
-        //     children: <p>{text}</p>,
-        // },
-        // {
-        //     key: '3',
-        //     label: (
-        //         <p className="text-mainColor font-bold font-cabinetgrotesk text-xl">
-        //             Binance
-        //         </p>
-        //     ),
-        //     children: <p>{text}</p>,
-        // },
-        // {
-        //     key: '4',
-        //     label: (
-        //         <p className="text-mainColor font-bold font-cabinetgrotesk text-xl">
-        //             Baxi
-        //         </p>
-        //     ),
-        //     children: <p>{text}</p>,
-        // },
-        // {
-        //     key: '5',
-        //     label: (
-        //         <p className="text-mainColor font-bold font-cabinetgrotesk text-xl">
-        //             MapleRad
-        //         </p>
-        //     ),
-        //     children: <p>{text}</p>,
-        // },
+        {
+            key: '2',
+            label: (
+                <p className="text-mainColor font-bold font-cabinetgrotesk text-xl">
+                    Stellas
+                </p>
+            ),
+            children: <StellaContent />
+        },
+        {
+            key: '3',
+            label: (
+                <p className="text-mainColor font-bold font-cabinetgrotesk text-xl">
+                    Baxi
+                </p>
+            ),
+            children: <BaxiContent />,
+        },
     ]
     return (
         <div>

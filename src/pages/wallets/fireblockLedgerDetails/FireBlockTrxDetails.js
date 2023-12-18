@@ -110,13 +110,13 @@ const FireBlockTrxDetails = () => {
                         filterHeader={true}
                         startDate={new Date('2022-09-05')}
                         endDate={new Date()}
-                        handelApplyFilter={() => {}}
-                        handleClearFilter={() => {}}
-                        onInputChange={() => {}}
-                        handleStatusChange={() => {}}
-                        handleTypeChange={() => {}}
-                        onHandleStartDate={() => {}}
-                        onHandleEndDate={() => {}}
+                        handelApplyFilter={() => { }}
+                        handleClearFilter={() => { }}
+                        onInputChange={() => { }}
+                        handleStatusChange={() => { }}
+                        handleTypeChange={() => { }}
+                        onHandleStartDate={() => { }}
+                        onHandleEndDate={() => { }}
                     />
                 </div>
             </div>

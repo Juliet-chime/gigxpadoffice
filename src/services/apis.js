@@ -78,6 +78,10 @@ const getRoles = () => {
     return `/roles`
 }
 
+const updateAdminRole = (id) => {
+    return `/${id}`
+}
+
 //customers/users url
 
 const getAllUsers = () => {
@@ -121,6 +125,12 @@ const getStellasBalance = () => {
     return `wallets/stellas`
 }
 
+//baxi/stella details
+
+const getStellaorBaxiLedger = (name) => {
+    return `/ledgers/${name}`
+}
+
 //fireblockwallet
 const getFireBlockWalletTrx = (currency) => {
     return `/wallets/fireblocks-transaction/${currency}`
@@ -150,17 +160,17 @@ const getCurrencies = () => {
 
 //lock account
 
-const lockAccount = (id) => {
+const suspendAccount = (id) => {
     return `/customers/${id}/block`
 }
 
-const unlockAccount = (id) => {
+const unSuspendAccount = (id) => {
     return `/customers/${id}/unblock`
 }
 
 //suspend Account
 
-const suspendAccount = () => {
+const lockAccount = () => {
     return `/customers/status`
 }
 
@@ -198,6 +208,8 @@ export {
     updateLimit,
     getFireBlockWalletTrx,
     lockAccount,
-    unlockAccount,
+    unSuspendAccount,
     suspendAccount,
+    updateAdminRole,
+    getStellaorBaxiLedger
 }
