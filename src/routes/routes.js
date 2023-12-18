@@ -14,6 +14,7 @@ import TwoFactorAuthentication from '../pages/auth/2fa'
 import FireBlockTrxDetails from '../pages/wallets/fireblockLedgerDetails/FireBlockTrxDetails'
 import FireBlockSavingsDetails from '../pages/wallets/fireblockLedgerDetails/FireBlockSavingsDetails'
 import ChangeRole from '../pages/settings/ChangeRole'
+import StellaBaxiLedgerDetails from '../pages/wallets/stellasbaxi/StellaBaxiLedgerDetails'
 
 const routes = [
     // public Routes
@@ -30,6 +31,7 @@ const routes = [
     { path: '/ledger', component: Wallets },
     { path: '/ledger/fireblockstransaction/:id', component: FireBlockTrxDetails },
     { path: '/ledger/fireblocksaving/:id', component: FireBlockSavingsDetails },
+    { path: '/ledger/:id/details', component: StellaBaxiLedgerDetails },
     { path: '/cards', component: Card },
     { path: '/customers', component: Customers },
     { path: '/customers/:id', component: CustomersDetails },

@@ -13,18 +13,16 @@ import { Form } from 'formik-antd'
 import * as Yup from 'yup'
 import CustomFormikField from '../../components/fields/CustomFormikField'
 import CustomFormikSelect from '../../components/fields/CustomFormikSelect'
-import { useSelector } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { getRolesSelector } from '../../services/slices/roles/fetchRoles'
 import { capitalizeFLetter } from '../../utils/func'
 import ErrorField from '../../components/fields/ErrorField'
+import { queryInviteAdmin } from '../../services/slices/invite/inviteadmin'
 
-import { useErrorTimeout } from '../../hooks/useTimeout'
-import Notification from '../../components/notification/Notification'
-
-const AddAUser = ({ setAddUser }) => {
+const AddAUser = ({ setAddUser, setMessage, setStatus }) => {
     const roles = useSelector(getRolesSelector)
 
-    const [message, status] = useErrorTimeout()
+    const dispatch = useDispatch()
 
     const options = roles?.role?.data?.map((option) => {
         return {
@@ -38,9 +36,10 @@ const AddAUser = ({ setAddUser }) => {
     const validationSchema = Yup.object({
         firstName: Yup.string().required('Please enter your first name'),
         lastName: Yup.string().required('Please enter your last name'),
-        // role: Yup.Array().required('Please select a role'),
+        role: Yup.array().required('Please select a role'),
         email: Yup.string()
             .email('Please enter a valid email')
+            .min(15)
             .required('Please enter your email')
             .matches(
                 /^[A-Za-z0-9._%+-]+@gigxpad\.com$/,
@@ -48,48 +47,30 @@ const AddAUser = ({ setAddUser }) => {
             ),
     })
 
-    const onHandleSubmit = async (values) => {
+    const onHandleSubmit = async (values, { resetForm }) => {
+        const roleId = values.role.map(v => roles?.role?.data.find(f => f.name.toLowerCase() === v.toLowerCase()).id)
+
         let data = {
             firstName: values?.firstName,
             lastName: values?.lastName,
             email: values?.email,
+            roleIds: roleId
         }
+        try {
+            const res = await dispatch(queryInviteAdmin(data)).unwrap()
+            setStatus('success')
+            setMessage(res?.message)
+            resetForm()
 
-        console.log(values, data)
-
-        // try {
-        //     if (values?.role === 'super_admin') {
-        //         const res = await dispatch(queryInviteSuperAdmin(data)).unwrap()
-        //         if (res?.status === 'success') {
-        //             setStatus('success')
-        //             setMessage(res?.message)
-        //         }
-        //     } else {
-        //         const role_id = roles?.role?.data?.find(
-        //             (id) => id?.name?.toLowerCase() === values?.role
-        //         )
-        //         data = {
-        //             ...data,
-        //             roleId: role_id?.id,
-        //         }
-        //         const res = await dispatch(queryInviteAdmin(data)).unwrap()
-        //         if (res?.status === 'success') {
-        //             setStatus('success')
-        //             setMessage(res?.message)
-        //         }
-        //     }
-        // } catch (err) {
-        //     if (err?.success === false) {
-        //         setStatus('error')
-        //         setMessage(err?.errorMessage)
-        //     }
-        // }
+        } catch (err) {
+            setStatus('error')
+            setMessage(err?.errorMessage)
+            resetForm()
+        }
     }
+
     return (
         <div>
-            {!!message ? (
-                <Notification message={message} type={status} />
-            ) : null}
             <div>
                 <CustomButton
                     bg={color.white}
