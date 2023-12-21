@@ -28,9 +28,7 @@ function convertNairaToDollar({ amount, exchangeRates, currencyPair }) {
 
     const nairaToDollar = amount / rate?.rate
 
-    return Number.isInteger(nairaToDollar)
-        ? nairaToDollar
-        : parseFloat(nairaToDollar.toFixed(3))
+    return Number.isInteger(nairaToDollar) ? nairaToDollar : parseFloat(nairaToDollar.toFixed(3))
 }
 
 export { capitalizeFLetter, filterCurrencies, convertNairaToDollar }
