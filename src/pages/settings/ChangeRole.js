@@ -4,23 +4,28 @@ import { color } from '../../assets/color'
 import { PiCaretLeft } from 'react-icons/pi'
 import { Col, Row } from 'antd'
 import { FormHeading, FormParagraph } from '../../components/layout/style'
-import { useSelector } from 'react-redux'
+import { useSelector, useDispatch } from 'react-redux'
 import { getRolesSelector } from '../../services/slices/roles/fetchRoles'
 import { capitalizeFLetter } from '../../utils/func'
 import CustomSelect from '../../components/fields/CustomSelect'
 import { BgHolder } from './style'
 import { useNavigate, useLocation } from 'react-router-dom'
 import AdminNameDisplay from './AdminNameDisplay'
+import { queryUpdateRole } from '../../services/slices/roles/updateRole'
+import { useErrorTimeout } from '../../hooks/useTimeout'
+import Notification from '../../components/notification/Notification'
 
 const ChangeRole = ({ setChangeRole, ...props }) => {
     const roles = useSelector(getRolesSelector)
     const navigate = useNavigate()
+    const dispatch = useDispatch()
 
     const location = useLocation()
     const userData = location?.state?.data
+    const [message, setMessage, status, setStatus] = useErrorTimeout(3000)
 
     const [updatesRoles, setUpdatesRoles] = useState([])
-    console.log(updatesRoles)
+    const [loading, setLoading] = useState(false)
 
     const options = roles?.role?.data?.map((option) => {
         return {
@@ -28,8 +33,46 @@ const ChangeRole = ({ setChangeRole, ...props }) => {
             label: capitalizeFLetter(option?.name),
         }
     })
+
+    const onChangeRole = async () => {
+
+        const roleId = updatesRoles.map(v => roles?.role?.data.find(f => f.name.toLowerCase() === v.toLowerCase()).id)
+
+        let data = {
+            firstName: userData?.firstName,
+            lastName: userData?.lastName,
+            roleIds: roleId
+        }
+        try {
+            setLoading(true)
+            const res = await dispatch(queryUpdateRole({ data, id: userData?.id })).unwrap()
+            setStatus('success')
+            setMessage(res?.message)
+            setLoading(false)
+            setUpdatesRoles([])
+        } catch (e) {
+            setLoading(false)
+            setStatus('error')
+            setMessage(e?.errorMessage)
+            setUpdatesRoles([])
+        } finally {
+            setLoading(false)
+        }
+    }
     return (
         <div>
+            {!!message ? (
+                <div
+                    style={{
+                        position: 'absolute',
+                        top: '0px',
+                        left: '0px',
+                        right: '0px',
+                    }}
+                >
+                    <Notification message={message} type={status} />
+                </div>
+            ) : null}
             <div>
                 <CustomButton
                     bg={color.white}
@@ -66,26 +109,6 @@ const ChangeRole = ({ setChangeRole, ...props }) => {
                                             ${userData?.lastName.slice(0, 1)}`}
                                     email={userData?.email}
                                 />
-                                {/* <div className="flex flex-col md:flex-row items-center justify-center md:justify-start gap-0 md:gap-4 bg-white rounded-[12px] bottom-1 border-[#eeeeee] shadow-md p-3 md:p-10 mt-6">
-                                    <div
-                                        className="w-[35px] md:w-[79px] h-[35px] md:h-[79px] bg-[#E2F2F4] flex items-center justify-center"
-                                        style={{ borderRadius: '100%' }}
-                                    >
-                                        <span className="text-main font-bold font-cabinetgrotesk text-[16px] md:text-[24px]">
-                                            {userData?.firstName.slice(0, 1)}
-                                            {userData?.lastName.slice(0, 1)}
-                                        </span>
-                                    </div>
-                                    <div className="text-center md:text-left">
-                                        <h3 className="text-main font-bold font-cabinetgrotesk text-[22px]">
-                                            {userData?.firstName}{' '}
-                                            {userData?.lastName}
-                                        </h3>
-                                        <h4 className="text-[#162E38] font-semibold text-[10px] md:text-[16px]">
-                                            {userData?.email}
-                                        </h4>
-                                    </div>
-                                </div> */}
 
                                 <div className="mt-8 changerole">
                                     <p className="mb-4 text-mainColor font-semibold text-[14px]">
@@ -108,6 +131,9 @@ const ChangeRole = ({ setChangeRole, ...props }) => {
                                     bg={color.secondaryColor}
                                     text="Save Changes"
                                     type="submit"
+                                    disabled={!(!!updatesRoles?.length)}
+                                    loading={loading}
+                                    onClick={onChangeRole}
                                 />
                             </div>
                         </div>
