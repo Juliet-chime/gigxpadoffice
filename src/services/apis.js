@@ -170,8 +170,8 @@ const unSuspendAccount = (id) => {
 
 //suspend Account
 
-const lockAccount = () => {
-    return `/customers/status`
+const lockAccount = (id) => {
+    return `/customers/${id}/status`
 }
 
 export {
