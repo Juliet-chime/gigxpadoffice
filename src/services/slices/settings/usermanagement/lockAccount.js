@@ -4,11 +4,11 @@ import { makeApiRequest } from '../../../baseApi'
 
 export const queryLockAccount = createAsyncThunk(
     'lock/queryLockAccount',
-    async ({ data, params }) => {
+    async ({ id, data, params }) => {
         try {
             const response = await makeApiRequest(
                 'put',
-                lockAccount(),
+                lockAccount(id),
                 data,
                 params
             )

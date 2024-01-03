@@ -6,8 +6,10 @@ import { color } from '../../../assets/color'
 import { useSelector } from 'react-redux'
 import { getBaxiBalanceSelector } from '../../../services/slices/dashboard/BaxiBalance'
 import { formatMoney } from '../../../utils/helperFunctions'
+import { useNavigate } from 'react-router-dom'
 
 const BaxiContent = () => {
+    const navigate = useNavigate()
     const { baxiBalance, loading } = useSelector(getBaxiBalanceSelector)
     return (
         <div>
@@ -21,6 +23,11 @@ const BaxiContent = () => {
                         })}
                         bg={color.lightYellow}
                         loading={loading}
+                        onViewLedgerBalance={() => {
+                            navigate(
+                                `/ledger/baxi/details`,
+                            )
+                        }}
                     />
                 </Col>
             </Row>

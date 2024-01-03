@@ -27,7 +27,7 @@ const OTCRate = () => {
 
     const onChangeRate = async () => {
         let data = {
-            currencyPair: `${currencies[activeKey - 1].toLowerCase()}tongn`,
+            currencyPair: `${currencies[activeKey - 1].toUpperCase()}TONGN`,
             rate: rateValue,
         }
 

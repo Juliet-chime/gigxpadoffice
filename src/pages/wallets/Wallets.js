@@ -8,7 +8,7 @@ import { queryFireBlockTrxCard } from '../../services/slices/ledger/blocksTrxCar
 import { queryFireBlockSavingCard } from '../../services/slices/ledger/blocksSavingCard'
 import FireBlockContent from './accordionContent/FireBlockContent'
 import StellaContent from './accordionContent/StellaContent'
-import BaxiContent from './accordionContent/BaxiContent'
+// import BaxiContent from './accordionContent/BaxiContent'
 
 const Wallets = () => {
     const onChange = (key) => { }
@@ -78,15 +78,15 @@ const Wallets = () => {
             ),
             children: <StellaContent />
         },
-        {
-            key: '3',
-            label: (
-                <p className="text-mainColor font-bold font-cabinetgrotesk text-xl">
-                    Baxi
-                </p>
-            ),
-            children: <BaxiContent />,
-        },
+        // {
+        //     key: '3',
+        //     label: (
+        //         <p className="text-mainColor font-bold font-cabinetgrotesk text-xl">
+        //             Baxi
+        //         </p>
+        //     ),
+        //     children: <BaxiContent />,
+        // },
     ]
     return (
         <div>
