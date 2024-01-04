@@ -1,16 +1,14 @@
 import { createAsyncThunk } from '@reduxjs/toolkit'
-import { unlockAccount } from '../../../apis'
+import { unSuspendAccount } from '../../../apis'
 import { makeApiRequest } from '../../../baseApi'
 
-export const queryUnlockAccount = createAsyncThunk(
-    'unlock/queryUnlockAccount',
-    async ({ id, params }) => {
+export const queryUnsuspendAccount = createAsyncThunk(
+    'unsuspend/queryUnsuspendAccount',
+    async ({ id }) => {
         try {
             const response = await makeApiRequest(
                 'put',
-                unlockAccount(id),
-                null,
-                params
+                unSuspendAccount(id),
             )
             return response?.data
         } catch (e) {}

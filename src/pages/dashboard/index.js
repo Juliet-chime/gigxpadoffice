@@ -54,6 +54,7 @@ import {
 import CurrencyDropdown from '../../components/dashboardComponents/CurrencyDropdown'
 import { queryFireBlockWalletTrx } from '../../services/slices/dashboard/fireBlockTrx'
 import { queryRoles } from '../../services/slices/roles/fetchRoles'
+import { queryFireBlockTrxCard } from '../../services/slices/ledger/blocksTrxCard'
 
 let initialStartDate = moment(new Date('2022-04-19')).format('YYYY-MM-DD')
 let InitialEndDate = moment(new Date()).format('YYYY-MM-DD')
@@ -67,6 +68,7 @@ export default function Dashboard() {
     const user = useSelector(get2FaSelector)
     const firstname = user?.user?.firstName
     const revenue = useSelector(getFiatRevenueSelector)
+    // console.log(revenue, 'tests')
     const fiatMetrics = useSelector(getFiatMetricSelector)
     const cryptoMetrics = useSelector(getCryptoMetricsSelector)
     const userMetrics = useSelector(getUserChartSelector)
@@ -106,6 +108,7 @@ export default function Dashboard() {
     const [fiatName, setFiatName] = useState(
         (fiatCurrencyOption || [])[0]?.name
     )
+    const [fireBlockUSDTrx, setFireBlockUSDTrx] = useState(null)
 
     const items = revenueItem.map((data, index) => {
         return {
@@ -115,10 +118,10 @@ export default function Dashboard() {
                 <CurrencyTabComponent
                     loading={revenue?.loading}
                     revenueAmount={formatMoney({
-                        amount: (revenueAmount || [])[0]?.totalAmount,
+                        amount: revenueAmount,
                     })}
                     profitAmount={formatMoney({
-                        amount: (revenueProfit || [])[0]?.totalCharge,
+                        amount: revenueProfit,
                     })}
                 />
             ),
@@ -421,6 +424,16 @@ export default function Dashboard() {
     }
 
     useEffect(() => {
+        async function getFireBlock() {
+            const res = await dispatch(
+                queryFireBlockTrxCard({ currency: 'usdt' })
+            ).unwrap()
+            setFireBlockUSDTrx(res)
+        }
+        getFireBlock()
+    }, [dispatch])
+
+    useEffect(() => {
         async function getData() {
             try {
                 await Promise.allSettled([
@@ -447,7 +460,7 @@ export default function Dashboard() {
                     dispatch(queryCurrencies()).unwrap(),
                     dispatch(queryRoles()).unwrap(),
                 ])
-            } catch (e) {}
+            } catch (e) { }
         }
         getData()
     }, [dispatch])
@@ -462,7 +475,7 @@ export default function Dashboard() {
                         currencyType: revenueCurrencyType,
                     })
                 ).unwrap()
-            } catch (e) {}
+            } catch (e) { }
         }
         getRevenueProfit()
     }, [dispatch])
@@ -583,17 +596,17 @@ export default function Dashboard() {
                             />
                         </div>
                     </Col>
-                    {/* <Col xs={24} sm={24} md={6} lg={6} xl={6}>
-                       <div>
-                           <Blocks
-                               name="Quidax"
-                               bigAmount={'₦3,204,490'}
-                               smallAmount={'6,448'}
-                               curreny={'USD'}
-                               padding="30px"
-                           />
-                       </div>
-                   </Col> */}
+                    <Col xs={24} sm={24} md={6} lg={6} xl={6}>
+                        <div>
+                            <Blocks
+                                name="Fireblocks"
+                                bigAmount={Number(fireBlockUSDTrx?.availableBalance).toFixed(8)}
+                                padding="30px"
+                                height="auto"
+                            />
+                        </div>
+                    </Col>
+
                     <Col xs={24} sm={24} md={6} lg={6} xl={6}>
                         <div>
                             <Blocks
@@ -602,7 +615,7 @@ export default function Dashboard() {
                                 flexlayout={'true'}
                                 height="110px"
                             >
-                                <Link to="/ledger">
+                                <Link to="/wallets">
                                     <div
                                         style={{
                                             display: 'flex',

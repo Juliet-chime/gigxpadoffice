@@ -4,15 +4,13 @@ import { makeApiRequest } from '../../../baseApi'
 
 export const querySuspendAccount = createAsyncThunk(
     'suspend/querySuspendAccount',
-    async ({ params, data }) => {
+    async ({ id }) => {
         try {
             const response = await makeApiRequest(
                 'put',
-                suspendAccount(),
-                data,
-                params
+                suspendAccount(id),
             )
             return response?.data
-        } catch (e) {}
+        } catch (e) { }
     }
 )
