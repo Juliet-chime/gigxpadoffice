@@ -68,6 +68,7 @@ export default function Dashboard() {
     const user = useSelector(get2FaSelector)
     const firstname = user?.user?.firstName
     const revenue = useSelector(getFiatRevenueSelector)
+    // console.log(revenue, 'tests')
     const fiatMetrics = useSelector(getFiatMetricSelector)
     const cryptoMetrics = useSelector(getCryptoMetricsSelector)
     const userMetrics = useSelector(getUserChartSelector)
@@ -117,10 +118,10 @@ export default function Dashboard() {
                 <CurrencyTabComponent
                     loading={revenue?.loading}
                     revenueAmount={formatMoney({
-                        amount: (revenueAmount || [])[0]?.totalAmount,
+                        amount: revenueAmount,
                     })}
                     profitAmount={formatMoney({
-                        amount: (revenueProfit || [])[0]?.totalCharge,
+                        amount: revenueProfit,
                     })}
                 />
             ),

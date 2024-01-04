@@ -14,10 +14,10 @@ import {
     queryOneUser,
 } from '../../services/slices/user/oneUser'
 import { useDispatch, useSelector } from 'react-redux'
-// import { queryLockAccount } from '../../services/slices/settings/usermanagement/lockAccount'
-// import { querySuspendAccount } from '../../services/slices/settings/usermanagement/suspendAccount'
+import { queryLockAccount } from '../../services/slices/settings/usermanagement/lockAccount'
+import { querySuspendAccount } from '../../services/slices/settings/usermanagement/suspendAccount'
 import DetailsHeader from '../../components/dashboardComponents/DetailsHeader'
-// import { queryUnsuspendAccount } from '../../services/slices/settings/usermanagement/unSuspendAccount'
+import { queryUnsuspendAccount } from '../../services/slices/settings/usermanagement/unSuspendAccount'
 
 const CustomersDetails = () => {
     const dispatch = useDispatch()
@@ -66,32 +66,30 @@ const CustomersDetails = () => {
 
     const onLockAccount = async () => {
 
-        // let data = {
-        //     userId: id,
-        //     status: 'locked',
-        // }
+        let data = {
+            status: 'locked',
+        }
 
-        // const res = await dispatch(queryLockAccount({ data }))
+        const res = await dispatch(queryLockAccount({ id, data }))
 
     }
 
     const onUnlockAccount = async () => {
-        // let data = {
-        //     userId: id,
-        //     status: 'active',
-        // }
+        let data = {
+            status: 'active',
+        }
 
-        // const res = await dispatch(queryLockAccount({ data }))
+        const res = await dispatch(queryLockAccount({ id, data }))
 
     }
 
     const onUnsuspendAccount = async () => {
-        // const res = await dispatch(queryUnsuspendAccount({ id }))
+        const res = await dispatch(queryUnsuspendAccount({ id }))
 
     }
 
     const onSuspendAccount = async () => {
-        // const res = await dispatch(querySuspendAccount({ id }))
+        const res = await dispatch(querySuspendAccount({ id }))
 
     }
 
