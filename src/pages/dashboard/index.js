@@ -119,9 +119,11 @@ export default function Dashboard() {
                     loading={revenue?.loading}
                     revenueAmount={formatMoney({
                         amount: revenueAmount,
+                        ...(data?.toUpperCase() === 'CRYPTO'?{currency:''}:{})
                     })}
                     profitAmount={formatMoney({
                         amount: revenueProfit,
+                        ...(data?.toUpperCase() === 'CRYPTO'?{currency:''}:{})
                     })}
                 />
             ),
@@ -742,6 +744,7 @@ export default function Dashboard() {
                                         amount={`${formatMoney({
                                             amount: cryptoMetrics?.cryptoMetrics
                                                 ?.total,
+                                                currency:''
                                         })}`}
                                         details
                                     />
