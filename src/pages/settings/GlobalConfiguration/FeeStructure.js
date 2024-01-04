@@ -7,8 +7,8 @@ import { useDispatch, useSelector } from 'react-redux'
 import { filterCurrencies } from '../../../utils/func'
 import { getCurrenciesSelector } from '../../../services/slices/misc/getCurrencies'
 import CurrencyDropdown from '../../../components/dashboardComponents/CurrencyDropdown'
-import { feeOptions } from '../../../utils/constants'
-import CustomSelect from '../../../components/fields/CustomSelect'
+// import { feeOptions } from '../../../utils/constants'
+// import CustomSelect from '../../../components/fields/CustomSelect'
 import { queryUpdateFee } from '../../../services/slices/settings/globalconfig/updateFee'
 import { useErrorTimeout } from '../../../hooks/useTimeout'
 import MessageComponent from '../../../components/notification/MessageComponent'
@@ -24,7 +24,7 @@ const FeeStructure = () => {
     const [isLoadingLimit, setIsLoadingLimit] = useState(false)
     const fiatCurrencyOption = filterCurrencies({ currencies, str: 'crypto' })
 
-    const [limitType, setLimitType] = useState((feeOptions || [])[0].value)
+    // const [limitType, setLimitType] = useState((feeOptions || [])[0].value)
     const [fiatCurrency, setFiatCurrency] = useState(
         (fiatCurrencyOption || [])[0]?.symbol
     )
@@ -39,9 +39,9 @@ const FeeStructure = () => {
         setFiatCurrency(currency)
         setFiatName(name)
     }
-    const onChangeFeeOptions = (value) => {
-        setLimitType(value)
-    }
+    // const onChangeFeeOptions = (value) => {
+    //     setLimitType(value)
+    // }
 
     // const onUpdateBillPayment = async () => {
     //     await dispatch(queryUpdateFee({ data }))
@@ -50,11 +50,12 @@ const FeeStructure = () => {
     const onUpdateWithdrawalFee = async () => {
         const data = {
             feeType: 'fiatTransaction',
-            feeMethod: limitType === 'percentage' ? 'percentageFee' : 'flatFee',
+            feeMethod: 'flatFee',
             currencyShortCode: fiatCurrency,
-            ...(limitType === 'percentage'
-                ? { percentageFee: Number(fee) }
-                : { amountFee: Number(fee) }),
+            amountFee: Number(fee)
+            // ...(limitType === 'percentage'
+            //     ? { percentageFee: Number(fee) }
+            //     : { amountFee: Number(fee) }),
         }
         try {
             setIsLoadingLimit(true)
@@ -180,14 +181,14 @@ const FeeStructure = () => {
                                 FIAT FEES
                             </h2>
                             <div className="flex items-center gap-5">
-                                <div className="roundedSelect">
+                                {/* <div className="roundedSelect">
                                     <CustomSelect
                                         value={limitType}
                                         options={feeOptions}
                                         onChange={onChangeFeeOptions}
                                         width="130px"
                                     />
-                                </div>
+                                </div> */}
 
                                 <CurrencyDropdown
                                     isCurrencyLoading={isCurrencyLoading}
