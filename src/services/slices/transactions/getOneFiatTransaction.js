@@ -17,7 +17,7 @@ export const queryOneFiatTransactions = createAsyncThunk(
                 getOneFiatTransactions(id)
             )
             return response?.data
-        } catch (e) {}
+        } catch (e) { }
     }
 )
 
