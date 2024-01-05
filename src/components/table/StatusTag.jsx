@@ -4,14 +4,14 @@ const StatusTag = ({ text, ...props }) => {
     return (
         <h1
             className={`${text === 'success' ||
-                    text === 'successful' ||
-                    text === 'Completed' || text === 'completed'
-                    ? 'bg-[#E8FFF7]'
-                    : text === 'failed'
-                        ? 'bg-[#ff14141a]'
-                        : text === 'pending'
-                            ? 'bg-[#ea7d1f1a]'
-                            : null
+                text === 'successful' ||
+                text === 'Completed' || text === 'completed'
+                ? 'bg-[#E8FFF7]'
+                : text === 'failed'
+                    ? 'bg-[#ff14141a]'
+                    : text === 'pending'
+                        ? 'bg-[#ea7d1f1a]'
+                        : null
                 } ${text === 'success' ||
                     text === 'successful' ||
                     text === 'Completed' || text === 'completed'

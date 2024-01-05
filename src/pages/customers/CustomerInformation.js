@@ -11,8 +11,8 @@ const CustomerInfoBlock = ({ title, value, icon, flag }) => {
     return (
         <div className="border border-ash-2 rounded-md p-3 flex items-center justify-between">
             <div className="flex items-center gap-3">
-           
-                {flag ?  <ReactCountryFlag countryCode="NG" /> : null}
+
+                {flag ? <ReactCountryFlag countryCode="NG" /> : null}
                 <div>
                     <p className="text-xs md:text-sm lg:text-sm xl:text-sm font-medium text-lighterAsh">
                         {title}

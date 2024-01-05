@@ -7,8 +7,8 @@ import TransactionLimits from './transactionLimit/TransactionLimits'
 import OTCRate from './OTCRate/OTCRate'
 import FeeStructure from './FeeStructure'
 
-const GlobalConfiguration = () => {
-    const onChange = (key) => {}
+const GlobalConfiguration = ({ setMessage, setStatus }) => {
+    const onChange = (key) => { }
     const items = [
         {
             key: '1',
@@ -20,7 +20,7 @@ const GlobalConfiguration = () => {
                     </p>
                 </div>
             ),
-            children: <TransactionLimits />,
+            children: <TransactionLimits setMessage={setMessage} setStatus={setStatus} />,
         },
         {
             key: '2',
@@ -32,7 +32,7 @@ const GlobalConfiguration = () => {
                     </p>
                 </div>
             ),
-            children: <FeeStructure />,
+            children: <FeeStructure setMessage={setMessage} setStatus={setStatus} />,
         },
         {
             key: '3',

@@ -158,6 +158,12 @@ const getCurrencies = () => {
     return `/settings/currencies`
 }
 
+//cryptochart
+
+const getCryptoChart = () => {
+    return `/transactions/crypto/summary`
+}
+
 //lock account
 
 const suspendAccount = (id) => {
@@ -211,5 +217,6 @@ export {
     unSuspendAccount,
     suspendAccount,
     updateAdminRole,
-    getStellaorBaxiLedger
+    getStellaorBaxiLedger,
+    getCryptoChart
 }

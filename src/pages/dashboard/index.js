@@ -68,7 +68,6 @@ export default function Dashboard() {
     const user = useSelector(get2FaSelector)
     const firstname = user?.user?.firstName
     const revenue = useSelector(getFiatRevenueSelector)
-    // console.log(revenue, 'tests')
     const fiatMetrics = useSelector(getFiatMetricSelector)
     const cryptoMetrics = useSelector(getCryptoMetricsSelector)
     const userMetrics = useSelector(getUserChartSelector)
@@ -119,11 +118,11 @@ export default function Dashboard() {
                     loading={revenue?.loading}
                     revenueAmount={formatMoney({
                         amount: revenueAmount,
-                        ...(data?.toUpperCase() === 'CRYPTO'?{currency:''}:{})
+                        ...(data?.toUpperCase() === 'CRYPTO' ? { currency: '' } : {})
                     })}
                     profitAmount={formatMoney({
                         amount: revenueProfit,
-                        ...(data?.toUpperCase() === 'CRYPTO'?{currency:''}:{})
+                        ...(data?.toUpperCase() === 'CRYPTO' ? { currency: '' } : {})
                     })}
                 />
             ),
@@ -744,7 +743,7 @@ export default function Dashboard() {
                                         amount={`${formatMoney({
                                             amount: cryptoMetrics?.cryptoMetrics
                                                 ?.total,
-                                                currency:''
+                                            currency: ''
                                         })}`}
                                         details
                                     />

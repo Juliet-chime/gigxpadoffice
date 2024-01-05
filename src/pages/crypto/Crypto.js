@@ -21,6 +21,7 @@ import {
     getOneCryptoTransactionsSelector,
     queryOneCryptoTransactions,
 } from '../../services/slices/transactions/getOneCryptoTransaction'
+import { getCryptoChartSelector, queryCryptoChart } from '../../services/slices/transactions/getCryptoChart'
 
 const Crypto = () => {
     const dispatch = useDispatch()
@@ -38,6 +39,9 @@ const Crypto = () => {
 
     const cryptoTransaction = useSelector(getCryptoTransactionsSelector)
     const oneCryptoTransaction = useSelector(getOneCryptoTransactionsSelector)
+
+    const cryptoChart = useSelector(getCryptoChartSelector)
+    console.log(cryptoChart, 'charttt')
 
     const columns = [
         {
@@ -128,7 +132,8 @@ const Crypto = () => {
                         to: moment().format('YYYY-MM-DD'),
                     })
                 ).unwrap()
-            } catch (e) {}
+                dispatch(queryCryptoChart()).unwrap()
+            } catch (e) { }
         }
         getCryptoTransactions()
     }, [startDate, dispatch])
