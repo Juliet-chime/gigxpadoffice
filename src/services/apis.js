@@ -96,6 +96,10 @@ const getUserAssest = (id) => {
     return `/customers/${id}/assets`
 }
 
+const getCustomerBalance = (id) => {
+    return `/customers/${id}/all-balances`
+}
+
 //ledger (on click of fireblocks card)
 const getFireBlockTrx = (currency) => {
     return `/ledgers/fireblocks-transaction/${currency}`
@@ -218,5 +222,6 @@ export {
     suspendAccount,
     updateAdminRole,
     getStellaorBaxiLedger,
-    getCryptoChart
+    getCryptoChart,
+    getCustomerBalance
 }

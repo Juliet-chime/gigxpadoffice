@@ -18,11 +18,21 @@ import { queryLockAccount } from '../../services/slices/settings/usermanagement/
 import { querySuspendAccount } from '../../services/slices/settings/usermanagement/suspendAccount'
 import DetailsHeader from '../../components/dashboardComponents/DetailsHeader'
 import { queryUnsuspendAccount } from '../../services/slices/settings/usermanagement/unSuspendAccount'
+import Notification from '../../components/notification/Notification'
+import { useErrorTimeout } from '../../hooks/useTimeout'
+import { getCustomerBalanceSelector, queryCustomerBalance } from '../../services/slices/user/customerBalance'
 
 const CustomersDetails = () => {
     const dispatch = useDispatch()
 
     const user = useSelector(getOneUserSelector)
+    const customerBalance = useSelector(getCustomerBalanceSelector)
+    console.log({customerBalance})
+
+    const [isLocking, setIsLocking] = useState(false)
+    const [lockStatus, setLockStatus] = useState(false)
+
+    const [message, setMessage, status, setStatus] = useErrorTimeout(3000)
 
     const { id } = useParams()
 
@@ -70,7 +80,22 @@ const CustomersDetails = () => {
             status: 'locked',
         }
 
-        const res = await dispatch(queryLockAccount({ id, data }))
+        try{
+            setIsLocking(true)
+            const res = await dispatch(queryLockAccount({ id, data }))
+            setIsLocking(false)
+            setIsModalOpen(false)
+            setLockStatus(true)
+            setStatus(res.payload.status)
+            setMessage(res.payload.message)
+
+        } catch(e){
+            setStatus('error')
+            setMessage(e.message)
+        } finally{
+            setIsLocking(false)
+        }
+
 
     }
 
@@ -79,7 +104,19 @@ const CustomersDetails = () => {
             status: 'active',
         }
 
-        const res = await dispatch(queryLockAccount({ id, data }))
+        try{
+            setIsLocking(true)
+            const res = await dispatch(queryLockAccount({ id, data }))
+            setIsLocking(false)
+            setLockStatus(false)
+            setStatus(res.payload.status)
+            setMessage(res.payload.message)
+        } catch(e){
+            setStatus('error')
+            setMessage(e.message)
+        } finally{
+            setIsLocking(false)
+        }
 
     }
 
@@ -97,12 +134,23 @@ const CustomersDetails = () => {
         async function getFiatTransactions() {
             try {
                 dispatch(queryOneUser({ id })).unwrap()
+                dispatch(queryCustomerBalance({id})).unwrap()
             } catch (e) { }
         }
         getFiatTransactions()
     }, [dispatch, id])
     return (
         <div>
+        {message ? <div
+                    style={{
+                        position: 'absolute',
+                        top: '0px',
+                        left: '0px',
+                        right: '0px',
+                    }}
+                >
+                    <Notification message={message} type={status} />
+                </div>: null}
             <Row justify="space-between" gutter={[0, 16]}>
                 <Col xs={24} sm={24} md={9} lg={9} xl={10}>
                     <DetailsHeader
@@ -115,13 +163,14 @@ const CustomersDetails = () => {
                 </Col>
                 <Col xs={24} sm={24} md={9} lg={6} xl={4}>
                     <div className="flex justify-end gap-3">
-                        {!true ? (
+                        {lockStatus ? (
                             <CustomButton
                                 text={'Unlock Account'}
                                 border="1px solid #DBDBDB"
                                 color={color.mainColor}
                                 radius="25px"
                                 onClick={onUnlockAccount}
+                                loading={isLocking}
                             />
                         ) : (
                             <CustomButton
@@ -187,6 +236,7 @@ const CustomersDetails = () => {
                         </p>
                         <CustomButton
                             text={'Yes, lock account'}
+                            loading={isLocking}
                             bg={color.fieldColor}
                             color={color.accessBtnColor}
                             weight="700"
