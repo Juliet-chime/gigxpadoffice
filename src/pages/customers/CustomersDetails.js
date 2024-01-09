@@ -27,10 +27,14 @@ const CustomersDetails = () => {
 
     const user = useSelector(getOneUserSelector)
     const customerBalance = useSelector(getCustomerBalanceSelector)
-    console.log({customerBalance})
+
+    const isLocked = user?.user.status.toLowerCase() === 'locked'
+
+    const isSuspended = user?.user.isBlacklisted
+
+    console.log({ user, isLocked })
 
     const [isLocking, setIsLocking] = useState(false)
-    const [lockStatus, setLockStatus] = useState(false)
 
     const [message, setMessage, status, setStatus] = useErrorTimeout(3000)
 
@@ -80,19 +84,19 @@ const CustomersDetails = () => {
             status: 'locked',
         }
 
-        try{
+        try {
             setIsLocking(true)
             const res = await dispatch(queryLockAccount({ id, data }))
+            dispatch(queryOneUser({ id })).unwrap()
             setIsLocking(false)
             setIsModalOpen(false)
-            setLockStatus(true)
             setStatus(res.payload.status)
             setMessage(res.payload.message)
 
-        } catch(e){
+        } catch (e) {
             setStatus('error')
             setMessage(e.message)
-        } finally{
+        } finally {
             setIsLocking(false)
         }
 
@@ -104,17 +108,17 @@ const CustomersDetails = () => {
             status: 'active',
         }
 
-        try{
+        try {
             setIsLocking(true)
             const res = await dispatch(queryLockAccount({ id, data }))
+            dispatch(queryOneUser({ id })).unwrap()
             setIsLocking(false)
-            setLockStatus(false)
             setStatus(res.payload.status)
             setMessage(res.payload.message)
-        } catch(e){
+        } catch (e) {
             setStatus('error')
             setMessage(e.message)
-        } finally{
+        } finally {
             setIsLocking(false)
         }
 
@@ -134,23 +138,23 @@ const CustomersDetails = () => {
         async function getFiatTransactions() {
             try {
                 dispatch(queryOneUser({ id })).unwrap()
-                dispatch(queryCustomerBalance({id})).unwrap()
+                dispatch(queryCustomerBalance({ id })).unwrap()
             } catch (e) { }
         }
         getFiatTransactions()
     }, [dispatch, id])
     return (
         <div>
-        {message ? <div
-                    style={{
-                        position: 'absolute',
-                        top: '0px',
-                        left: '0px',
-                        right: '0px',
-                    }}
-                >
-                    <Notification message={message} type={status} />
-                </div>: null}
+            {message ? <div
+                style={{
+                    position: 'absolute',
+                    top: '0px',
+                    left: '0px',
+                    right: '0px',
+                }}
+            >
+                <Notification message={message} type={status} />
+            </div> : null}
             <Row justify="space-between" gutter={[0, 16]}>
                 <Col xs={24} sm={24} md={9} lg={9} xl={10}>
                     <DetailsHeader
@@ -163,7 +167,7 @@ const CustomersDetails = () => {
                 </Col>
                 <Col xs={24} sm={24} md={9} lg={6} xl={4}>
                     <div className="flex justify-end gap-3">
-                        {lockStatus ? (
+                        {isLocked ? (
                             <CustomButton
                                 text={'Unlock Account'}
                                 border="1px solid #DBDBDB"
@@ -181,7 +185,7 @@ const CustomersDetails = () => {
                                 onClick={showModal}
                             />
                         )}
-                        {!true ? (
+                        {isSuspended ? (
                             <CustomButton
                                 text={'Account Suspended'}
                                 border="1px solid #DBDBDB"

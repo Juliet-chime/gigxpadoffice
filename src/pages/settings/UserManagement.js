@@ -13,6 +13,8 @@ import { queryResendInviteAdmin } from '../../services/slices/invite/resendInvit
 import { useNavigate } from 'react-router-dom'
 import CustomDrawer from '../../components/fields/CustomDrawer'
 import AdminDetails from './AdminDetails'
+import { capitalizeFLetter } from '../../utils/func'
+import moment from 'moment'
 
 const SettingActions = ({ text, color, ...props }) => {
     return (
@@ -148,37 +150,43 @@ const UserManagement = ({
                 )
             },
         },
-        // {
-        //     title: 'Last Login',
-        //     dataIndex: 'date',
-        //     key: 'date',
-        // },
-        // {
-        //     title: 'Status',
-        //     dataIndex: 'status',
-        //     key: 'status',
-        //     render: (text) => {
-        //         return (
-        //             <p
-        //                 className={`${
-        //                     text === 'active'
-        //                         ? 'text-statusGreen'
-        //                         : text === 'pending'
-        //                         ? 'text-statusPending'
-        //                         : null
-        //                 }`}
-        //             >
-        //                 {text}
-        //             </p>
-        //         )
-        //     },
-        // },
+        {
+            title: 'Last Login',
+            dataIndex: 'lastLoginAt',
+            key: 'lastLoginAt',
+            render: (text) => {
+                return <>
+                    {!text ? null : <p>{moment(text).format('DD/MM/YYYY, h:mm:ss')}</p>}
+                </>
+            },
+        },
+        {
+            title: 'Status',
+            dataIndex: 'status',
+            key: 'status',
+            render: (text) => {
+                return (
+                    <p
+                        className={`${text.toLowerCase() === 'active'
+                                ? 'text-statusGreen'
+                                : text.toLowerCase() === 'inactive'
+                                    ? 'text-statusPending'
+                                    : null
+                            }`}
+                    >
+                        {capitalizeFLetter(text)}
+                    </p>
+                )
+            },
+        },
         {
             title: ' ',
             dataIndex: '',
             key: '',
             render: (_, record) => {
                 const { roles } = record
+                const isActive = _.status === 'active'
+                console.log(_, 'ffff')
                 return (
                     <div>
                         <Dropdown
@@ -193,7 +201,7 @@ const UserManagement = ({
                                             </p>
                                         ) : (
                                             <div className="flex flex-col">
-                                                <SettingActions
+                                                {!isActive ? <SettingActions
                                                     text={
                                                         reSendInviteLoading
                                                             ? 'Resending...'
@@ -207,7 +215,8 @@ const UserManagement = ({
                                                     disable={
                                                         reSendInviteLoading
                                                     }
-                                                />
+                                                /> : null}
+
                                                 <SettingActions text="Send Password Reset" />
                                                 <SettingActions
                                                     text="Change Role"

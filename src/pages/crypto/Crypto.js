@@ -187,39 +187,17 @@ const Crypto = () => {
             </div>
             <div className="mt-12 mb-8">
                 <Row gutter={[16, 16]}>
-                    <Col xs={24} sm={24} md={8} lg={7} xl={6}>
+                    {cryptoChart?.cryptoChart?.data.map((item, index) => <Col xs={24} sm={24} md={8} lg={7} xl={6} key={index}>
                         <Blocks
-                            name="Total Crypto Transfers"
+                            name={item.title}
                             nameColor={color.mainColor}
-                            bigAmount={'858,800'}
+                            bigAmount={item.value}
                             padding="20px"
                             height="92px"
                             bg={color.offWhite}
                             border={`solid 1px ${color.lineAsh}`}
                         />
-                    </Col>
-                    <Col xs={24} sm={24} md={8} lg={7} xl={6}>
-                        <Blocks
-                            name="Total Crypto Swaps"
-                            nameColor={color.mainColor}
-                            bigAmount={'858,800'}
-                            padding="20px"
-                            height="92px"
-                            bg={color.offWhite}
-                            border={`solid 1px ${color.lineAsh}`}
-                        />
-                    </Col>
-                    <Col xs={24} sm={24} md={8} lg={7} xl={6}>
-                        <Blocks
-                            name="Total FIAT to Crypto"
-                            nameColor={color.mainColor}
-                            bigAmount={'248'}
-                            padding="20px"
-                            height="92px"
-                            bg={color.offWhite}
-                            border={`solid 1px ${color.lineAsh}`}
-                        />
-                    </Col>
+                    </Col>)}
                 </Row>
             </div>
             <CustomTable

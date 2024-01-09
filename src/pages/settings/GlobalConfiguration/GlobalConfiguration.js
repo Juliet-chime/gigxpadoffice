@@ -6,6 +6,7 @@ import { color } from '../../../assets/color'
 import TransactionLimits from './transactionLimit/TransactionLimits'
 import OTCRate from './OTCRate/OTCRate'
 import FeeStructure from './FeeStructure'
+import AppRate from './OTCRate/AppRate'
 
 const GlobalConfiguration = ({ setMessage, setStatus }) => {
     const onChange = (key) => { }
@@ -56,7 +57,7 @@ const GlobalConfiguration = ({ setMessage, setStatus }) => {
                     </p>
                 </div>
             ),
-            children: <OTCRate />,
+            children: <AppRate />,
         },
     ]
 
