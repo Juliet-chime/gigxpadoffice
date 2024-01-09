@@ -46,6 +46,18 @@ const GlobalConfiguration = ({ setMessage, setStatus }) => {
             ),
             children: <OTCRate />,
         },
+        {
+            key: '4',
+            label: (
+                <div className="flex items-center gap-3">
+                    <IoMdLock fontSize={18} color={color.mainColor} />
+                    <p className="text-mainColor font-medium text-sm">
+                        App Rates
+                    </p>
+                </div>
+            ),
+            children: <OTCRate />,
+        },
     ]
 
     return (
