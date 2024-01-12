@@ -168,10 +168,10 @@ const UserManagement = ({
                 return (
                     <p
                         className={`${text.toLowerCase() === 'active'
-                                ? 'text-statusGreen'
-                                : text.toLowerCase() === 'inactive'
-                                    ? 'text-statusPending'
-                                    : null
+                            ? 'text-statusGreen'
+                            : text.toLowerCase() === 'inactive'
+                                ? 'text-statusPending'
+                                : null
                             }`}
                     >
                         {capitalizeFLetter(text)}
@@ -186,7 +186,6 @@ const UserManagement = ({
             render: (_, record) => {
                 const { roles } = record
                 const isActive = _.status === 'active'
-                console.log(_, 'ffff')
                 return (
                     <div>
                         <Dropdown

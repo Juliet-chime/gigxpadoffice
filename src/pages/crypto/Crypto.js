@@ -41,7 +41,6 @@ const Crypto = () => {
     const oneCryptoTransaction = useSelector(getOneCryptoTransactionsSelector)
 
     const cryptoChart = useSelector(getCryptoChartSelector)
-    console.log(cryptoChart, 'charttt')
 
     const columns = [
         {

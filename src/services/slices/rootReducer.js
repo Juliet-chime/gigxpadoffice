@@ -58,7 +58,7 @@ const combinedReducer = combineReducers({
     fireBlockWallet: fiatMetricsReducer,
     stellaBaxi: stellaBaxiLedgerReducer,
     cryptoChart: cryptoChartReducer,
-    customerBalance:customerBalanceReducer
+    customerBalance: customerBalanceReducer
 })
 
 export const rootReducer = (state, action) => {

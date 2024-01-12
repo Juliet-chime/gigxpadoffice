@@ -45,7 +45,7 @@ const GlobalConfiguration = ({ setMessage, setStatus }) => {
                     </p>
                 </div>
             ),
-            children: <OTCRate />,
+            children: <OTCRate setMessage={setMessage} setStatus={setStatus} />,
         },
         {
             key: '4',
