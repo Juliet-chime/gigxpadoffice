@@ -18,12 +18,12 @@ const AppRate = () => {
     const [loading, setLoading] = useState(false)
 
     const [initialRate, setInitialRate] = useState(
-        rates.find((_, index) => index + 1 === Number(activeKey))
+        rates?.find((_, index) => index + 1 === Number(activeKey))
     )
 
     const [rateValue, setRateValue] = useState(initialRate?.rate)
 
-    const currencies = rates.map((item) => item?.currencyPair.split('/')[0])
+    const currencies = rates?.map((item) => item?.currencyPair.split('/')[0])
 
     const onChangeRate = async () => {
         let data = {
@@ -40,7 +40,7 @@ const AppRate = () => {
         }
     }
 
-    const items = currencies.map((curr, index) => {
+    const items = currencies?.map((curr, index) => {
         return {
             key: index + 1,
             label: (

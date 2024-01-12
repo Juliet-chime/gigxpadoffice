@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useMemo, useState } from 'react'
 import CustomTable from '../../components/table/CustomTable'
 import Dashboardheader from '../../components/dashboardComponents/Dashboardheader'
 import { useNavigate } from 'react-router-dom'
@@ -7,10 +7,7 @@ import {
     queryAllUser,
 } from '../../services/slices/user/allUsers'
 import { useDispatch, useSelector } from 'react-redux'
-// import { queryOneUser } from '../../services/slices/user/oneUser';
-// import { queryUserAssest } from '../../services/slices/user/userAssest';
 import moment from 'moment'
-// import { queryAdmins } from '../../services/slices/admin/fetchAdmins';
 
 const Customers = () => {
     const navigate = useNavigate()
@@ -18,8 +15,25 @@ const Customers = () => {
 
     const [startDate] = useState(new Date('2022-09-05'))
     const [endDate] = useState(new Date('2022-09-05'))
+    const [customer, setCustomer] = useState('')
 
-    const allUsers = useSelector(getAllUsersSelector)
+    const { allUsers } = useSelector(getAllUsersSelector)
+
+    const users = allUsers?.data?.users
+
+    const checks = useMemo(
+        () => [
+            (user) =>
+                !customer ? true : user.fullName.toLowerCase().includes(customer.toLowerCase()),
+        ],
+        [customer]
+    )
+
+    const filteredData = useMemo(() => {
+        return users.filter((user) => {
+            return checks.every((check) => check(user))
+        })
+    }, [checks, users])
 
     const columns = [
         {
@@ -67,7 +81,7 @@ const Customers = () => {
                 // dispatch(queryAdmins()).unwrap()
                 // dispatch(queryOneUser({id:'851827c0-d122-4edf-bbab-e2a1aa8460ef'})).unwrap()
                 // dispatch(queryUserAssest({id:'851827c0-d122-4edf-bbab-e2a1aa8460ef'})).unwrap()
-            } catch (e) {}
+            } catch (e) { }
         }
         getCustomers()
     }, [dispatch])
@@ -80,12 +94,13 @@ const Customers = () => {
                 className="mb-6"
             />
             <CustomTable
-                data={allUsers?.allUsers?.data?.users}
+                data={filteredData}
                 columns={columns}
                 isLoading={allUsers?.loading}
                 filterHeader={true}
                 startDate={startDate}
                 endDate={endDate}
+                onInputChange={e => setCustomer(e.target.value)}
                 onRow={(record, rowIndex) => {
                     return {
                         onClick: (event) => {

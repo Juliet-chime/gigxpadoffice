@@ -10,11 +10,11 @@ const initialState = {
 
 export const queryCustomerBalance = createAsyncThunk(
     'getCustomerBalance/queryCustomerBalance',
-    async ({id}) => {
+    async ({ id }) => {
         try {
-            const response = await makeApiRequest('get',  getCustomerBalance(id))
+            const response = await makeApiRequest('get', getCustomerBalance(id))
             return response?.data
-        } catch (e) {}
+        } catch (e) { }
     }
 )
 

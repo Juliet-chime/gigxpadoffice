@@ -552,6 +552,8 @@ export default function Dashboard() {
         )
     })
 
+    const fireblockBal = Number(fireBlockUSDTrx?.availableBalance).toFixed(8)
+
     return (
         <div className="overflow-hidden py-10">
             <Dashboardheader
@@ -601,7 +603,7 @@ export default function Dashboard() {
                         <div>
                             <Blocks
                                 name="Fireblocks"
-                                bigAmount={Number(fireBlockUSDTrx?.availableBalance).toFixed(8)}
+                                bigAmount={!fireBlockUSDTrx?.availableBalance.length ? 0 : isNaN(fireblockBal) ? 0 : fireblockBal}
                                 padding="30px"
                                 height="auto"
                             />

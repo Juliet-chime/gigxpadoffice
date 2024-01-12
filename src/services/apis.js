@@ -148,6 +148,10 @@ const getRate = () => {
     return `/settings/app-rates`
 }
 
+const otcRate = () => {
+    return `/settings/otc-rates`
+}
+
 const getFees = () => {
     return `/settings/fees`
 }
@@ -223,5 +227,6 @@ export {
     updateAdminRole,
     getStellaorBaxiLedger,
     getCryptoChart,
-    getCustomerBalance
+    getCustomerBalance,
+    otcRate
 }

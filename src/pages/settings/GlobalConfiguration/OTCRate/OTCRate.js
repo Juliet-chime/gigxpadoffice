@@ -4,10 +4,10 @@ import OtcChange from './OtcChange'
 import { useDispatch, useSelector } from 'react-redux'
 import { getRatesSelector } from '../../../../services/slices/settings/globalconfig/getRate'
 import ReactCountryFlag from 'react-country-flag'
-import { queryUpdateRates } from '../../../../services/slices/settings/globalconfig/updateRate'
 import { useErrorTimeout } from '../../../../hooks/useTimeout'
+import { queryUpdateOtcRates } from '../../../../services/slices/settings/globalconfig/upateOtcRate'
 
-const OTCRate = () => {
+const OTCRate = ({ setMessage, setStatus }) => {
     const { rates } = useSelector(getRatesSelector)
 
     const dispatch = useDispatch()
@@ -18,12 +18,12 @@ const OTCRate = () => {
     const [loading, setLoading] = useState(false)
 
     const [initialRate, setInitialRate] = useState(
-        rates.find((_, index) => index + 1 === Number(activeKey))
+        rates?.find((_, index) => index + 1 === Number(activeKey))
     )
 
     const [rateValue, setRateValue] = useState(initialRate?.rate)
 
-    const currencies = rates.map((item) => item?.currencyPair.split('/')[0])
+    const currencies = rates?.map((item) => item?.currencyPair.split('/')[0])
 
     const onChangeRate = async () => {
         let data = {
@@ -33,14 +33,21 @@ const OTCRate = () => {
 
         try {
             setLoading(true)
-            await dispatch(queryUpdateRates({ data }))
+            const res = await dispatch(queryUpdateOtcRates({ data }))
+            const { payload = {} } = res
+            setStatus(payload?.status)
+            setMessage(payload?.message)
             setLoading(false)
         } catch (e) {
+            setLoading(false)
+            setStatus('error')
+            setMessage(e?.message)
+        } finally {
             setLoading(false)
         }
     }
 
-    const items = currencies.map((curr, index) => {
+    const items = currencies?.map((curr, index) => {
         return {
             key: index + 1,
             label: (
