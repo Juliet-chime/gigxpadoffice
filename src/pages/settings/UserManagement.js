@@ -33,7 +33,6 @@ const UserManagement = ({
     setAddUser,
     setMessage,
     setStatus,
-    setChangeRole,
 }) => {
     const dispatch = useDispatch()
     const navigate = useNavigate()
@@ -288,7 +287,7 @@ const UserManagement = ({
                     className="mt-6"
                 />
 
-                <div className="admindetail">
+                <div>
                     <CustomDrawer
                         placement="right"
                         onClose={() => setOpen(false)}
