@@ -4,10 +4,10 @@ import OtcChange from './OtcChange'
 import { useDispatch, useSelector } from 'react-redux'
 import { getRatesSelector } from '../../../../services/slices/settings/globalconfig/getRate'
 import ReactCountryFlag from 'react-country-flag'
+import { queryUpdateRates } from '../../../../services/slices/settings/globalconfig/updateRate'
 import { useErrorTimeout } from '../../../../hooks/useTimeout'
-import { queryUpdateOtcRates } from '../../../../services/slices/settings/globalconfig/upateOtcRate'
 
-const OTCRate = ({ setMessage, setStatus }) => {
+const AppRate = () => {
     const { rates } = useSelector(getRatesSelector)
 
     const dispatch = useDispatch()
@@ -33,16 +33,9 @@ const OTCRate = ({ setMessage, setStatus }) => {
 
         try {
             setLoading(true)
-            const res = await dispatch(queryUpdateOtcRates({ data }))
-            const { payload = {} } = res
-            setStatus(payload?.status)
-            setMessage(payload?.message)
+            await dispatch(queryUpdateRates({ data }))
             setLoading(false)
         } catch (e) {
-            setLoading(false)
-            setStatus('error')
-            setMessage(e?.message)
-        } finally {
             setLoading(false)
         }
     }
@@ -88,4 +81,4 @@ const OTCRate = ({ setMessage, setStatus }) => {
     )
 }
 
-export default OTCRate
+export default AppRate

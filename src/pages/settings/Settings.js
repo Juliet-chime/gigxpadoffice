@@ -42,7 +42,7 @@ const Settings = () => {
         {
             key: '3',
             label: `Global Configuration`,
-            children: <GlobalConfiguration />,
+            children: <GlobalConfiguration setMessage={setMessage} setStatus={setStatus} />,
         },
     ]
 

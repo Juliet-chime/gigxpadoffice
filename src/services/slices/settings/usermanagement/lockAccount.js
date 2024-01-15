@@ -13,6 +13,6 @@ export const queryLockAccount = createAsyncThunk(
                 params
             )
             return response?.data
-        } catch (e) {}
+        } catch (e) { }
     }
 )

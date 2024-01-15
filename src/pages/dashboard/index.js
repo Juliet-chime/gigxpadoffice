@@ -68,7 +68,6 @@ export default function Dashboard() {
     const user = useSelector(get2FaSelector)
     const firstname = user?.user?.firstName
     const revenue = useSelector(getFiatRevenueSelector)
-    // console.log(revenue, 'tests')
     const fiatMetrics = useSelector(getFiatMetricSelector)
     const cryptoMetrics = useSelector(getCryptoMetricsSelector)
     const userMetrics = useSelector(getUserChartSelector)
@@ -119,9 +118,11 @@ export default function Dashboard() {
                     loading={revenue?.loading}
                     revenueAmount={formatMoney({
                         amount: revenueAmount,
+                        ...(data?.toUpperCase() === 'CRYPTO' ? { currency: '' } : {})
                     })}
                     profitAmount={formatMoney({
                         amount: revenueProfit,
+                        ...(data?.toUpperCase() === 'CRYPTO' ? { currency: '' } : {})
                     })}
                 />
             ),
@@ -551,6 +552,8 @@ export default function Dashboard() {
         )
     })
 
+    const fireblockBal = Number(fireBlockUSDTrx?.availableBalance).toFixed(8)
+
     return (
         <div className="overflow-hidden py-10">
             <Dashboardheader
@@ -600,7 +603,7 @@ export default function Dashboard() {
                         <div>
                             <Blocks
                                 name="Fireblocks"
-                                bigAmount={Number(fireBlockUSDTrx?.availableBalance).toFixed(8)}
+                                bigAmount={!fireBlockUSDTrx?.availableBalance.length ? 0 : isNaN(fireblockBal) ? 0 : fireblockBal}
                                 padding="30px"
                                 height="auto"
                             />
@@ -742,6 +745,7 @@ export default function Dashboard() {
                                         amount={`${formatMoney({
                                             amount: cryptoMetrics?.cryptoMetrics
                                                 ?.total,
+                                            currency: ''
                                         })}`}
                                         details
                                     />

@@ -1,12 +1,12 @@
 import { createAsyncThunk } from '@reduxjs/toolkit'
 import { makeApiRequest } from '../../../baseApi'
-import { getRate } from '../../../apis'
+import { otcRate } from '../../../apis'
 
-export const queryUpdateRates = createAsyncThunk(
-    'rates/updateRates',
+export const queryUpdateOtcRates = createAsyncThunk(
+    'rates/updateOtcRates',
     async ({ data }) => {
         try {
-            const response = await makeApiRequest('post', getRate(), data)
+            const response = await makeApiRequest('post', otcRate(), data)
             return response?.data
         } catch (e) { }
     }

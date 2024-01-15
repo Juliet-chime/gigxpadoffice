@@ -6,9 +6,10 @@ import { color } from '../../../assets/color'
 import TransactionLimits from './transactionLimit/TransactionLimits'
 import OTCRate from './OTCRate/OTCRate'
 import FeeStructure from './FeeStructure'
+import AppRate from './OTCRate/AppRate'
 
-const GlobalConfiguration = () => {
-    const onChange = (key) => {}
+const GlobalConfiguration = ({ setMessage, setStatus }) => {
+    const onChange = (key) => { }
     const items = [
         {
             key: '1',
@@ -20,7 +21,7 @@ const GlobalConfiguration = () => {
                     </p>
                 </div>
             ),
-            children: <TransactionLimits />,
+            children: <TransactionLimits setMessage={setMessage} setStatus={setStatus} />,
         },
         {
             key: '2',
@@ -32,7 +33,7 @@ const GlobalConfiguration = () => {
                     </p>
                 </div>
             ),
-            children: <FeeStructure />,
+            children: <FeeStructure setMessage={setMessage} setStatus={setStatus} />,
         },
         {
             key: '3',
@@ -44,7 +45,19 @@ const GlobalConfiguration = () => {
                     </p>
                 </div>
             ),
-            children: <OTCRate />,
+            children: <OTCRate setMessage={setMessage} setStatus={setStatus} />,
+        },
+        {
+            key: '4',
+            label: (
+                <div className="flex items-center gap-3">
+                    <IoMdLock fontSize={18} color={color.mainColor} />
+                    <p className="text-mainColor font-medium text-sm">
+                        App Rates
+                    </p>
+                </div>
+            ),
+            children: <AppRate />,
         },
     ]
 
