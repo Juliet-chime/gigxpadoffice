@@ -5,6 +5,7 @@ import { capitalizeFLetter } from '../../utils/func'
 import TrxDetailsValue from '../transactions/TrxDetailsValue'
 import CustomButton from '../../components/fields/CustomButton'
 import { useNavigate } from 'react-router-dom'
+import moment from 'moment'
 
 const AdminDetails = ({ userData }) => {
     const navigate = useNavigate()
@@ -23,7 +24,7 @@ const AdminDetails = ({ userData }) => {
                 email={userData?.email}
             />
             {/* <hr /> */}
-            <div className="border border-red-950">
+            <div className="">
                 <TrxDetailsValue
                     name={'Assigned Roles'}
                     tag={() => (
@@ -36,11 +37,11 @@ const AdminDetails = ({ userData }) => {
                         </div>
                     )}
                 />
-                <TrxDetailsValue name={'Date Added'} value={''} />
-                <TrxDetailsValue name={'Last Active'} value={''} />
-                <TrxDetailsValue name={'Status'} value={''} />
+                {/* <TrxDetailsValue name={'Date Added'} value={''} /> */}
+                <TrxDetailsValue name={'Last Active'} value={moment(userData.lastLoginAt).format('DD/MM/YYYY, h:mm:ss')} />
+                <TrxDetailsValue name={'Status'} status={userData.status} />
             </div>
-            <div className="mt-4">
+            <div className="mt-20 border-t border-[#E8E8E8] py-20">
                 <Row gutter={[16]}>
                     <Col xs={24} sm={24} md={24} lg={12} xl={12}>
                         <div>
@@ -74,7 +75,7 @@ const AdminDetails = ({ userData }) => {
                         </div>
                     </Col>
                 </Row>
-                <Row className="mt-2">
+                <Row className="mt-4">
                     <Col span={24}>
                         <div>
                             <CustomButton

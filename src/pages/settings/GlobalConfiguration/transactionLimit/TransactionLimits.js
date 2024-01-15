@@ -2,24 +2,24 @@ import { Tabs } from 'antd'
 import React, { useState } from 'react'
 import Tier from './Tier'
 
-const TransactionLimits = () => {
+const TransactionLimits = ({ setMessage, setStatus }) => {
     const [level, setLevel] = useState(1)
 
     const items = [
         {
             key: '1',
             label: `Tier 1`,
-            children: <Tier level={level} />,
+            children: <Tier level={level} setMessage={setMessage} setStatus={setStatus} />,
         },
         {
             key: '2',
             label: `Tier 2`,
-            children: <Tier level={level} />,
+            children: <Tier level={level} setMessage={setMessage} setStatus={setStatus} />,
         },
         {
             key: '3',
             label: `Tier 3`,
-            children: <Tier level={level} />,
+            children: <Tier level={level} setMessage={setMessage} setStatus={setStatus} />,
         },
     ]
 
