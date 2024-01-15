@@ -35,17 +35,23 @@ const ChangeRole = ({ setChangeRole, ...props }) => {
     })
 
     const onChangeRole = async () => {
-
-        const roleId = updatesRoles.map(v => roles?.role?.data.find(f => f.name.toLowerCase() === v.toLowerCase()).id)
+        const roleId = updatesRoles.map(
+            (v) =>
+                roles?.role?.data.find(
+                    (f) => f.name.toLowerCase() === v.toLowerCase()
+                ).id
+        )
 
         let data = {
             firstName: userData?.firstName,
             lastName: userData?.lastName,
-            roleIds: roleId
+            roleIds: roleId,
         }
         try {
             setLoading(true)
-            const res = await dispatch(queryUpdateRole({ data, id: userData?.id })).unwrap()
+            const res = await dispatch(
+                queryUpdateRole({ data, id: userData?.id })
+            ).unwrap()
             setStatus('success')
             setMessage(res?.message)
             setLoading(false)
@@ -131,7 +137,7 @@ const ChangeRole = ({ setChangeRole, ...props }) => {
                                     bg={color.secondaryColor}
                                     text="Save Changes"
                                     type="submit"
-                                    disabled={!(!!updatesRoles?.length)}
+                                    disabled={!!!updatesRoles?.length}
                                     loading={loading}
                                     onClick={onChangeRole}
                                 />
