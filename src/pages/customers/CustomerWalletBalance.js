@@ -2,42 +2,50 @@ import { Col, Row } from 'antd'
 import React from 'react'
 import Blocks from '../../components/dashboardComponents/Blocks'
 import { color } from '../../assets/color'
-import bitcoin from '../../assets/images/bitcoin.svg'
-import usd from '../../assets/images/usd.svg'
-import naira from '../../assets/images/naira.svg'
 import { SlOptionsVertical } from 'react-icons/sl'
 import CustomTable from '../../components/table/CustomTable'
+import { capitalizeFLetter } from '../../utils/func'
+import { formatMoney } from '../../utils/helperFunctions'
 
-const CustomerWalletBalance = () => {
+const CustomerWalletBalance = ({ walletDetails }) => {
     const columns = [
         {
             title: 'Assest',
             dataIndex: 'assest',
             key: 'assest',
-            render: (text) => (
-                <div className="flex items-center gap-4">
-                    <div>
-                        <img
-                            src={
-                                text === 'Bitcoin'
-                                    ? bitcoin
-                                    : text === 'USDT'
-                                    ? usd
-                                    : text === 'Naira'
-                                    ? naira
-                                    : null
-                            }
-                            alt=""
-                        />
+            render: (_, rowData) => {
+                return (
+                    <div className="flex items-center gap-4">
+                        <div>
+                            <img
+                                src={rowData.icon}
+                                alt={rowData.name}
+                            />
+                        </div>
+                        <p> {capitalizeFLetter(rowData.name)}</p>
                     </div>
-                    <p> {text}</p>
-                </div>
-            ),
+                )
+            }
         },
         {
             title: 'Balance',
             dataIndex: 'balance',
             key: 'balance',
+            render: (_, record) => (
+                <p>
+                    {record.name !== 'naira' ? record.balance : formatMoney({ amount: record.balanceInNgn })}
+                </p>
+            ),
+        },
+        {
+            title: 'Value USD',
+            dataIndex: 'balanceInUsd',
+            key: 'balanceInUsd',
+            render: (_, record) => (
+                <p>
+                    {record.balanceInUsd}
+                </p>
+            ),
         },
         {
             title: 'Date Added',
@@ -50,11 +58,10 @@ const CustomerWalletBalance = () => {
             key: 'status',
             render: (text) => (
                 <p
-                    className={`${
-                        text === 'active' ? 'text-statusGreen' : null
-                    }`}
+                    className={`${text.toLowerCase() === 'active' ? 'text-statusGreen' : null
+                        }`}
                 >
-                    {text}
+                    {capitalizeFLetter(text)}
                 </p>
             ),
         },
@@ -67,36 +74,6 @@ const CustomerWalletBalance = () => {
                     <SlOptionsVertical color="#67777E" />
                 </div>
             ),
-        },
-    ]
-    const data = [
-        {
-            key: '1',
-            assest: 'Bitcoin',
-            balance: 0.0039885,
-            date: '23/04/2023, 11:38.00',
-            status: 'active',
-        },
-        {
-            key: '2',
-            assest: 'USDT',
-            balance: 1.3443,
-            date: '23/04/2023, 11:38.00',
-            status: 'active',
-        },
-        {
-            key: '3',
-            assest: 'Naira',
-            balance: 3.4339885,
-            date: '23/04/2023, 11:38.00',
-            status: 'active',
-        },
-        {
-            key: '4',
-            assest: 'USDT',
-            balance: 1.3443,
-            date: '23/04/2023, 11:38.00',
-            status: 'active',
         },
     ]
     return (
@@ -139,7 +116,7 @@ const CustomerWalletBalance = () => {
                     <div className="wallet-table">
                         <CustomTable
                             columns={columns}
-                            data={data}
+                            data={walletDetails}
                             tableborder={'none'}
                             pagination={{
                                 hideOnSinglePage: true,

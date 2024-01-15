@@ -15,7 +15,7 @@ import {
 } from '../../../../services/slices/settings/globalconfig/limit'
 import Loader from '../../../../components/loader/Loader'
 
-const Tier = ({ level }) => {
+const Tier = ({ level, setMessage, setStatus }) => {
     const { limit, loading } = useSelector(getLimitSelector)
 
     const defaultVal = limit?.find((item) => item?.level === level)
@@ -39,8 +39,13 @@ const Tier = ({ level }) => {
             maximumAmount: values.max,
         }
         try {
-            await dispatch(queryLimit({ data })).unwrap()
-        } catch (e) {}
+            let res = await dispatch(queryLimit({ data })).unwrap()
+            setMessage('Transaction Limit updated successfully')
+            setStatus(res.status)
+        } catch (e) {
+            setStatus('error')
+            setMessage('Error updating transaction Limit')
+        }
     }
 
     return (

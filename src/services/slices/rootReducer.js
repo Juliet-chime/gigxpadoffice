@@ -25,6 +25,8 @@ import fireBlockTrxReducer from './ledger/blocksTrx'
 import fireblockTrxSavingReducer from './ledger/blocksSaving'
 import limitReducer from './settings/globalconfig/limit'
 import stellaBaxiLedgerReducer from './ledger/stella-baxi'
+import cryptoChartReducer from './transactions/getCryptoChart'
+import customerBalanceReducer from './user/customerBalance'
 import { clearLocalStorage } from '../../utils/authFunc'
 
 const combinedReducer = combineReducers({
@@ -54,7 +56,9 @@ const combinedReducer = combineReducers({
     fireblockTrxSaving: fireblockTrxSavingReducer,
     limit: limitReducer,
     fireBlockWallet: fiatMetricsReducer,
-    stellaBaxi: stellaBaxiLedgerReducer
+    stellaBaxi: stellaBaxiLedgerReducer,
+    cryptoChart: cryptoChartReducer,
+    customerBalance: customerBalanceReducer
 })
 
 export const rootReducer = (state, action) => {

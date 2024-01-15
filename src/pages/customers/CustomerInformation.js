@@ -3,15 +3,16 @@ import React from 'react'
 import dummyPerson from '../../assets/images/dummyPerson.svg'
 import { IoIosCheckmarkCircleOutline } from 'react-icons/io'
 import { color } from '../../assets/color'
-import flag from '../../assets/images/9jaflag.svg'
 import Loader from '../../components/loader/Loader'
+import ReactCountryFlag from 'react-country-flag'
 
 const CustomerInfoBlock = ({ title, value, icon, flag }) => {
     const Icon = icon
     return (
         <div className="border border-ash-2 rounded-md p-3 flex items-center justify-between">
             <div className="flex items-center gap-3">
-                {flag ? <img src={flag} alt="" /> : null}
+
+                {flag ? <ReactCountryFlag countryCode="NG" /> : null}
                 <div>
                     <p className="text-xs md:text-sm lg:text-sm xl:text-sm font-medium text-lighterAsh">
                         {title}
@@ -77,13 +78,13 @@ const CustomerInformation = ({ data, loading }) => {
                                     <CustomerInfoBlock
                                         title={'Region'}
                                         value={data?.country}
-                                        flag={flag}
+                                        flag={true}
                                     />
                                 </Col>
                                 <Col span={12}>
                                     <CustomerInfoBlock
                                         title={'Account Level'}
-                                        value="Tier 1"
+                                        value={`Tier ${data?.kycLevel}`}
                                     />
                                 </Col>
                                 <Col span={12}>
