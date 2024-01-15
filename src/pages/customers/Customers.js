@@ -30,7 +30,7 @@ const Customers = () => {
     )
 
     const filteredData = useMemo(() => {
-        return users.filter((user) => {
+        return users?.filter((user) => {
             return checks.every((check) => check(user))
         })
     }, [checks, users])

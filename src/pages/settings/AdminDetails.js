@@ -15,12 +15,12 @@ const AdminDetails = ({ userData }) => {
                 padding={'md:p-4'}
                 name={` ${capitalizeFLetter(userData?.firstName)}${' '}
                                             ${capitalizeFLetter(
-                                                userData?.lastName
-                                            )}`}
+                    userData?.lastName
+                )}`}
                 initials={`${userData?.firstName.toUpperCase().slice(0, 1)}
                                             ${userData?.lastName
-                                                .toUpperCase()
-                                                .slice(0, 1)}`}
+                        .toUpperCase()
+                        .slice(0, 1)}`}
                 email={userData?.email}
             />
             {/* <hr /> */}
