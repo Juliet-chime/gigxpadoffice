@@ -27,22 +27,26 @@ export const roles = [
 
 export const typeOptions = [
     {
-        value: 'credit',
+        value: 'CREDIT',
         label: 'Credit',
     },
     {
-        value: 'debit',
+        value: 'DEBIT',
         label: 'Debit',
+    },
+    {
+        value: 'DEBIT_CREDIT',
+        label: 'Credit_Debit',
     },
 ]
 
 export const assestOptions = [
     {
-        value: 'bitcoin',
-        label: 'BitCoin',
+        value: 'BTC',
+        label: 'BTC',
     },
     {
-        value: 'usd',
+        value: 'USDT',
         label: 'USDT',
     },
 ]
