@@ -245,11 +245,10 @@ const CustomTableHeader = ({
                     md={3}
                     lg={!showExportCSV ? 3 : 2}
                     xl={3}
-                    className={`p-1 md:p-3 lg:p-3 xl:p-3 border-0 ${
-                        !showExportCSV
+                    className={`p-1 md:p-3 lg:p-3 xl:p-3 border-0 ${!showExportCSV
                             ? 'border-0'
                             : 'md:border-l lg:border-l xl:border-l md:border-r lg:border-r xl:border-r border-lightash'
-                    }`}
+                        }`}
                 >
                     <div
                         className="text-search flex items-center justify-center cursor-pointer"

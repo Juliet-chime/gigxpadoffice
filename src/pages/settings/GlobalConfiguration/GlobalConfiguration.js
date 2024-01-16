@@ -57,7 +57,7 @@ const GlobalConfiguration = ({ setMessage, setStatus }) => {
                     </p>
                 </div>
             ),
-            children: <AppRate />,
+            children: <AppRate setMessage={setMessage} setStatus={setStatus} />,
         },
     ]
 
