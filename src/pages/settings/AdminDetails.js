@@ -29,8 +29,8 @@ const AdminDetails = ({ userData }) => {
                     name={'Assigned Roles'}
                     tag={() => (
                         <div className="flex flex-wrap gap-3 mt-2">
-                            {userData?.roles.map((role) => (
-                                <p className="bg-[#F2F3F4] rounded-[10px] text-mainColor font-medium p-2 w-auto">
+                            {userData?.roles.map((role, idx) => (
+                                <p className="bg-[#F2F3F4] rounded-[10px] text-mainColor font-medium p-2 w-auto" key={idx}>
                                     {capitalizeFLetter(role.name)}
                                 </p>
                             ))}

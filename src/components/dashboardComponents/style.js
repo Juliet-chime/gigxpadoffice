@@ -49,7 +49,7 @@ export const BlockStyle = styled('div')`
         display: flex;
     }
     p {
-        color: ${(props) => props.nameColor || color.lighterAsh};
+        color: ${(props) => props.namecolor || color.lighterAsh};
     }
     h2 {
         color: ${(props) => props.bigAmtColor || color.mainColor};

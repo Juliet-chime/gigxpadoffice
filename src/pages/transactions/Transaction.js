@@ -18,7 +18,7 @@ import {
 } from '../../services/slices/transactions/getOneFiatTransaction'
 
 let initialStartDate = moment(new Date('2022-09-05')).format('YYYY-MM-DD')
-let InitialEndDate = moment(new Date()).format('YYYY-MM-DD')
+let initialEndDate = moment(new Date()).format('YYYY-MM-DD')
 
 const Transaction = () => {
     const dispatch = useDispatch()
@@ -102,7 +102,7 @@ const Transaction = () => {
         dispatch(
             queryFiatTransactions({
                 from: startDate || initialStartDate,
-                to: endDate || InitialEndDate,
+                to: endDate || initialEndDate,
                 status: value,
                 ...(!!type ? { type } : {}),
             })
@@ -114,7 +114,7 @@ const Transaction = () => {
         dispatch(
             queryFiatTransactions({
                 from: startDate || initialStartDate,
-                to: endDate || InitialEndDate,
+                to: endDate || initialEndDate,
                 type: value,
                 ...(!!status ? { status } : {}),
             })
@@ -130,7 +130,7 @@ const Transaction = () => {
             queryFiatTransactions({
                 from:
                     moment(startDate).format('YYYY-MM-DD') || initialStartDate,
-                to: moment(endDate).format('YYYY-MM-DD') || InitialEndDate,
+                to: moment(endDate).format('YYYY-MM-DD') || initialEndDate,
                 ...(!!status ? { status } : {}),
                 ...(!!type ? { type } : {}),
             })
@@ -142,7 +142,7 @@ const Transaction = () => {
         dispatch(
             queryFiatTransactions({
                 from: initialStartDate,
-                to: InitialEndDate,
+                to: initialEndDate,
                 ...(!!status ? { status } : {}),
                 ...(!!type ? { type } : {}),
             })
@@ -154,7 +154,13 @@ const Transaction = () => {
     }
 
     const onInputChange = (e) => {
-        alert(e.target.value)
+        dispatch(
+            queryFiatTransactions({
+                from: initialStartDate,
+                to: initialEndDate,
+                ...(!!e.target.value.length ? { searchField: e.target.value } : {})
+            })
+        ).unwrap()
     }
 
     const OnEachRowClicked = (trxId) => {
@@ -168,7 +174,7 @@ const Transaction = () => {
                 dispatch(
                     queryFiatTransactions({
                         from: initialStartDate,
-                        to: InitialEndDate,
+                        to: initialEndDate,
                     })
                 ).unwrap()
             } catch (e) { }
