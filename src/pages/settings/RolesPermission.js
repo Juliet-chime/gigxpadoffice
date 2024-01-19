@@ -63,7 +63,7 @@ const RolesPermission = ({ setAddRole }) => {
             <Row gutter={[16, 16]}>
                 {roles.map((items, index) => {
                     return (
-                        <>
+                        <div key={index}>
                             <Col xs={12} sm={12} md={6} lg={5} xl={4}>
                                 <BlockStyle
                                     height="165px"
@@ -78,12 +78,12 @@ const RolesPermission = ({ setAddRole }) => {
                                         items.role === 'Super Admin'
                                             ? showDrawer
                                             : items.role === 'Administrator'
-                                            ? showAdmin
-                                            : items.role === 'Developer'
-                                            ? showDeveloper
-                                            : items.role === 'Finance'
-                                            ? showFinance
-                                            : null
+                                                ? showAdmin
+                                                : items.role === 'Developer'
+                                                    ? showDeveloper
+                                                    : items.role === 'Finance'
+                                                        ? showFinance
+                                                        : null
                                     }
                                     className="cursor-pointer"
                                 >
@@ -143,7 +143,7 @@ const RolesPermission = ({ setAddRole }) => {
                                     <div>finance</div>
                                 </CustomDrawer>
                             ) : null}
-                        </>
+                        </div>
                     )
                 })}
                 <Col xs={12} sm={12} md={6} lg={5} xl={4}>
