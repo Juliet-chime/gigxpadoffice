@@ -578,24 +578,6 @@ button,
     border-right: solid 1px #eeeeee !important;
 }
 
-/* 
-.doc .ant-drawer-wrapper-body .ant-drawer-body {
-    padding: 0px !important;
-} */
-
-/* .admindetails.ant-drawer .ant-drawer-body  {
-    padding: 0px;
-    border: solid red !important;
-} */
-
-/* .admindetails{
-    padding: 0px;
-    border:5px solid red;
-    background: #000;
-    width: 80% ;
-} */
-
-
 .ant-alert {
     background: transparent;
     border: none !important;

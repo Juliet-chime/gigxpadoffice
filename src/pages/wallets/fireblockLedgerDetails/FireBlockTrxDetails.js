@@ -89,7 +89,7 @@ const FireBlockTrxDetails = () => {
                     <Col xs={24} sm={24} md={7} lg={7} xl={6}>
                         <Blocks
                             name="Wallet Balance"
-                            nameColor={color.mainColor}
+                            namecolor={color.mainColor}
                             bigAmount={data?.availableBalance}
                             smallAmount={formatMoney({
                                 amount: data?.balanceInUsd,
