@@ -91,7 +91,7 @@ const FireBlockSavingsDetails = () => {
                     <Col xs={24} sm={24} md={7} lg={7} xl={6}>
                         <Blocks
                             name="Wallet Balance"
-                            nameColor={color.mainColor}
+                            namecolor={color.mainColor}
                             bigAmount={data?.availableBalance}
                             smallAmount={formatMoney({
                                 amount: data?.balanceInUsd,
@@ -112,13 +112,13 @@ const FireBlockSavingsDetails = () => {
                         filterHeader={true}
                         startDate={new Date('2022-09-05')}
                         endDate={new Date()}
-                        handelApplyFilter={() => {}}
-                        handleClearFilter={() => {}}
-                        onInputChange={() => {}}
-                        handleStatusChange={() => {}}
-                        handleTypeChange={() => {}}
-                        onHandleStartDate={() => {}}
-                        onHandleEndDate={() => {}}
+                        handelApplyFilter={() => { }}
+                        handleClearFilter={() => { }}
+                        onInputChange={() => { }}
+                        handleStatusChange={() => { }}
+                        handleTypeChange={() => { }}
+                        onHandleStartDate={() => { }}
+                        onHandleEndDate={() => { }}
                     />
                 </div>
             </div>

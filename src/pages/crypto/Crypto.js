@@ -24,7 +24,7 @@ import {
 import { getCryptoChartSelector, queryCryptoChart } from '../../services/slices/transactions/getCryptoChart'
 
 let initialStartDate = moment(new Date('2022-09-05')).format('YYYY-MM-DD')
-let InitialEndDate = moment(new Date()).format('YYYY-MM-DD')
+let initialEndDate = moment(new Date()).format('YYYY-MM-DD')
 
 const Crypto = () => {
     const dispatch = useDispatch()
@@ -36,9 +36,6 @@ const Crypto = () => {
     const [assest, setAssest] = useState('')
     const [type, setType] = useState('')
     const [status, setStatus] = useState('')
-    const [searchText, setSearchText] = useState('')
-
-    console.log(searchText)
 
     const onChange = (dates) => {
         const [start, end] = dates
@@ -136,7 +133,13 @@ const Crypto = () => {
     }
 
     const onInputChange = (e) => {
-        setSearchText(e.target.value)
+        dispatch(
+            queryCryptoTransactions({
+                from: startDate || initialStartDate,
+                to: endDate || initialEndDate,
+                searchField: e.target.value,
+            })
+        ).unwrap()
     }
 
     const handleStatusChange = (value) => {
@@ -144,7 +147,7 @@ const Crypto = () => {
         dispatch(
             queryCryptoTransactions({
                 from: startDate || initialStartDate,
-                to: endDate || InitialEndDate,
+                to: endDate || initialEndDate,
                 status: value,
                 ...(!!type ? { type } : {}),
                 ...(!!assest ? { currencyShortCode: assest } : {})
@@ -157,7 +160,7 @@ const Crypto = () => {
         dispatch(
             queryCryptoTransactions({
                 from: startDate || initialStartDate,
-                to: endDate || InitialEndDate,
+                to: endDate || initialEndDate,
                 type: value,
                 ...(!!status ? { status } : {}),
                 ...(!!assest ? { currencyShortCode: assest } : {})
@@ -170,7 +173,7 @@ const Crypto = () => {
         dispatch(
             queryCryptoTransactions({
                 from: startDate || initialStartDate,
-                to: endDate || InitialEndDate,
+                to: endDate || initialEndDate,
                 currencyShortCode: value,
                 ...(!!type ? { type } : {}),
                 ...(!!status ? { status } : {}),
@@ -183,7 +186,7 @@ const Crypto = () => {
             queryCryptoTransactions({
                 from:
                     moment(startDate).format('YYYY-MM-DD') || initialStartDate,
-                to: moment(endDate).format('YYYY-MM-DD') || InitialEndDate,
+                to: moment(endDate).format('YYYY-MM-DD') || initialEndDate,
                 ...(!!status ? { status } : {}),
                 ...(!!type ? { type } : {}),
                 ...(!!assest ? { currencyShortCode: assest } : {})
@@ -196,7 +199,7 @@ const Crypto = () => {
         dispatch(
             queryCryptoTransactions({
                 from: initialStartDate,
-                to: InitialEndDate,
+                to: initialEndDate,
                 ...(!!status ? { status } : {}),
                 ...(!!type ? { type } : {}),
                 ...(!!assest ? { currencyShortCode: assest } : {})
@@ -210,7 +213,7 @@ const Crypto = () => {
                 dispatch(
                     queryCryptoTransactions({
                         from: initialStartDate,
-                        to: InitialEndDate,
+                        to: initialEndDate,
                     })
                 ).unwrap()
                 dispatch(queryCryptoChart()).unwrap()
@@ -271,7 +274,7 @@ const Crypto = () => {
                     {cryptoChart?.cryptoChart?.data.map((item, index) => <Col xs={24} sm={24} md={8} lg={7} xl={6} key={index}>
                         <Blocks
                             name={item.title}
-                            nameColor={color.mainColor}
+                            namecolor={color.mainColor}
                             bigAmount={item.value}
                             padding="20px"
                             height="92px"
