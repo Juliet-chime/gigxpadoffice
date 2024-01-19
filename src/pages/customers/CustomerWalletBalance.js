@@ -83,7 +83,7 @@ const CustomerWalletBalance = ({ walletDetails }) => {
                     <div className="flex flex-row lg:flex-col xl:flex-col flex-wrap lg:flex-nowrap xl:flex-nowrap gap-1 md:gap-3 lg:gap-3 xl:gap-3">
                         <Blocks
                             name="Total Wallet Balance"
-                            nameColor={color.mainColor}
+                            namecolor={color.mainColor}
                             bigAmount={'₦3,699,800'}
                             padding="20px"
                             height="92px"
@@ -93,7 +93,7 @@ const CustomerWalletBalance = ({ walletDetails }) => {
 
                         <Blocks
                             name="Total Crypto Balance"
-                            nameColor={color.mainColor}
+                            namecolor={color.mainColor}
                             bigAmount={'₦3,699,800'}
                             padding="20px"
                             height="92px"
@@ -103,7 +103,7 @@ const CustomerWalletBalance = ({ walletDetails }) => {
 
                         <Blocks
                             name="Total FIAT Balance"
-                            nameColor={color.mainColor}
+                            namecolor={color.mainColor}
                             bigAmount={'₦3,699,800'}
                             padding="20px"
                             height="92px"
