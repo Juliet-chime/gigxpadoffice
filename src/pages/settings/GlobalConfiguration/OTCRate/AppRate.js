@@ -2,12 +2,12 @@ import { Tabs } from 'antd'
 import React, { useState } from 'react'
 import OtcChange from './OtcChange'
 import { useDispatch, useSelector } from 'react-redux'
-import { getRatesSelector } from '../../../../services/slices/settings/globalconfig/getRate'
+import { getRatesSelector, queryRates } from '../../../../services/slices/settings/globalconfig/getRate'
 import ReactCountryFlag from 'react-country-flag'
+import { queryUpdateRates } from '../../../../services/slices/settings/globalconfig/updateRate'
 import { useErrorTimeout } from '../../../../hooks/useTimeout'
-import { queryUpdateOtcRates } from '../../../../services/slices/settings/globalconfig/upateOtcRate'
 
-const OTCRate = ({ setMessage, setStatus }) => {
+const AppRate = ({ setMessage, setStatus }) => {
     const { rates } = useSelector(getRatesSelector)
 
     const dispatch = useDispatch()
@@ -27,22 +27,23 @@ const OTCRate = ({ setMessage, setStatus }) => {
 
     const onChangeRate = async () => {
         let data = {
-            currencyPair: `${currencies[activeKey - 1].toUpperCase()}TONGN`,
+            currencyPair: `NGNTO${currencies[activeKey - 1].toUpperCase()}`,
             rate: rateValue,
         }
 
         try {
             setLoading(true)
-            const res = await dispatch(queryUpdateOtcRates({ data }))
+            const res = await dispatch(queryUpdateRates({ data }))
             const { payload = {} } = res
             setStatus(payload?.status)
             setMessage(payload?.message)
+            dispatch(queryRates())
             setLoading(false)
         } catch (e) {
             setLoading(false)
             setStatus('error')
             setMessage(e?.message)
-        } finally {
+        } finally{
             setLoading(false)
         }
     }
@@ -88,4 +89,4 @@ const OTCRate = ({ setMessage, setStatus }) => {
     )
 }
 
-export default OTCRate
+export default AppRate

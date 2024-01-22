@@ -96,6 +96,10 @@ const getUserAssest = (id) => {
     return `/customers/${id}/assets`
 }
 
+const getCustomerBalance = (id) => {
+    return `/customers/${id}/all-balances`
+}
+
 //ledger (on click of fireblocks card)
 const getFireBlockTrx = (currency) => {
     return `/ledgers/fireblocks-transaction/${currency}`
@@ -144,6 +148,10 @@ const getRate = () => {
     return `/settings/app-rates`
 }
 
+const otcRate = () => {
+    return `/settings/otc-rates`
+}
+
 const getFees = () => {
     return `/settings/fees`
 }
@@ -156,6 +164,12 @@ const updateLimit = () => {
 
 const getCurrencies = () => {
     return `/settings/currencies`
+}
+
+//cryptochart
+
+const getCryptoChart = () => {
+    return `/transactions/crypto/summary`
 }
 
 //lock account
@@ -211,5 +225,8 @@ export {
     unSuspendAccount,
     suspendAccount,
     updateAdminRole,
-    getStellaorBaxiLedger
+    getStellaorBaxiLedger,
+    getCryptoChart,
+    getCustomerBalance,
+    otcRate
 }

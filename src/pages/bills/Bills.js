@@ -18,7 +18,7 @@ import {
 } from '../../services/slices/transactions/getOneBillTransaction'
 
 let initialStartDate = moment(new Date('2022-09-05')).format('YYYY-MM-DD')
-let InitialEndDate = moment(new Date()).format('YYYY-MM-DD')
+let initialEndDate = moment(new Date()).format('YYYY-MM-DD')
 
 const Bills = () => {
     const dispatch = useDispatch()
@@ -37,7 +37,7 @@ const Bills = () => {
         dispatch(
             queryBillTransactions({
                 from: startDate || initialStartDate,
-                to: endDate || InitialEndDate,
+                to: endDate || initialEndDate,
                 status: value,
                 ...(!!billType ? { type: billType } : {}),
             })
@@ -49,7 +49,7 @@ const Bills = () => {
         dispatch(
             queryBillTransactions({
                 from: startDate || initialStartDate,
-                to: endDate || InitialEndDate,
+                to: endDate || initialEndDate,
                 type: value,
                 ...(!!status ? { status } : {}),
             })
@@ -69,7 +69,7 @@ const Bills = () => {
             queryBillTransactions({
                 from:
                     moment(startDate).format('YYYY-MM-DD') || initialStartDate,
-                to: moment(endDate).format('YYYY-MM-DD') || InitialEndDate,
+                to: moment(endDate).format('YYYY-MM-DD') || initialEndDate,
                 ...(!!status ? { status } : {}),
                 ...(!!billType ? { type: billType } : {}),
             })
@@ -81,7 +81,7 @@ const Bills = () => {
         dispatch(
             queryBillTransactions({
                 from: initialStartDate,
-                to: InitialEndDate,
+                to: initialEndDate,
                 ...(!!status ? { status } : {}),
                 ...(!!billType ? { type: billType } : {}),
             })
@@ -168,10 +168,10 @@ const Bills = () => {
                 dispatch(
                     queryBillTransactions({
                         from: initialStartDate,
-                        to: InitialEndDate,
+                        to: initialEndDate,
                     })
                 ).unwrap()
-            } catch (e) {}
+            } catch (e) { }
         }
         getBillTransactions()
     }, [dispatch])

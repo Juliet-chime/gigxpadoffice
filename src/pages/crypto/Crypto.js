@@ -21,14 +21,21 @@ import {
     getOneCryptoTransactionsSelector,
     queryOneCryptoTransactions,
 } from '../../services/slices/transactions/getOneCryptoTransaction'
+import { getCryptoChartSelector, queryCryptoChart } from '../../services/slices/transactions/getCryptoChart'
+
+let initialStartDate = moment(new Date('2022-09-05')).format('YYYY-MM-DD')
+let initialEndDate = moment(new Date()).format('YYYY-MM-DD')
 
 const Crypto = () => {
     const dispatch = useDispatch()
 
     const [open, setOpen] = useState(false)
-    const [startDate, setStartDate] = useState(new Date('2022-09-05'))
+    const [startDate, setStartDate] = useState('')
     const [changeIcon, setChangeIcon] = useState(false)
-    const [endDate, setEndDate] = useState(new Date('2022-09-05'))
+    const [endDate, setEndDate] = useState('')
+    const [assest, setAssest] = useState('')
+    const [type, setType] = useState('')
+    const [status, setStatus] = useState('')
 
     const onChange = (dates) => {
         const [start, end] = dates
@@ -36,8 +43,18 @@ const Crypto = () => {
         setEndDate(end)
     }
 
+    const handleStartDate = async (date) => {
+        setStartDate(date)
+    }
+
+    const handleEndDate = async (date) => {
+        setEndDate(date)
+    }
+
     const cryptoTransaction = useSelector(getCryptoTransactionsSelector)
     const oneCryptoTransaction = useSelector(getOneCryptoTransactionsSelector)
+
+    const cryptoChart = useSelector(getCryptoChartSelector)
 
     const columns = [
         {
@@ -116,7 +133,78 @@ const Crypto = () => {
     }
 
     const onInputChange = (e) => {
-        alert(e.target.value)
+        dispatch(
+            queryCryptoTransactions({
+                from: startDate || initialStartDate,
+                to: endDate || initialEndDate,
+                searchField: e.target.value,
+            })
+        ).unwrap()
+    }
+
+    const handleStatusChange = (value) => {
+        setStatus(value)
+        dispatch(
+            queryCryptoTransactions({
+                from: startDate || initialStartDate,
+                to: endDate || initialEndDate,
+                status: value,
+                ...(!!type ? { type } : {}),
+                ...(!!assest ? { currencyShortCode: assest } : {})
+            })
+        )
+    }
+
+    const handleTypeChange = async (value) => {
+        setType(value)
+        dispatch(
+            queryCryptoTransactions({
+                from: startDate || initialStartDate,
+                to: endDate || initialEndDate,
+                type: value,
+                ...(!!status ? { status } : {}),
+                ...(!!assest ? { currencyShortCode: assest } : {})
+            })
+        )
+    }
+
+    const handleAssestChange = async (value) => {
+        setAssest(value)
+        dispatch(
+            queryCryptoTransactions({
+                from: startDate || initialStartDate,
+                to: endDate || initialEndDate,
+                currencyShortCode: value,
+                ...(!!type ? { type } : {}),
+                ...(!!status ? { status } : {}),
+            })
+        )
+    }
+
+    const handleApplyFilter = async () => {
+        dispatch(
+            queryCryptoTransactions({
+                from:
+                    moment(startDate).format('YYYY-MM-DD') || initialStartDate,
+                to: moment(endDate).format('YYYY-MM-DD') || initialEndDate,
+                ...(!!status ? { status } : {}),
+                ...(!!type ? { type } : {}),
+                ...(!!assest ? { currencyShortCode: assest } : {})
+            })
+        )
+    }
+    const handleClearFilter = async () => {
+        setStartDate('')
+        setEndDate('')
+        dispatch(
+            queryCryptoTransactions({
+                from: initialStartDate,
+                to: initialEndDate,
+                ...(!!status ? { status } : {}),
+                ...(!!type ? { type } : {}),
+                ...(!!assest ? { currencyShortCode: assest } : {})
+            })
+        )
     }
 
     useEffect(() => {
@@ -124,11 +212,12 @@ const Crypto = () => {
             try {
                 dispatch(
                     queryCryptoTransactions({
-                        from: moment(startDate).format('YYYY-MM-DD'),
-                        to: moment().format('YYYY-MM-DD'),
+                        from: initialStartDate,
+                        to: initialEndDate,
                     })
                 ).unwrap()
-            } catch (e) {}
+                dispatch(queryCryptoChart()).unwrap()
+            } catch (e) { }
         }
         getCryptoTransactions()
     }, [startDate, dispatch])
@@ -182,39 +271,17 @@ const Crypto = () => {
             </div>
             <div className="mt-12 mb-8">
                 <Row gutter={[16, 16]}>
-                    <Col xs={24} sm={24} md={8} lg={7} xl={6}>
+                    {cryptoChart?.cryptoChart?.data.map((item, index) => <Col xs={24} sm={24} md={8} lg={7} xl={6} key={index}>
                         <Blocks
-                            name="Total Crypto Transfers"
-                            nameColor={color.mainColor}
-                            bigAmount={'858,800'}
+                            name={item.title}
+                            namecolor={color.mainColor}
+                            bigAmount={item.value}
                             padding="20px"
                             height="92px"
                             bg={color.offWhite}
                             border={`solid 1px ${color.lineAsh}`}
                         />
-                    </Col>
-                    <Col xs={24} sm={24} md={8} lg={7} xl={6}>
-                        <Blocks
-                            name="Total Crypto Swaps"
-                            nameColor={color.mainColor}
-                            bigAmount={'858,800'}
-                            padding="20px"
-                            height="92px"
-                            bg={color.offWhite}
-                            border={`solid 1px ${color.lineAsh}`}
-                        />
-                    </Col>
-                    <Col xs={24} sm={24} md={8} lg={7} xl={6}>
-                        <Blocks
-                            name="Total FIAT to Crypto"
-                            nameColor={color.mainColor}
-                            bigAmount={'248'}
-                            padding="20px"
-                            height="92px"
-                            bg={color.offWhite}
-                            border={`solid 1px ${color.lineAsh}`}
-                        />
-                    </Col>
+                    </Col>)}
                 </Row>
             </div>
             <CustomTable
@@ -222,17 +289,16 @@ const Crypto = () => {
                 columns={columns}
                 isLoading={cryptoTransaction?.loading}
                 filterHeader={true}
-                startDate={startDate}
-                endDate={endDate}
+                startDate={startDate || new Date('2022-09-05')}
+                endDate={endDate || new Date()}
+                handelApplyFilter={handleApplyFilter}
+                handleClearFilter={handleClearFilter}
                 onInputChange={onInputChange}
-                handleTypeChange={(value) => alert(value)}
-                handleAssestChange={(value) => alert(value)}
-                onHandleStartDate={(date) => {
-                    setStartDate(new Date(date))
-                }}
-                onHandleEndDate={(date) => {
-                    setEndDate(new Date(date))
-                }}
+                handleTypeChange={handleTypeChange}
+                handleAssestChange={handleAssestChange}
+                handleStatusChange={handleStatusChange}
+                onHandleStartDate={handleStartDate}
+                onHandleEndDate={handleEndDate}
                 onRow={(record) => {
                     return {
                         onClick: (event) => OnEachRowClicked(record?.id),

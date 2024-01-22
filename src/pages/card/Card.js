@@ -90,7 +90,7 @@ const Card = () => {
                     <Col xs={24} sm={24} md={7} lg={6} xl={5}>
                         <Blocks
                             name="Total Card Top-Up"
-                            nameColor={color.mainColor}
+                            namecolor={color.mainColor}
                             bigAmount={'1,256,990'}
                             padding="20px"
                             height="92px"
@@ -110,10 +110,10 @@ const Card = () => {
                             showDrawer()
                             setDetails(record)
                         }, // click row
-                        onDoubleClick: (event) => {}, // double click row
-                        onContextMenu: (event) => {}, // right button click row
-                        onMouseEnter: (event) => {}, // mouse enter row
-                        onMouseLeave: (event) => {}, // mouse leave row
+                        onDoubleClick: (event) => { }, // double click row
+                        onContextMenu: (event) => { }, // right button click row
+                        onMouseEnter: (event) => { }, // mouse enter row
+                        onMouseLeave: (event) => { }, // mouse leave row
                     }
                 }}
             />

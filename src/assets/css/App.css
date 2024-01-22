@@ -42,6 +42,10 @@ a {
     text-decoration: none;
 }
 
+.main-layout-div .ant-row {
+    justify-content: center !important;
+}
+
 
 button,
 [type='button'] {
@@ -577,17 +581,6 @@ button,
 .wallet-table .ant-table-wrapper .ant-table-tbody>tr>td:last-child {
     border-right: solid 1px #eeeeee !important;
 }
-
-/* 
-.doc .ant-drawer-wrapper-body .ant-drawer-body {
-    padding: 0px !important;
-} */
-
-.admindetail .ant-drawer .ant-drawer-wrapper-body .ant-drawer-body {
-    padding: 0px;
-    border: solid red;
-}
-
 
 .ant-alert {
     background: transparent;
