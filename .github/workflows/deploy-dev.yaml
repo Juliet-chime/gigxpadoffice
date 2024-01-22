@@ -1,122 +1,113 @@
 name: Build and Deploy Update to develop
 on:
-  push:
-    branches: [develop]
-    paths-ignore:
-      - k8s/dev/kustomization.yaml
-      - k8s/dev/service.yaml
-      - k8s/dev/ingress.yaml
-      - k8s/dev/configmap.yaml
-      - k8s/dev/deployment.yaml
+    push:
+        branches: [develop]
+        paths-ignore:
+            - k8s/dev/kustomization.yaml
+            - k8s/dev/service.yaml
+            - k8s/dev/ingress.yaml
+            - k8s/dev/configmap.yaml
+            - k8s/dev/deployment.yaml
 
 jobs:
-  sonarcloud:
-    #needs: [ on-success ]
-    name: SonarCloud
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v2
-        with:
-          fetch-depth: 0 # Shallow clones should be disabled for a better relevancy of analysis....
-      - name: SonarCloud Scan
-        uses: SonarSource/sonarcloud-github-action@master
-        env:
-          GITHUB_TOKEN: ${{ secrets.PAT }} # Needed to get PR information, if any exist
-          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-        #run: npx sonarqube-scanner
-      - name: Get SonarCloud quality gate status
-        env:
-          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-        run: |
-          RESULT=$(curl -u "$SONAR_TOKEN:" "https://sonarcloud.io/api/qualitygates/project_status?projectKey=GIGXPad-com_xpad-bko&analysisId=$SONAR_ANALYSIS_ID")
-          STATUS=$(echo $RESULT | jq -r .status)
-          echo $STATUS
-      - name: Check quality gate status
-        if: ${{ env.STATUS == 'ERROR' }}
-        run: |
-          echo "Quality gate status is ERROR"
-          exit 1
+    sonarqube:
+        #needs: [ on-success ]
+        name: sonarqube-scan
+        runs-on: ubuntu-latest
+        steps:
+            - uses: actions/checkout@v2
+              with:
+                  fetch-depth: 0 # Shallow clones should be disabled for a better relevancy of analysis
+            - uses: sonarsource/sonarqube-scan-action@master
+              env:
+                  SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+                  SONAR_HOST_URL: ${{ secrets.SONAR_HOST_URL }}
 
-  deploy:
-    runs-on: ubuntu-latest
-    needs: [sonarcloud]
-    environment:
-      name: develop
-      url: https://dev-bko.gigxpad.com
-    if: github.ref == 'refs/heads/develop'
-    steps:
-      - name: Check if deployment should progress
-        if: ${{ env.STATUS == 'OK' }}
-        run: |
-          echo "Quality gate status is OK"
-      - name: cancel previous run # in case of quick successions
-        uses: styfle/cancel-workflow-action@0.4.1
-        with:
-          access_token: ${{ github.token }}
-      - name: Check out code
-        uses: actions/checkout@v2
+            - uses: sonarsource/sonarqube-quality-gate-action@master
+              timeout-minutes: 5
+              env:
+                  SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
 
-      - name: Setup Kustomize
-        uses: imranismail/setup-kustomize@v1
-        with:
-          kustomize-version: "3.6.1"
+    deploy:
+        runs-on: ubuntu-latest
+        needs: [sonarqube]
+        environment:
+            name: develop
+            url: https://dev-bko.gigxpad.com
+        if: github.ref == 'refs/heads/develop'
+        steps:
+            - name: Check if deployment should progress
+              if: ${{ env.STATUS == 'OK' }}
+              run: |
+                  echo "Quality gate status is OK"
+            - name: cancel previous run # in case of quick successions
+              uses: styfle/cancel-workflow-action@0.4.1
+              with:
+                  access_token: ${{ github.token }}
+            - name: Check out code
+              uses: actions/checkout@v2
 
-      - name: Configure AWS credentials for staging
-        uses: aws-actions/configure-aws-credentials@v1
-        with:
-          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          aws-region: eu-west-2
+            - name: Setup Kustomize
+              uses: imranismail/setup-kustomize@v1
+              with:
+                  kustomize-version: '3.6.1'
 
-      - name: Login to Amazon ECR
-        id: login-ecr
-        uses: aws-actions/amazon-ecr-login@v1
-      - name: Export env to file
-        run: |
-          pwd
-      - name: Build, tag, and push image to Amazon ECR
-        env:
-          ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
-          ECR_REPOSITORY: gigxpad-web
-          IMAGE_TAG: ${{github.sha}}-bko
-        run: |
-          docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG .
-          docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
+            - name: Configure AWS credentials for staging
+              uses: aws-actions/configure-aws-credentials@v1
+              with:
+                  aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+                  aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+                  aws-region: eu-west-2
 
-      - name: Update Kubernetes resources
-        env:
-          ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
-          ECR_REPOSITORY: gigxpad-web
-          IMAGE_TAG: ${{github.sha}}-bko
-        run: |
-          cd k8s/dev
-          kustomize edit set image xpad-bko=$ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
-          cat kustomization.yaml
-      - name: Commit files
-        run: |
-          git config --local user.email "action@github.com"
-          git config --local user.name "GitHub Action"
-          git commit -am "Bump docker tag"
-      - name: Pushing to the protected branch 'protected'
-        uses: CasperWA/push-protected@v2
-        with:
-          token: ${{ secrets.PAT }}
-          branch: develop
-      - name: Notify slack success
-        if: success()
-        env:
-          SLACK_BOT_TOKEN: ${{ secrets.SLACK_NOTIFICATIONS_BOT_TOKEN }}
-        uses: voxmedia/github-action-slack-notify-build@v1
-        with:
-          channel: gigxpad-app-alerts
-          status: SUCCESS
-          color: good
-      - name: Notify slack fail
-        if: failure()
-        env:
-          SLACK_BOT_TOKEN: ${{ secrets.SLACK_NOTIFICATIONS_BOT_TOKEN }}
-        uses: voxmedia/github-action-slack-notify-build@v1
-        with:
-          channel: gigxpad-app-alerts
-          status: FAILED
-          color: danger
+            - name: Login to Amazon ECR
+              id: login-ecr
+              uses: aws-actions/amazon-ecr-login@v1
+            - name: Export env to file
+              run: |
+                  pwd
+            - name: Build, tag, and push image to Amazon ECR
+              env:
+                  ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
+                  ECR_REPOSITORY: gigxpad-web
+                  IMAGE_TAG: ${{github.sha}}-bko
+              run: |
+                  docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG .
+                  docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
+
+            - name: Update Kubernetes resources
+              env:
+                  ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
+                  ECR_REPOSITORY: gigxpad-web
+                  IMAGE_TAG: ${{github.sha}}-bko
+              run: |
+                  cd k8s/dev
+                  kustomize edit set image xpad-bko=$ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
+                  cat kustomization.yaml
+            - name: Commit files
+              run: |
+                  git config --local user.email "action@github.com"
+                  git config --local user.name "GitHub Action"
+                  git commit -am "Bump docker tag"
+            - name: Pushing to the protected branch 'protected'
+              uses: CasperWA/push-protected@v2
+              with:
+                  token: ${{ secrets.PAT }}
+                  branch: develop
+            # - name: Notify slack success
+            #   if: success()
+            #   env:
+            #     SLACK_BOT_TOKEN: ${{ secrets.SLACK_NOTIFICATIONS_BOT_TOKEN }}
+            #   uses: voxmedia/github-action-slack-notify-build@v1
+            #   with:
+            #     channel: gigxpad-app-alerts
+            #     status: SUCCESS
+            #     color: good
+            # - name: Notify slack fail
+            #   if: failure()
+            #   env:
+            #     SLACK_BOT_TOKEN: ${{ secrets.SLACK_NOTIFICATIONS_BOT_TOKEN }}
+            #   uses: voxmedia/github-action-slack-notify-build@v1
+            #   with:
+            #     channel: gigxpad-app-alerts
+            #     status: FAILED
+            #     color: danger
