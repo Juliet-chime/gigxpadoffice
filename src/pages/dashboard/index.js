@@ -618,7 +618,7 @@ export default function Dashboard() {
                                 flexlayout={'true'}
                                 height="110px"
                             >
-                                <Link to="/wallets">
+                                <Link to="/ledger">
                                     <div
                                         style={{
                                             display: 'flex',

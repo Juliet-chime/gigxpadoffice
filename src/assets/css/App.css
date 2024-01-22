@@ -42,6 +42,10 @@ a {
     text-decoration: none;
 }
 
+.main-layout-div .ant-row {
+    justify-content: center !important;
+}
+
 
 button,
 [type='button'] {

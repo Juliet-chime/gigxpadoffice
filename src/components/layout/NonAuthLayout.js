@@ -3,7 +3,6 @@ import {
     FormHeading,
     FormParagraph,
     InputContainer,
-    LayoutBgContainer,
     LayoutContainer,
     LogoLock,
 } from './style'
@@ -22,17 +21,22 @@ const NonAuthLayout = ({
     spanWidth,
 }) => {
     return (
-        <LayoutContainer className="h-full md:h-[100vh]">
+        <LayoutContainer className="h-full md:h-[100vh] main-layout-div">
             <div>
                 <Row>
-                    <Col xs={0} sm={0} md={0} lg={8} xl={8}>
+                    {/* <Col xs={0} sm={0} md={0} lg={8} xl={8}>
                         <LayoutBgContainer image={image}>
                             <div className="logo-container">
                                 <img src={gpad} alt="logo" />
                             </div>
                         </LayoutBgContainer>
-                    </Col>
-                    <Col xs={24} sm={24} md={24} lg={16} xl={16}>
+                    </Col> */}
+                     {/* <LayoutBgContainer>
+                            <div className="logo-container">
+                                <img src={gpad} alt="logo" />
+                            </div>
+                        </LayoutBgContainer> */}
+                    <Col type="flex" align="middle">
                         <LogoLock lock={lock}>
                             <div className="mobile_logo">
                                 <img src={gpad} alt="logo" />

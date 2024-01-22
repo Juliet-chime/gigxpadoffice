@@ -10,19 +10,6 @@ metadata:
         #kubernetes.io/tls-acme: "true"
 
 spec:
-<<<<<<< HEAD
-    rules:
-        - host: bko.gigxpad.com
-          http:
-              paths:
-                  - path: /
-                    pathType: Prefix
-                    backend:
-                        service:
-                            name: xpad-bko
-                            port:
-                                number: 3000
-=======
   rules:
     - host: bko.gigxpad.com
       http:
@@ -34,4 +21,3 @@ spec:
                 name: xpad-bko
                 port:
                   number: 3000
->>>>>>> ab3ba90b9afe25107b0e64731f2a68f4c3f98afe
