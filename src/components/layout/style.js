@@ -51,14 +51,14 @@ export const LayoutBgContainer = styled.div`
 export const LogoLock = styled.div`
     display: flex;
     align-items: center;
-    justify-content: flex-end;
+    justify-content: center;
     padding: 30px;
     @media (max-width: 920px) {
         justify-content: ${(props) =>
             props.lock ? 'space-between' : 'center'};
     }
     .mobile_logo {
-        display: none;
+        display: block;
         img {
             width: 100%;
             object-fit: contain;
