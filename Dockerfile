@@ -16,5 +16,8 @@ COPY . .
 # Expose the port your React Native app will run on (default is 19000)
 EXPOSE 3000
 
+# Create a production build (adjust as needed)
+RUN npm run build
+
 # Start your React Native application
 CMD ["npm", "start"]
