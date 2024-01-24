@@ -20,7 +20,7 @@ const Settings = () => {
 
     const [message, setMessage, status, setStatus] = useErrorTimeout(3000)
 
-    const onChangeTab = (key) => { }
+    const onChangeTab = (key) => {}
 
     const items = [
         {
@@ -42,7 +42,12 @@ const Settings = () => {
         {
             key: '3',
             label: `Global Configuration`,
-            children: <GlobalConfiguration setMessage={setMessage} setStatus={setStatus} />,
+            children: (
+                <GlobalConfiguration
+                    setMessage={setMessage}
+                    setStatus={setStatus}
+                />
+            ),
         },
     ]
 
@@ -73,7 +78,13 @@ const Settings = () => {
                 </div>
             ) : null}
             {addUser ? (
-                <AddAUser setAddUser={setAddUser} status={status} message={message} setMessage={setMessage} setStatus={setStatus} />
+                <AddAUser
+                    setAddUser={setAddUser}
+                    status={status}
+                    message={message}
+                    setMessage={setMessage}
+                    setStatus={setStatus}
+                />
             ) : addRole ? (
                 <AddARole setAddRole={setAddRole} />
             ) : (

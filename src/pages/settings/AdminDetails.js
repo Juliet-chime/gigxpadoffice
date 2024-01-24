@@ -15,12 +15,12 @@ const AdminDetails = ({ userData }) => {
                 padding={'md:p-4'}
                 name={` ${capitalizeFLetter(userData?.firstName)}${' '}
                                             ${capitalizeFLetter(
-                    userData?.lastName
-                )}`}
+                                                userData?.lastName
+                                            )}`}
                 initials={`${userData?.firstName.toUpperCase().slice(0, 1)}
                                             ${userData?.lastName
-                        .toUpperCase()
-                        .slice(0, 1)}`}
+                                                .toUpperCase()
+                                                .slice(0, 1)}`}
                 email={userData?.email}
             />
             {/* <hr /> */}
@@ -30,7 +30,10 @@ const AdminDetails = ({ userData }) => {
                     tag={() => (
                         <div className="flex flex-wrap gap-3 mt-2">
                             {userData?.roles.map((role, idx) => (
-                                <p className="bg-[#F2F3F4] rounded-[10px] text-mainColor font-medium p-2 w-auto" key={idx}>
+                                <p
+                                    className="bg-[#F2F3F4] rounded-[10px] text-mainColor font-medium p-2 w-auto"
+                                    key={idx}
+                                >
                                     {capitalizeFLetter(role.name)}
                                 </p>
                             ))}
@@ -38,7 +41,12 @@ const AdminDetails = ({ userData }) => {
                     )}
                 />
                 {/* <TrxDetailsValue name={'Date Added'} value={''} /> */}
-                <TrxDetailsValue name={'Last Active'} value={moment(userData.lastLoginAt).format('DD/MM/YYYY, h:mm:ss')} />
+                <TrxDetailsValue
+                    name={'Last Active'}
+                    value={moment(userData.lastLoginAt).format(
+                        'DD/MM/YYYY, h:mm:ss'
+                    )}
+                />
                 <TrxDetailsValue name={'Status'} status={userData.status} />
             </div>
             <div className="mt-20 border-t border-[#E8E8E8] py-20">

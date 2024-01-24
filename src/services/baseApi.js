@@ -5,6 +5,8 @@ import { isSessionExpired } from '../utils/authUtils'
 const API_URL = process.env.REACT_APP_PUBLIC_API_URL
 const API_KEY = process.env.REACT_APP_PUBLIC_API_KEY
 
+console.log(API_URL, API_KEY, 'keys')
+
 let instance
 
 function setAuthorization(headers) {
@@ -41,7 +43,12 @@ function instantiateInstance() {
     return instance
 }
 
-export const makeApiRequest = async (method, url, data = null, params = null) => {
+export const makeApiRequest = async (
+    method,
+    url,
+    data = null,
+    params = null
+) => {
     instantiateInstance()
 
     const buildParams = (data) => {

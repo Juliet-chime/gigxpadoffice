@@ -2,12 +2,20 @@ import { Col, Row } from 'antd'
 import React from 'react'
 import Blocks from '../../components/dashboardComponents/Blocks'
 import { color } from '../../assets/color'
-import { SlOptionsVertical } from 'react-icons/sl'
+// import { SlOptionsVertical } from 'react-icons/sl'
 import CustomTable from '../../components/table/CustomTable'
 import { capitalizeFLetter } from '../../utils/func'
 import { formatMoney } from '../../utils/helperFunctions'
 
 const CustomerWalletBalance = ({ walletDetails }) => {
+
+const totalFiatValue  = walletDetails.filter((item)=> item?.type === 'fiat').reduce((accumulator, currentValue) => {
+    return accumulator + Number(currentValue.balanceInUsd)
+},0)
+const totalCryptoValue  = walletDetails.filter((item)=> item?.type === 'crypto').reduce((accumulator, currentValue) => {
+    return accumulator + Number(currentValue.balanceInUsd)
+},0)
+
     const columns = [
         {
             title: 'Assest',
@@ -65,16 +73,16 @@ const CustomerWalletBalance = ({ walletDetails }) => {
                 </p>
             ),
         },
-        {
-            title: ' ',
-            dataIndex: '',
-            key: '',
-            render: (_, record) => (
-                <div>
-                    <SlOptionsVertical color="#67777E" />
-                </div>
-            ),
-        },
+        // {
+        //     title: ' ',
+        //     dataIndex: '',
+        //     key: '',
+        //     render: (_, record) => (
+        //         <div>
+        //             <SlOptionsVertical color="#67777E" />
+        //         </div>
+        //     ),
+        // },
     ]
     return (
         <div>
@@ -84,7 +92,7 @@ const CustomerWalletBalance = ({ walletDetails }) => {
                         <Blocks
                             name="Total Wallet Balance"
                             namecolor={color.mainColor}
-                            bigAmount={'₦3,699,800'}
+                            bigAmount={'₦0'}
                             padding="20px"
                             height="92px"
                             bg={color.offWhite}
@@ -94,7 +102,7 @@ const CustomerWalletBalance = ({ walletDetails }) => {
                         <Blocks
                             name="Total Crypto Balance"
                             namecolor={color.mainColor}
-                            bigAmount={'₦3,699,800'}
+                            bigAmount={Number(totalCryptoValue).toFixed(3)}
                             padding="20px"
                             height="92px"
                             bg={color.offWhite}
@@ -104,7 +112,7 @@ const CustomerWalletBalance = ({ walletDetails }) => {
                         <Blocks
                             name="Total FIAT Balance"
                             namecolor={color.mainColor}
-                            bigAmount={'₦3,699,800'}
+                            bigAmount={formatMoney({ amount:totalFiatValue})}
                             padding="20px"
                             height="92px"
                             bg={color.offWhite}

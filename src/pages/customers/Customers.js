@@ -9,22 +9,29 @@ import {
 import { useDispatch, useSelector } from 'react-redux'
 import moment from 'moment'
 
+let initialStartDate = moment(new Date('2022-09-05')).format('YYYY-MM-DD')
+let initialEndDate = moment(new Date()).format('YYYY-MM-DD')
+
 const Customers = () => {
     const navigate = useNavigate()
     const dispatch = useDispatch()
 
-    const [startDate] = useState(new Date('2022-09-05'))
-    const [endDate] = useState(new Date('2022-09-05'))
+    const [startDate, setStartDate] = useState('')
+    const [endDate, setEndDate] = useState('')
     const [customer, setCustomer] = useState('')
 
-    const { allUsers } = useSelector(getAllUsersSelector)
+    const { allUsers, loading } = useSelector(getAllUsersSelector)
 
     const users = allUsers?.data?.users
 
     const checks = useMemo(
         () => [
             (user) =>
-                !customer ? true : user.fullName.toLowerCase().includes(customer.toLowerCase()),
+                !customer
+                    ? true
+                    : user.fullName
+                          .toLowerCase()
+                          .includes(customer.toLowerCase()),
         ],
         [customer]
     )
@@ -74,14 +81,47 @@ const Customers = () => {
         // },
     ]
 
+    const handleStartDate = async (date) => {
+        setStartDate(date)
+    }
+
+    const handleEndDate = async (date) => {
+        setEndDate(date)
+    }
+
+    const handleApplyFilter = async () => {
+        dispatch(
+            queryAllUser({
+                from:
+                    moment(startDate).format('YYYY-MM-DD') || initialStartDate,
+                to: moment(endDate).format('YYYY-MM-DD') || initialEndDate,
+            })
+        ).unwrap()
+    }
+    const handleClearFilter = async () => {
+        setStartDate('')
+        setEndDate('')
+        dispatch(
+            queryAllUser({
+                from: initialStartDate,
+                to: initialEndDate,
+            })
+        ).unwrap()
+    }
+
     useEffect(() => {
         async function getCustomers() {
             try {
-                dispatch(queryAllUser()).unwrap()
+                dispatch(
+                    queryAllUser({
+                        from: initialStartDate,
+                        to: initialEndDate,
+                    })
+                ).unwrap()
                 // dispatch(queryAdmins()).unwrap()
                 // dispatch(queryOneUser({id:'851827c0-d122-4edf-bbab-e2a1aa8460ef'})).unwrap()
                 // dispatch(queryUserAssest({id:'851827c0-d122-4edf-bbab-e2a1aa8460ef'})).unwrap()
-            } catch (e) { }
+            } catch (e) {}
         }
         getCustomers()
     }, [dispatch])
@@ -96,11 +136,15 @@ const Customers = () => {
             <CustomTable
                 data={filteredData}
                 columns={columns}
-                isLoading={allUsers?.loading}
+                isLoading={loading}
                 filterHeader={true}
-                startDate={startDate}
-                endDate={endDate}
-                onInputChange={e => setCustomer(e.target.value)}
+                startDate={startDate || new Date('2022-09-05')}
+                endDate={endDate || new Date()}
+                onInputChange={(e) => setCustomer(e.target.value)}
+                onHandleStartDate={handleStartDate}
+                onHandleEndDate={handleEndDate}
+                handelApplyFilter={handleApplyFilter}
+                handleClearFilter={handleClearFilter}
                 onRow={(record, rowIndex) => {
                     return {
                         onClick: (event) => {

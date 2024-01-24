@@ -19,8 +19,9 @@ import moment from 'moment'
 const SettingActions = ({ text, color, ...props }) => {
     return (
         <span
-            className={`${color || 'text-mainColor'
-                } text-[12px] font-medium cursor my-1 cursor-pointer`}
+            className={`${
+                color || 'text-mainColor'
+            } text-[12px] font-medium cursor my-1 cursor-pointer`}
             {...props}
         >
             {text}
@@ -28,12 +29,7 @@ const SettingActions = ({ text, color, ...props }) => {
     )
 }
 
-
-const UserManagement = ({
-    setAddUser,
-    setMessage,
-    setStatus,
-}) => {
+const UserManagement = ({ setAddUser, setMessage, setStatus }) => {
     const dispatch = useDispatch()
     const navigate = useNavigate()
 
@@ -154,9 +150,13 @@ const UserManagement = ({
             dataIndex: 'lastLoginAt',
             key: 'lastLoginAt',
             render: (text) => {
-                return <>
-                    {!text ? null : <p>{moment(text).format('DD/MM/YYYY, h:mm:ss')}</p>}
-                </>
+                return (
+                    <>
+                        {!text ? null : (
+                            <p>{moment(text).format('DD/MM/YYYY, h:mm:ss')}</p>
+                        )}
+                    </>
+                )
             },
         },
         {
@@ -166,12 +166,13 @@ const UserManagement = ({
             render: (text) => {
                 return (
                     <p
-                        className={`${text.toLowerCase() === 'active'
-                            ? 'text-statusGreen'
-                            : text.toLowerCase() === 'inactive'
+                        className={`${
+                            text.toLowerCase() === 'active'
+                                ? 'text-statusGreen'
+                                : text.toLowerCase() === 'inactive'
                                 ? 'text-statusPending'
                                 : null
-                            }`}
+                        }`}
                     >
                         {capitalizeFLetter(text)}
                     </p>
@@ -199,21 +200,25 @@ const UserManagement = ({
                                             </p>
                                         ) : (
                                             <div className="flex flex-col">
-                                                {!isActive ? <SettingActions
-                                                    text={
-                                                        reSendInviteLoading
-                                                            ? 'Resending...'
-                                                            : 'Resend Invite'
-                                                    }
-                                                    onClick={() =>
-                                                        onHandleResendInvite({
-                                                            email: record?.email,
-                                                        })
-                                                    }
-                                                    disable={
-                                                        reSendInviteLoading
-                                                    }
-                                                /> : null}
+                                                {!isActive ? (
+                                                    <SettingActions
+                                                        text={
+                                                            reSendInviteLoading
+                                                                ? 'Resending...'
+                                                                : 'Resend Invite'
+                                                        }
+                                                        onClick={() =>
+                                                            onHandleResendInvite(
+                                                                {
+                                                                    email: record?.email,
+                                                                }
+                                                            )
+                                                        }
+                                                        disable={
+                                                            reSendInviteLoading
+                                                        }
+                                                    />
+                                                ) : null}
 
                                                 <SettingActions text="Send Password Reset" />
                                                 <SettingActions
@@ -271,11 +276,11 @@ const UserManagement = ({
                             hideOnSinglePage: true,
                             pageSize: 7,
                         }}
-                    // onRow={(record) => {
-                    //     return {
-                    //         onClick: (event) => OnEachRowClicked(record), // click row
-                    //     }
-                    // }}
+                        // onRow={(record) => {
+                        //     return {
+                        //         onClick: (event) => OnEachRowClicked(record), // click row
+                        //     }
+                        // }}
                     />
                 </div>
                 <CustomButton

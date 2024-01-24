@@ -171,7 +171,7 @@ const Bills = () => {
                         to: initialEndDate,
                     })
                 ).unwrap()
-            } catch (e) { }
+            } catch (e) {}
         }
         getBillTransactions()
     }, [dispatch])

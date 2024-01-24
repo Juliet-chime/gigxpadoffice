@@ -120,7 +120,7 @@ function Login() {
                 title={
                     show
                         ? 'Change your account password'
-                        : 'Log in to the Admin Dashboard'
+                        : 'Log in'
                 }
                 subText={
                     show
@@ -152,6 +152,7 @@ function Login() {
                                                 placeholder="New Password"
                                                 className="inputstyle"
                                                 name="password"
+                                                autoComplete="off"
                                                 onChange={handleChange}
                                             />
                                             {password ? (
@@ -165,6 +166,7 @@ function Login() {
                                                 placeholder="Retype Password"
                                                 className="inputstyle"
                                                 name="confirmPassword"
+                                                autoComplete="off"
                                                 onChange={handleChange}
                                             />
                                             {confirmPassword ? (
@@ -257,7 +259,7 @@ function Login() {
                                             <CustomFormikField
                                                 type={'password'}
                                                 name="password"
-                                                placeholder="input password"
+                                                placeholder="Input password"
                                                 iconRender={(visible) =>
                                                     visible ? (
                                                         <EyeTwoTone />
@@ -281,7 +283,7 @@ function Login() {
                                             <br />
                                             <CustomFormikButton
                                                 bg={color.secondaryColor}
-                                                text={`Log In`}
+                                                text={`Log in`}
                                                 type="submit"
                                                 disabled={isSubmitting}
                                             />
