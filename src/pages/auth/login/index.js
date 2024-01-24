@@ -120,7 +120,7 @@ function Login() {
                 title={
                     show
                         ? 'Change your account password'
-                        : 'Log in to the Admin Dashboard'
+                        : 'Log in'
                 }
                 subText={
                     show
@@ -257,7 +257,7 @@ function Login() {
                                             <CustomFormikField
                                                 type={'password'}
                                                 name="password"
-                                                placeholder="input password"
+                                                placeholder="Input password"
                                                 iconRender={(visible) =>
                                                     visible ? (
                                                         <EyeTwoTone />
@@ -281,7 +281,7 @@ function Login() {
                                             <br />
                                             <CustomFormikButton
                                                 bg={color.secondaryColor}
-                                                text={`Log In`}
+                                                text={`Log in`}
                                                 type="submit"
                                                 disabled={isSubmitting}
                                             />
