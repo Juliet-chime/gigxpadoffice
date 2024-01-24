@@ -21,7 +21,7 @@ const NonAuthLayout = ({
     spanWidth,
 }) => {
     return (
-        <LayoutContainer className="h-full md:h-[100vh] main-layout-div">
+        <LayoutContainer className="h-full main-layout-div">
             <div>
                 <Row>
                     {/* <Col xs={0} sm={0} md={0} lg={8} xl={8}>
@@ -48,7 +48,7 @@ const NonAuthLayout = ({
                             ) : null}
                         </LogoLock>
 
-                        <div>
+                        <div className="middle-form">
                             <InputContainer>
                                 {title ? (
                                     <FormHeading maxwidth={maxwidth}>
