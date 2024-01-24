@@ -2,7 +2,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
     name: xpad-bko
-    namespace: gigxpad-stagging
+    namespace: gigxpad-prod
 spec:
     replicas: 1
     revisionHistoryLimit: 3
@@ -20,30 +20,30 @@ spec:
                   ports:
                       - containerPort: 3000
                   env:
-                      - name: NEXT_PUBLIC_API_URL
-                        valueFrom:
-                            secretKeyRef:
-                                name: gigxpad-bko-prod-secret
-                                key: NEXT_PUBLIC_API_URL
-                                optional: false
-                      - name: NEXT_PUBLIC_API_KEY
-                        valueFrom:
-                            secretKeyRef:
-                                name: gigxpad-bko-prod-secret
-                                key: NEXT_PUBLIC_API_KEY
-                                optional: false
-                      - name: NEXT_PUBLIC_ADMIN_EMAIL
-                        valueFrom:
-                            secretKeyRef:
-                                name: gigxpad-bko-prod-secret
-                                key: NEXT_PUBLIC_ADMIN_EMAIL
-                                optional: false
-                      - name: NEXT_PUBLIC_ADMIN_PASS
-                        valueFrom:
-                            secretKeyRef:
-                                name: gigxpad-bko-prod-secret
-                                key: NEXT_PUBLIC_ADMIN_PASS
-                                optional: false
+                      # - name: NEXT_PUBLIC_API_URL
+                      #   valueFrom:
+                      #     secretKeyRef:
+                      #       name: gigxpad-bko-dev-secret
+                      #       key: NEXT_PUBLIC_API_URL
+                      #       optional: false
+                      # - name: NEXT_PUBLIC_API_KEY
+                      #   valueFrom:
+                      #     secretKeyRef:
+                      #       name: gigxpad-bko-dev-secret
+                      #       key: NEXT_PUBLIC_API_KEY
+                      #       optional: false
+                      # - name: NEXT_PUBLIC_ADMIN_EMAIL
+                      #   valueFrom:
+                      #     secretKeyRef:
+                      #       name: gigxpad-bko-dev-secret
+                      #       key: NEXT_PUBLIC_ADMIN_EMAIL
+                      #       optional: false
+                      # - name: NEXT_PUBLIC_ADMIN_PASS
+                      #   valueFrom:
+                      #     secretKeyRef:
+                      #       name: gigxpad-bko-dev-secret
+                      #       key: NEXT_PUBLIC_ADMIN_PASS
+                      #       optional: false
                   #readinessProbe:
                   #httpGet:
                   #path: actuator/health
@@ -64,7 +64,8 @@ spec:
                           cpu: 100m
                           memory: 2Gi
                   imagePullPolicy: Always
-                  #envFrom:
-                  #- secretRef:
+                  envFrom:
+                      - secretRef:
+                            name: gigxpad-bko-prod-secret
             imagePullSecrets:
                 - name: gigxpad-bko-prod-secret
