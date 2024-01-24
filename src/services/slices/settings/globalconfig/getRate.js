@@ -19,7 +19,7 @@ export const queryRates = createAsyncThunk(
                 params
             )
             return response?.data
-        } catch (e) { }
+        } catch (e) {}
     }
 )
 

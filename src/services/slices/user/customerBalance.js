@@ -14,7 +14,7 @@ export const queryCustomerBalance = createAsyncThunk(
         try {
             const response = await makeApiRequest('get', getCustomerBalance(id))
             return response?.data
-        } catch (e) { }
+        } catch (e) {}
     }
 )
 

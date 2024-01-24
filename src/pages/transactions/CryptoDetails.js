@@ -23,7 +23,7 @@ const CryptoDetails = ({ data, loading }) => {
                         />
                         <TrxDetailsValue
                             name={'Transaction Fee'}
-                            value={formatMoney({ amount: data?.amount })}
+                            value={Number(data?.amount).toFixed(5)}
                         />
                         {/* <TrxDetailsValue name={'Quidax Fee'} value={data?.quidaxFee} />
                 <TrxDetailsValue name={'XPAD Fee'} value={data?.xpadFee} /> */}

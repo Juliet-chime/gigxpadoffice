@@ -6,7 +6,7 @@ import { Col, Row } from 'antd'
 import Blocks from '../../components/dashboardComponents/Blocks'
 import { color } from '../../assets/color'
 import OneDateRange from '../../components/chart/OneDateRange'
-import { formatDate, formatMoney } from '../../utils/helperFunctions'
+import { formatDate } from '../../utils/helperFunctions'
 import { PiCaretDown, PiCaretUp } from 'react-icons/pi'
 import CryptoDetails from '../transactions/CryptoDetails'
 import {
@@ -21,7 +21,10 @@ import {
     getOneCryptoTransactionsSelector,
     queryOneCryptoTransactions,
 } from '../../services/slices/transactions/getOneCryptoTransaction'
-import { getCryptoChartSelector, queryCryptoChart } from '../../services/slices/transactions/getCryptoChart'
+import {
+    getCryptoChartSelector,
+    queryCryptoChart,
+} from '../../services/slices/transactions/getCryptoChart'
 
 let initialStartDate = moment(new Date('2022-09-05')).format('YYYY-MM-DD')
 let initialEndDate = moment(new Date()).format('YYYY-MM-DD')
@@ -75,7 +78,7 @@ const Crypto = () => {
             dataIndex: 'amount',
             key: 'amount',
             render: (text) => {
-                return <p>{formatMoney({ amount: text })}</p>
+                return <p>{Number(text).toFixed(5)}</p>
             },
         },
         {
@@ -150,7 +153,7 @@ const Crypto = () => {
                 to: endDate || initialEndDate,
                 status: value,
                 ...(!!type ? { type } : {}),
-                ...(!!assest ? { currencyShortCode: assest } : {})
+                ...(!!assest ? { currencyShortCode: assest } : {}),
             })
         )
     }
@@ -163,7 +166,7 @@ const Crypto = () => {
                 to: endDate || initialEndDate,
                 type: value,
                 ...(!!status ? { status } : {}),
-                ...(!!assest ? { currencyShortCode: assest } : {})
+                ...(!!assest ? { currencyShortCode: assest } : {}),
             })
         )
     }
@@ -189,7 +192,7 @@ const Crypto = () => {
                 to: moment(endDate).format('YYYY-MM-DD') || initialEndDate,
                 ...(!!status ? { status } : {}),
                 ...(!!type ? { type } : {}),
-                ...(!!assest ? { currencyShortCode: assest } : {})
+                ...(!!assest ? { currencyShortCode: assest } : {}),
             })
         )
     }
@@ -202,7 +205,7 @@ const Crypto = () => {
                 to: initialEndDate,
                 ...(!!status ? { status } : {}),
                 ...(!!type ? { type } : {}),
-                ...(!!assest ? { currencyShortCode: assest } : {})
+                ...(!!assest ? { currencyShortCode: assest } : {}),
             })
         )
     }
@@ -217,7 +220,7 @@ const Crypto = () => {
                     })
                 ).unwrap()
                 dispatch(queryCryptoChart()).unwrap()
-            } catch (e) { }
+            } catch (e) {}
         }
         getCryptoTransactions()
     }, [startDate, dispatch])
@@ -271,17 +274,19 @@ const Crypto = () => {
             </div>
             <div className="mt-12 mb-8">
                 <Row gutter={[16, 16]}>
-                    {cryptoChart?.cryptoChart?.data.map((item, index) => <Col xs={24} sm={24} md={8} lg={7} xl={6} key={index}>
-                        <Blocks
-                            name={item.title}
-                            namecolor={color.mainColor}
-                            bigAmount={item.value}
-                            padding="20px"
-                            height="92px"
-                            bg={color.offWhite}
-                            border={`solid 1px ${color.lineAsh}`}
-                        />
-                    </Col>)}
+                    {cryptoChart?.cryptoChart?.data.map((item, index) => (
+                        <Col xs={24} sm={24} md={8} lg={7} xl={6} key={index}>
+                            <Blocks
+                                name={item.title}
+                                namecolor={color.mainColor}
+                                bigAmount={item.value}
+                                padding="20px"
+                                height="92px"
+                                bg={color.offWhite}
+                                border={`solid 1px ${color.lineAsh}`}
+                            />
+                        </Col>
+                    ))}
                 </Row>
             </div>
             <CustomTable

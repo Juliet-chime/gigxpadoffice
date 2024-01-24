@@ -1,6 +1,9 @@
 import React, { useEffect } from 'react'
 import { useParams } from 'react-router-dom'
-import { getStellaBaxiLedgerSelector, queryStellaBaxiLedger } from '../../../services/slices/ledger/stella-baxi'
+import {
+    getStellaBaxiLedgerSelector,
+    queryStellaBaxiLedger,
+} from '../../../services/slices/ledger/stella-baxi'
 import { useDispatch, useSelector } from 'react-redux'
 import CustomTable from '../../../components/table/CustomTable'
 import DetailsHeader from '../../../components/dashboardComponents/DetailsHeader'
@@ -10,13 +13,12 @@ import moment from 'moment'
 import { formatMoney } from '../../../utils/helperFunctions'
 
 const StellaBaxiLedgerDetails = () => {
-
     const { id } = useParams()
     const dispatch = useDispatch()
 
-
-    const { data, loading: isLoading } = useSelector(getStellaBaxiLedgerSelector)
-
+    const { data, loading: isLoading } = useSelector(
+        getStellaBaxiLedgerSelector
+    )
 
     const columns = [
         {
@@ -117,13 +119,13 @@ const StellaBaxiLedgerDetails = () => {
                         filterHeader={true}
                         startDate={new Date('2022-09-05')}
                         endDate={new Date()}
-                        handelApplyFilter={() => { }}
-                        handleClearFilter={() => { }}
-                        onInputChange={() => { }}
-                        handleStatusChange={() => { }}
-                        handleTypeChange={() => { }}
-                        onHandleStartDate={() => { }}
-                        onHandleEndDate={() => { }}
+                        handelApplyFilter={() => {}}
+                        handleClearFilter={() => {}}
+                        onInputChange={() => {}}
+                        handleStatusChange={() => {}}
+                        handleTypeChange={() => {}}
+                        onHandleStartDate={() => {}}
+                        onHandleEndDate={() => {}}
                     />
                 </div>
             </div>

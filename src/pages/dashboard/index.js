@@ -118,11 +118,15 @@ export default function Dashboard() {
                     loading={revenue?.loading}
                     revenueAmount={formatMoney({
                         amount: revenueAmount,
-                        ...(data?.toUpperCase() === 'CRYPTO' ? { currency: '' } : {})
+                        ...(data?.toUpperCase() === 'CRYPTO'
+                            ? { currency: '' }
+                            : {}),
                     })}
                     profitAmount={formatMoney({
                         amount: revenueProfit,
-                        ...(data?.toUpperCase() === 'CRYPTO' ? { currency: '' } : {})
+                        ...(data?.toUpperCase() === 'CRYPTO'
+                            ? { currency: '' }
+                            : {}),
                     })}
                 />
             ),
@@ -461,7 +465,7 @@ export default function Dashboard() {
                     dispatch(queryCurrencies()).unwrap(),
                     dispatch(queryRoles()).unwrap(),
                 ])
-            } catch (e) { }
+            } catch (e) {}
         }
         getData()
     }, [dispatch])
@@ -476,7 +480,7 @@ export default function Dashboard() {
                         currencyType: revenueCurrencyType,
                     })
                 ).unwrap()
-            } catch (e) { }
+            } catch (e) {}
         }
         getRevenueProfit()
     }, [dispatch])
@@ -491,7 +495,7 @@ export default function Dashboard() {
                 onClick={onClick}
                 ref={ref}
                 className={
-                    ' rounded-large border border-dateLine py-2 px-3 cursor-pointer flex items-center gap-2 text-mainColor text-sm font-medium '
+                    'rounded-large border border-dateLine py-2 px-3 cursor-pointer flex items-center gap-2 text-mainColor text-sm font-medium'
                 }
             >
                 {today ? `Today` : value || moment().format('MM/DD/YYYY')}{' '}
@@ -603,7 +607,13 @@ export default function Dashboard() {
                         <div>
                             <Blocks
                                 name="Fireblocks"
-                                bigAmount={!fireBlockUSDTrx?.availableBalance.length ? 0 : isNaN(fireblockBal) ? 0 : fireblockBal}
+                                bigAmount={
+                                    !fireBlockUSDTrx?.availableBalance.length
+                                        ? 0
+                                        : isNaN(fireblockBal)
+                                        ? 0
+                                        : fireblockBal
+                                }
                                 padding="30px"
                                 height="auto"
                             />
@@ -745,7 +755,7 @@ export default function Dashboard() {
                                         amount={`${formatMoney({
                                             amount: cryptoMetrics?.cryptoMetrics
                                                 ?.total,
-                                            currency: ''
+                                            currency: '',
                                         })}`}
                                         details
                                     />

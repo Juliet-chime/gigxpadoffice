@@ -20,7 +20,10 @@ import DetailsHeader from '../../components/dashboardComponents/DetailsHeader'
 // import { queryUnsuspendAccount } from '../../services/slices/settings/usermanagement/unSuspendAccount'
 import Notification from '../../components/notification/Notification'
 import { useErrorTimeout } from '../../hooks/useTimeout'
-import { getCustomerBalanceSelector, queryCustomerBalance } from '../../services/slices/user/customerBalance'
+import {
+    getCustomerBalanceSelector,
+    queryCustomerBalance,
+} from '../../services/slices/user/customerBalance'
 
 const CustomersDetails = () => {
     const dispatch = useDispatch()
@@ -31,7 +34,6 @@ const CustomersDetails = () => {
     const isLocked = user?.user?.status?.toLowerCase() === 'locked'
 
     const isSuspended = user?.user.isBlacklisted
-
 
     const [isLocking, setIsLocking] = useState(false)
 
@@ -68,7 +70,9 @@ const CustomersDetails = () => {
         {
             key: '2',
             label: `Wallet Balances`,
-            children: <CustomerWalletBalance walletDetails={customerBalance.data} />,
+            children: (
+                <CustomerWalletBalance walletDetails={customerBalance.data} />
+            ),
         },
         {
             key: '3',
@@ -78,7 +82,6 @@ const CustomersDetails = () => {
     ]
 
     const onLockAccount = async () => {
-
         let data = {
             status: 'locked',
         }
@@ -91,15 +94,12 @@ const CustomersDetails = () => {
             setIsModalOpen(false)
             setStatus(res.payload.status)
             setMessage(res.payload.message)
-
         } catch (e) {
             setStatus('error')
             setMessage(e.message)
         } finally {
             setIsLocking(false)
         }
-
-
     }
 
     const onUnlockAccount = async () => {
@@ -120,17 +120,14 @@ const CustomersDetails = () => {
         } finally {
             setIsLocking(false)
         }
-
     }
 
     const onUnsuspendAccount = async () => {
         // const res = await dispatch(queryUnsuspendAccount({ id }))
-
     }
 
     const onSuspendAccount = async () => {
         // const res = await dispatch(querySuspendAccount({ id }))
-
     }
 
     useEffect(() => {
@@ -138,24 +135,25 @@ const CustomersDetails = () => {
             try {
                 dispatch(queryOneUser({ id })).unwrap()
                 dispatch(queryCustomerBalance({ id })).unwrap()
-            } catch (e) { }
+            } catch (e) {}
         }
         getFiatTransactions()
     }, [dispatch, id])
 
-
     return (
         <div>
-            {message ? <div
-                style={{
-                    position: 'absolute',
-                    top: '0px',
-                    left: '0px',
-                    right: '0px',
-                }}
-            >
-                <Notification message={message} type={status} />
-            </div> : null}
+            {message ? (
+                <div
+                    style={{
+                        position: 'absolute',
+                        top: '0px',
+                        left: '0px',
+                        right: '0px',
+                    }}
+                >
+                    <Notification message={message} type={status} />
+                </div>
+            ) : null}
             <Row justify="space-between" gutter={[0, 16]}>
                 <Col xs={24} sm={24} md={9} lg={9} xl={10}>
                     <DetailsHeader
@@ -246,7 +244,7 @@ const CustomersDetails = () => {
                             color={color.accessBtnColor}
                             weight="700"
                             height="3.75rem"
-                            className='mt-2'
+                            className="mt-2"
                             onClick={onLockAccount}
                         />
                     </div>

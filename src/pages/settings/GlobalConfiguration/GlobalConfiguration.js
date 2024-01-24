@@ -9,7 +9,7 @@ import FeeStructure from './FeeStructure'
 import AppRate from './OTCRate/AppRate'
 
 const GlobalConfiguration = ({ setMessage, setStatus }) => {
-    const onChange = (key) => { }
+    const onChange = (key) => {}
     const items = [
         {
             key: '1',
@@ -21,7 +21,12 @@ const GlobalConfiguration = ({ setMessage, setStatus }) => {
                     </p>
                 </div>
             ),
-            children: <TransactionLimits setMessage={setMessage} setStatus={setStatus} />,
+            children: (
+                <TransactionLimits
+                    setMessage={setMessage}
+                    setStatus={setStatus}
+                />
+            ),
         },
         {
             key: '2',
@@ -33,7 +38,9 @@ const GlobalConfiguration = ({ setMessage, setStatus }) => {
                     </p>
                 </div>
             ),
-            children: <FeeStructure setMessage={setMessage} setStatus={setStatus} />,
+            children: (
+                <FeeStructure setMessage={setMessage} setStatus={setStatus} />
+            ),
         },
         {
             key: '3',

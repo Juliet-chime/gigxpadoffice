@@ -43,7 +43,12 @@ function instantiateInstance() {
     return instance
 }
 
-export const makeApiRequest = async (method, url, data = null, params = null) => {
+export const makeApiRequest = async (
+    method,
+    url,
+    data = null,
+    params = null
+) => {
     instantiateInstance()
 
     const buildParams = (data) => {

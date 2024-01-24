@@ -158,7 +158,9 @@ const Transaction = () => {
             queryFiatTransactions({
                 from: initialStartDate,
                 to: initialEndDate,
-                ...(!!e.target.value.length ? { searchField: e.target.value } : {})
+                ...(!!e.target.value.length
+                    ? { searchField: e.target.value }
+                    : {}),
             })
         ).unwrap()
     }
@@ -177,7 +179,7 @@ const Transaction = () => {
                         to: initialEndDate,
                     })
                 ).unwrap()
-            } catch (e) { }
+            } catch (e) {}
         }
         getFiatTransactions()
     }, [dispatch])
