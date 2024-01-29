@@ -152,6 +152,7 @@ function Login() {
                                                 placeholder="New Password"
                                                 className="inputstyle"
                                                 name="password"
+                                                autoComplete="off"
                                                 onChange={handleChange}
                                             />
                                             {password ? (
@@ -165,6 +166,7 @@ function Login() {
                                                 placeholder="Retype Password"
                                                 className="inputstyle"
                                                 name="confirmPassword"
+                                                autoComplete="off"
                                                 onChange={handleChange}
                                             />
                                             {confirmPassword ? (

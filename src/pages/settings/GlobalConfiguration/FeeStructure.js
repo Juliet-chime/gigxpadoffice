@@ -60,7 +60,7 @@ const FeeStructure = ({ setMessage, setStatus }) => {
         <>
             <div className="border border-ash-3 rounded-lg p-2 md:p-6 lg:p-6 xl:p-6">
                 <Row gutter={[16, 16]}>
-                    <Col xs={24} sm={24} md={12} lg={12} xl={12}>
+                    {/* <Col xs={24} sm={24} md={12} lg={12} xl={12}>
                         <div className="border border-ash-3 rounded-24">
                             <h2 className="border-b border-ash-3 font-medium text-mainColor text-sm p-6 pt-6 pb-3">
                                 CRYPTO FEES
@@ -160,7 +160,7 @@ const FeeStructure = ({ setMessage, setStatus }) => {
                                 </div>
                             </div>
                         </div>
-                    </Col>
+                    </Col> */}
                     <Col xs={24} sm={24} md={12} lg={12} xl={12}>
                         <div className="border border-ash-3 rounded-24">
                             <div className="flex justify-between items-center border-b border-ash-3 p-6 pt-1 pb-3">

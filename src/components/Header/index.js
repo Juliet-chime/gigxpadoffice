@@ -1,16 +1,18 @@
-import React, { useState } from 'react'
+import React from 'react'
 import { Dropdown, Layout } from 'antd'
 import { BiBell } from 'react-icons/bi'
 import { GoPersonFill } from 'react-icons/go'
 import { HeaderWrapper } from './style'
-import { RxPerson } from 'react-icons/rx'
+// import { RxPerson } from 'react-icons/rx'
+// import {
+//     PiCaretDown,
+//     PiCaretUp,
+//     PiCurrencyDollarSimple,
+// } from 'react-icons/pi'
 import {
-    PiCaretDown,
-    PiCaretUp,
-    PiCurrencyDollarSimple,
     PiSignOut,
 } from 'react-icons/pi'
-import { GrFormCheckmark } from 'react-icons/gr'
+// import { GrFormCheckmark } from 'react-icons/gr'
 import { color } from '../../assets/color'
 import HeaderDropDownComponent from './HeaderDropDonComponent'
 import { useDispatch, useSelector } from 'react-redux'
@@ -35,7 +37,7 @@ export const SubItems = ({ text, icon, active }) => {
 }
 
 export default function NavHeader({ dropdownRender }) {
-    const [openMenu, setOpenMenu] = useState(false)
+    // const [openMenu, setOpenMenu] = useState(false)
 
     const user = useSelector(get2FaSelector)
     const dispatch = useDispatch()
@@ -71,11 +73,11 @@ export default function NavHeader({ dropdownRender }) {
                         dropdownRender={(menus) => {
                             return (
                                 <div className="shadow-lg rounded-md px-1 py-2 bg-white">
-                                    <HeaderDropDownComponent
+                                    {/* <HeaderDropDownComponent
                                         icon={RxPerson}
                                         label={'My Profile'}
-                                    />
-                                    <HeaderDropDownComponent
+                                    /> */}
+                                    {/* <HeaderDropDownComponent
                                         icon={PiCurrencyDollarSimple}
                                         label={'Currency'}
                                         className="cursor-pointer"
@@ -96,7 +98,7 @@ export default function NavHeader({ dropdownRender }) {
                                                 />
                                             </div>
                                         )}
-                                    </HeaderDropDownComponent>
+                                    </HeaderDropDownComponent> */}
                                     <HeaderDropDownComponent
                                         icon={PiSignOut}
                                         label={'SignOut'}

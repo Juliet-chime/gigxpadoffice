@@ -15,10 +15,12 @@ import FireBlockTrxDetails from '../pages/wallets/fireblockLedgerDetails/FireBlo
 import FireBlockSavingsDetails from '../pages/wallets/fireblockLedgerDetails/FireBlockSavingsDetails'
 import ChangeRole from '../pages/settings/ChangeRole'
 import StellaBaxiLedgerDetails from '../pages/wallets/stellasbaxi/StellaBaxiLedgerDetails'
+import Health from '../pages/health'
 
 const routes = [
     // public Routes
     { path: '/', component: Login, ispublic: true },
+    { path: '/health', component: Health, ispublic: true },
     { path: '/access', component: AccessPage, ispublic: true },
     { path: '/accesslogin', component: AccessLogin, ispublic: true },
     { path: '/2FA', component: TwoFactorAuthentication, ispublic: true },

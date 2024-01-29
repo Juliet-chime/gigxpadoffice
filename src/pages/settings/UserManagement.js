@@ -10,6 +10,7 @@ import {
     queryAdmins,
 } from '../../services/slices/admin/fetchAdmins'
 import { queryResendInviteAdmin } from '../../services/slices/invite/resendInvite'
+import { queryDeleteAdminAccount } from '../../services/slices/invite/removeUser'
 import { useNavigate } from 'react-router-dom'
 import CustomDrawer from '../../components/fields/CustomDrawer'
 import AdminDetails from './AdminDetails'
@@ -19,8 +20,9 @@ import moment from 'moment'
 const SettingActions = ({ text, color, ...props }) => {
     return (
         <span
-            className={`${color || 'text-mainColor'
-                } text-[12px] font-medium cursor my-1 cursor-pointer`}
+            className={`${
+                color || 'text-mainColor'
+            } text-[12px] font-medium cursor my-1 cursor-pointer`}
             {...props}
         >
             {text}
@@ -28,16 +30,12 @@ const SettingActions = ({ text, color, ...props }) => {
     )
 }
 
-
-const UserManagement = ({
-    setAddUser,
-    setMessage,
-    setStatus,
-}) => {
+const UserManagement = ({ setAddUser, setMessage, setStatus }) => {
     const dispatch = useDispatch()
     const navigate = useNavigate()
 
     const [reSendInviteLoading, setResendInviteLoading] = useState(false)
+    const [deleteUserLoading, setDeleteUserLoading] = useState(false)
     const [open, setOpen] = useState(false)
     const [adminDetail, setAdminDetail] = useState(null)
 
@@ -71,6 +69,22 @@ const UserManagement = ({
             setMessage(e?.errorMessage)
         } finally {
             setResendInviteLoading(false)
+        }
+    }
+
+    const onHandleRemoveUser = async (data) => {
+        try {
+            setDeleteUserLoading(true)
+            const res = await dispatch(queryDeleteAdminAccount(data.id)).unwrap()
+            setDeleteUserLoading(false)
+            setStatus(res?.status)
+            setMessage(res?.message)
+            dispatch(queryAdmins())
+        } catch (e) {
+            setStatus('error')
+            setMessage(e?.errorMessage)
+        } finally {
+            setDeleteUserLoading(false)
         }
     }
 
@@ -154,9 +168,13 @@ const UserManagement = ({
             dataIndex: 'lastLoginAt',
             key: 'lastLoginAt',
             render: (text) => {
-                return <>
-                    {!text ? null : <p>{moment(text).format('DD/MM/YYYY, h:mm:ss')}</p>}
-                </>
+                return (
+                    <>
+                        {!text ? null : (
+                            <p>{moment(text).format('DD/MM/YYYY, h:mm:ss')}</p>
+                        )}
+                    </>
+                )
             },
         },
         {
@@ -166,12 +184,13 @@ const UserManagement = ({
             render: (text) => {
                 return (
                     <p
-                        className={`${text.toLowerCase() === 'active'
-                            ? 'text-statusGreen'
-                            : text.toLowerCase() === 'inactive'
+                        className={`${
+                            text.toLowerCase() === 'active'
+                                ? 'text-statusGreen'
+                                : text.toLowerCase() === 'inactive'
                                 ? 'text-statusPending'
                                 : null
-                            }`}
+                        }`}
                     >
                         {capitalizeFLetter(text)}
                     </p>
@@ -199,21 +218,25 @@ const UserManagement = ({
                                             </p>
                                         ) : (
                                             <div className="flex flex-col">
-                                                {!isActive ? <SettingActions
-                                                    text={
-                                                        reSendInviteLoading
-                                                            ? 'Resending...'
-                                                            : 'Resend Invite'
-                                                    }
-                                                    onClick={() =>
-                                                        onHandleResendInvite({
-                                                            email: record?.email,
-                                                        })
-                                                    }
-                                                    disable={
-                                                        reSendInviteLoading
-                                                    }
-                                                /> : null}
+                                                {!isActive ? (
+                                                    <SettingActions
+                                                        text={
+                                                            reSendInviteLoading
+                                                                ? 'Resending...'
+                                                                : 'Resend Invite'
+                                                        }
+                                                        onClick={() =>
+                                                            onHandleResendInvite(
+                                                                {
+                                                                    email: record?.email,
+                                                                }
+                                                            )
+                                                        }
+                                                        disable={
+                                                            reSendInviteLoading
+                                                        }
+                                                    />
+                                                ) : null}
 
                                                 <SettingActions text="Send Password Reset" />
                                                 <SettingActions
@@ -232,6 +255,12 @@ const UserManagement = ({
                                                 <SettingActions
                                                     text="Remove User"
                                                     color="text-secondaryColor"
+                                                    onClick={() =>
+                                                        onHandleRemoveUser(
+                                                            record
+                                                        )
+                                                    }
+                                                    disable={deleteUserLoading}
                                                 />
                                             </div>
                                         )}
@@ -271,11 +300,11 @@ const UserManagement = ({
                             hideOnSinglePage: true,
                             pageSize: 7,
                         }}
-                    // onRow={(record) => {
-                    //     return {
-                    //         onClick: (event) => OnEachRowClicked(record), // click row
-                    //     }
-                    // }}
+                        // onRow={(record) => {
+                        //     return {
+                        //         onClick: (event) => OnEachRowClicked(record), // click row
+                        //     }
+                        // }}
                     />
                 </div>
                 <CustomButton

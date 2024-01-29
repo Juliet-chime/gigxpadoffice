@@ -60,6 +60,10 @@ const inviteAdmin = () => {
     return `/invite`
 }
 
+const removeAdmin = (id) => {
+    return `/${id}`
+}
+
 const inviteSuperAdmin = () => {
     return `/invite-superadmin`
 }
@@ -228,5 +232,6 @@ export {
     getStellaorBaxiLedger,
     getCryptoChart,
     getCustomerBalance,
-    otcRate
+    otcRate,
+    removeAdmin
 }
