@@ -75,7 +75,7 @@ const UserManagement = ({ setAddUser, setMessage, setStatus }) => {
     const onHandleRemoveUser = async (data) => {
         try {
             setDeleteUserLoading(true)
-            const res = await dispatch(queryDeleteAdminAccount(data)).unwrap()
+            const res = await dispatch(queryDeleteAdminAccount(data.id)).unwrap()
             setDeleteUserLoading(false)
             setStatus(res?.status)
             setMessage(res?.message)
