@@ -4,13 +4,12 @@ import { makeApiRequest } from '../../baseApi'
 
 export const queryDeleteAdminAccount = createAsyncThunk(
     'remove/queryDeleteAdminAccount',
-    async ({ id }) => {
+    async (id, { rejectWithValue }) => {
         try {
-            const response = await makeApiRequest(
-                'delete',
-                removeAdmin(id),
-            )
+            const response = await makeApiRequest('delete', removeAdmin(id))
             return response?.data
-        } catch (e) { }
+        } catch (e) {
+            return rejectWithValue(e.data)
+        }
     }
 )
