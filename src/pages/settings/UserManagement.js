@@ -62,6 +62,8 @@ const UserManagement = ({ setAddUser, setMessage, setStatus }) => {
             setResendInviteLoading(true)
             const res = await dispatch(queryResendInviteAdmin(data)).unwrap()
             setResendInviteLoading(false)
+            if (res?.status === 'success') {
+            }
             setStatus(res?.status)
             setMessage(res?.message)
         } catch (e) {
@@ -72,14 +74,16 @@ const UserManagement = ({ setAddUser, setMessage, setStatus }) => {
         }
     }
 
-    const onHandleRemoveUser = async (data) => {
+    const onHandleRemoveUser = async (id) => {
         try {
             setDeleteUserLoading(true)
-            const res = await dispatch(queryDeleteAdminAccount(data.id)).unwrap()
+            const res = await dispatch(queryDeleteAdminAccount(id)).unwrap()
             setDeleteUserLoading(false)
-            setStatus(res?.status)
-            setMessage(res?.message)
-            dispatch(queryAdmins())
+            if (res?.status === 'success') {
+                setStatus(res?.status)
+                setMessage(res?.message)
+                dispatch(queryAdmins())
+            }
         } catch (e) {
             setStatus('error')
             setMessage(e?.errorMessage)
@@ -257,7 +261,7 @@ const UserManagement = ({ setAddUser, setMessage, setStatus }) => {
                                                     color="text-secondaryColor"
                                                     onClick={() =>
                                                         onHandleRemoveUser(
-                                                            record
+                                                            record.id
                                                         )
                                                     }
                                                     disable={deleteUserLoading}
