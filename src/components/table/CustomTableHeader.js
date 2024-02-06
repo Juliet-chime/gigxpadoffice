@@ -42,6 +42,8 @@ const CustomTableHeader = ({
     const [showSearch, setShowSearch] = useState(false)
     const [showCalendar, setShowCalendar] = useState(false)
 
+    // console.log(startDate, endDate, 'hshsh')
+
     const onHandleApplyFilter = () => {
         handelApplyFilter()
         setShowCalendar(false)

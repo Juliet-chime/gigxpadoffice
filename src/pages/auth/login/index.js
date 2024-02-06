@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import NonAuthLayout from '../../../components/layout/NonAuthLayout'
 import { InputHolder } from './style'
 import {
@@ -110,6 +110,10 @@ function Login() {
         }
     }
 
+    useEffect(() => {
+        localStorage.removeItem('newUserToken')
+    }, [])
+
     return (
         <div>
             {!!message ? (
@@ -117,11 +121,7 @@ function Login() {
             ) : null}
             <NonAuthLayout
                 image={show ? signBg1 : signBg}
-                title={
-                    show
-                        ? 'Change your account password'
-                        : 'Log in'
-                }
+                title={show ? 'Change your account password' : 'Log in'}
                 subText={
                     show
                         ? 'Set a new password for your XPAD account'
