@@ -17,8 +17,8 @@ import {
     queryOneFiatTransactions,
 } from '../../services/slices/transactions/getOneFiatTransaction'
 
-let initialStartDate = moment(new Date('2022-09-05')).format('YYYY-MM-DD')
-let initialEndDate = moment(new Date()).format('YYYY-MM-DD')
+let initialStartDate = moment().startOf("month").format('YYYY-MM-DD')
+let initialEndDate = moment().format('YYYY-MM-DD')
 
 const Transaction = () => {
     const dispatch = useDispatch()
@@ -196,8 +196,8 @@ const Transaction = () => {
                 columns={columns}
                 isLoading={fiatTransaction?.loading}
                 filterHeader={true}
-                startDate={startDate || new Date('2022-09-05')}
-                endDate={endDate || new Date()}
+                startDate={startDate || initialStartDate}
+                endDate={endDate || initialEndDate}
                 handelApplyFilter={handleApplyFilter}
                 handleClearFilter={handleClearFilter}
                 onInputChange={onInputChange}

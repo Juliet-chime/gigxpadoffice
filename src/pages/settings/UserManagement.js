@@ -10,6 +10,7 @@ import {
     queryAdmins,
 } from '../../services/slices/admin/fetchAdmins'
 import { queryResendInviteAdmin } from '../../services/slices/invite/resendInvite'
+import { queryDeleteAdminAccount } from '../../services/slices/invite/removeUser'
 import { useNavigate } from 'react-router-dom'
 import CustomDrawer from '../../components/fields/CustomDrawer'
 import AdminDetails from './AdminDetails'
@@ -34,6 +35,7 @@ const UserManagement = ({ setAddUser, setMessage, setStatus }) => {
     const navigate = useNavigate()
 
     const [reSendInviteLoading, setResendInviteLoading] = useState(false)
+    const [deleteUserLoading, setDeleteUserLoading] = useState(false)
     const [open, setOpen] = useState(false)
     const [adminDetail, setAdminDetail] = useState(null)
 
@@ -60,6 +62,8 @@ const UserManagement = ({ setAddUser, setMessage, setStatus }) => {
             setResendInviteLoading(true)
             const res = await dispatch(queryResendInviteAdmin(data)).unwrap()
             setResendInviteLoading(false)
+            if (res?.status === 'success') {
+            }
             setStatus(res?.status)
             setMessage(res?.message)
         } catch (e) {
@@ -67,6 +71,24 @@ const UserManagement = ({ setAddUser, setMessage, setStatus }) => {
             setMessage(e?.errorMessage)
         } finally {
             setResendInviteLoading(false)
+        }
+    }
+
+    const onHandleRemoveUser = async (id) => {
+        try {
+            setDeleteUserLoading(true)
+            const res = await dispatch(queryDeleteAdminAccount(id)).unwrap()
+            setDeleteUserLoading(false)
+            if (res?.status === 'success') {
+                setStatus(res?.status)
+                setMessage(res?.message)
+                dispatch(queryAdmins())
+            }
+        } catch (e) {
+            setStatus('error')
+            setMessage(e?.errorMessage)
+        } finally {
+            setDeleteUserLoading(false)
         }
     }
 
@@ -237,6 +259,12 @@ const UserManagement = ({ setAddUser, setMessage, setStatus }) => {
                                                 <SettingActions
                                                     text="Remove User"
                                                     color="text-secondaryColor"
+                                                    onClick={() =>
+                                                        onHandleRemoveUser(
+                                                            record.id
+                                                        )
+                                                    }
+                                                    disable={deleteUserLoading}
                                                 />
                                             </div>
                                         )}

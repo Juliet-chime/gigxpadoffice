@@ -56,8 +56,8 @@ import { queryFireBlockWalletTrx } from '../../services/slices/dashboard/fireBlo
 import { queryRoles } from '../../services/slices/roles/fetchRoles'
 import { queryFireBlockTrxCard } from '../../services/slices/ledger/blocksTrxCard'
 
-let initialStartDate = moment(new Date('2022-04-19')).format('YYYY-MM-DD')
-let InitialEndDate = moment(new Date()).format('YYYY-MM-DD')
+let initialStartDate = moment().startOf("month").format('YYYY-MM-DD')
+let InitialEndDate = moment().format('YYYY-MM-DD')
 let initialFiatCurrency = 'NGN'
 let initialCryptoCurrency = 'BTC'
 let revenueCurrencyType = revenueItem[0]
@@ -71,8 +71,8 @@ export default function Dashboard() {
     const fiatMetrics = useSelector(getFiatMetricSelector)
     const cryptoMetrics = useSelector(getCryptoMetricsSelector)
     const userMetrics = useSelector(getUserChartSelector)
-    const { stellasBalance } = useSelector(getStellasBalanceSelector)
-    const { baxiBalance } = useSelector(getBaxiBalanceSelector)
+    const { stellasBalance, loading: isStellasLoading } = useSelector(getStellasBalanceSelector)
+    const { baxiBalance, loading: isBaxiLoading } = useSelector(getBaxiBalanceSelector)
     const { currencies, loading: isCurrencyLoading } = useSelector(
         getCurrenciesSelector
     )
@@ -108,6 +108,7 @@ export default function Dashboard() {
         (fiatCurrencyOption || [])[0]?.name
     )
     const [fireBlockUSDTrx, setFireBlockUSDTrx] = useState(null)
+    const [fireBlockLoading, setFireBlockLoading] = useState(false)
 
     const items = revenueItem.map((data, index) => {
         return {
@@ -430,10 +431,12 @@ export default function Dashboard() {
 
     useEffect(() => {
         async function getFireBlock() {
+            setFireBlockLoading(true)
             const res = await dispatch(
                 queryFireBlockTrxCard({ currency: 'usdt' })
             ).unwrap()
             setFireBlockUSDTrx(res)
+            setFireBlockLoading(false)
         }
         getFireBlock()
     }, [dispatch])
@@ -445,7 +448,7 @@ export default function Dashboard() {
                     dispatch(queryRates()).unwrap(),
                     dispatch(queryStellasBalance()).unwrap(),
                     dispatch(queryBaxiBalance()).unwrap(),
-                    dispatch(queryFireBlockWalletTrx({ currency: 'ustd' }))
+                    dispatch(queryFireBlockWalletTrx({ currency: 'usdt' }))
                         .unwrap,
                     dispatch(
                         queryFiatMetrics({
@@ -574,6 +577,7 @@ export default function Dashboard() {
                                 bigAmount={formatMoney({
                                     amount: stellasBalance?.accountBalance,
                                 })}
+                                loading={isStellasLoading}
                                 // smallAmount={formatMoney({
                                 //     amount: usdStellas,
                                 //     decimalCount: 3,
@@ -592,6 +596,7 @@ export default function Dashboard() {
                                 bigAmount={formatMoney({
                                     amount: baxiBalance?.accountBalance,
                                 })}
+                                loading={isBaxiLoading}
                                 // smallAmount={formatMoney({
                                 //     amount: usdBaxi,
                                 //     decimalCount: 3,
@@ -614,6 +619,8 @@ export default function Dashboard() {
                                         ? 0
                                         : fireblockBal
                                 }
+                                // bigAmount={!fireBlockUSDTrx?.availableBalance.length ? 0 : isNaN(fireblockBal) ? 0 : fireblockBal}
+                                loading={fireBlockLoading}
                                 padding="30px"
                                 height="auto"
                             />

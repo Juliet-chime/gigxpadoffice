@@ -12,12 +12,7 @@ export const queryAllUser = createAsyncThunk(
     'getAllUsers/queryAllUser',
     async (params = null) => {
         try {
-            const response = await makeApiRequest(
-                'get',
-                getAllUsers(),
-                null,
-                params
-            )
+            const response = await makeApiRequest('get', getAllUsers(), null, params)
             return response?.data
         } catch (e) {}
     }

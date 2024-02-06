@@ -41,6 +41,6 @@ spec:
           imagePullPolicy: Always
           envFrom:
             - secretRef:
-                name: gigxpad-bko-prod-secret
+                name: gigxpad-bko-staging-secret
       imagePullSecrets:
-        - name: gigxpad-bko-prod-secret
+        - name: gigxpad-bko-staging-secret
